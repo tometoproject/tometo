@@ -12,9 +12,12 @@
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
-    "parcel-bundler": "^1.12.3"
+    "@vue/component-compiler-utils": "^3.0.0",
+    "parcel-bundler": "^1.12.3",
+    "vue-template-compiler": "^2.6.10"
   },
   "dependencies": {
-    "preact": "^8.4.2"
+    "vue": "^2.6.10",
+    "vue-hot-reload-api": "^2.3.3"
   }
 }
