@@ -5,6 +5,7 @@
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build src/index.js",
+    "watch": "concurrently -n \"mt,om\" \"npm:start\" \"cd ../omotem; cargo watch -x run\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,5 +23,8 @@
     "vue-router": "^3.0.6",
     "vue-template-compiler": "^2.6.10",
     "vuex": "^3.1.0"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0"
   }
 }
