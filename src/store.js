@@ -7,12 +7,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: JSON.parse(localStorage.setItem('user')) || null,
+    user: JSON.parse(localStorage.getItem('user')) || null,
     loading: false
   },
   mutations: {
     setUser (state, user) {
       state.user = user
+    },
+    clearUser (state) {
+      state.user = null
     },
     toggleLoading (state, user) {
       state.loading = !state.loading
@@ -40,6 +43,10 @@ export default new Vuex.Store({
       }, error => {
         commit('toggleLoading')
       })
+    },
+    logout ({ commit }) {
+      commit('clearUser')
+      localStorage.removeItem('user')
     }
   }
 })

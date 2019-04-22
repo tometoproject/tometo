@@ -15,13 +15,17 @@
       </a>
       </div>
     <div class="navbar-menu" id="mainNavbar" v-bind:class="{ 'is-active' : burgerActivated }">
-      <div class="navbar-end">
+      <div class="navbar-end" v-if="!user">
         <div class="navbar-item">
           <div class="buttons">
             <router-link class="button is-info" to="/register"><strong>Register</strong></router-link>
             <router-link class="button is-light" to="/login"><strong>Log in</strong></router-link>
           </div>
         </div>
+      </div>
+      <div class="navbar-end" v-else>
+        <div class="navbar-item">Logged in as&nbsp; <strong class="has-text-white">{{ user.signin_user.username }}</strong></div>
+        <div class="navbar-item"><button class="button is-light" @click="logout"><strong>Log out</strong></button></div>
       </div>
     </div>
   </nav>
@@ -35,9 +39,17 @@ export default {
       burgerActivated: false
     }
   },
+  computed: {
+    user () {
+      return this.$store.state.user
+    }
+  },
   methods: {
     toggleBurger () {
       this.burgerActivated = !this.burgerActivated
+    },
+    logout () {
+      this.$store.dispatch('logout')
     }
   }
 }
