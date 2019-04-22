@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { register } from './service/auth'
+import { register, login } from './service/auth'
 import router from './router';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: JSON.parse(localStorage.getItem('user')) || null,
+    user: JSON.parse(localStorage.setItem('user')) || null,
     loading: false
   },
   mutations: {
@@ -28,7 +28,17 @@ export default new Vuex.Store({
         router.push('/')
       }, error => {
         commit('toggleLoading')
+      })
+    },
+    login ({ commit }, { username, password }) {
+      commit('toggleLoading')
+
+      login(username, password).then(user => {
+        commit('toggleLoading')
+        commit('setUser', user)
         router.push('/')
+      }, error => {
+        commit('toggleLoading')
       })
     }
   }
