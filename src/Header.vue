@@ -18,7 +18,7 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
-            <router-link class="button is-info" to="/signup"><strong>Sign up</strong></router-link>
+            <router-link class="button is-info" to="/register"><strong>Register</strong></router-link>
             <router-link class="button is-light" to="/login"><strong>Log in</strong></router-link>
           </div>
         </div>
