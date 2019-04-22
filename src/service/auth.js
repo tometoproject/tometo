@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 export function register (username, password, confirm_password, email) {
   const requestOptions = {
     method: 'POST',

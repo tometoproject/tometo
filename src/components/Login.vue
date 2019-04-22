@@ -25,7 +25,7 @@ export default {
       password: ''
     }
   },
-  created () {
+  beforeMount () {
     if (this.$store.state.user)
       router.back()
   },

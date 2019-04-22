@@ -32,6 +32,10 @@ export default {
       email: ''
     }
   },
+  beforeMount () {
+    if (this.$store.state.user)
+      router.back()
+  },
   computed: {
     loggingIn () {
       return this.$store.state.loading
