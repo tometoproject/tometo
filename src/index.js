@@ -13,3 +13,8 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#content')
+
+router.beforeEach((to, from, next) => {
+  store.commit('clearFlash')
+  next()
+})

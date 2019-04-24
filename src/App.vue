@@ -2,6 +2,8 @@
   <div id="app">
     <app-header></app-header>
     <main class="section container">
+        <b-notification v-if="infoFlashMessage" type="is-info">{{ infoFlashMessage }}</b-notification>
+        <b-notification v-if="errorFlashMessage" type="is-danger">{{ errorFlashMessage }}</b-notification>
         <router-view></router-view>
     </main>
   </div>
@@ -15,6 +17,14 @@ export default {
   data () {
     return {
       greeting: 'Hello'
+    }
+  },
+  computed: {
+    errorFlashMessage () {
+      return this.$store.state.flash.error
+    },
+    infoFlashMessage () {
+      return this.$store.state.flash.info
     }
   },
   components: {

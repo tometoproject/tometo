@@ -8,7 +8,7 @@ export function register (username, password, confirm_password, email) {
   return fetch(`${process.env.API_URL}/user/signup`, requestOptions)
     .then(res => res.text().then(text => {
       const data = text && JSON.parse(text)
-      if (!res.ok) {
+      if (!res.ok || data.status !== 200) {
         const error = (data && data.message) || res.statusText
         return Promise.reject(error)
       }
@@ -31,7 +31,7 @@ export function login (username, password) {
   return fetch(`${process.env.API_URL}/user/signin`, requestOptions)
   .then(res => res.text().then(text => {
     const data = text && JSON.parse(text)
-    if (!res.ok) {
+    if (!res.ok || data.status !== 200) {
       const error = (data && data.message) || res.statusText
       return Promise.reject(error)
     }
