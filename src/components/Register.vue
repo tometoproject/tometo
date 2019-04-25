@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section v-on:keyup.enter="submitForm">
     <h1 class="title is-2">Register</h1>
     <b-field label="Username">
       <b-input v-model="username"></b-input>
