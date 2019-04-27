@@ -40,13 +40,11 @@ export default new Vuex.Store({
   actions: {
     register ({ commit }, { username, password, confirm_password, email }) {
       commit('toggleLoading')
-      commit('clearFlash')
 
       register(username, password, confirm_password, email).then(user => {
         commit('toggleLoading')
-        commit('setUser', user)
         router.push('/')
-        commit('setInfoFlash', 'Registered and signed in successfully.')
+        commit('setInfoFlash', 'Registered successfully. You can sign in now.')
       }, error => {
         commit('toggleLoading')
         commit('setErrorFlash', `There was an error during registration: ${error}`)
@@ -54,7 +52,6 @@ export default new Vuex.Store({
     },
     login ({ commit }, { username, password }) {
       commit('toggleLoading')
-      commit('clearFlash')
 
       login(username, password).then(user => {
         commit('toggleLoading')
