@@ -21,12 +21,20 @@ prerequisites:
 - Node.js, the latest LTS or Stable version should work
 - Rust, the latest Stable version should work, although you do need at least
   version 1.32.0
+- Python 3, accessible under the `python3` executable, as well as `pip3`
+- The Google Cloud SDK
 
 After you've installed Rust, you should also install `diesel-cli`, which is what
 powers our database management:
 
 ```sh
 cargo install diesel-cli
+```
+
+You'll also want to install the TextGrid Python module:
+
+```sh
+pip3 install TextGrid
 ```
 
 Then, you can clone the repositories. Make sure you have a user account and that
@@ -61,26 +69,49 @@ doing stuff:
   
 You will also want to set the `API_URL` environment variable. You can do this
 via creating a `.env` file in the root of the repository (this file won't be
-tracked). The contents should look like this:
+tracked). The easiest way to do this is by copying the example file:
 
-```
-API_URL=http://localhost:4001
+```sh
+cp .env.example .env
 ```
 
 Of course, the port depends on what port you are running the server on.
 
+### MFA
+
+Omotem uses the
+[Montreal Forced Aligner](https://montreal-forced-aligner.readthedocs.io/en/latest/)
+to figure out timestamps for the generated audio. Download the 1.1.0 beta
+release and extract it:
+
+```sh
+curl -LO https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner/releases/download/v1.1.0-beta.2/montreal-forced-aligner_linux.tar.gz
+tar xvf montreal-forced-aligner_linux.tar.gz
+```
+
+After that, copy the `montreal-forced-aligner` folder to a permanent location.
+You'll also want to download a lexicon file for the English language. You can
+find one [here](http://www.openslr.org/resources/11/librispeech-lexicon.txt).
+Download and save that in the directory where your MFA is, as `lexicon.txt`.
+
 ### Omotem (rOM)
 
-Assuming that you've set up your PostgreSQL access, create a `.env` file in the
-repository root and fill it with the following:
+Assuming that you've set up your PostgreSQL access, copy the `.env` file in the
+repository root and replace its contents:
 
-```
-DATABASE_URL=postgres://user:password@localhost/dbname
-PORT=4001
+```sh
+cp .env.example .env
 ```
 
 Replace the example parts with your own. Feel free to adjust the port number,
-just make sure you also change the `API_URL` variable in the frontend.
+just make sure you also change the `API_URL` variable in the frontend. The
+`MFA_LOCATION` should point to the directory where your Montreal Forced Aligner
+lives.
+
+The `GOOGLE_APPLICATION_CREDENTIALS` points to a service account credential
+file that you should have downloaded while setting up the Google Cloud SDK.
+You can find more information on this
+[here](https://cloud.google.com/docs/authentication/getting-started).
 
 Next up, to make the app aware of the database, run this command:
 
