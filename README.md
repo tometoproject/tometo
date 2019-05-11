@@ -27,13 +27,13 @@ prerequisites:
 After you've installed Rust, you should also install `diesel-cli`, which is what
 powers our database management:
 
-```sh
+```
 cargo install diesel-cli
 ```
 
 You'll also want to install the TextGrid Python module:
 
-```sh
+```
 pip3 install TextGrid
 ```
 
@@ -41,7 +41,7 @@ Then, you can clone the repositories. Make sure you have a user account and that
 you've added your SSH key to Phabricator
 ([here's](https://p.veb.cool/w/new-user-guide/) a guide on that):
 
-```sh
+```
 git clone ssh://vcs@p.veb.cool:2222/source/metomo.git
 git clone ssh://vcs@p.veb.cool:2222/source/omotem.git
 ```
@@ -55,7 +55,7 @@ should (although this currently doesn't work correctly, see
 
 Once you're in the directoy, you'll want to install its dependencies:
 
-```sh
+```
 npm install
 ```
 
@@ -71,7 +71,7 @@ You will also want to set the `API_URL` environment variable. You can do this
 via creating a `.env` file in the root of the repository (this file won't be
 tracked). The easiest way to do this is by copying the example file:
 
-```sh
+```
 cp .env.example .env
 ```
 
@@ -84,7 +84,7 @@ Omotem uses the
 to figure out timestamps for the generated audio. Download the 1.1.0 beta
 release and extract it:
 
-```sh
+```
 curl -LO https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner/releases/download/v1.1.0-beta.2/montreal-forced-aligner_linux.tar.gz
 tar xvf montreal-forced-aligner_linux.tar.gz
 ```
@@ -99,7 +99,7 @@ Download and save that in the directory where your MFA is, as `lexicon.txt`.
 Assuming that you've set up your PostgreSQL access, copy the `.env` file in the
 repository root and replace its contents:
 
-```sh
+```
 cp .env.example .env
 ```
 
@@ -115,7 +115,7 @@ You can find more information on this
 
 Next up, to make the app aware of the database, run this command:
 
-```sh
+```
 diesel setup
 ```
 
@@ -124,14 +124,14 @@ know.
 
 Now you can run the backend:
 
-```sh
+```
 cargo run
 ```
 
 If you want to automatically watch and restart when there's a file change,
 you can use `cargo-watch`:
 
-```sh
+```
 cargo install cargo-watch
 cargo watch -x run
 ```
