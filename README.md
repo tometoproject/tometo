@@ -12,7 +12,7 @@ auto-complete). That way, the right people will be notified.
 
 Metomo is functionally split into two parts — the frontend, which is a Vue.js
 app that's kept in this repository, and the backend, which is a Rust app that's
-kept at [rOM](https://p.veb.cool/source/omotem).
+kept at [rOM](https://marisa.cloud/source/omotem).
 
 In order to get the system running on your computer, you'll need some
 prerequisites:
@@ -39,17 +39,17 @@ pip3 install TextGrid
 
 Then, you can clone the repositories. Make sure you have a user account and that
 you've added your SSH key to Phabricator
-([here's](https://p.veb.cool/w/new-user-guide/) a guide on that):
+([here's](https://marisa.cloud/w/new-user-guide/) a guide on that):
 
 ```
-git clone ssh://vcs@p.veb.cool:2222/source/metomo.git
-git clone ssh://vcs@p.veb.cool:2222/source/omotem.git
+git clone ssh://vcs@marisa.cloud:2222/source/metomo.git
+git clone ssh://vcs@marisa.cloud:2222/source/omotem.git
 ```
 
 It's not strictly necessary to have them be siblings in the same directory, but
 if you want to use a convenience script to have both apps run at once, you
 should (although this currently doesn't work correctly, see
-[T11](https://p.veb.cool/T11)).
+[T11](https://marisa.cloud/T11)).
 
 ### Metomo (rMT)
 
@@ -65,7 +65,7 @@ doing stuff:
 - `npm start`: Runs the frontend and watches for changes
 - `npm run build`: Builds a production-ready JavaScript distribution
 - `npm run watch`: Runs and watches both the front and the backend, but
-  currently doesn't work correctly (see [T11](https://p.veb.cool/T11))
+  currently doesn't work correctly (see [T11](https://marisa.cloud/T11))
   
 You will also want to set the `API_URL` environment variable. You can do this
 via creating a `.env` file in the root of the repository (this file won't be
@@ -140,6 +140,6 @@ cargo watch -x run
 
 If you want to send in a pull request (we call them Revisions here), the
 project follows the global workflow for Differential Revisions. A guide on
-how to contribute a Revision can be found [here](https://p.veb.cool/w/differential-guide/).
+how to contribute a Revision can be found [here](https://marisa.cloud/w/differential-guide/).
 
 
