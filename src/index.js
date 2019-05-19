@@ -5,7 +5,17 @@ import './custom.scss'
 import router from './router'
 import store from './store'
 
-Vue.use(Buefy)
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+
+library.add(faMinus, faPlus);
+Vue.component('vue-fontawesome', FontAwesomeIcon);
+
+Vue.use(Buefy, {
+  defaultIconComponent: 'vue-fontawesome',
+  defaultIconPack: 'fas'
+})
 Vue.config.productionTip = false
 
 new Vue({

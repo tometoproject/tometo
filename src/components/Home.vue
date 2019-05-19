@@ -1,8 +1,12 @@
 <template>
-  <span>
-    <div>{{ message }} world!</div>
-    <button @click="changeMessage('test')">change me</button>
-  </span>
+  <section class="hero is-warning">
+    <div class="hero-body">
+      <div class="container">
+        <p class="title">this page is under construction!!</p>
+        <p class="subtitle">check back later</p>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>

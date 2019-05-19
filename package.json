@@ -14,12 +14,16 @@
   },
   "dependencies": {
     "@babel/core": "^7.4.3",
+    "@fortawesome/fontawesome-svg-core": "^1.2.18",
+    "@fortawesome/free-solid-svg-icons": "^5.8.2",
+    "@fortawesome/vue-fontawesome": "^0.1.6",
     "@vue/component-compiler-utils": "^3.0.0",
     "buefy": "^0.7.4",
     "parcel-bundler": "^1.12.3",
-    "sass": "^1.19.0",
+    "sass": "^1.20.0",
     "vue": "^2.6.10",
     "vue-hot-reload-api": "^2.3.3",
+    "vue-material-design-icons": "^3.2.0",
     "vue-router": "^3.0.6",
     "vue-template-compiler": "^2.6.10",
     "vuex": "^3.1.0"
