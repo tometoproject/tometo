@@ -3,15 +3,15 @@
     <h1 class="title is-2">Login</h1>
 
     <b-field label="Username">
-        <b-input v-model="username"></b-input>
-      </b-field>
+      <b-input v-model="username"></b-input>
+    </b-field>
 
-      <b-field label="Password">
-        <b-input type="password" v-model="password"></b-input>
-      </b-field>
+    <b-field label="Password">
+      <b-input type="password" v-model="password"></b-input>
+    </b-field>
 
-      <b-button @click="submitForm" :disabled="loggingIn">Submit</b-button>
-    </section>
+    <b-button @click="submitForm" :disabled="loggingIn">Submit</b-button>
+  </section>
 </template>
 
 <script>

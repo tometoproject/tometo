@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { register, login } from './service/auth'
+import { postStatus } from './service/status'
 import router from './router';
 
 Vue.use(Vuex)
@@ -66,6 +67,17 @@ export default new Vuex.Store({
     logout ({ commit }) {
       commit('clearUser')
       localStorage.removeItem('user')
+    },
+    newStatus ({ commit, state }, { content, pitch }) {
+      commit('toggleLoading')
+
+      postStatus(content, pitch, state.user.signin_user.id, state.user.token).then(data => {
+        commit('toggleLoading')
+        router.push(`/status/${data.id}`)
+      }, error => {
+        commit('toggleLoading')
+        commit('setErrorFlash', `There was an error while creating your status: ${error}`)
+      })
     }
   }
 })

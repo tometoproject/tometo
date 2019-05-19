@@ -15,11 +15,23 @@
 </template>
 
 <script>
+import router from '../router'
+
 export default {
+  name: 'NewStatus',
   data () {
     return {
       content: '',
       pitch: 10
+    }
+  },
+  beforeMount () {
+    if (!this.$store.state.user)
+      router.back()
+  },
+  computed: {
+    loading () {
+      return this.$store.state.loading
     }
   },
   methods: {
