@@ -13,12 +13,7 @@ export function register (username, password, confirm_password, email) {
         return Promise.reject(error)
       }
       return data
-    })).then(user => {
-      if (user.token) {
-        localStorage.setItem('user', JSON.stringify(user))
-      }
-      return user
-    })
+    })).then(user => user)
 }
 
 export function login (username, password) {
