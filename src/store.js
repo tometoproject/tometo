@@ -48,7 +48,7 @@ export default new Vuex.Store({
         commit('setInfoFlash', 'Registered successfully. You can sign in now.')
       }, error => {
         commit('toggleLoading')
-        commit('setErrorFlash', `There was an error during registration: ${error}`)
+        commit('setErrorFlash', error)
       })
     },
     login ({ commit }, { username, password }) {
@@ -61,7 +61,7 @@ export default new Vuex.Store({
         commit('setInfoFlash', 'Signed in successfully.')
       }, error => {
         commit('toggleLoading')
-        commit('setErrorFlash', `There was an error during login: ${error}`)
+        commit('setErrorFlash', error)
       })
     },
     logout ({ commit }) {
@@ -76,7 +76,7 @@ export default new Vuex.Store({
         router.push(`/status/${data.id}`)
       }, error => {
         commit('toggleLoading')
-        commit('setErrorFlash', `There was an error while creating your status: ${error}`)
+        commit('setErrorFlash', error)
       })
     }
   }
