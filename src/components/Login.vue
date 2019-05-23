@@ -10,7 +10,8 @@
       <b-input type="password" v-model="password"></b-input>
     </b-field>
 
-    <b-button @click="submitForm" :disabled="loggingIn">Submit</b-button>
+    <b-button @click="submitForm" :disabled="loading">Submit</b-button>
+    <b-loading :is-full-page="false" :active.sync="loading"></b-loading>
   </section>
 </template>
 
@@ -30,7 +31,7 @@ export default {
       router.back()
   },
   computed: {
-    loggingIn () {
+    loading () {
       return this.$store.state.loading
     }
   },

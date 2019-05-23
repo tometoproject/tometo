@@ -11,6 +11,7 @@
     </b-field>
 
     <b-button @click="submitForm" :disabled="loading">Submit</b-button>
+    <b-loading :is-full-page="false" :active.sync="loading"></b-loading>
   </section>
 </template>
 
@@ -22,7 +23,7 @@ export default {
   data () {
     return {
       content: '',
-      pitch: 10
+      pitch: 10,
     }
   },
   beforeMount () {
