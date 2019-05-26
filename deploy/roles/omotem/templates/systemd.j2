@@ -1,0 +1,13 @@
+[Unit]
+Description=Omotem
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+WorkingDirectory=/var/www/{{ checkout_dir }}
+User=lu
+ExecStart=/var/www/{{ checkout_dir }}/target/release/omotem
+
+[Install]
+WantedBy=default.target

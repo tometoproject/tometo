@@ -1,5 +1,9 @@
 node_modules/
 npm-debug.log
-dist/
+dist/*
+!dist/index.html
+serve_dist/
 .cache/
 .env
+deploy/inventory/*
+!deploy/inventory/.gitkeep

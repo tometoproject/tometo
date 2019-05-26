@@ -1,0 +1,5 @@
+---
+- hosts: metomo
+  remote_user: lu
+  roles:
+    - metomo

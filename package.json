@@ -3,8 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build src/index.js",
+    "start": "parcel index.html -d serve_dist",
+    "build": "parcel build src/index.js --no-source-maps",
     "watch": "concurrently -n \"mt,om\" \"npm:start\" \"cd ../omotem; cargo watch -x run\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

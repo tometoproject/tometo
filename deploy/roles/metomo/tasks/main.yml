@@ -1,0 +1,17 @@
+---
+- name: Checkout from Git
+  git: repo={{ metomo_repo }} dest=/var/www/{{ checkout_dir }} version={{ metomo_branch }}
+- name: Install npm packages
+  npm:
+    path: /var/www/{{ checkout_dir }}
+- name: Copy .env file
+  command: chdir=/var/www/{{ checkout_dir }} cp .env.example .env
+- name: Run build script
+  command: chdir=/var/www/{{ checkout_dir }} npm run build
+- name: Copy nginx config
+  become: yes
+  template: src=metomo.conf.j2 dest=/etc/nginx/conf.d/metomo.conf
+  args:
+    force: no
+  notify:
+    - restart nginx

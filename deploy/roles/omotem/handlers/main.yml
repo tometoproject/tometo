@@ -1,0 +1,14 @@
+---
+- name: systemd reload
+  command: systemctl daemon-reload
+  become: yes
+- name: restart omotem
+  service:
+    name: omotem
+    state: restarted
+  become: yes
+- name: restart nginx
+  service:
+    name: nginx
+    state: restarted
+  become: yes

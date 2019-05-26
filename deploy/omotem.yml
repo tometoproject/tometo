@@ -1,0 +1,5 @@
+---
+- hosts: omotem
+  remote_user: lu
+  roles:
+    - omotem
