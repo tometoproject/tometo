@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 import Buefy from 'buefy'
+import * as Sentry from '@sentry/browser'
+import * as Integrations from '@sentry/integrations'
 import './custom.scss'
 import router from './router'
 import store from './store'
@@ -23,6 +25,16 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#content')
+
+Sentry.init({
+  dsn: process.env.SENTRY_DSN,
+  integrations: [
+    new Integrations.Vue({
+      Vue,
+      attachProps: true
+    })
+  ]
+})
 
 router.beforeEach((to, from, next) => {
   store.commit('clearFlash')
