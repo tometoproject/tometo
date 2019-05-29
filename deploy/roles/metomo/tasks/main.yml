@@ -1,6 +1,6 @@
 ---
 - name: Checkout from Git
-  git: repo={{ metomo_repo }} dest=/var/www/{{ checkout_dir }} version={{ metomo_branch }}
+  git: repo={{ metomo_repo }} dest=/var/www/{{ checkout_dir }} version={{ checkout_branch }}
 - name: Install npm packages
   npm:
     path: /var/www/{{ checkout_dir }}

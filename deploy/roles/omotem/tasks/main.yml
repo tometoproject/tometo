@@ -1,6 +1,6 @@
 ---
 - name: Checkout from Git
-  git: repo={{ omotem_repo }} dest=/var/www/{{ checkout_dir }} version={{ omotem_branch }}
+  git: repo={{ omotem_repo }} dest=/var/www/{{ checkout_dir }} version={{ checkout_branch }}
 - name: Copy .env file
   template: src=env.j2 dest=/var/www/{{ checkout_dir }}/.env
 - name: Install npm dependencies

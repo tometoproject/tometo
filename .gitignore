@@ -6,4 +6,4 @@ serve_dist/
 .cache/
 .env
 deploy/inventory/*
-!deploy/inventory/.gitkeep
+!deploy/inventory/example
