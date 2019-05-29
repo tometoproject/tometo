@@ -10,7 +10,7 @@
   command: chdir=/var/www/{{ checkout_dir }} npm run build
 - name: Copy nginx config
   become: yes
-  template: src=metomo.conf.j2 dest=/etc/nginx/conf.d/metomo.conf
+  template: src=nginx.j2 dest=/etc/nginx/conf.d/metomo.conf
   args:
     force: no
   notify:

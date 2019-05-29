@@ -12,7 +12,7 @@
     chdir: /var/www/{{ checkout_dir }}
     executable: /bin/bash
 - name: Copy nginx file
-  template: src=omotem.conf.j2 dest=/etc/nginx/conf.d/omotem.conf
+  template: src=nginx.j2 dest=/etc/nginx/conf.d/omotem.conf
   become: yes
   args:
     force: no
