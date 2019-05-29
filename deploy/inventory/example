@@ -16,3 +16,10 @@ database_url=postgres://test@localhost/omotem
 google_creds=/path/to/serviceaccount.json
 secret=randomlygeneratedsecurestring
 hostname=omotem.cool.zone
+
+[both:children]
+metomo
+omotem
+
+[both:vars]
+env=staging
