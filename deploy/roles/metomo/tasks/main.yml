@@ -5,7 +5,7 @@
   npm:
     path: /var/www/{{ checkout_dir }}
 - name: Copy .env file
-  command: chdir=/var/www/{{ checkout_dir }} cp .env.example .env
+  template: src=env.j2 dest=/var/www/{{ checkout_dir }}/.env
 - name: Run build script
   command: chdir=/var/www/{{ checkout_dir }} npm run build
 - name: Copy nginx config
