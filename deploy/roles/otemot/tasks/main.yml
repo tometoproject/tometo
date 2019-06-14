@@ -1,6 +1,6 @@
 ---
 - name: Checkout from Git
-  git: repo={{ omotem_repo }} dest=/var/www/{{ checkout_dir }} version={{ checkout_branch }}
+  git: repo={{ otemot_repo }} dest=/var/www/{{ checkout_dir }} version={{ checkout_branch }}
 - name: Copy .env file
   template: src=env.j2 dest=/var/www/{{ checkout_dir }}/.env
 - name: Install npm dependencies
@@ -12,14 +12,14 @@
     chdir: /var/www/{{ checkout_dir }}
     executable: /bin/bash
 - name: Copy nginx file
-  template: src=nginx.j2 dest=/etc/nginx/conf.d/omotem.conf
+  template: src=nginx.j2 dest=/etc/nginx/conf.d/otemot.conf
   become: yes
   args:
     force: no
   notify:
     - restart nginx
 - name: Copy systemd file
-  template: src=systemd.j2 dest=/etc/systemd/system/omotem.service
+  template: src=systemd.j2 dest=/etc/systemd/system/otemot.service
   become: yes
   notify:
     - systemd reload
@@ -29,4 +29,4 @@
     chdir: /var/www/{{ checkout_dir }}
     executable: /bin/bash
   notify:
-    - restart omotem
+    - restart otemot

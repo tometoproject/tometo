@@ -2,9 +2,9 @@
 - name: systemd reload
   command: systemctl daemon-reload
   become: yes
-- name: restart omotem
+- name: restart otemot
   service:
-    name: omotem
+    name: otemot
     state: restarted
   become: yes
 - name: restart nginx

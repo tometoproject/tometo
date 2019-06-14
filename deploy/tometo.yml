@@ -1,5 +1,5 @@
 ---
-- hosts: omotem
+- hosts: tometo
   remote_user: lu
   roles:
-    - omotem
+    - tometo

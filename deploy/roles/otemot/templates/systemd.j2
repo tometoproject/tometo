@@ -1,5 +1,5 @@
 [Unit]
-Description=Omotem
+Description=Otemot
 After=network.target
 StartLimitIntervalSec=0
 
@@ -7,7 +7,7 @@ StartLimitIntervalSec=0
 Type=simple
 WorkingDirectory=/var/www/{{ checkout_dir }}
 User=lu
-ExecStart=/var/www/{{ checkout_dir }}/target/release/omotem
+ExecStart=/var/www/{{ checkout_dir }}/target/release/otemot
 
 [Install]
 WantedBy=default.target

@@ -1,5 +1,5 @@
 ---
-- hosts: metomo
+- hosts: otemot
   remote_user: lu
   roles:
-    - metomo
+    - otemot

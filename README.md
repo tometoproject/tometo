@@ -1,16 +1,16 @@
-# metomo
+# tometo
 
 ## Reporting Issues
 
 To report an issue, you will need a user account. After signing up and
 verifying your email, you can report an issue by opening a new task. To do that,
 select the star next to your user avatar in the top bar and click "Create Task".
-Enter a title, description and "Metomo" in the "Tags" section (it should
+Enter a title, description and "Tometo" in the "Tags" section (it should
 auto-complete). That way, the right people will be notified.
 
 ## Local Setup
 
-Metomo is functionally split into two parts — the frontend, which is a Vue.js
+Tometo is functionally split into two parts — the frontend, which is a Vue.js
 app that's kept in this repository, and the backend, which is a Rust app that's
 kept at [rOM](https://marisa.cloud/source/omotem).
 

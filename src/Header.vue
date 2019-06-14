@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar is-link" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <router-link to="/" class="navbar-item"><strong>Metomo</strong></router-link>
+      <router-link to="/" class="navbar-item"><strong>Tometo</strong></router-link>
       <router-link to="/status/new" class="navbar-item" v-if="user">New Status</router-link>
       <a
         @click="toggleBurger"

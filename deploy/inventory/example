@@ -1,25 +1,25 @@
-[metomo]
+[tometo]
 test1.cool.zone
 
-[metomo:vars]
-checkout_dir=metomo_custom
+[tometo:vars]
+checkout_dir=tometo_custom
 checkout_branch=master
-hostname=metomo.cool.zone
+hostname=tometo.cool.zone
 
-[omotem]
+[otemot]
 test2.cool.zone
 
-[omotem:vars]
-checkout_dir=omotem_custom
+[otemot:vars]
+checkout_dir=otemot_custom
 checkout_branch=master
-database_url=postgres://test@localhost/omotem
+database_url=postgres://test@localhost/otemot
 google_creds=/path/to/serviceaccount.json
 secret=randomlygeneratedsecurestring
-hostname=omotem.cool.zone
+hostname=otemot.cool.zone
 
 [both:children]
-metomo
-omotem
+tometo
+otemot
 
 [both:vars]
 env=staging

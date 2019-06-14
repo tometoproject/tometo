@@ -1,16 +1,16 @@
 {
-  "name": "metomo",
+  "name": "tometo",
   "private": true,
   "version": "1.0.0",
   "scripts": {
     "start": "parcel index.html -d serve_dist",
     "build": "parcel build src/index.js --no-source-maps",
-    "watch": "concurrently -n \"mt,om\" \"npm:start\" \"cd ../omotem; cargo watch -x run\"",
+    "watch": "concurrently -n \"mt,om\" \"npm:start\" \"cd ../otemot; cargo watch -x run\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "ssh://vcs@p.veb.cool:2222/source/metomo.git"
+    "url": "git@marisa.cloud:tometo/tometo.git"
   },
   "dependencies": {
     "@babel/core": "^7.4.3",

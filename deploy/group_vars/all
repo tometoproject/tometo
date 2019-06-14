@@ -1,6 +1,6 @@
 ---
 
-metomo_repo: ssh://vcs@marisa.cloud:2222/source/metomo.git
-metomo_branch: master
-omotem_repo: ssh://vcs@marisa.cloud:2222/source/omotem.git
-omotem_branch: master
+tometo_repo: git@marisa.cloud:tometo/tometo.git
+tometo_branch: master
+otemot_repo: git@marisa.cloud:tometo/otemot.git
+otemot_branch: master
