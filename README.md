@@ -3,16 +3,13 @@
 ## Reporting Issues
 
 To report an issue, you will need a user account. After signing up and
-verifying your email, you can report an issue by opening a new task. To do that,
-select the star next to your user avatar in the top bar and click "Create Task".
-Enter a title, description and "Tometo" in the "Tags" section (it should
-auto-complete). That way, the right people will be notified.
+verifying your email, you can report an issue by opening a new issue [here](https://marisa.cloud/tometo/tometo/issues/new).
 
 ## Local Setup
 
 Tometo is functionally split into two parts — the frontend, which is a Vue.js
 app that's kept in this repository, and the backend, which is a Rust app that's
-kept at [rOM](https://marisa.cloud/source/omotem).
+kept at [tometo/otemot](https://marisa.cloud/tometo/otemot).
 
 In order to get the system running on your computer, you'll need some
 prerequisites:
@@ -38,20 +35,18 @@ pip3 install TextGrid
 ```
 
 Then, you can clone the repositories. Make sure you have a user account and that
-you've added your SSH key to Phabricator
-([here's](https://marisa.cloud/w/new-user-guide/) a guide on that):
+you've added your SSH key to GitLab (if not, you can use the HTTPS checkout):
 
 ```
-git clone ssh://vcs@marisa.cloud:2222/source/metomo.git
-git clone ssh://vcs@marisa.cloud:2222/source/omotem.git
+git clone git@marisa.cloud:tometo/tometo.git
+git clone git@marisa.cloud:tometo/otemot.git
 ```
 
 It's not strictly necessary to have them be siblings in the same directory, but
 if you want to use a convenience script to have both apps run at once, you
-should (although this currently doesn't work correctly, see
-[T11](https://marisa.cloud/T11)).
+should (although this currently doesn't work correctly).
 
-### Metomo (rMT)
+### Tometo Setup
 
 Once you're in the directoy, you'll want to install its dependencies:
 
@@ -65,7 +60,7 @@ doing stuff:
 - `npm start`: Runs the frontend and watches for changes
 - `npm run build`: Builds a production-ready JavaScript distribution
 - `npm run watch`: Runs and watches both the front and the backend, but
-  currently doesn't work correctly (see [T11](https://marisa.cloud/T11))
+  currently doesn't work correctly
   
 You will also want to set the `API_URL` environment variable. You can do this
 via creating a `.env` file in the root of the repository (this file won't be
@@ -77,7 +72,7 @@ cp .env.example .env
 
 Of course, the port depends on what port you are running the server on.
 
-### MFA
+### MFA Setup
 
 Omotem uses the
 [Montreal Forced Aligner](https://montreal-forced-aligner.readthedocs.io/en/latest/)
@@ -94,7 +89,7 @@ You'll also want to download a lexicon file for the English language. You can
 find one [here](http://www.openslr.org/resources/11/librispeech-lexicon.txt).
 Download and save that in the directory where your MFA is, as `lexicon.txt`.
 
-### Omotem (rOM)
+### Otemot Setup
 
 Assuming that you've set up your PostgreSQL access, copy the `.env` file in the
 repository root and replace its contents:
@@ -138,8 +133,7 @@ cargo watch -x run
 
 ## Contributing
 
-If you want to send in a pull request (we call them Revisions here), the
-project follows the global workflow for Differential Revisions. A guide on
-how to contribute a Revision can be found [here](https://marisa.cloud/w/differential-guide/).
+Feel free to send merge requests! This section will be expanded on in the
+future, surely.
 
 
