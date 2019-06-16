@@ -5,7 +5,7 @@
   "scripts": {
     "start": "parcel index.html -d serve_dist",
     "build": "parcel build src/index.js --no-source-maps",
-    "watch": "concurrently -n \"mt,om\" \"npm:start\" \"cd ../otemot; cargo watch -x run\"",
+    "watch": "concurrently -n \"f,b\" \"npm:start\" \"cd ../otemot; cargo watch -x run\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

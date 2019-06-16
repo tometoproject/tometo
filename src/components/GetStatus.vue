@@ -44,7 +44,7 @@ export default {
       if (this.isLoaded && this.$data.index < this.$data.words.length) {
         const cur = this.$data.words[this.$data.index]
         const time = this.$data.src.currentTime
-        if (time > Number(cur.end)) {
+        if (time > Number(cur.begin)) {
           this.$data.index += 1
           const word = this.$data.unplayed.shift()
           this.$data.played.push(word)
@@ -66,11 +66,11 @@ export default {
         this.$data.src.play()
       })
 
-      return fetch(res.timestamps, {method: 'GET', cache: 'no-store'}) // for now
+      return fetch(res.timestamps, {method: 'GET'})
     })
     .then(res2 => res2.json())
     .then(res2 => {
-      this.$data.words = res2
+      this.$data.words = res2.fragments
       this.$data.jsonLoaded = true
     })
   },
