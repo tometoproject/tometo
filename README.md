@@ -25,7 +25,7 @@ After you've installed Rust, you should also install `diesel-cli`, which is what
 powers our database management:
 
 ```
-cargo install diesel-cli
+cargo install diesel_cli --no-default-features --features postgres
 ```
 
 You'll also want to install the TextGrid Python module:
