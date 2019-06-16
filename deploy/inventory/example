@@ -15,7 +15,7 @@ checkout_branch=master
 database_url=postgres://test@localhost/otemot
 google_creds=/path/to/serviceaccount.json
 secret=randomlygeneratedsecurestring
-hostname=otemot.cool.zone
+hostname=http://otemot.cool.zone
 
 [both:children]
 tometo

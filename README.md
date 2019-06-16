@@ -28,10 +28,10 @@ powers our database management:
 cargo install diesel_cli --no-default-features --features postgres
 ```
 
-You'll also want to install the TextGrid Python module:
+You'll also want to install `aeneas`, which parses text for us:
 
 ```
-pip3 install TextGrid
+pip3 install numpy aeneas
 ```
 
 Then, you can clone the repositories. Make sure you have a user account and that
@@ -44,7 +44,7 @@ git clone git@marisa.cloud:tometo/otemot.git
 
 It's not strictly necessary to have them be siblings in the same directory, but
 if you want to use a convenience script to have both apps run at once, you
-should (although this currently doesn't work correctly).
+should.
 
 ### Tometo Setup
 
@@ -59,8 +59,7 @@ doing stuff:
 
 - `npm start`: Runs the frontend and watches for changes
 - `npm run build`: Builds a production-ready JavaScript distribution
-- `npm run watch`: Runs and watches both the front and the backend, but
-  currently doesn't work correctly
+- `npm run watch`: Runs and watches both the front and the backend (run `cargo install cargo-watch` first)
   
 You will also want to set the `API_URL` environment variable. You can do this
 via creating a `.env` file in the root of the repository (this file won't be
@@ -71,23 +70,6 @@ cp .env.example .env
 ```
 
 Of course, the port depends on what port you are running the server on.
-
-### MFA Setup
-
-Omotem uses the
-[Montreal Forced Aligner](https://montreal-forced-aligner.readthedocs.io/en/latest/)
-to figure out timestamps for the generated audio. Download the 1.1.0 beta
-release and extract it:
-
-```
-curl -LO https://github.com/MontrealCorpusTools/Montreal-Forced-Aligner/releases/download/v1.1.0-beta.2/montreal-forced-aligner_linux.tar.gz
-tar xvf montreal-forced-aligner_linux.tar.gz
-```
-
-After that, copy the `montreal-forced-aligner` folder to a permanent location.
-You'll also want to download a lexicon file for the English language. You can
-find one [here](http://www.openslr.org/resources/11/librispeech-lexicon.txt).
-Download and save that in the directory where your MFA is, as `lexicon.txt`.
 
 ### Otemot Setup
 
@@ -116,6 +98,12 @@ diesel setup
 
 If your database is misconfigured, the output from this command will let you
 know.
+
+You also need to install npm dependencies here:
+
+```
+npm install
+```
 
 Now you can run the backend:
 
