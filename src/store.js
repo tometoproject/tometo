@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { register, login } from './service/auth'
 import { postStatus } from './service/status'
-import router from './router';
+import router from './router'
 
 Vue.use(Vuex)
 
@@ -39,10 +39,10 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    register ({ commit }, { username, password, confirm_password, email }) {
+    register ({ commit }, { username, password, confirmPassword, email }) {
       commit('toggleLoading')
 
-      register(username, password, confirm_password, email).then(user => {
+      register(username, password, confirmPassword, email).then(user => {
         commit('toggleLoading')
         router.push('/')
         commit('setInfoFlash', 'Registered successfully. You can sign in now.')

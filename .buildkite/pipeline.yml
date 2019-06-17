@@ -1,0 +1,8 @@
+steps:
+  - label: "Install dependencies"
+    command: "npm install"
+  
+  - wait
+
+  - label: "Run lint"
+    command: "npm run lint"

@@ -6,7 +6,8 @@
     "start": "parcel index.html -d serve_dist",
     "build": "parcel build src/index.js --no-source-maps",
     "watch": "concurrently -n \"f,b\" \"npm:start\" \"cd ../otemot; cargo watch -x run\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "standard"
   },
   "repository": {
     "type": "git",
@@ -31,6 +32,13 @@
     "vuex": "^3.1.0"
   },
   "devDependencies": {
-    "concurrently": "^4.1.0"
+    "concurrently": "^4.1.0",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^5.2.2"
   }
 }
