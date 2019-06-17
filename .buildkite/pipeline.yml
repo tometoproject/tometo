@@ -1,8 +1,5 @@
 steps:
-  - label: "Install dependencies"
-    command: "npm install --dev"
-  
-  - wait
-
-  - label: "Run lint"
-    command: "npm run lint"
+  - label: ":broom: Lint"
+    commands:
+      - "npm install --dev"
+      - "npm run lint"
