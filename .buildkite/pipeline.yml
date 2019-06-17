@@ -1,5 +1,5 @@
 steps:
-  - label: ":broom: Lint"
+  - label: ":ski: Lint"
     commands:
       - "npm install --dev"
       - "npm run lint"
