@@ -14,7 +14,7 @@
     </b-field>
 
     <b-field label="Password Confirmation">
-      <b-input type="password" v-model="confirm_password"></b-input>
+      <b-input type="password" v-model="confirmPassword"></b-input>
     </b-field>
 
     <b-button @click="submitForm" :disabled="loading">Submit</b-button>
@@ -29,7 +29,7 @@ export default {
     return {
       username: '',
       password: '',
-      confirm_password: '',
+      confirmPassword: '',
       email: ''
     }
   },
@@ -44,8 +44,8 @@ export default {
   },
   methods: {
     submitForm () {
-      let { username, email, password, confirm_password } = this
-      this.$store.dispatch('register', { username, password, confirm_password, email })
+      let { username, email, password, confirmPassword } = this
+      this.$store.dispatch('register', { username, password, confirmPassword, email })
     }
   }
 }
