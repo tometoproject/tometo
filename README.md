@@ -3,7 +3,7 @@
 ## Reporting Issues
 
 To report an issue, you will need a user account. After signing up and
-verifying your email, you can report an issue by opening a new issue [here](https://marisa.cloud/tometo/tometo/issues/new).
+verifying your email, you can report an issue by opening a new issue [here](https://marisa.cloud/tometo/issues/issues/new).
 
 ## Local Setup
 
