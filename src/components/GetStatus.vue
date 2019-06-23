@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import router from '../router'
+
 export default {
   name: 'GetStatus',
   data () {
@@ -55,7 +57,14 @@ export default {
 
   mounted () {
     fetch(`${process.env.API_URL}/api/status/${this.$route.params.id}`)
-    .then(res => res.json())
+    .then(res => {
+      if (res.ok) {
+        return res.json()
+      } else {
+        router.back()
+        // TODO: add a good error message
+      }
+    })
     .then(res => {
       this.$data.unplayed = res.content.split(' ')
       this.$data.src = new Audio(res.audio)
