@@ -5,11 +5,11 @@ import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 import router from './router'
 import store from './store'
-require('./custom.scss')
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+require('./custom.scss')
 
 library.add(faMinus, faPlus)
 Vue.component('vue-fontawesome', FontAwesomeIcon)
