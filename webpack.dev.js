@@ -1,4 +1,4 @@
-const webpackConfig = require('./webpack.config')
+const webpackConfig = require('./webpack.common')
 
 module.exports = {
   mode: 'development',

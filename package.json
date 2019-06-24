@@ -2,12 +2,14 @@
   "name": "tometo",
   "private": true,
   "version": "1.0.0",
+  "sideEffects": false,
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
     "watch": "concurrently -n \"f,b\" \"npm:start\" \"cd ../otemot; cargo watch -x run\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint src/"
+    "lint": "eslint src/",
+    "analyzebundle": "webpack --config webpack.dev.js --profile --json > stats.json && webpack-bundle-analyzer stats.json"
   },
   "repository": {
     "type": "git",
@@ -22,11 +24,15 @@
     "@sentry/integrations": "^5.3.1",
     "@vue/component-compiler-utils": "^3.0.0",
     "acorn": "^6.1.1",
-    "buefy": "^0.7.4",
+    "buefy": "^0.7.7",
     "css-loader": "^3.0.0",
+    "dotenv-webpack": "^1.7.0",
+    "mini-css-extract-plugin": "^0.7.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
     "sass": "^1.21.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "terser-webpack-plugin": "^1.3.0",
     "vue": "^2.6.10",
     "vue-hot-reload-api": "^2.3.3",
     "vue-loader": "^15.7.0",
