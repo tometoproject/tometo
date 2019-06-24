@@ -58,7 +58,7 @@ There's not much more to it! We provide a couple of convenience commands for
 doing stuff:
 
 - `npm start`: Runs the frontend and watches for changes
-- `npm run build`: Builds a production-ready JavaScript distribution
+- `npm run build`: Builds a production-ready JavaScript distribution in `dist/`
 - `npm run watch`: Runs and watches both the front and the backend (run `cargo install cargo-watch` first)
   
 You will also want to set the `API_URL` environment variable. You can do this
