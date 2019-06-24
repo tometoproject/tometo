@@ -3,13 +3,13 @@ import App from './App.vue'
 import Buefy from 'buefy'
 import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
-import './custom.scss'
 import router from './router'
 import store from './store'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+require('./custom.scss')
 
 library.add(faMinus, faPlus)
 Vue.component('vue-fontawesome', FontAwesomeIcon)

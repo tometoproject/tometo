@@ -7,3 +7,4 @@ serve_dist/
 .env
 deploy/inventory/*
 !deploy/inventory/example
+stats.json

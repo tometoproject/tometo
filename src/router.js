@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from './components/Home.vue'
-import Register from './components/Register.vue'
-import Login from './components/Login.vue'
-import GetStatus from './components/GetStatus.vue'
-import NewStatus from './components/NewStatus.vue'
+
+// TODO: Figure out why using import() here isn't working, even with the Babel plugin
+const Home = () => System.import(/* webpackChunkName: "home" */ './components/Home.vue')
+const Register = () => System.import(/* webpackChunkName: "register" */ './components/Register.vue')
+const Login = () => System.import(/* webpackChunkName: "login" */ './components/Login.vue')
+const GetStatus = () => System.import(/* webpackChunkName: "getstatus" */ './components/GetStatus.vue')
+const NewStatus = () => System.import(/* webpackChunkName: "newstatus" */ './components/NewStatus.vue')
 
 Vue.use(VueRouter)
 
