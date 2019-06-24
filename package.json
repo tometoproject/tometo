@@ -3,8 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "start": "parcel index.html -d serve_dist",
-    "build": "parcel build src/index.js --no-source-maps",
+    "start": "webpack-dev-server --config webpack.dev.js",
+    "build": "webpack --config webpack.prod.js",
     "watch": "concurrently -n \"f,b\" \"npm:start\" \"cd ../otemot; cargo watch -x run\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src/"
@@ -45,6 +45,8 @@
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^5.2.2"
+    "eslint-plugin-vue": "^5.2.2",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-dev-server": "^3.7.2"
   }
 }
