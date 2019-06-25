@@ -28,7 +28,8 @@ powers our database management:
 cargo install diesel_cli --no-default-features --features postgres
 ```
 
-You'll also want to install `aeneas`, which parses text for us:
+You'll also want to install `aeneas`, which parses text for us (this needs
+ffmpeg and espeak installed and available):
 
 ```
 pip3 install numpy aeneas
