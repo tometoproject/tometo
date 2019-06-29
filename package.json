@@ -27,7 +27,6 @@
     "@vue/component-compiler-utils": "^3.0.0",
     "acorn": "^6.1.1",
     "babel-loader": "^8.0.6",
-    "babel-plugin-dynamic-import-node": "^2.3.0",
     "buefy": "^0.7.7",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.0.0",
