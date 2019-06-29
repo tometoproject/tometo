@@ -7,9 +7,11 @@
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly",
-    "System": "readonly"
+    "System": "readonly",
+    "import": "readonly"
   },
   "parserOptions": {
+    "parser": "babel-eslint",
     "ecmaVersion": 2018,
     "sourceType": "module"
   },

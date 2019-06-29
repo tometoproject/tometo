@@ -7,7 +7,7 @@
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js",
-    "watch": "concurrently -n \"f,b\" \"npm:start\" \"cd ../otemot; cargo watch -x run -i gentts/\"",
+    "watch": "concurrently -n \"f,b\" \"npm:start\" \"cd ../otemot; cargo watch -x run\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src/",
     "analyzebundle": "webpack --config webpack.dev.js --profile --json > stats.json && webpack-bundle-analyzer stats.json"
@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@babel/core": "^7.4.5",
-    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.4.5",
     "@fortawesome/fontawesome-svg-core": "^1.2.18",
     "@fortawesome/free-solid-svg-icons": "^5.8.2",
@@ -28,6 +27,7 @@
     "@vue/component-compiler-utils": "^3.0.0",
     "acorn": "^6.1.1",
     "babel-loader": "^8.0.6",
+    "babel-plugin-dynamic-import-node": "^2.3.0",
     "buefy": "^0.7.7",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.0.0",
