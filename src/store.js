@@ -8,7 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: JSON.parse(localStorage.getItem('user')) || null,
+    username: localStorage.getItem('username') || null,
     loading: false,
     flash: {
       error: null,
@@ -16,11 +16,11 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    setUser (state, user) {
-      state.user = user
+    setUsername (state, username) {
+      state.username = username
     },
-    clearUser (state) {
-      state.user = null
+    clearUsername (state) {
+      state.username = null
     },
     toggleLoading (state) {
       state.loading = !state.loading
@@ -56,7 +56,7 @@ export default new Vuex.Store({
 
       login(username, password).then(user => {
         commit('toggleLoading')
-        commit('setUser', user)
+        commit('setUsername', user)
         router.push('/')
         commit('setInfoFlash', 'Signed in successfully.')
       }, error => {
@@ -65,13 +65,13 @@ export default new Vuex.Store({
       })
     },
     logout ({ commit }) {
-      commit('clearUser')
-      localStorage.removeItem('user')
+      commit('clearUsername')
+      localStorage.removeItem('username')
     },
     newStatus ({ commit, state }, { content, pitch }) {
       commit('toggleLoading')
 
-      postStatus(content, pitch, state.user.signin_user.id, state.user.token).then(data => {
+      postStatus(content, pitch, state.username).then(data => {
         commit('toggleLoading')
         router.push(`/status/${data.id}`)
       }, error => {
