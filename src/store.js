@@ -70,10 +70,10 @@ export default new Vuex.Store({
         localStorage.removeItem('username')
       })
     },
-    newStatus ({ commit, state }, { content, pitch }) {
+    newStatus ({ commit }, { content, pitch }) {
       commit('toggleLoading')
 
-      postStatus(content, pitch, state.username).then(data => {
+      postStatus(content, pitch).then(data => {
         commit('toggleLoading')
         router.push(`/status/${data.id}`)
       }, error => {

@@ -1,8 +1,8 @@
-export function postStatus (content, pitch, username) {
+export function postStatus (content, pitch) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ content, pitch, username }),
+    body: JSON.stringify({ content, pitch }),
     credentials: 'include'
   }
 
