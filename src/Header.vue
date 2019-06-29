@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="navbar-end" v-else>
-        <div class="navbar-item">Logged in as&nbsp; <strong class="has-text-white">{{ user.signin_user.username }}</strong></div>
+        <div class="navbar-item">Logged in as&nbsp; <strong class="has-text-white">{{ user }}</strong></div>
         <div class="navbar-item"><button class="button is-light" @click="logout"><strong>Log out</strong></button></div>
       </div>
     </div>
@@ -42,7 +42,7 @@ export default {
   },
   computed: {
     user () {
-      return this.$store.state.user
+      return this.$store.state.username
     }
   },
   methods: {

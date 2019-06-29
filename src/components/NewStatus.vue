@@ -27,7 +27,7 @@ export default {
     }
   },
   beforeMount () {
-    if (!this.$store.state.user)
+    if (!this.$store.state.username)
       router.back()
   },
   computed: {

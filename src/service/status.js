@@ -1,8 +1,9 @@
-export function postStatus (content, pitch, id, jwt) {
+export function postStatus (content, pitch) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ content, pitch, user_id: id, jwt })
+    body: JSON.stringify({ content, pitch }),
+    credentials: 'include'
   }
 
   return fetch(`${process.env.API_URL}/api/status/new`, requestOptions)
