@@ -33,9 +33,23 @@ export function login (username, password) {
       }
       return data
     })).then(data => {
-      if (data.username) {
-        localStorage.setItem('username', data.username)
-      }
       return data
     })
+}
+
+export function logout () {
+  const requestOptions = {
+    method: 'DELETE',
+    credentials: 'include'
+  }
+
+  return fetch(`${process.env.API_URL}/api/auth`, requestOptions)
+    .then(res => res.text().then(text => {
+      const data = text && JSON.parse(text)
+      if (!res.ok) {
+        const error = (data && data.message) || res.statusText
+        return Promise.reject(error)
+      }
+      return data
+    }))
 }

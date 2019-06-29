@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { register, login } from './service/auth'
+import { register, login, logout } from './service/auth'
 import { postStatus } from './service/status'
 import router from './router'
 
@@ -56,7 +56,7 @@ export default new Vuex.Store({
 
       login(username, password).then(user => {
         commit('toggleLoading')
-        commit('setUsername', user)
+        commit('setUsername', user.username)
         router.push('/')
         commit('setInfoFlash', 'Signed in successfully.')
       }, error => {
@@ -65,8 +65,10 @@ export default new Vuex.Store({
       })
     },
     logout ({ commit }) {
-      commit('clearUsername')
-      localStorage.removeItem('username')
+      logout().then(data => {
+        commit('clearUsername')
+        localStorage.removeItem('username')
+      })
     },
     newStatus ({ commit, state }, { content, pitch }) {
       commit('toggleLoading')
