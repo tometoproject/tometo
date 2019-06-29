@@ -14,11 +14,6 @@ import Header from './Header.vue'
 
 export default {
   name: 'App',
-  data () {
-    return {
-      greeting: 'Hello'
-    }
-  },
   computed: {
     errorFlashMessage () {
       return this.$store.state.flash.error
@@ -29,6 +24,18 @@ export default {
   },
   components: {
     'app-header': Header
+  },
+  mounted: function () {
+    if (!this.$store.state.cookiesAcknowledged) {
+      this.$snackbar.open({
+        message: 'We use cookies to keep you logged in, but nothing else.',
+        actionText: 'Got it!',
+        indefinite: true,
+        onAction: () => {
+          this.$store.commit('acknowledgeCookies')
+        }
+      })
+    }
   }
 }
 </script>

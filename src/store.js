@@ -9,6 +9,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     username: localStorage.getItem('username') || null,
+    cookiesAcknowledged: localStorage.getItem('cookiesAcknowledged') || false,
     loading: false,
     flash: {
       error: null,
@@ -36,6 +37,10 @@ export default new Vuex.Store({
         info: null,
         error: null
       }
+    },
+    acknowledgeCookies (state) {
+      localStorage.setItem('cookiesAcknowledged', true)
+      state.cookiesAcknowledged = true
     }
   },
   actions: {
