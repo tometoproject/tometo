@@ -4,7 +4,7 @@ test1.cool.zone
 [tometo:vars]
 checkout_dir=tometo_custom
 checkout_branch=master
-hostname=tometo.cool.zone
+sentry=yourothersentrydsn.com
 
 [otemot]
 test2.cool.zone
@@ -14,8 +14,9 @@ checkout_dir=otemot_custom
 checkout_branch=master
 database_url=postgres://test@localhost/otemot
 google_creds=/path/to/serviceaccount.json
-secret=randomlygeneratedsecurestring
-hostname=http://otemot.cool.zone
+cookie_secret=randomlygeneratedsecurestring
+jwt_secret=anotherrandomlygeneratedsecurestring
+sentry=yoursentrydsn.com
 
 [both:children]
 tometo
@@ -23,3 +24,5 @@ otemot
 
 [both:vars]
 env=staging
+ot_hostname=https://otemot.cool.zone
+mt_hostname=https://metomo.cool.zone
