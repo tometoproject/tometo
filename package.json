@@ -9,7 +9,7 @@
     "build": "webpack --config webpack.prod.js",
     "watch": "concurrently -n \"f,b\" \"npm:start\" \"cargo watch -x run\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint src/",
+    "lint": "eslint src/ otemot/tts.js",
     "analyzebundle": "webpack --config webpack.dev.js --profile --json > stats.json && webpack-bundle-analyzer stats.json"
   },
   "repository": {

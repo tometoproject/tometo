@@ -16,8 +16,8 @@ const text = argv._[0]
 const name = argv.n
 
 const rq = {
-  input: {text},
-  voice: {languageCode: 'en-US', name: 'en-US-Standard-B'},
+  input: { text },
+  voice: { languageCode: 'en-US', name: 'en-US-Standard-B' },
   audioConfig: {
     audioEncoding: 'MP3',
     pitch: argv.p || 0,
