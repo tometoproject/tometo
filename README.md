@@ -18,7 +18,9 @@ prerequisites:
 - Node.js, the latest LTS or Stable version should work
 - Rust, the latest Stable version should work, although you do need at least
   version 1.32.0
-- Python 3, accessible under the `python3` executable, as well as `pip3`
+- Python 3, accessible under the `python3` executable, as well as `pip3` (plus development headers, sometimes separate as `espeak-devel`)
+- eSpeak (and its development headers, sometimes separate as `espeak-devel`)
+- FFmpeg
 - The Google Cloud SDK
 
 After you've installed Rust, you should also install `diesel-cli`, which is what
