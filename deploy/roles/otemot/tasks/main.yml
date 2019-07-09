@@ -1,15 +1,15 @@
 ---
 - name: Checkout from Git
-  git: repo={{ otemot_repo }} dest=/var/www/{{ checkout_dir }} version={{ checkout_branch }}
+  git: repo=git@marisa.cloud:tometo/tometo.git dest={{ checkout_dir }} version={{ checkout_branch }}
 - name: Copy .env file
-  template: src=env.j2 dest=/var/www/{{ checkout_dir }}/.env
+  template: src=env.j2 dest={{ checkout_dir }}/otemot/.env
 - name: Install npm dependencies
   npm:
-    path: /var/www/{{ checkout_dir }}
+    path: {{ checkout_dir }}
 - name: Set up databases
   shell: source ~/.profile && diesel setup
   args:
-    chdir: /var/www/{{ checkout_dir }}
+    chdir: {{ checkout_dir }}/otemot
     executable: /bin/bash
 - name: Copy nginx file
   template: src=nginx.j2 dest=/etc/nginx/conf.d/otemot.conf
@@ -26,7 +26,7 @@
 - name: Compile
   shell: source ~/.profile && cargo build --release
   args:
-    chdir: /var/www/{{ checkout_dir }}
+    chdir: {{ checkout_dir }}
     executable: /bin/bash
   notify:
     - restart otemot

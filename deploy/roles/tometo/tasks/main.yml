@@ -1,13 +1,13 @@
 ---
 - name: Checkout from Git
-  git: repo={{ tometo_repo }} dest=/var/www/{{ checkout_dir }} version={{ checkout_branch }}
+  git: repo=git@marisa.cloud:tometo/tometo.git dest={{ checkout_dir }} version={{ checkout_branch }}
 - name: Install npm packages
   npm:
-    path: /var/www/{{ checkout_dir }}
+    path: {{ checkout_dir }}
 - name: Copy .env file
-  template: src=env.j2 dest=/var/www/{{ checkout_dir }}/.env
+  template: src=env.j2 dest={{ checkout_dir }}/.env
 - name: Run build script
-  command: chdir=/var/www/{{ checkout_dir }} npm run build
+  command: chdir={{ checkout_dir }} npm run build
 - name: Copy nginx config
   become: yes
   template: src=nginx.j2 dest=/etc/nginx/conf.d/tometo.conf

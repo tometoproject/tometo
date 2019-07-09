@@ -2,7 +2,7 @@
 test1.cool.zone
 
 [tometo:vars]
-checkout_dir=tometo_custom
+checkout_dir=/opt/tometo_custom
 checkout_branch=master
 sentry=yourothersentrydsn.com
 
@@ -10,7 +10,7 @@ sentry=yourothersentrydsn.com
 test2.cool.zone
 
 [otemot:vars]
-checkout_dir=otemot_custom
+checkout_dir=/opt/otemot_custom
 checkout_branch=master
 database_url=postgres://test@localhost/otemot
 google_creds=/path/to/serviceaccount.json
