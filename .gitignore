@@ -8,3 +8,8 @@ serve_dist/
 deploy/inventory/*
 !deploy/inventory/example
 stats.json
+target/
+**/*.rs.bk
+otemot/gentts/
+otemot/storage/
+.DS_Store
