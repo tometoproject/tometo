@@ -1,5 +1,5 @@
 steps:
   - label: ":ski: Lint"
     commands:
-      - "npm install --only=dev"
+      - "npm install"
       - "npm run lint"
