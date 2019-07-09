@@ -1,5 +1,7 @@
 # tometo
 
+Tometo is a social network focused on text-to-speech.
+
 ## Reporting Issues
 
 To report an issue, you will need a user account. After signing up and
@@ -9,7 +11,7 @@ verifying your email, you can report an issue by opening a new issue [here](http
 
 Tometo is functionally split into two parts — the frontend, which is a Vue.js
 app that's kept in this repository, and the backend, which is a Rust app that's
-kept at [tometo/otemot](https://marisa.cloud/tometo/otemot).
+kept in the `./otemot` folder.
 
 In order to get the system running on your computer, you'll need some
 prerequisites:
@@ -37,17 +39,12 @@ ffmpeg and espeak installed and available):
 pip3 install numpy aeneas
 ```
 
-Then, you can clone the repositories. Make sure you have a user account and that
+Then, you can clone the repository. Make sure you have a user account and that
 you've added your SSH key to GitLab (if not, you can use the HTTPS checkout):
 
 ```
 git clone git@marisa.cloud:tometo/tometo.git
-git clone git@marisa.cloud:tometo/otemot.git
 ```
-
-It's not strictly necessary to have them be siblings in the same directory, but
-if you want to use a convenience script to have both apps run at once, you
-should.
 
 ### Tometo Setup
 
@@ -76,6 +73,12 @@ Of course, the port depends on what port you are running the server on.
 
 ### Otemot Setup
 
+First, go into the right directory:
+
+```
+cd otemot
+```
+
 Assuming that you've set up your PostgreSQL access, copy the `.env` file in the
 repository root and replace its contents:
 
@@ -102,24 +105,19 @@ diesel setup
 If your database is misconfigured, the output from this command will let you
 know.
 
-You also need to install npm dependencies here:
+Now you can back out of the directory and run the backend:
 
 ```
-npm install
-```
-
-Now you can run the backend:
-
-```
+cd ..
 cargo run
 ```
 
-If you want to automatically watch and restart when there's a file change,
-you can use `cargo-watch`:
+To watch when there's a file change, use `npm run watch` (which also watches
+the frontend), but install `cargo-watch` first:
 
 ```
 cargo install cargo-watch
-cargo watch -x run
+npm run watch
 ```
 
 ## Contributing
