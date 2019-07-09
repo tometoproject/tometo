@@ -16,11 +16,12 @@ kept in the `./otemot` folder.
 In order to get the system running on your computer, you'll need some
 prerequisites:
 
-- PostgreSQL
+- A PostgreSQL server, and its development headers (sometimes called `postgresql-devel`)
 - Node.js, the latest LTS or Stable version should work
 - Rust, the latest Stable version should work, although you do need at least
   version 1.32.0
-- Python 3, accessible under the `python3` executable, as well as `pip3` (plus development headers, sometimes separate as `python3-devel`)
+- Python 3, accessible under the `python3` executable, as well as `pip3`
+  (plus development headers, sometimes separate as `python3-devel`)
 - eSpeak (and its development headers, sometimes separate as `espeak-devel`)
 - FFmpeg
 - The Google Cloud SDK
