@@ -29,9 +29,15 @@ export default new Vuex.Store({
     },
     setInfoFlash (state, msg) {
       state.flash.info = msg
+      setTimeout(() => {
+        state.flash.info = null
+      }, 3000)
     },
     setErrorFlash (state, msg) {
       state.flash.error = msg
+      setTimeout(() => {
+        state.flash.error = null
+      }, 5000)
     },
     clearFlash (state) {
       state.flash = {

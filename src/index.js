@@ -35,8 +35,3 @@ Sentry.init({
     })
   ]
 })
-
-router.beforeEach((to, from, next) => {
-  store.commit('clearFlash')
-  next()
-})
