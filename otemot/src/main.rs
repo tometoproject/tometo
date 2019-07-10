@@ -31,7 +31,10 @@ fn main() {
     let sys = actix_rt::System::new("otemot");
     let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set!");
     let port = env::var("PORT").expect("PORT must be set!");
-    let dsn = env::var("SENTRY_DSN").expect("SENTRY_DSN must be set!");
+    let mut dsn = env::var("SENTRY_DSN").expect("SENTRY_DSN must be set!");
+    if &dsn[0..3] != "http" {
+        dsn = String::new();
+    }
     let environment = env::var("RUST_ENV").expect("RUST_ENV must be set!");
     let is_development = environment == "development";
     let secret = env::var("COOKIE_SECRET").expect("COOKIE_SECRET must be set!");
