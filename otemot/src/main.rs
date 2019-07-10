@@ -93,7 +93,7 @@ fn main() {
                             .route(web::get().to_async(status::get_status)),
                     ),
             )
-            .service(Files::new("/storage", "./storage"))
+            .service(Files::new("/storage", "./otemot/storage"))
     })
     .bind(format!("127.0.0.1:{}", port))
     .unwrap()

@@ -46,7 +46,7 @@ impl Handler<CreateStatus> for Oa {
         let conn = &self.0.get().unwrap();
         let command_out = Command::new("/usr/bin/env")
             .arg("node")
-            .arg("tts.js")
+            .arg("otemot/tts.js")
             .arg(&status.content)
             .args(&["-p", &status.pitch.to_string()])
             .args(&["-s", "1.0"])

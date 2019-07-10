@@ -42,8 +42,8 @@ mkdir(`${__dirname}/${name}`).then(() => {
   switch (process.env.STORAGE) {
     case 'local':
       return Promise.all([
-        rename(`${__dirname}/${name}/out.json`, `${process.cwd()}/storage/${name}.json`),
-        rename(`${__dirname}/${name}/temp.mp3`, `${process.cwd()}/storage/${name}.mp3`)
+        rename(`${__dirname}/${name}/out.json`, `${process.cwd()}/otemot/storage/${name}.json`),
+        rename(`${__dirname}/${name}/temp.mp3`, `${process.cwd()}/otemot/storage/${name}.mp3`)
       ])
   }
 }).then(() => {

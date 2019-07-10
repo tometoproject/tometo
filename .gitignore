@@ -11,5 +11,6 @@ stats.json
 target/
 **/*.rs.bk
 otemot/gentts/
-otemot/storage/
+otemot/storage/*.mp3
+otemot/storage/*.json
 .DS_Store
