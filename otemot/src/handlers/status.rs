@@ -5,10 +5,10 @@ use crate::models::status::{CreateStatus, GetStatus, NewStatus, Status};
 use crate::models::user::User;
 use actix::Handler;
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
+use sensitive_words::words;
 use sentry::capture_message;
 use std::process::Command;
 use uuid::Uuid;
-use sensitive_words::words;
 
 impl Handler<CreateStatus> for Oa {
     type Result = Result<NewStatusMsg, ServiceError>;
@@ -32,7 +32,7 @@ impl Handler<CreateStatus> for Oa {
         if check_for_bad_words(&status.content) {
             return Err(ServiceError::BadRequest(
                 "Please refrain from using this language in your statuses.".to_string(),
-            ))
+            ));
         }
 
         let conn = &self.0.get().unwrap();
@@ -116,5 +116,7 @@ impl Handler<GetStatus> for Oa {
 
 fn check_for_bad_words(message: &str) -> bool {
     let words = words();
-    message.split(' ').any(move |w| words.contains(&w.to_string()))
+    message
+        .split(' ')
+        .any(move |w| words.contains(&w.to_string()))
 }
