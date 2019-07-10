@@ -88,9 +88,7 @@ cp .env.example .env
 ```
 
 Replace the example parts with your own. Feel free to adjust the port number,
-just make sure you also change the `API_URL` variable in the frontend. The
-`MFA_LOCATION` should point to the directory where your Montreal Forced Aligner
-lives.
+just make sure you also change the `API_URL` variable in the frontend.
 
 The `GOOGLE_APPLICATION_CREDENTIALS` points to a service account credential
 file that you should have downloaded while setting up the Google Cloud SDK.
