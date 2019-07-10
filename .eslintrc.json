@@ -1,23 +1,26 @@
 {
-  "env": {
-    "browser": true,
-    "es6": true
-  },
-  "extends": "standard",
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly",
-    "System": "readonly",
-    "import": "readonly"
-  },
-  "parserOptions": {
-    "parser": "babel-eslint",
-    "ecmaVersion": 2018,
-    "sourceType": "module"
-  },
-  "plugins": [
-    "vue"
-  ],
-  "rules": {
-  }
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+	"extends": "standard",
+	"globals": {
+		"Atomics": "readonly",
+		"SharedArrayBuffer": "readonly",
+		"System": "readonly",
+		"import": "readonly"
+	},
+	"parserOptions": {
+		"parser": "babel-eslint",
+		"ecmaVersion": 2018,
+		"sourceType": "module"
+	},
+	"plugins": [
+		"vue"
+	],
+	"rules": {
+		"indent": ["error", "tab"],
+		"no-tabs": "off",
+		"no-mixed-spaces-and-tabs": "error"
+	}
 }

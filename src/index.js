@@ -15,23 +15,23 @@ library.add(faMinus, faPlus)
 Vue.component('vue-fontawesome', FontAwesomeIcon)
 
 Vue.use(Buefy, {
-  defaultIconComponent: 'vue-fontawesome',
-  defaultIconPack: 'fas'
+	defaultIconComponent: 'vue-fontawesome',
+	defaultIconPack: 'fas'
 })
 Vue.config.productionTip = false
 
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+	router,
+	store,
+	render: h => h(App)
 }).$mount('#content')
 
 Sentry.init({
-  dsn: process.env.SENTRY_DSN,
-  integrations: [
-    new Integrations.Vue({
-      Vue,
-      attachProps: true
-    })
-  ]
+	dsn: process.env.SENTRY_DSN,
+	integrations: [
+		new Integrations.Vue({
+			Vue,
+			attachProps: true
+		})
+	]
 })

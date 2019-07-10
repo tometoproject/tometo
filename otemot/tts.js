@@ -16,41 +16,41 @@ const text = argv._[0]
 const name = argv.n
 
 const rq = {
-  input: { text },
-  voice: { languageCode: 'en-US', name: 'en-US-Standard-B' },
-  audioConfig: {
-    audioEncoding: 'MP3',
-    pitch: argv.p || 0,
-    speakingRate: argv.s || 1.0
-  }
+	input: { text },
+	voice: { languageCode: 'en-US', name: 'en-US-Standard-B' },
+	audioConfig: {
+		audioEncoding: 'MP3',
+		pitch: argv.p || 0,
+		speakingRate: argv.s || 1.0
+	}
 }
 
 mkdir(`${__dirname}/${name}`).then(() => {
-  console.log('synthesizing speech...')
-  return client.synthesizeSpeech(rq)
+	console.log('synthesizing speech...')
+	return client.synthesizeSpeech(rq)
 }).then(response => {
-  console.log('writing audio...')
-  return writeFile(`${__dirname}/${name}/temp.mp3`, response[0].audioContent, 'binary')
+	console.log('writing audio...')
+	return writeFile(`${__dirname}/${name}/temp.mp3`, response[0].audioContent, 'binary')
 }).then(() => {
-  console.log('writing text...')
-  return writeFile(`${__dirname}/${name}/temp.txt`, argv._[0].split(' ').join('\n'), 'UTF-8')
+	console.log('writing text...')
+	return writeFile(`${__dirname}/${name}/temp.txt`, argv._[0].split(' ').join('\n'), 'UTF-8')
 }).then(() => {
-  console.log('running aligner...')
-  return exec(`python3 -m aeneas.tools.execute_task ${__dirname}/${name}/temp.mp3 ${__dirname}/${name}/temp.txt "task_language=eng|os_task_file_format=json|is_text_type=plain" ${__dirname}/${name}/out.json`)
+	console.log('running aligner...')
+	return exec(`python3 -m aeneas.tools.execute_task ${__dirname}/${name}/temp.mp3 ${__dirname}/${name}/temp.txt "task_language=eng|os_task_file_format=json|is_text_type=plain" ${__dirname}/${name}/out.json`)
 }).then(() => {
-  console.log('storing...')
-  switch (process.env.STORAGE) {
-    case 'local':
-      return Promise.all([
-        rename(`${__dirname}/${name}/out.json`, `${process.cwd()}/otemot/storage/${name}.json`),
-        rename(`${__dirname}/${name}/temp.mp3`, `${process.cwd()}/otemot/storage/${name}.mp3`)
-      ])
-  }
+	console.log('storing...')
+	switch (process.env.STORAGE) {
+	case 'local':
+		return Promise.all([
+			rename(`${__dirname}/${name}/out.json`, `${process.cwd()}/otemot/storage/${name}.json`),
+			rename(`${__dirname}/${name}/temp.mp3`, `${process.cwd()}/otemot/storage/${name}.mp3`)
+		])
+	}
 }).then(() => {
-  console.log('cleaning up...')
-  return Promise.all([
-    del(`${__dirname}/${name}`)
-  ])
+	console.log('cleaning up...')
+	return Promise.all([
+		del(`${__dirname}/${name}`)
+	])
 }).then(() => {
-  console.log('done!')
+	console.log('done!')
 })

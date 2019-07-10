@@ -10,12 +10,12 @@ import GetStatus from './components/GetStatus.vue'
 Vue.use(VueRouter)
 
 export default new VueRouter({
-  mode: 'history',
-  routes: [
-    { path: '/', component: Home },
-    { path: '/register', component: Register },
-    { path: '/login', component: Login },
-    { path: '/status/new', component: NewStatus },
-    { path: '/status/:id', component: GetStatus }
-  ]
+	mode: 'history',
+	routes: [
+		{ path: '/', component: Home },
+		{ path: '/register', component: Register },
+		{ path: '/login', component: Login },
+		{ path: '/status/new', component: NewStatus },
+		{ path: '/status/:id', component: GetStatus }
+	]
 })
