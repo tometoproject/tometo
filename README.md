@@ -16,7 +16,7 @@ kept in the `./otemot` folder.
 In order to get the system running on your computer, you'll need some
 prerequisites:
 
-- A PostgreSQL server, and its development headers (sometimes called `libpq-devel` or `postgresql-devel`)
+- A PostgreSQL server, and its development headers (sometimes called `libpq-dev` or `postgresql-devel`)
 - Node.js, the latest LTS or Stable version should work
 - Rust, the latest Stable version should work, although you do need at least
   version 1.32.0
