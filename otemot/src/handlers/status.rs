@@ -116,5 +116,5 @@ impl Handler<GetStatus> for Oa {
 
 fn check_for_bad_words(message: &str) -> bool {
     let words = words();
-    words.iter().any(move |w| message.contains(w))
+    message.split(' ').any(move |w| words.contains(&w.to_string()))
 }
