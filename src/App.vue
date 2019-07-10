@@ -1,10 +1,10 @@
 <template>
 	<div id="app">
 		<main class="container">
-				<app-header></app-header>
-				<b-notification v-if="infoFlashMessage" type="is-info">{{ infoFlashMessage }}</b-notification>
-				<b-notification v-if="errorFlashMessage" type="is-danger">{{ errorFlashMessage }}</b-notification>
-				<router-view></router-view>
+			<app-header></app-header>
+			<b-notification v-if="infoFlashMessage" type="is-info">{{ infoFlashMessage }}</b-notification>
+			<b-notification v-if="errorFlashMessage" type="is-danger">{{ errorFlashMessage }}</b-notification>
+			<router-view></router-view>
 		</main>
 	</div>
 </template>
