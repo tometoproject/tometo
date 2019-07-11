@@ -2,7 +2,7 @@
 
 Otemot is the backend for Tometo. It's also just the word Tometo, reversed.
 It's a Rust app that's powered by `actix-web`, a small web framework, and
-`actix`, and asynchronous actor framework. Suffice to say, it's pretty
+`actix`, an asynchronous actor framework. Suffice to say, it's pretty
 efficient.
 
 Here's a rough layout of the project structure:
