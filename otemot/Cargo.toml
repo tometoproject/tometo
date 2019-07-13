@@ -28,4 +28,4 @@ derive_more = "0.15.0"
 actix-identity = "0.1.0"
 jsonwebtoken = "6.0.1"
 sensitive_words = "1.0.2"
-config = "0.9.3"
+config = { version = "0.9.3", features = ["json"] }
