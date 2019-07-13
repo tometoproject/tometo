@@ -47,6 +47,26 @@ you've added your SSH key to GitLab (if not, you can use the HTTPS checkout):
 git clone git@marisa.cloud:tometo/tometo.git
 ```
 
+### Configuration
+
+Configuration is done through a central config file called `config.json`, which
+provides configuration for both components. First, copy the example file:
+
+```
+cp config.example.json
+```
+
+Don't worry about your config file getting put into version control, it's ignored
+by default.
+
+You can leave the `dsn` keys in both blocks as they are, unless you have two Sentry
+DSN keys.
+
+The `otemot.google_credentials` key points to a service account credential
+file that you should have downloaded while setting up the Google Cloud SDK.
+You can find more information on this
+[here](https://cloud.google.com/docs/authentication/getting-started).
+
 ### Tometo Setup
 
 Once you're in the directoy, you'll want to install its dependencies:
@@ -61,16 +81,6 @@ doing stuff:
 - `npm start`: Runs the frontend and watches for changes
 - `npm run build`: Builds a production-ready JavaScript distribution in `dist/`
 - `npm run watch`: Runs and watches both the front and the backend (run `cargo install cargo-watch` first)
-  
-You will also want to set the `API_URL` environment variable. You can do this
-via creating a `.env` file in the root of the repository (this file won't be
-tracked). The easiest way to do this is by copying the example file:
-
-```
-cp .env.example .env
-```
-
-Of course, the port depends on what port you are running the server on.
 
 ### Otemot Setup
 
@@ -79,21 +89,6 @@ First, go into the right directory:
 ```
 cd otemot
 ```
-
-Assuming that you've set up your PostgreSQL access, copy the `.env` file in the
-repository root and replace its contents:
-
-```
-cp .env.example .env
-```
-
-Replace the example parts with your own. Feel free to adjust the port number,
-just make sure you also change the `API_URL` variable in the frontend.
-
-The `GOOGLE_APPLICATION_CREDENTIALS` points to a service account credential
-file that you should have downloaded while setting up the Google Cloud SDK.
-You can find more information on this
-[here](https://cloud.google.com/docs/authentication/getting-started).
 
 Next up, to make the app aware of the database, run this command:
 
