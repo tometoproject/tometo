@@ -67,6 +67,10 @@ file that you should have downloaded while setting up the Google Cloud SDK.
 You can find more information on this
 [here](https://cloud.google.com/docs/authentication/getting-started).
 
+If you want to override config variables temporarily, you can set environment variables
+to match them. For example, to set the `otemot.secrets.cookie` key, you would set the
+`OTEMOT_SECRETS_COOKIE` variable.
+
 ### Tometo Setup
 
 Once you're in the directoy, you'll want to install its dependencies:

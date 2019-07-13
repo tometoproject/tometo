@@ -27,7 +27,7 @@ fn main() {
     let mut cfg = config::Config::default();
     cfg
         .merge(config::File::new("config.json", config::FileFormat::Json)).unwrap()
-        .merge(config::Environment::with_prefix("TOMETO")).unwrap();
+        .merge(config::Environment::new().separator("_")).unwrap();
     ::std::env::set_var("RUST_LOG", "actix_web=info");
     env_logger::init();
     println!("OK");
@@ -110,7 +110,7 @@ fn main() {
             )
             .service(Files::new("/storage", "./otemot/storage"))
     })
-    .bind(format!("127.0.0.1:{}", port))
+    .bind(format!("127.0.0.1:{}", &ot_hostname.chars().rev().take(4).collect::<String>()))
     .unwrap()
     .start();
     println!("OK");
