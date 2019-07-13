@@ -19,6 +19,7 @@
 
 <script>
 import router from '../router'
+import config from '../../config.json'
 
 export default {
 	name: 'GetStatus',
@@ -56,7 +57,7 @@ export default {
 	},
 
 	mounted () {
-		fetch(`${process.env.API_URL}/api/status/${this.$route.params.id}`)
+		fetch(`${config.otemot.hostname}/api/status/${this.$route.params.id}`)
 		.then(res => {
 			if (res.ok) {
 				return res.json()

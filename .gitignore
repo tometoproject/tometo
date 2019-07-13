@@ -14,3 +14,4 @@ otemot/gentts/
 otemot/storage/*.mp3
 otemot/storage/*.json
 .DS_Store
+config.json
