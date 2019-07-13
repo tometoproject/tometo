@@ -34,7 +34,6 @@ fn main() {
 
     print!("Ensuring configuration key completeness...");
     let database_url = cfg.get::<String>("otemot.database_url").expect("otemot.database_url unset!");
-    let port = cfg.get::<i32>("otemot.port").expect("otemot.port unset!");
     cfg.get::<String>("otemot.storage").expect("otemot.storage unset!");
     cfg.get::<String>("otemot.google_credentials").expect("otemot.google_credentials unset!");
     let cookie_secret = cfg.get::<String>("otemot.secrets.cookie").expect("otemot.secrets.cookie unset!");
