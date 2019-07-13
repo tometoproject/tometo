@@ -16,7 +16,7 @@ lint otemot:
   stage: "test"
   before_script:
     - apk update
-    - apk add curl rust cargo openssl postgresql
+    - apk add curl rust cargo openssl-dev postgresql-dev
     - rustc --version
   script:
     - cargo check
