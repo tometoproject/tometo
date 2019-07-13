@@ -1,5 +1,8 @@
 image: node:lts-alpine
 
+before_script:
+  - curl https://sh.rustup.rs -sSf | sh -s -- -y
+
 stages:
   - test
 
@@ -8,3 +11,8 @@ lint tometo:
   script:
     - npm install
     - npm run lint
+
+lint otemot:
+  stage: "test"
+  script:
+    - cargo check
