@@ -12,6 +12,7 @@ lint tometo:
 lint otemot:
   stage: "test"
   before_script:
+    - apk update
     - apk add curl rust cargo openssl postgresql
     - rustc --version
   script:
