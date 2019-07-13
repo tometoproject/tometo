@@ -1,9 +1,5 @@
 image: node:lts-alpine
 
-before_script:
-  - apk add curl
-  - curl https://sh.rustup.rs -sSf | sh -s -- -y
-
 stages:
   - test
 
@@ -15,5 +11,9 @@ lint tometo:
 
 lint otemot:
   stage: "test"
+  before_script:
+    - export PATH="$CARGO_HOME/bin:$PATH"
+    - curl https://sh.rustup.rs -sSf | sh -s -- -y  --default-toolchain stable
+    - rustc --version
   script:
     - cargo check
