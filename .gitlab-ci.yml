@@ -1,10 +1,13 @@
-image: node:lts-alpine
+image: alpine:edge
 
 stages:
   - test
 
 lint tometo:
   stage: "test"
+  before_script:
+    - apk update
+    - apk add nodejs
   script:
     - npm install
     - npm run lint
