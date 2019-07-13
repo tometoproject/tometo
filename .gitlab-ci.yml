@@ -16,8 +16,8 @@ lint otemot:
   stage: "test"
   cache:
     key: otemot-lint
-    paths: out/
-
+    paths:
+      - out/
   before_script:
     - apk update
     - apk add curl rust cargo openssl-dev postgresql-dev
