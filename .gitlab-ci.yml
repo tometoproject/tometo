@@ -7,7 +7,7 @@ lint tometo:
   stage: "test"
   before_script:
     - apk update
-    - apk add nodejs
+    - apk add nodejs npm
   script:
     - npm install
     - npm run lint
