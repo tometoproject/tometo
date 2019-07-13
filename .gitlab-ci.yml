@@ -1,13 +1,10 @@
 image: node:lts-alpine
 
 stages:
-  - build
   - test
-
-build tometo:
-  stage: "build"
-  script: "npm install"
 
 lint tometo:
   stage: "test"
-  script: "npm run lint"
+  script:
+    - npm install
+    - npm run lint
