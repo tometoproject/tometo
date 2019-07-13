@@ -12,9 +12,7 @@ lint tometo:
 lint otemot:
   stage: "test"
   before_script:
-    - apk add curl
-    - export PATH="$CARGO_HOME/bin:$PATH"
-    - curl https://sh.rustup.rs -sSf | sh -s -- -y  --default-toolchain stable
+    - apk add curl rust cargo
     - rustc --version
   script:
     - cargo check
