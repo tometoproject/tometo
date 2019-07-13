@@ -14,9 +14,13 @@ lint tometo:
 
 lint otemot:
   stage: "test"
+  cache:
+    key: otemot-lint
+    paths: out/
+
   before_script:
     - apk update
     - apk add curl rust cargo openssl-dev postgresql-dev
     - rustc --version
   script:
-    - cargo check
+    - cargo check --target-dir out/
