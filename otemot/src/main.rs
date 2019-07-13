@@ -21,26 +21,35 @@ use actix_files::Files;
 use actix_identity::{CookieIdentityPolicy, IdentityService};
 use actix_web::{middleware::Logger, web, App, HttpServer};
 use diesel::{r2d2::ConnectionManager, PgConnection};
-use std::env;
 
 fn main() {
-    print!("Checking environment variables... ");
+    print!("Loading configuration file... ");
+    let mut cfg = config::Config::default();
+    cfg
+        .merge(config::File::new("config.json", config::FileFormat::Json)).unwrap()
+        .merge(config::Environment::with_prefix("TOMETO")).unwrap();
     ::std::env::set_var("RUST_LOG", "actix_web=info");
     env_logger::init();
-    dotenv::from_path("./otemot/.env").ok();
-    let sys = actix_rt::System::new("otemot");
-    let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must be set!");
-    let port = env::var("PORT").expect("PORT must be set!");
-    let mut dsn = env::var("SENTRY_DSN").expect("SENTRY_DSN must be set!");
+    println!("OK");
+
+    print!("Ensuring configuration key completeness...");
+    let database_url = cfg.get::<String>("otemot.database_url").expect("otemot.database_url unset!");
+    let port = cfg.get::<i32>("otemot.port").expect("otemot.port unset!");
+    cfg.get::<String>("otemot.storage").expect("otemot.storage unset!");
+    cfg.get::<String>("otemot.google_credentials").expect("otemot.google_credentials unset!");
+    let cookie_secret = cfg.get::<String>("otemot.secrets.cookie").expect("otemot.secrets.cookie unset!");
+    cfg.get::<String>("otemot.secrets.jwt").expect("otemot.secrets.jwt unset!");
+    let ot_hostname = cfg.get::<String>("otemot.hostname").expect("otemot.hostname unset!");
+    let tm_hostname = cfg.get::<String>("tometo.hostname").expect("tometo.hostname unset!");
+    let mut dsn = cfg.get::<String>("otemot.dsn").expect("otemot.dsn unset!");
+    let environment = cfg.get::<String>("otemot.env").expect("otemot.env unset!");
     if &dsn[0..3] != "http" {
         dsn = String::new();
     }
-    let environment = env::var("RUST_ENV").expect("RUST_ENV must be set!");
     let is_development = environment == "development";
-    let secret = env::var("COOKIE_SECRET").expect("COOKIE_SECRET must be set!");
-    env::var("JWT_SECRET").expect("JWT_SECRET must be set!");
-    let ot_hostname = env::var("OT_HOSTNAME").expect("OT_HOSTNAME must be set!");
-    let tm_hostname = env::var("TM_HOSTNAME").expect("TM_HOSTNAME must be set!");
+    println!("OK");
+
+    print!("Initializing Sentry...");
     let _guard = sentry::init((
         dsn,
         sentry::ClientOptions {
@@ -50,6 +59,8 @@ fn main() {
     ));
     sentry::integrations::panic::register_panic_handler();
     println!("OK");
+
+    let sys = actix_rt::System::new("otemot");
 
     print!("Initializing database connection... ");
     let manager = ConnectionManager::<PgConnection>::new(database_url);
@@ -64,6 +75,7 @@ fn main() {
     HttpServer::new(move || {
         App::new()
             .data(address.clone())
+            .data(cfg.clone())
             .wrap(
                 Cors::new()
                     .allowed_origin(tm_hostname.as_ref())
@@ -73,7 +85,7 @@ fn main() {
             .wrap(Logger::default())
             .service(web::resource("/").route(web::get().to(home::index)))
             .wrap(IdentityService::new(
-                CookieIdentityPolicy::new(secret.as_bytes())
+                CookieIdentityPolicy::new(cookie_secret.as_bytes())
                     .name("auth")
                     .path("/")
                     .secure(!is_development),

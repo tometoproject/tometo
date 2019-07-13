@@ -21,10 +21,12 @@ pub fn create_status(
 pub fn get_status(
     status_id: web::Path<String>,
     state: web::Data<Addr<Oa>>,
+    cfg: web::Data<config::Config>,
 ) -> impl Future<Item = HttpResponse, Error = Error> {
     state
         .send(GetStatus {
             id: status_id.to_string(),
+            hostname: cfg.get::<String>("otemot.hostname").unwrap(),
         })
         .from_err()
         .and_then(|res| match res {

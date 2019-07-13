@@ -48,6 +48,7 @@ impl CreateStatus {
 #[derive(Deserialize, Serialize, Debug)]
 pub struct GetStatus {
     pub id: String,
+    pub hostname: String,
 }
 
 impl Message for GetStatus {
