@@ -9,9 +9,11 @@ const writeFile = util.promisify(fs.writeFile)
 const rename = util.promisify(fs.rename)
 const exec = util.promisify(childProcess.exec)
 const argv = require('minimist')(process.argv.slice(2))
-require('dotenv').config()
+const config = require('../config.json')
 
-const client = new TextToSpeechClient()
+const client = new TextToSpeechClient({
+	keyFilename: config.otemot.google_credentials
+})
 const text = argv._[0]
 const name = argv.n
 
@@ -39,7 +41,7 @@ mkdir(`${__dirname}/gentts/${name}`).then(() => {
 	return exec(`python3 -m aeneas.tools.execute_task ${__dirname}/gentts/${name}/temp.mp3 ${__dirname}/gentts/${name}/temp.txt "task_language=eng|os_task_file_format=json|is_text_type=plain" ${__dirname}/gentts/${name}/out.json`)
 }).then(() => {
 	console.log('storing...')
-	switch (process.env.STORAGE) {
+	switch (config.otemot.storage) {
 	case 'local':
 		return Promise.all([
 			rename(`${__dirname}/gentts/${name}/out.json`, `${process.cwd()}/otemot/storage/${name}.json`),

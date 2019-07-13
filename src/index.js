@@ -5,6 +5,7 @@ import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 import router from './router'
 import store from './store'
+import config from '../config.json'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -27,7 +28,7 @@ new Vue({
 }).$mount('#content')
 
 Sentry.init({
-	dsn: process.env.SENTRY_DSN,
+	dsn: config.tometo.dsn,
 	integrations: [
 		new Integrations.Vue({
 			Vue,

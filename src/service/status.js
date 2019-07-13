@@ -1,3 +1,5 @@
+import config from '../../config.json'
+
 export function postStatus (content, pitch) {
 	const requestOptions = {
 		method: 'POST',
@@ -6,7 +8,7 @@ export function postStatus (content, pitch) {
 		credentials: 'include'
 	}
 
-	return fetch(`${process.env.API_URL}/api/status/new`, requestOptions)
+	return fetch(`${config.otemot.hostname}/api/status/new`, requestOptions)
 		.then(res => res.text().then(text => {
 			const data = text && JSON.parse(text)
 			if (!res.ok) {

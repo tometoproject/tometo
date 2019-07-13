@@ -104,12 +104,11 @@ impl Handler<GetStatus> for Oa {
             return Err(ServiceError::NotFound("No status found!".to_string()));
         }
 
-        let hostname = ::std::env::var("OT_HOSTNAME").expect("OT_HOSTNAME must be set!");
         Ok(StatusMsg {
             status: 200,
-            audio: format!("{}/storage/{}.mp3", &hostname, &status.id),
+            audio: format!("{}/storage/{}.mp3", &status.hostname, &status.id),
             content: status_result.unwrap().content,
-            timestamps: format!("{}/storage/{}.json", &hostname, &status.id),
+            timestamps: format!("{}/storage/{}.json", &status.hostname, &status.id),
         })
     }
 }
