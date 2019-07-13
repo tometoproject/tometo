@@ -4,7 +4,7 @@ Thanks for your interest in contributing to Tometo!
 There are more than one way to contribute to the project, and we appreciate
 all of them.
 
-If you have any questions, feel free to ask them in the [Tometo Discord server](discord)!
+If you have any questions, feel free to ask them in the [Tometo Discord server][discord]!
 As a reminder, all contributors, in whichever way, are required to follow
 the [Code of Conduct](./CODE_OF_CONDUCT.md).
 

@@ -120,7 +120,6 @@ npm run watch
 
 ## Contributing
 
-Feel free to send merge requests! This section will be expanded on in the
-future, surely.
+See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 
