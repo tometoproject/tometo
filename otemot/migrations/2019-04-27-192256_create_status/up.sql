@@ -1,7 +1,7 @@
 -- Your SQL goes here
-create table statuses(
-  id text not null primary key,
-  content text not null,
-  pitch integer not null,
-  user_id integer not null
+CREATE TABLE statuses(
+  id TEXT NOT NULL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users (id),
+  content TEXT NOT NULL,
+  pitch INTEGER NOT NULL
 );
