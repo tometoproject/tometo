@@ -9,8 +9,8 @@ use uuid::Uuid;
 pub struct Status {
     pub id: String,
     pub content: String,
-    pub pitch: i32,
-    pub user_id: i32,
+    pub avatar_id: String,
+    pub related_status_id: Option<String>,
 }
 
 #[table_name = "statuses"]
@@ -18,8 +18,8 @@ pub struct Status {
 pub struct NewStatus<'a> {
     pub id: &'a str,
     pub content: &'a str,
-    pub pitch: i32,
-    pub user_id: i32,
+    pub avatar_id: &'a str,
+    pub related_status_id: Option<&'a str>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
@@ -64,8 +64,8 @@ impl Default for Status {
         Status {
             id: Uuid::new_v4().to_string(),
             content: "".to_string(),
-            pitch: 0,
-            user_id: 0,
+            avatar_id: "".to_string(),
+            related_status_id: None,
         }
     }
 }

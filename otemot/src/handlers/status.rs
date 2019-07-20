@@ -65,12 +65,12 @@ impl Handler<CreateStatus> for Oa {
 
         match user {
             None => Err(ServiceError::Unauthorized),
-            Some(luser) => {
+            Some(_luser) => {
                 let new_status = NewStatus {
                     id: &new_id.to_string(),
                     content: &status.content,
-                    pitch: status.pitch,
-                    user_id: luser.id,
+                    avatar_id: "aaaa",
+                    related_status_id: None,
                 };
                 diesel::insert_into(statuses)
                     .values(&new_status)
@@ -95,7 +95,7 @@ impl Handler<GetStatus> for Oa {
 
         let conn = &self.0.get().unwrap();
         let status_result = statuses
-            .filter(&id.eq(&status.id))
+            .filter(id.eq(&status.id))
             .load::<Status>(conn)
             .map_err(|_| ServiceError::InternalServerError)?
             .pop();
