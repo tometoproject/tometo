@@ -8,7 +8,7 @@ export function postStatus (content, pitch) {
 		credentials: 'include'
 	}
 
-	return fetch(`${config.otemot.hostname}/api/status/new`, requestOptions)
+	return fetch(`${config.otemot.external_url}/api/status/new`, requestOptions)
 		.then(res => res.text().then(text => {
 			const data = text && JSON.parse(text)
 			if (!res.ok) {
