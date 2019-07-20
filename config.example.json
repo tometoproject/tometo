@@ -11,7 +11,8 @@
       "cookie": "replacemewithaverylongstring",
       "jwt": "replacemetoo"
     },
-    "hostname": "http://localhost:4001",
+    "hostname": "127.0.0.1:4001",
+    "external_url": "http://localhost:4001",
     "dsn": "AAAA",
     "env": "development"
   }
