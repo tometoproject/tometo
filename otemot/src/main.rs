@@ -21,6 +21,7 @@ use actix_files::Files;
 use actix_identity::{CookieIdentityPolicy, IdentityService};
 use actix_web::{middleware::Logger, web, App, HttpServer};
 use diesel::{r2d2::ConnectionManager, PgConnection};
+use std::net::SocketAddrV4;
 
 fn main() {
     print!("Loading configuration file... ");
@@ -38,7 +39,8 @@ fn main() {
     cfg.get::<String>("otemot.google_credentials").expect("otemot.google_credentials unset!");
     let cookie_secret = cfg.get::<String>("otemot.secrets.cookie").expect("otemot.secrets.cookie unset!");
     cfg.get::<String>("otemot.secrets.jwt").expect("otemot.secrets.jwt unset!");
-    let ot_hostname = cfg.get::<String>("otemot.hostname").expect("otemot.hostname unset!");
+    let ot_hostname = cfg.get::<SocketAddrV4>("otemot.hostname").expect("otemot.hostname unset!");
+    cfg.get::<String>("otemot.external_url").expect("otemot.external_url unset!");
     let tm_hostname = cfg.get::<String>("tometo.hostname").expect("tometo.hostname unset!");
     let mut dsn = cfg.get::<String>("otemot.dsn").expect("otemot.dsn unset!");
     let environment = cfg.get::<String>("otemot.env").expect("otemot.env unset!");
@@ -109,7 +111,7 @@ fn main() {
             )
             .service(Files::new("/storage", "./otemot/storage"))
     })
-    .bind(format!("127.0.0.1:{}", &ot_hostname.chars().rev().take(4).collect::<String>()))
+    .bind(ot_hostname)
     .unwrap()
     .start();
     println!("OK");
