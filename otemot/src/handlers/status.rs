@@ -1,6 +1,6 @@
 use crate::actor::Oa;
 use crate::errors::ServiceError;
-use crate::messages::{NewStatusMsg, StatusMsg};
+use crate::messages::{NewResourceMsg, StatusMsg};
 use crate::models::status::{CreateStatus, GetStatus, NewStatus, Status};
 use crate::models::user::User;
 use actix::Handler;
@@ -11,7 +11,7 @@ use std::process::Command;
 use uuid::Uuid;
 
 impl Handler<CreateStatus> for Oa {
-    type Result = Result<NewStatusMsg, ServiceError>;
+    type Result = Result<NewResourceMsg, ServiceError>;
 
     fn handle(&mut self, status: CreateStatus, _: &mut Self::Context) -> Self::Result {
         use crate::schema::statuses::dsl::*;
@@ -43,7 +43,6 @@ impl Handler<CreateStatus> for Oa {
             .pop();
 
         let new_id = Uuid::new_v4();
-        let conn = &self.0.get().unwrap();
         let command_out = Command::new("/usr/bin/env")
             .arg("node")
             .arg("otemot/tts.js")
@@ -77,7 +76,7 @@ impl Handler<CreateStatus> for Oa {
                     .execute(conn)
                     .map_err(|_| ServiceError::InternalServerError)?;
 
-                Ok(NewStatusMsg {
+                Ok(NewResourceMsg {
                     status: 200,
                     id: Some(new_id),
                     message: None,

@@ -1,5 +1,5 @@
 use crate::errors::ServiceError;
-use crate::messages::{NewStatusMsg, StatusMsg};
+use crate::messages::{NewResourceMsg, StatusMsg};
 use crate::schema::statuses;
 use actix::Message;
 use uuid::Uuid;
@@ -56,7 +56,7 @@ impl Message for GetStatus {
 }
 
 impl Message for CreateStatus {
-    type Result = Result<NewStatusMsg, ServiceError>;
+    type Result = Result<NewResourceMsg, ServiceError>;
 }
 
 impl Default for Status {

@@ -14,7 +14,7 @@ mod schema;
 mod token;
 
 use crate::actor::Oa;
-use crate::api::{auth, home, status};
+use crate::api::{auth, home, status, avatar};
 use actix::prelude::*;
 use actix_cors::Cors;
 use actix_files::Files;
@@ -100,6 +100,10 @@ fn main() {
                             .route(web::get().to_async(auth::get_user)),
                     )
                     .service(web::resource("/register").route(web::post().to_async(auth::signup)))
+                    .service(
+                        web::resource("/avatar/new")
+                            .route(web::post().to_async(avatar::create_avatar)),
+                    )
                     .service(
                         web::resource("/status/new")
                             .route(web::post().to_async(status::create_status)),

@@ -2,10 +2,10 @@ table! {
     avatars (id) {
         id -> Text,
         user_id -> Int4,
-        pitch -> Int4,
-        speed -> Int4,
-        language -> Varchar,
-        gender -> Varchar,
+        pitch -> Int2,
+        speed -> Float4,
+        language -> Text,
+        gender -> Text,
     }
 }
 
