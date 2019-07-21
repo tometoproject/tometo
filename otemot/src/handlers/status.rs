@@ -1,8 +1,8 @@
-use crate::actor::{Oa, Conn};
+use crate::actor::{Conn, Oa};
 use crate::errors::ServiceError;
 use crate::messages::{NewResourceMsg, StatusMsg};
-use crate::models::status::{CreateStatus, GetStatus, NewStatus, Status};
 use crate::models::avatar::Avatar;
+use crate::models::status::{CreateStatus, GetStatus, NewStatus, Status};
 use crate::models::user::User;
 use actix::Handler;
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
@@ -14,8 +14,8 @@ impl Handler<CreateStatus> for Oa {
     type Result = Result<NewResourceMsg, ServiceError>;
 
     fn handle(&mut self, status: CreateStatus, _: &mut Self::Context) -> Self::Result {
-        use crate::schema::users::dsl::{username, users};
         use crate::schema::avatars::dsl::{avatars, user_id};
+        use crate::schema::users::dsl::{username, users};
 
         if status.content.is_empty() {
             return Err(ServiceError::BadRequest(
@@ -41,20 +41,20 @@ impl Handler<CreateStatus> for Oa {
             .load::<User>(conn)
             .map_err(|_| ServiceError::InternalServerError)?
             .pop();
-        
+
         if let Some(authed_user) = user {
             let avatar = avatars
                 .filter(user_id.eq(&authed_user.id))
                 .load::<Avatar>(conn)
                 .map_err(|_| ServiceError::InternalServerError)?
                 .pop();
-            
+
             if avatar.is_none() {
                 return Err(ServiceError::BadRequest(
                     "Please create an Avatar first!".to_string(),
                 ));
             }
-            
+
             let res = genstatus(status.content, avatar.unwrap(), &conn)?;
             Ok(NewResourceMsg {
                 status: 200,

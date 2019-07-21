@@ -1,26 +1,26 @@
-use actix::Handler;
-use uuid::Uuid;
 use crate::actor::Oa;
-use crate::models::avatar::{CreateAvatar, NewAvatar, Avatar};
-use crate::messages::NewResourceMsg;
 use crate::errors::ServiceError;
+use crate::messages::NewResourceMsg;
+use crate::models::avatar::{Avatar, CreateAvatar, NewAvatar};
 use crate::models::user::User;
-use diesel::{QueryDsl, RunQueryDsl, ExpressionMethods};
+use actix::Handler;
+use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
+use uuid::Uuid;
 
 impl Handler<CreateAvatar> for Oa {
-	type Result = Result<NewResourceMsg, ServiceError>;
+    type Result = Result<NewResourceMsg, ServiceError>;
 
-	fn handle(&mut self, avatar: CreateAvatar, _: &mut Self::Context) -> Self::Result {
-		use crate::schema::avatars::dsl::*;
-		use crate::schema::users::dsl::{users, username};
+    fn handle(&mut self, avatar: CreateAvatar, _: &mut Self::Context) -> Self::Result {
+        use crate::schema::avatars::dsl::*;
+        use crate::schema::users::dsl::{username, users};
 
-		let conn = &self.0.get().unwrap();
-		let user = users
-			.filter(username.eq(&avatar.username))
-			.load::<User>(conn)
-			.map_err(|_| ServiceError::InternalServerError)?
-			.pop();
-		
+        let conn = &self.0.get().unwrap();
+        let user = users
+            .filter(username.eq(&avatar.username))
+            .load::<User>(conn)
+            .map_err(|_| ServiceError::InternalServerError)?
+            .pop();
+
         if user.is_none() {
             return Err(ServiceError::Unauthorized);
         }
@@ -32,7 +32,7 @@ impl Handler<CreateAvatar> for Oa {
             .load::<Avatar>(conn)
             .map_err(|_| ServiceError::InternalServerError)?
             .pop();
-        
+
         if existing_avatar.is_some() {
             return Err(ServiceError::BadRequest(
                 "You can't create more than one Avatar!".to_string(),
@@ -53,11 +53,11 @@ impl Handler<CreateAvatar> for Oa {
             .values(&new_avatar)
             .execute(conn)
             .map_err(|_| ServiceError::InternalServerError)?;
-        
+
         Ok(NewResourceMsg {
             status: 200,
             id: Some(new_id),
             message: None,
         })
-	}
+    }
 }

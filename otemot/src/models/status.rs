@@ -37,7 +37,7 @@ impl CreateStatus {
     pub fn from_json(s: CreateStatusJson, username: String) -> Self {
         CreateStatus {
             content: s.content,
-            username
+            username,
         }
     }
 }
