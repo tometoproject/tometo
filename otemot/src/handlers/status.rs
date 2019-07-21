@@ -1,12 +1,12 @@
-use crate::actor::Oa;
+use crate::actor::{Oa, Conn};
 use crate::errors::ServiceError;
 use crate::messages::{NewResourceMsg, StatusMsg};
 use crate::models::status::{CreateStatus, GetStatus, NewStatus, Status};
+use crate::models::avatar::Avatar;
 use crate::models::user::User;
 use actix::Handler;
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use sensitive_words::words;
-use sentry::capture_message;
 use std::process::Command;
 use uuid::Uuid;
 
@@ -14,8 +14,8 @@ impl Handler<CreateStatus> for Oa {
     type Result = Result<NewResourceMsg, ServiceError>;
 
     fn handle(&mut self, status: CreateStatus, _: &mut Self::Context) -> Self::Result {
-        use crate::schema::statuses::dsl::*;
-        use crate::schema::users::dsl::*;
+        use crate::schema::users::dsl::{username, users};
+        use crate::schema::avatars::dsl::{avatars, user_id};
 
         if status.content.is_empty() {
             return Err(ServiceError::BadRequest(
@@ -37,53 +37,66 @@ impl Handler<CreateStatus> for Oa {
 
         let conn = &self.0.get().unwrap();
         let user = users
-            .filter(&username.eq(&status.username))
+            .filter(username.eq(&status.username))
             .load::<User>(conn)
             .map_err(|_| ServiceError::InternalServerError)?
             .pop();
-
-        let new_id = Uuid::new_v4();
-        let command_out = Command::new("/usr/bin/env")
-            .arg("node")
-            .arg("otemot/tts.js")
-            .arg(&status.content)
-            .args(&["-p", &status.pitch.to_string()])
-            .args(&["-s", "1.0"])
-            .args(&["-n", &new_id.to_string()])
-            .output()?;
-
-        if !command_out.status.success() {
-            capture_message(
-                String::from_utf8(command_out.stderr).unwrap().as_str(),
-                sentry::Level::Error,
-            );
-            return Err(ServiceError::InternalServerError);
-        } else {
-            dbg!(String::from_utf8(command_out.stdout).unwrap());
-        }
-
-        match user {
-            None => Err(ServiceError::Unauthorized),
-            Some(_luser) => {
-                let new_status = NewStatus {
-                    id: &new_id.to_string(),
-                    content: &status.content,
-                    avatar_id: "aaaa",
-                    related_status_id: None,
-                };
-                diesel::insert_into(statuses)
-                    .values(&new_status)
-                    .execute(conn)
-                    .map_err(|_| ServiceError::InternalServerError)?;
-
-                Ok(NewResourceMsg {
-                    status: 200,
-                    id: Some(new_id),
-                    message: None,
-                })
+        
+        if let Some(authed_user) = user {
+            let avatar = avatars
+                .filter(user_id.eq(&authed_user.id))
+                .load::<Avatar>(conn)
+                .map_err(|_| ServiceError::InternalServerError)?
+                .pop();
+            
+            if avatar.is_none() {
+                return Err(ServiceError::BadRequest(
+                    "Please create an Avatar first!".to_string(),
+                ));
             }
+            
+            let res = genstatus(status.content, avatar.unwrap(), &conn)?;
+            Ok(NewResourceMsg {
+                status: 200,
+                id: Some(res),
+                message: None,
+            })
+        } else {
+            Err(ServiceError::Unauthorized)
         }
     }
+}
+
+fn genstatus(content: String, avatar: Avatar, conn: Conn) -> Result<Uuid, ServiceError> {
+    use crate::schema::statuses::dsl::statuses;
+
+    let new_id = Uuid::new_v4();
+    let command_out = Command::new("/usr/bin/env")
+        .arg("node")
+        .arg("otemot/tts.js")
+        .arg(&content)
+        .args(&["-p", &avatar.pitch.to_string()])
+        .args(&["-s", &avatar.speed.to_string()])
+        .args(&["-n", &new_id.to_string()])
+        .output()?;
+
+    if !command_out.status.success() {
+        return Err(ServiceError::InternalServerError);
+    }
+
+    let new_status = NewStatus {
+        id: &new_id.to_string(),
+        content: &content,
+        avatar_id: &avatar.id,
+        related_status_id: None,
+    };
+
+    diesel::insert_into(statuses)
+        .values(&new_status)
+        .execute(conn)
+        .map_err(|_| ServiceError::InternalServerError)?;
+
+    Ok(new_id)
 }
 
 impl Handler<GetStatus> for Oa {

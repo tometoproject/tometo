@@ -25,13 +25,11 @@ pub struct NewStatus<'a> {
 #[derive(Deserialize, Serialize, Debug)]
 pub struct CreateStatusJson {
     pub content: String,
-    pub pitch: i32,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct CreateStatus {
     pub content: String,
-    pub pitch: i32,
     pub username: String,
 }
 
@@ -39,8 +37,7 @@ impl CreateStatus {
     pub fn from_json(s: CreateStatusJson, username: String) -> Self {
         CreateStatus {
             content: s.content,
-            pitch: s.pitch,
-            username,
+            username
         }
     }
 }
