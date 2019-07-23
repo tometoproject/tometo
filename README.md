@@ -37,7 +37,8 @@ You'll also want to install `aeneas`, which parses text for us (this needs
 ffmpeg and espeak installed and available):
 
 ```
-pip3 install numpy aeneas
+pip3 install --user numpy 
+pip3 install --user aeneas 
 ```
 
 Then, you can clone the repository. Make sure you have a user account and that
@@ -53,7 +54,7 @@ Configuration is done through a central config file called `config.json`, which
 provides configuration for both components. First, copy the example file:
 
 ```
-cp config.example.json
+cp config.example.json config.json
 ```
 
 Don't worry about your config file getting put into version control, it's ignored
