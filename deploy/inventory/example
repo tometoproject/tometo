@@ -18,6 +18,7 @@ cookie_secret=randomlygeneratedsecurestring
 jwt_secret=anotherrandomlygeneratedsecurestring
 sentry=yoursentrydsn.com
 hostname=otemot.cool.zone
+protocol=http
 
 [both:children]
 tometo

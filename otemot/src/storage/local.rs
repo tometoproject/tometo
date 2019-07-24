@@ -16,8 +16,9 @@ impl LocalStorage {
             .merge(config::Environment::new().separator("_"))
             .unwrap();
 
+        let protocol = cfg.get::<String>("otemot.local_storage.protocol").unwrap();
         let hostname = cfg.get::<String>("otemot.hostname").unwrap();
-        LocalStorage { hostname }
+        LocalStorage { hostname: format!("{}://{}", protocol, hostname) }
     }
 }
 

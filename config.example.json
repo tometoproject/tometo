@@ -5,13 +5,16 @@
   },
   "otemot": {
     "database_url": "postgres://username:password@localhost/otemot_dev",
-    "storage": "local",
+		"storage": "local",
+		"local_storage": {
+			"protocol": "http"
+		},
     "google_credentials": "/your/username/Documents/account.json",
     "secrets": {
       "cookie": "replacemewithaverylongstring",
       "jwt": "replacemetoo"
     },
-    "hostname": "http://127.0.0.1:4001",
+		"hostname": "127.0.0.1:4001",
     "external_url": "http://localhost:4001",
     "dsn": "AAAA",
     "env": "development"
