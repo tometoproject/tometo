@@ -11,6 +11,7 @@ mod handlers;
 mod messages;
 mod models;
 mod schema;
+mod storage;
 mod token;
 
 use crate::actor::Oa;

@@ -4,9 +4,12 @@ use crate::messages::{NewResourceMsg, StatusMsg};
 use crate::models::avatar::Avatar;
 use crate::models::status::{CreateStatus, GetStatus, NewStatus, Status};
 use crate::models::user::User;
+use crate::storage::{create_storage, Storage};
 use actix::Handler;
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use sensitive_words::words;
+use std::fs;
+use std::path::PathBuf;
 use std::process::Command;
 use uuid::Uuid;
 
@@ -55,7 +58,13 @@ impl Handler<CreateStatus> for Oa {
                 ));
             }
 
-            let res = genstatus(status.content, avatar.unwrap(), &conn)?;
+            let mut cfg = config::Config::default();
+            cfg.merge(config::File::new("config.json", config::FileFormat::Json))
+                .unwrap()
+                .merge(config::Environment::new().separator("_"))
+                .unwrap();
+            let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
+            let res = genstatus(status.content, avatar.unwrap(), &conn, &storage)?;
             Ok(NewResourceMsg {
                 status: 200,
                 id: Some(res),
@@ -67,7 +76,12 @@ impl Handler<CreateStatus> for Oa {
     }
 }
 
-fn genstatus(content: String, avatar: Avatar, conn: Conn) -> Result<Uuid, ServiceError> {
+fn genstatus(
+    content: String,
+    avatar: Avatar,
+    conn: Conn,
+    storage: &impl Storage,
+) -> Result<Uuid, ServiceError> {
     use crate::schema::statuses::dsl::statuses;
 
     let new_id = Uuid::new_v4();
@@ -84,6 +98,15 @@ fn genstatus(content: String, avatar: Avatar, conn: Conn) -> Result<Uuid, Servic
         return Err(ServiceError::InternalServerError);
     }
 
+    let mut pbuf = PathBuf::from("otemot/gentts");
+    pbuf.push(&new_id.to_string());
+    let mut audio_path = PathBuf::from(&pbuf);
+    audio_path.push("temp.mp3");
+    let mut text_path = PathBuf::from(&pbuf);
+    text_path.push("out.json");
+    storage.put(format!("{}.mp3", new_id.to_string()), &audio_path)?;
+    storage.put(format!("{}.json", new_id.to_string()), &text_path)?;
+
     let new_status = NewStatus {
         id: &new_id.to_string(),
         content: &content,
@@ -95,6 +118,8 @@ fn genstatus(content: String, avatar: Avatar, conn: Conn) -> Result<Uuid, Servic
         .values(&new_status)
         .execute(conn)
         .map_err(|_| ServiceError::InternalServerError)?;
+
+    fs::remove_dir_all(&pbuf)?;
 
     Ok(new_id)
 }
@@ -116,11 +141,20 @@ impl Handler<GetStatus> for Oa {
             return Err(ServiceError::NotFound("No status found!".to_string()));
         }
 
+        let mut cfg = config::Config::default();
+        cfg.merge(config::File::new("config.json", config::FileFormat::Json))
+            .unwrap()
+            .merge(config::Environment::new().separator("_"))
+            .unwrap();
+        let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
+        let audio_path = storage.get(format!("{}.mp3", &status.id))?;
+        let timestamps_path = storage.get(format!("{}.json", &status.id))?;
+
         Ok(StatusMsg {
             status: 200,
-            audio: format!("{}/storage/{}.mp3", &status.hostname, &status.id),
+            audio: audio_path,
             content: status_result.unwrap().content,
-            timestamps: format!("{}/storage/{}.json", &status.hostname, &status.id),
+            timestamps: timestamps_path,
         })
     }
 }
