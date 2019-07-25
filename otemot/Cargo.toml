@@ -14,6 +14,7 @@ serde_derive = "1.0"
 chrono = { version = "0.4.7", features = ["serde"] }
 bcrypt = "0.4"
 md5 = "0.6"
+jsonwebtoken = "5.0"
 # actix-web = "1.0"
 # actix = "0.8"
 # actix-files = "0.1"

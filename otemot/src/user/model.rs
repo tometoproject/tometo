@@ -16,6 +16,11 @@ pub struct User {
     pub avatar: String,
 }
 
+#[derive(Serialize, Deserialize, Debug)]
+pub struct SlimUser {
+	pub username: String,
+}
+
 #[table_name = "users"]
 #[derive(Insertable)]
 pub struct InsertableUser {
@@ -33,6 +38,12 @@ pub struct CreateUser {
 	pub username: String,
 	pub password: String,
 	pub confirmPassword: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct LoginUser {
+	pub username: String,
+	pub password: String,
 }
 
 impl User {
