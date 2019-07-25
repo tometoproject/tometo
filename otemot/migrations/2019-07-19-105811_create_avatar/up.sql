@@ -2,8 +2,8 @@
 CREATE TABLE avatars(
 	id TEXT NOT NULL PRIMARY KEY,
 	user_id INTEGER NOT NULL REFERENCES users (id),
-	pitch INTEGER NOT NULL,
-	speed INTEGER NOT NULL,
-	language VARCHAR(10) NOT NULL,
-	gender VARCHAR(1) NOT NULL
+	pitch SMALLINT NOT NULL,
+	speed REAL NOT NULL,
+	language TEXT NOT NULL,
+	gender TEXT NOT NULL
 );

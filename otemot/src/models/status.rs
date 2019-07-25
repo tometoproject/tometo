@@ -1,5 +1,5 @@
 use crate::errors::ServiceError;
-use crate::messages::{NewStatusMsg, StatusMsg};
+use crate::messages::{NewResourceMsg, StatusMsg};
 use crate::schema::statuses;
 use actix::Message;
 use uuid::Uuid;
@@ -25,13 +25,11 @@ pub struct NewStatus<'a> {
 #[derive(Deserialize, Serialize, Debug)]
 pub struct CreateStatusJson {
     pub content: String,
-    pub pitch: i32,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct CreateStatus {
     pub content: String,
-    pub pitch: i32,
     pub username: String,
 }
 
@@ -39,7 +37,6 @@ impl CreateStatus {
     pub fn from_json(s: CreateStatusJson, username: String) -> Self {
         CreateStatus {
             content: s.content,
-            pitch: s.pitch,
             username,
         }
     }
@@ -56,7 +53,7 @@ impl Message for GetStatus {
 }
 
 impl Message for CreateStatus {
-    type Result = Result<NewStatusMsg, ServiceError>;
+    type Result = Result<NewResourceMsg, ServiceError>;
 }
 
 impl Default for Status {

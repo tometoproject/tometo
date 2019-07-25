@@ -7,7 +7,7 @@ export function register (username, password, confirmPassword, email) {
 		body: JSON.stringify({ username, password, confirmPassword, email })
 	}
 
-	return fetch(`${config.otemot.hostname}/api/register`, requestOptions)
+	return fetch(`${config.otemot.external_url}/api/register`, requestOptions)
 		.then(res => res.text().then(text => {
 			const data = text && JSON.parse(text)
 			if (!res.ok) {
@@ -26,7 +26,7 @@ export function login (username, password) {
 		credentials: 'include'
 	}
 
-	return fetch(`${config.otemot.hostname}/api/auth`, requestOptions)
+	return fetch(`${config.otemot.external_url}/api/auth`, requestOptions)
 		.then(res => res.text().then(text => {
 			const data = text && JSON.parse(text)
 			if (!res.ok) {
@@ -45,7 +45,7 @@ export function logout () {
 		credentials: 'include'
 	}
 
-	return fetch(`${config.otemot.hostname}/api/auth`, requestOptions)
+	return fetch(`${config.otemot.external_url}/api/auth`, requestOptions)
 		.then(res => res.text().then(text => {
 			const data = text && JSON.parse(text)
 			if (!res.ok) {

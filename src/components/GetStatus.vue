@@ -57,7 +57,7 @@ export default {
 	},
 
 	mounted () {
-		fetch(`${config.otemot.hostname}/api/status/${this.$route.params.id}`)
+		fetch(`${config.otemot.external_url}/api/status/${this.$route.params.id}`)
 		.then(res => {
 			if (res.ok) {
 				return res.json()

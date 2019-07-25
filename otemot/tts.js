@@ -1,12 +1,10 @@
 const { TextToSpeechClient } = require('@google-cloud/text-to-speech')
 const mkdir = require('make-dir')
-const del = require('del')
 
 const fs = require('fs')
 const util = require('util')
 const childProcess = require('child_process')
 const writeFile = util.promisify(fs.writeFile)
-const rename = util.promisify(fs.rename)
 const exec = util.promisify(childProcess.exec)
 const argv = require('minimist')(process.argv.slice(2))
 const config = require('../config.json')
@@ -39,20 +37,6 @@ mkdir(`${__dirname}/gentts/${name}`).then(() => {
 }).then(() => {
 	console.log('running aligner...')
 	return exec(`python3 -m aeneas.tools.execute_task ${__dirname}/gentts/${name}/temp.mp3 ${__dirname}/gentts/${name}/temp.txt "task_language=eng|os_task_file_format=json|is_text_type=plain" ${__dirname}/gentts/${name}/out.json`)
-}).then(() => {
-	console.log('storing...')
-	switch (config.otemot.storage) {
-	case 'local':
-		return Promise.all([
-			rename(`${__dirname}/gentts/${name}/out.json`, `${process.cwd()}/otemot/storage/${name}.json`),
-			rename(`${__dirname}/gentts/${name}/temp.mp3`, `${process.cwd()}/otemot/storage/${name}.mp3`)
-		])
-	}
-}).then(() => {
-	console.log('cleaning up...')
-	return Promise.all([
-		del(`${__dirname}/gentts/${name}`)
-	])
 }).then(() => {
 	console.log('done!')
 })
