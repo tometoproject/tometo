@@ -32,8 +32,4 @@ table! {
 joinable!(avatars -> users (user_id));
 joinable!(statuses -> avatars (avatar_id));
 
-allow_tables_to_appear_in_same_query!(
-    avatars,
-    statuses,
-    users,
-);
+allow_tables_to_appear_in_same_query!(avatars, statuses, users,);
