@@ -14,7 +14,7 @@ pub struct LoginMsg {
 }
 
 #[derive(Deserialize, Serialize, Debug)]
-pub struct NewStatusMsg {
+pub struct NewResourceMsg {
     pub status: u16,
     pub id: Option<Uuid>,
     pub message: Option<String>,

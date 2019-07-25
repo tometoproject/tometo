@@ -1,2 +1,2 @@
 -- This file should undo anything in `up.sql`
-DROP TABLE statuses;
+DROP INDEX users_username;

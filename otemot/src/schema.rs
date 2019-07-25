@@ -1,9 +1,20 @@
 table! {
+    avatars (id) {
+        id -> Text,
+        user_id -> Int4,
+        pitch -> Int2,
+        speed -> Float4,
+        language -> Text,
+        gender -> Text,
+    }
+}
+
+table! {
     statuses (id) {
         id -> Text,
         content -> Text,
-        pitch -> Int4,
-        user_id -> Int4,
+        avatar_id -> Text,
+        related_status_id -> Nullable<Text>,
     }
 }
 
@@ -18,4 +29,7 @@ table! {
     }
 }
 
-allow_tables_to_appear_in_same_query!(statuses, users,);
+joinable!(avatars -> users (user_id));
+joinable!(statuses -> avatars (avatar_id));
+
+allow_tables_to_appear_in_same_query!(avatars, statuses, users,);

@@ -1,5 +1,5 @@
 use crate::errors::ServiceError;
-use crate::messages::{NewStatusMsg, StatusMsg};
+use crate::messages::{NewResourceMsg, StatusMsg};
 use crate::schema::statuses;
 use actix::Message;
 use uuid::Uuid;
@@ -9,8 +9,8 @@ use uuid::Uuid;
 pub struct Status {
     pub id: String,
     pub content: String,
-    pub pitch: i32,
-    pub user_id: i32,
+    pub avatar_id: String,
+    pub related_status_id: Option<String>,
 }
 
 #[table_name = "statuses"]
@@ -18,20 +18,18 @@ pub struct Status {
 pub struct NewStatus<'a> {
     pub id: &'a str,
     pub content: &'a str,
-    pub pitch: i32,
-    pub user_id: i32,
+    pub avatar_id: &'a str,
+    pub related_status_id: Option<&'a str>,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct CreateStatusJson {
     pub content: String,
-    pub pitch: i32,
 }
 
 #[derive(Deserialize, Serialize, Debug)]
 pub struct CreateStatus {
     pub content: String,
-    pub pitch: i32,
     pub username: String,
 }
 
@@ -39,7 +37,6 @@ impl CreateStatus {
     pub fn from_json(s: CreateStatusJson, username: String) -> Self {
         CreateStatus {
             content: s.content,
-            pitch: s.pitch,
             username,
         }
     }
@@ -56,7 +53,7 @@ impl Message for GetStatus {
 }
 
 impl Message for CreateStatus {
-    type Result = Result<NewStatusMsg, ServiceError>;
+    type Result = Result<NewResourceMsg, ServiceError>;
 }
 
 impl Default for Status {
@@ -64,8 +61,8 @@ impl Default for Status {
         Status {
             id: Uuid::new_v4().to_string(),
             content: "".to_string(),
-            pitch: 0,
-            user_id: 0,
+            avatar_id: "".to_string(),
+            related_status_id: None,
         }
     }
 }

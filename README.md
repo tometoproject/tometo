@@ -95,10 +95,11 @@ First, go into the right directory:
 cd otemot
 ```
 
-Next up, to make the app aware of the database, run this command:
+Next up, to make the app aware of the database, run this command, substituting `username`,
+`password` and `otemot_dev` for your own database credentials:
 
 ```
-diesel setup
+DATABASE_URL=postgres://username:password@localhost/otemot_dev diesel setup
 ```
 
 If your database is misconfigured, the output from this command will let you

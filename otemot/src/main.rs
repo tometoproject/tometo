@@ -11,10 +11,11 @@ mod handlers;
 mod messages;
 mod models;
 mod schema;
+mod storage;
 mod token;
 
 use crate::actor::Oa;
-use crate::api::{auth, home, status};
+use crate::api::{auth, avatar, home, status};
 use actix::prelude::*;
 use actix_cors::Cors;
 use actix_files::Files;
@@ -26,22 +27,35 @@ use std::net::SocketAddrV4;
 fn main() {
     print!("Loading configuration file... ");
     let mut cfg = config::Config::default();
-    cfg
-        .merge(config::File::new("config.json", config::FileFormat::Json)).unwrap()
-        .merge(config::Environment::new().separator("_")).unwrap();
+    cfg.merge(config::File::new("config.json", config::FileFormat::Json))
+        .unwrap()
+        .merge(config::Environment::new().separator("_"))
+        .unwrap();
     ::std::env::set_var("RUST_LOG", "actix_web=info");
     env_logger::init();
     println!("OK");
 
     print!("Ensuring configuration key completeness...");
-    let database_url = cfg.get::<String>("otemot.database_url").expect("otemot.database_url unset!");
-    cfg.get::<String>("otemot.storage").expect("otemot.storage unset!");
-    cfg.get::<String>("otemot.google_credentials").expect("otemot.google_credentials unset!");
-    let cookie_secret = cfg.get::<String>("otemot.secrets.cookie").expect("otemot.secrets.cookie unset!");
-    cfg.get::<String>("otemot.secrets.jwt").expect("otemot.secrets.jwt unset!");
-    let ot_hostname = cfg.get::<SocketAddrV4>("otemot.hostname").expect("otemot.hostname unset!");
-    cfg.get::<String>("otemot.external_url").expect("otemot.external_url unset!");
-    let tm_hostname = cfg.get::<String>("tometo.hostname").expect("tometo.hostname unset!");
+    let database_url = cfg
+        .get::<String>("otemot.database_url")
+        .expect("otemot.database_url unset!");
+    cfg.get::<String>("otemot.storage")
+        .expect("otemot.storage unset!");
+    cfg.get::<String>("otemot.google_credentials")
+        .expect("otemot.google_credentials unset!");
+    let cookie_secret = cfg
+        .get::<String>("otemot.secrets.cookie")
+        .expect("otemot.secrets.cookie unset!");
+    cfg.get::<String>("otemot.secrets.jwt")
+        .expect("otemot.secrets.jwt unset!");
+    let ot_hostname = cfg
+        .get::<SocketAddrV4>("otemot.hostname")
+        .expect("otemot.hostname unset!");
+    cfg.get::<String>("otemot.external_url")
+        .expect("otemot.external_url unset!");
+    let tm_hostname = cfg
+        .get::<String>("tometo.hostname")
+        .expect("tometo.hostname unset!");
     let mut dsn = cfg.get::<String>("otemot.dsn").expect("otemot.dsn unset!");
     let environment = cfg.get::<String>("otemot.env").expect("otemot.env unset!");
     if &dsn[0..3] != "http" {
@@ -100,6 +114,10 @@ fn main() {
                             .route(web::get().to_async(auth::get_user)),
                     )
                     .service(web::resource("/register").route(web::post().to_async(auth::signup)))
+                    .service(
+                        web::resource("/avatar/new")
+                            .route(web::post().to_async(avatar::create_avatar)),
+                    )
                     .service(
                         web::resource("/status/new")
                             .route(web::post().to_async(status::create_status)),

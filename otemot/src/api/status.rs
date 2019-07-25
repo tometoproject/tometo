@@ -26,7 +26,7 @@ pub fn get_status(
     state
         .send(GetStatus {
             id: status_id.to_string(),
-            hostname: cfg.get::<String>("otemot.hostname").unwrap(),
+            hostname: cfg.get::<String>("otemot.external_url").unwrap(),
         })
         .from_err()
         .and_then(|res| match res {

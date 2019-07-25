@@ -1,10 +1,10 @@
 -- Your SQL goes here
-create table users (
-  id serial not null primary key,
-  email text not null,
-  username text not null,
-  password text not null,
-  created_at timestamp not null default current_timestamp,
-  avatar text not null default '',
-  unique (email, username)
+CREATE TABLE users (
+  id SERIAL NOT NULL PRIMARY KEY,
+  email TEXT NOT NULL,
+  username TEXT NOT NULL,
+  password TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT current_timestamp,
+  avatar TEXT NOT NULL DEFAULT '',
+  UNIQUE (email, username)
 );
