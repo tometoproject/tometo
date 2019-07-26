@@ -1,6 +1,6 @@
-use crate::user::model::{User, CreateUser, LoginUser, SlimUser};
 use crate::db;
-use rocket::http::{self, Cookies, Cookie};
+use crate::user::model::{CreateUser, LoginUser, SlimUser, User};
+use rocket::http::{self, Cookie, Cookies};
 use rocket_contrib::json::Json;
 
 pub mod model;
@@ -17,10 +17,9 @@ fn register(user: Json<CreateUser>, connection: db::Connection) -> Result<String
 	{
 		return Err(http::Status::BadRequest);
 	}
-	
-	let res = User::create(user, &connection)
-		.map_err(|_| http::Status::InternalServerError);
-	
+
+	let res = User::create(user, &connection).map_err(|_| http::Status::InternalServerError);
+
 	match res {
 		Ok(_) => Ok("Successfully created user!".into()),
 		Err(e) => Err(e),
@@ -28,14 +27,20 @@ fn register(user: Json<CreateUser>, connection: db::Connection) -> Result<String
 }
 
 #[post("/", data = "<user>")]
-fn login(user: Json<LoginUser>, connection: db::Connection, mut cookies: Cookies) -> Result<Json<SlimUser>, http::Status> {
+fn login(
+	user: Json<LoginUser>,
+	connection: db::Connection,
+	mut cookies: Cookies,
+) -> Result<Json<SlimUser>, http::Status> {
 	let user = user.into_inner();
 	User::check_password(&user, &connection)?;
 	let token = token::create_token(&SlimUser {
 		username: user.username.clone(),
 	})?;
 	cookies.add_private(Cookie::new("auth", token));
-	Ok(Json(SlimUser { username: user.username.clone() }))
+	Ok(Json(SlimUser {
+		username: user.username.clone(),
+	}))
 }
 
 #[delete("/")]

@@ -1,8 +1,8 @@
 use diesel::pg::PgConnection;
 use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
-use rocket::request::{self, FromRequest};
-use rocket::{Request, State, Outcome};
 use rocket::http::Status;
+use rocket::request::{self, FromRequest};
+use rocket::{Outcome, Request, State};
 use std::ops::Deref;
 
 pub type PgPool = Pool<ConnectionManager<PgConnection>>;

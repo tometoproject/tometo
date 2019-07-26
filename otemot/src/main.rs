@@ -8,8 +8,8 @@ extern crate diesel;
 extern crate serde_derive;
 
 mod db;
-mod user;
 mod schema;
+mod user;
 
 #[get("/")]
 fn index() -> &'static str {
@@ -19,16 +19,18 @@ fn index() -> &'static str {
 fn main() {
 	let mut cfg = config::Config::default();
 	cfg.merge(config::File::new("config.json", config::FileFormat::Json))
-		 .unwrap()
-		 .merge(config::Environment::new().separator("_"))
-		 .unwrap();
-	
-	let db_url = cfg.get::<String>("otemot.database_url").expect("otemot.database_url is unset!");
+		.unwrap()
+		.merge(config::Environment::new().separator("_"))
+		.unwrap();
+
+	let db_url = cfg
+		.get::<String>("otemot.database_url")
+		.expect("otemot.database_url is unset!");
 
 	let mut rocket = rocket::ignite()
 		.manage(db::connect(db_url))
 		.mount("/", routes![index]);
-	
+
 	rocket = user::mount(rocket);
 
 	rocket.launch();

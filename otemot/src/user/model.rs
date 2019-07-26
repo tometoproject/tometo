@@ -1,23 +1,23 @@
-use chrono::{NaiveDateTime, Utc};
-use crate::schema::users;
-use diesel::PgConnection;
-use diesel::prelude::*;
-use rocket::http;
-use rocket::request::{Request, FromRequest, Outcome};
 use crate::db::Connection;
+use crate::schema::users;
 use crate::user::token::decode_token;
 use bcrypt::{hash, verify, DEFAULT_COST};
+use chrono::{NaiveDateTime, Utc};
+use diesel::prelude::*;
+use diesel::PgConnection;
 use md5::compute;
+use rocket::http;
+use rocket::request::{FromRequest, Outcome, Request};
 
 #[table_name = "users"]
 #[derive(Debug, Serialize, Deserialize, Queryable, AsChangeset)]
 pub struct User {
-    pub id: i32,
-    pub email: String,
-    pub username: String,
-    pub password: String,
-    pub created_at: NaiveDateTime,
-    pub avatar: String,
+	pub id: i32,
+	pub email: String,
+	pub username: String,
+	pub password: String,
+	pub created_at: NaiveDateTime,
+	pub avatar: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -36,11 +36,11 @@ impl From<User> for SlimUser {
 #[table_name = "users"]
 #[derive(Insertable)]
 pub struct InsertableUser {
-    pub email: String,
-    pub username: String,
-    pub password: String,
-    pub created_at: NaiveDateTime,
-    pub avatar: String,
+	pub email: String,
+	pub username: String,
+	pub password: String,
+	pub created_at: NaiveDateTime,
+	pub avatar: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -66,9 +66,8 @@ impl User {
 		};
 		let digest = compute(&user.email);
 		let md5str = format!("{:x}", digest);
-		let avatar_url = "http://www.gravatar.com/avatar/".to_string()
-			+ &md5str
-			+ "?s=128&d=identicon";
+		let avatar_url =
+			"http://www.gravatar.com/avatar/".to_string() + &md5str + "?s=128&d=identicon";
 		let new_user = InsertableUser {
 			email: user.email,
 			username: user.username,
@@ -77,12 +76,17 @@ impl User {
 			avatar: avatar_url,
 		};
 
-		diesel::insert_into(users::table).values(&new_user).execute(connection)?;
+		diesel::insert_into(users::table)
+			.values(&new_user)
+			.execute(connection)?;
 		Ok(())
 	}
 
 	pub fn check_password(user: &LoginUser, connection: &PgConnection) -> Result<(), http::Status> {
-		let db_user = users::table.filter(users::username.eq(&user.username)).first::<User>(connection).map_err(|_| http::Status::InternalServerError)?;
+		let db_user = users::table
+			.filter(users::username.eq(&user.username))
+			.first::<User>(connection)
+			.map_err(|_| http::Status::InternalServerError)?;
 		match verify(&user.password, &db_user.password) {
 			Ok(valid) if valid => Ok(()),
 			Ok(valid) if !valid => Err(http::Status::BadRequest),
@@ -104,7 +108,9 @@ impl<'a, 'r> FromRequest<'a, 'r> for SlimUser {
 		if user.is_err() {
 			return Outcome::Failure((http::Status::BadRequest, ()));
 		}
-		let query = users::table.filter(users::username.eq(&user.unwrap().username)).first::<User>(&conn);
+		let query = users::table
+			.filter(users::username.eq(&user.unwrap().username))
+			.first::<User>(&conn);
 		match query {
 			Ok(u) => Outcome::Success(u.into()),
 			Err(_) => Outcome::Failure((http::Status::Unauthorized, ())),
