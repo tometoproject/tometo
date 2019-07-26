@@ -2,6 +2,10 @@ use chrono::{NaiveDateTime, Utc};
 use crate::schema::users;
 use diesel::PgConnection;
 use diesel::prelude::*;
+use rocket::http;
+use rocket::request::{Request, FromRequest, Outcome};
+use crate::db::Connection;
+use crate::user::token::decode_token;
 use bcrypt::{hash, verify, DEFAULT_COST};
 use md5::compute;
 
@@ -19,6 +23,14 @@ pub struct User {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct SlimUser {
 	pub username: String,
+}
+
+impl From<User> for SlimUser {
+	fn from(user: User) -> Self {
+		SlimUser {
+			username: user.username,
+		}
+	}
 }
 
 #[table_name = "users"]
@@ -47,7 +59,7 @@ pub struct LoginUser {
 }
 
 impl User {
-	pub fn create(user: CreateUser, connection: &PgConnection) -> QueryResult<User> {
+	pub fn create(user: CreateUser, connection: &PgConnection) -> QueryResult<()> {
 		let hash_password = match hash(&user.password, DEFAULT_COST) {
 			Ok(h) => h,
 			Err(_) => panic!(),
@@ -66,6 +78,36 @@ impl User {
 		};
 
 		diesel::insert_into(users::table).values(&new_user).execute(connection)?;
-		users::table.order(users::created_at.desc()).first(connection)
+		Ok(())
+	}
+
+	pub fn check_password(user: &LoginUser, connection: &PgConnection) -> Result<(), http::Status> {
+		let db_user = users::table.filter(users::username.eq(&user.username)).first::<User>(connection).map_err(|_| http::Status::InternalServerError)?;
+		match verify(&user.password, &db_user.password) {
+			Ok(valid) if valid => Ok(()),
+			Ok(valid) if !valid => Err(http::Status::BadRequest),
+			_ => Err(http::Status::InternalServerError),
+		}
+	}
+}
+
+impl<'a, 'r> FromRequest<'a, 'r> for User {
+	type Error = ();
+
+	fn from_request(request: &'a Request<'r>) -> Outcome<Self, Self::Error> {
+		let conn = request.guard::<Connection>()?.0;
+		let jwt = request.cookies().get_private("auth");
+		if jwt.is_none() {
+			return Outcome::Failure((http::Status::BadRequest, ()));
+		}
+		let user = decode_token(&jwt.unwrap().value());
+		if user.is_err() {
+			return Outcome::Failure((http::Status::BadRequest, ()));
+		}
+		let query = users::table.filter(users::username.eq(&user.unwrap().username)).first::<User>(&conn);
+		match query {
+			Ok(u) => Outcome::Success(u),
+			Err(_) => Outcome::Failure((http::Status::Unauthorized, ())),
+		}
 	}
 }
