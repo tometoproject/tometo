@@ -91,7 +91,7 @@ impl User {
 	}
 }
 
-impl<'a, 'r> FromRequest<'a, 'r> for User {
+impl<'a, 'r> FromRequest<'a, 'r> for SlimUser {
 	type Error = ();
 
 	fn from_request(request: &'a Request<'r>) -> Outcome<Self, Self::Error> {
@@ -106,7 +106,7 @@ impl<'a, 'r> FromRequest<'a, 'r> for User {
 		}
 		let query = users::table.filter(users::username.eq(&user.unwrap().username)).first::<User>(&conn);
 		match query {
-			Ok(u) => Outcome::Success(u),
+			Ok(u) => Outcome::Success(u.into()),
 			Err(_) => Outcome::Failure((http::Status::Unauthorized, ())),
 		}
 	}

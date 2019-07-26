@@ -38,8 +38,18 @@ fn login(user: Json<LoginUser>, connection: db::Connection, mut cookies: Cookies
 	Ok(Json(SlimUser { username: user.username.clone() }))
 }
 
+#[delete("/")]
+fn logout(mut cookies: Cookies) -> () {
+	cookies.remove_private(Cookie::named("auth"));
+}
+
+#[get("/")]
+fn get_user(user: SlimUser) -> Json<SlimUser> {
+	Json(user)
+}
+
 pub fn mount(rocket: rocket::Rocket) -> rocket::Rocket {
 	rocket
 		.mount("/api/register", routes![register])
-		.mount("/api/auth", routes![login])
+		.mount("/api/auth", routes![login, logout, get_user])
 }
