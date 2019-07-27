@@ -4,7 +4,7 @@ use crate::avatar::model::{Avatar, CreateAvatar};
 use rocket::http;
 use rocket_contrib::json::Json;
 
-mod model;
+pub mod model;
 
 #[post("/", data = "<avatar>")]
 fn create_avatar(user: SlimUser, avatar: Json<CreateAvatar>, connection: db::Connection) -> Result<String, http::Status> {

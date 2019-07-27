@@ -11,6 +11,8 @@ mod db;
 mod schema;
 mod user;
 mod avatar;
+mod status;
+mod storage;
 
 #[get("/")]
 fn index() -> &'static str {
@@ -34,6 +36,7 @@ fn main() {
 
 	rocket = user::mount(rocket);
 	rocket = avatar::mount(rocket);
+	rocket = status::mount(rocket);
 
 	rocket.launch();
 }

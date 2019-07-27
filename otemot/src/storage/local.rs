@@ -1,7 +1,7 @@
-use crate::errors::ServiceError;
 use crate::storage::Storage;
 use std::fs;
 use std::path::PathBuf;
+use rocket::http::Status;
 
 #[derive(Debug, Clone)]
 pub struct LocalStorage {
@@ -23,34 +23,34 @@ impl LocalStorage {
 }
 
 impl Storage for LocalStorage {
-    fn get(&self, key: String) -> Result<String, ServiceError> {
+    fn get(&self, key: String) -> Result<String, Status> {
         let mut path = PathBuf::from("otemot/storage");
         path.push(&key);
         if !path.exists() {
-            Err(ServiceError::NotFound("File doesn't exist!".to_string()))
+            Err(Status::NotFound)
         } else {
             Ok(format!("{}/storage/{}", self.hostname, &key))
         }
     }
 
-    fn put(&self, key: String, path: &PathBuf) -> Result<bool, ServiceError> {
+    fn put(&self, key: String, path: &PathBuf) -> Result<bool, Status> {
         if !path.exists() {
             return Ok(false);
         }
 
         let mut pb = PathBuf::from("otemot/storage");
         pb.push(&key);
-        fs::rename(path, pb)?;
+        fs::rename(path, pb).map_err(|_| Status::InternalServerError)?;
         Ok(true)
     }
 
-    fn delete(&self, key: String) -> Result<bool, ServiceError> {
+    fn delete(&self, key: String) -> Result<bool, Status> {
         let mut path = PathBuf::from("otemot/storage");
         path.push(key);
         if !path.exists() {
             Ok(false)
         } else {
-            fs::remove_file(path)?;
+            fs::remove_file(path).map_err(|_| Status::InternalServerError)?;
             Ok(true)
         }
     }
