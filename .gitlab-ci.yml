@@ -1,13 +1,10 @@
-image: alpine:edge
+image: node:buster
 
 stages:
   - test
 
 lint tometo:
   stage: "test"
-  before_script:
-    - apk update
-    - apk add nodejs npm
   script:
     - npm install
     - npm run lint
@@ -19,8 +16,8 @@ lint otemot:
     paths:
       - out/
   before_script:
-    - apk update
-    - apk add curl rust cargo openssl-dev postgresql-dev
+    - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly-2019-07-18
+    - source $HOME/.cargo/env
     - rustc --version
   script:
     - cargo check --target-dir out/
