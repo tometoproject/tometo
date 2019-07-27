@@ -14,6 +14,8 @@ mod avatar;
 mod status;
 mod storage;
 
+use rocket_contrib::serve::StaticFiles;
+
 #[get("/")]
 fn index() -> &'static str {
 	"Hello world!"
@@ -32,7 +34,8 @@ fn main() {
 
 	let mut rocket = rocket::ignite()
 		.manage(db::connect(db_url))
-		.mount("/", routes![index]);
+		.mount("/", routes![index])
+		.mount("/storage", StaticFiles::from("otemot/storage"));
 
 	rocket = user::mount(rocket);
 	rocket = avatar::mount(rocket);
