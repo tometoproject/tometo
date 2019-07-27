@@ -17,7 +17,6 @@
 		"hostname": "127.0.0.1",
 		"port": "4001",
     "external_url": "http://localhost:4001",
-    "dsn": "AAAA",
     "env": "development"
   }
 }

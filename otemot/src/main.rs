@@ -53,7 +53,6 @@ fn main() {
 	let tm_hostname = cfg
 		.get::<String>("tometo.hostname")
 		.expect("tometo.hostname unset!");
-	let mut dsn = cfg.get::<String>("otemot.dsn").expect("otemot.dsn unset!");
 	let c_environment = cfg.get::<String>("otemot.env").expect("otemot.env unset!");
 	let environment;
 	match c_environment.as_str() {
@@ -61,9 +60,6 @@ fn main() {
 		"production" => environment = Environment::Production,
 		"staging" => environment = Environment::Staging,
 		_ => environment = Environment::Development,
-	}
-	if &dsn[0..3] != "http" {
-		dsn = String::new();
 	}
 
 	let rocket_config = RocketConfig::build(environment)
