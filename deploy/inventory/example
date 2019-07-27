@@ -18,7 +18,6 @@ cookie_secret=randomlygeneratedsecurestring
 jwt_secret=anotherrandomlygeneratedsecurestring
 hostname=otemot.cool.zone
 port=4001
-protocol=http
 
 [both:children]
 tometo
