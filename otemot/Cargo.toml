@@ -7,6 +7,7 @@ edition = "2018"
 [dependencies]
 rocket = "0.4.2"
 rocket_contrib = { version = "0.4.2", features = ["json", "serve"], default-features = false }
+rocket_cors = "0.5"
 diesel = { version = "1.4.2", features = ["postgres", "r2d2", "chrono"] }
 config = { version = "0.9.3", features = ["json"], default-features = false }
 serde = "1.0"
