@@ -2,7 +2,7 @@ server {
   server_name {{ ot_hostname }};
 
   location / {
-    proxy_pass http://localhost:4001/;
+    proxy_pass http://localhost:{{ port }}/;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_pass_header Authorization;
   }
