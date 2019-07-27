@@ -102,11 +102,11 @@ impl<'a, 'r> FromRequest<'a, 'r> for SlimUser {
 		let conn = request.guard::<Connection>()?.0;
 		let jwt = request.cookies().get_private("auth");
 		if jwt.is_none() {
-			return Outcome::Failure((http::Status::BadRequest, ()));
+			return Outcome::Failure((http::Status::Unauthorized, ()));
 		}
 		let user = decode_token(&jwt.unwrap().value());
 		if user.is_err() {
-			return Outcome::Failure((http::Status::BadRequest, ()));
+			return Outcome::Failure((http::Status::Unauthorized, ()));
 		}
 		let query = users::table
 			.filter(users::username.eq(&user.unwrap().username))

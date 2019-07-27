@@ -10,6 +10,7 @@ extern crate serde_derive;
 mod db;
 mod schema;
 mod user;
+mod avatar;
 
 #[get("/")]
 fn index() -> &'static str {
@@ -32,6 +33,7 @@ fn main() {
 		.mount("/", routes![index]);
 
 	rocket = user::mount(rocket);
+	rocket = avatar::mount(rocket);
 
 	rocket.launch();
 }
