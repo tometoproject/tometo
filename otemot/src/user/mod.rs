@@ -44,7 +44,7 @@ fn login(
 }
 
 #[delete("/")]
-fn logout(mut cookies: Cookies) -> () {
+fn logout(mut cookies: Cookies) {
 	cookies.remove_private(Cookie::named("auth"));
 }
 

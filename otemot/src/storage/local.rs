@@ -3,7 +3,7 @@ use rocket::http::Status;
 use std::fs;
 use std::path::PathBuf;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct LocalStorage {
 	hostname: String,
 }

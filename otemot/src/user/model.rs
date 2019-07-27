@@ -62,7 +62,7 @@ impl User {
 	pub fn create(user: CreateUser, connection: &PgConnection) -> QueryResult<()> {
 		let hash_password = match hash(&user.password, DEFAULT_COST) {
 			Ok(h) => h,
-			Err(_) => panic!(),
+			Err(e) => panic!(e),
 		};
 		let digest = compute(&user.email);
 		let md5str = format!("{:x}", digest);
