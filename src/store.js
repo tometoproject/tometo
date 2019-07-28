@@ -87,7 +87,7 @@ export default new Vuex.Store({
 
 			postStatus(content, pitch).then(data => {
 				commit('toggleLoading')
-				router.push(`/status/${data.id}`)
+				router.push(`/status/${data}`)
 			}, error => {
 				commit('toggleLoading')
 				commit('setErrorFlash', error)
