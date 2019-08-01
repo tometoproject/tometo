@@ -12,7 +12,7 @@ export function postStatus (content, pitch) {
 		.then(res => res.text().then(text => {
 			const data = text && JSON.parse(text)
 			if (!res.ok) {
-				const error = res.statusText
+				const error = (data && data.message) || res.statusText
 				return Promise.reject(error)
 			}
 			return data

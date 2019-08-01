@@ -10,15 +10,17 @@ extern crate serde_derive;
 
 mod avatar;
 mod db;
+mod error;
 mod schema;
 mod status;
 mod storage;
 mod user;
 
+use crate::error::ErrorJson;
 use rocket::config::{Config as RocketConfig, Environment};
 use rocket::http::Method;
-use rocket_contrib::serve::StaticFiles;
 use rocket_contrib::json::Json;
+use rocket_contrib::serve::StaticFiles;
 use rocket_cors::{AllowedHeaders, AllowedOrigins, CorsOptions};
 
 #[get("/")]
@@ -88,21 +90,16 @@ fn main() {
 		.mount("/storage", StaticFiles::from("otemot/storage"))
 		.attach(cors);
 
-	#[derive(Serialize)]
-	struct ErrorResponse {
-		message: String,
-	}
-
 	#[catch(404)]
-	fn not_found() -> Json<ErrorResponse> {
-		Json(ErrorResponse {
+	fn not_found() -> Json<ErrorJson> {
+		Json(ErrorJson {
 			message: String::from("Not found!"),
 		})
 	}
 
 	#[catch(500)]
-	fn server_error() -> Json<ErrorResponse> {
-		Json(ErrorResponse {
+	fn server_error() -> Json<ErrorJson> {
+		Json(ErrorJson {
 			message: String::from("Internal server error."),
 		})
 	}

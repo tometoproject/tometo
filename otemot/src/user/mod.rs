@@ -1,13 +1,14 @@
 use crate::db;
+use crate::error::{new_ejson, OError};
 use crate::user::model::{CreateUser, LoginUser, SlimUser, User};
-use rocket::http::{self, Cookie, Cookies};
+use rocket::http::{Cookie, Cookies};
 use rocket_contrib::json::Json;
 
 pub mod model;
 pub mod token;
 
 #[post("/", data = "<user>")]
-fn register(user: Json<CreateUser>, connection: db::Connection) -> Result<String, http::Status> {
+fn register(user: Json<CreateUser>, connection: db::Connection) -> Result<String, OError> {
 	let user = user.into_inner();
 
 	if user.username.is_empty()
@@ -15,15 +16,13 @@ fn register(user: Json<CreateUser>, connection: db::Connection) -> Result<String
 		|| user.confirmPassword.is_empty()
 		|| user.email.is_empty()
 	{
-		return Err(http::Status::BadRequest);
+		return Err(OError::BadRequest(new_ejson(
+			"Please fill out all of the fields!",
+		)));
 	}
 
-	let res = User::create(user, &connection).map_err(|_| http::Status::InternalServerError);
-
-	match res {
-		Ok(_) => Ok("Successfully created user!".into()),
-		Err(e) => Err(e),
-	}
+	User::create(user, &connection)?;
+	Ok(String::from("Successfully created User!"))
 }
 
 #[post("/", data = "<user>")]
@@ -31,7 +30,7 @@ fn login(
 	user: Json<LoginUser>,
 	connection: db::Connection,
 	mut cookies: Cookies,
-) -> Result<Json<SlimUser>, http::Status> {
+) -> Result<Json<SlimUser>, OError> {
 	let user = user.into_inner();
 	User::check_password(&user, &connection)?;
 	let token = token::create_token(&SlimUser {

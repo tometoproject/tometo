@@ -1,9 +1,9 @@
 use crate::avatar::model::Avatar;
+use crate::error::{new_ejson, OError};
 use crate::schema::{avatars, statuses, users};
 use crate::storage::{create_storage, Storage};
 use crate::user::model::User;
 use diesel::prelude::*;
-use rocket::http;
 use std::fs;
 use std::path::PathBuf;
 use std::process::Command;
@@ -40,35 +40,28 @@ impl Status {
 		status: CreateStatus,
 		username: &str,
 		connection: &PgConnection,
-	) -> Result<Uuid, http::Status> {
+	) -> Result<Uuid, OError> {
 		let user = users::table
 			.filter(users::username.eq(username))
-			.first::<User>(connection)
-			.map_err(|_| http::Status::InternalServerError)?;
+			.first::<User>(connection)?;
 		let avatar = avatars::table
 			.filter(avatars::user_id.eq(user.id))
-			.first::<Avatar>(connection);
-		if avatar.is_err() {
-			return Err(http::Status::BadRequest);
-		}
+			.first::<Avatar>(connection)
+			.map_err(|_| OError::BadRequest(new_ejson("Create an avatar first!")))?;
 		let mut cfg = config::Config::default();
 		cfg.merge(config::File::new("config.json", config::FileFormat::Json))
 			.unwrap()
 			.merge(config::Environment::new().separator("_"))
 			.unwrap();
 		let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
-		let res = genstatus(status.content, avatar.unwrap(), connection, &storage)?;
+		let res = genstatus(status.content, avatar, connection, &storage)?;
 		Ok(res)
 	}
 
-	pub fn get(
-		status: GetStatus,
-		connection: &PgConnection,
-	) -> Result<GetStatusResponse, http::Status> {
+	pub fn get(status: GetStatus, connection: &PgConnection) -> Result<GetStatusResponse, OError> {
 		let status = statuses::table
 			.filter(statuses::id.eq(status.id))
-			.first::<Status>(connection)
-			.map_err(|_| http::Status::BadRequest)?;
+			.first::<Status>(connection)?;
 		let mut cfg = config::Config::default();
 		cfg.merge(config::File::new("config.json", config::FileFormat::Json))
 			.unwrap()
@@ -90,21 +83,16 @@ fn genstatus(
 	avatar: Avatar,
 	conn: &PgConnection,
 	storage: &impl Storage,
-) -> Result<Uuid, http::Status> {
+) -> Result<Uuid, OError> {
 	let new_id = Uuid::new_v4();
-	let command_out = Command::new("/usr/bin/env")
+	Command::new("/usr/bin/env")
 		.arg("node")
 		.arg("otemot/tts.js")
 		.arg(&content)
 		.args(&["-p", &avatar.pitch.to_string()])
 		.args(&["-s", &avatar.speed.to_string()])
 		.args(&["-n", &new_id.to_string()])
-		.output()
-		.map_err(|_| http::Status::InternalServerError)?;
-
-	if !command_out.status.success() {
-		return Err(http::Status::InternalServerError);
-	}
+		.output()?;
 
 	let mut pbuf = PathBuf::from("otemot/gentts");
 	pbuf.push(&new_id.to_string());
@@ -124,10 +112,9 @@ fn genstatus(
 
 	diesel::insert_into(statuses::table)
 		.values(&new_status)
-		.execute(conn)
-		.map_err(|_| http::Status::InternalServerError)?;
+		.execute(conn)?;
 
-	fs::remove_dir_all(&pbuf).map_err(|_| http::Status::InternalServerError)?;
+	fs::remove_dir_all(&pbuf)?;
 
 	Ok(new_id)
 }

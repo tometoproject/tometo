@@ -1,7 +1,7 @@
 use crate::db;
+use crate::error::OError;
 use crate::status::model::{CreateStatus, GetStatus, GetStatusResponse, Status};
 use crate::user::model::SlimUser;
-use rocket::http;
 use rocket_contrib::json::Json;
 use uuid::Uuid;
 
@@ -12,28 +12,19 @@ fn create_status(
 	user: SlimUser,
 	status: Json<CreateStatus>,
 	connection: db::Connection,
-) -> Result<Json<Uuid>, http::Status> {
+) -> Result<Json<Uuid>, OError> {
 	let status = status.into_inner();
 
-	let res = Status::create(status, &user.username, &connection);
+	let res = Status::create(status, &user.username, &connection)?;
 
-	match res {
-		Ok(r) => Ok(Json(r)),
-		Err(e) => Err(e),
-	}
+	Ok(Json(res))
 }
 
 #[get("/<id>")]
-fn get_status(
-	id: String,
-	connection: db::Connection,
-) -> Result<Json<GetStatusResponse>, http::Status> {
+fn get_status(id: String, connection: db::Connection) -> Result<Json<GetStatusResponse>, OError> {
 	let status = GetStatus { id };
-	let res = Status::get(status, &connection);
-	match res {
-		Ok(r) => Ok(Json(r)),
-		Err(e) => Err(e),
-	}
+	let res = Status::get(status, &connection)?;
+	Ok(Json(res))
 }
 
 pub fn mount(rocket: rocket::Rocket) -> rocket::Rocket {

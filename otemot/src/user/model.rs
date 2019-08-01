@@ -1,4 +1,5 @@
 use crate::db::Connection;
+use crate::error::{new_ejson, OError};
 use crate::schema::users;
 use crate::user::token::decode_token;
 use bcrypt::{hash, verify, DEFAULT_COST};
@@ -59,7 +60,7 @@ pub struct LoginUser {
 }
 
 impl User {
-	pub fn create(user: CreateUser, connection: &PgConnection) -> QueryResult<()> {
+	pub fn create(user: CreateUser, connection: &PgConnection) -> Result<(), OError> {
 		let hash_password = match hash(&user.password, DEFAULT_COST) {
 			Ok(h) => h,
 			Err(e) => panic!(e),
@@ -82,15 +83,16 @@ impl User {
 		Ok(())
 	}
 
-	pub fn check_password(user: &LoginUser, connection: &PgConnection) -> Result<(), http::Status> {
+	pub fn check_password(user: &LoginUser, connection: &PgConnection) -> Result<(), OError> {
 		let db_user = users::table
 			.filter(users::username.eq(&user.username))
-			.first::<User>(connection)
-			.map_err(|_| http::Status::InternalServerError)?;
+			.first::<User>(connection)?;
 		match verify(&user.password, &db_user.password) {
 			Ok(valid) if valid => Ok(()),
-			Ok(valid) if !valid => Err(http::Status::BadRequest),
-			_ => Err(http::Status::InternalServerError),
+			Ok(valid) if !valid => Err(OError::BadRequest(new_ejson("Password doesn't match!"))),
+			_ => Err(OError::InternalServerError(new_ejson(
+				"Error while verifying password",
+			))),
 		}
 	}
 }

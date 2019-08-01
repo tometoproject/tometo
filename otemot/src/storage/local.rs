@@ -1,5 +1,5 @@
+use crate::error::{new_ejson, OError};
 use crate::storage::Storage;
-use rocket::http::Status;
 use std::fs;
 use std::path::PathBuf;
 
@@ -17,41 +17,39 @@ impl LocalStorage {
 			.unwrap();
 
 		let hostname = cfg.get::<String>("otemot.external_url").unwrap();
-		LocalStorage {
-			hostname,
-		}
+		LocalStorage { hostname }
 	}
 }
 
 impl Storage for LocalStorage {
-	fn get(&self, key: String) -> Result<String, Status> {
+	fn get(&self, key: String) -> Result<String, OError> {
 		let mut path = PathBuf::from("otemot/storage");
 		path.push(&key);
 		if !path.exists() {
-			Err(Status::NotFound)
+			Err(OError::NotFound(new_ejson("File not found!")))
 		} else {
 			Ok(format!("{}/storage/{}", self.hostname, &key))
 		}
 	}
 
-	fn put(&self, key: String, path: &PathBuf) -> Result<bool, Status> {
+	fn put(&self, key: String, path: &PathBuf) -> Result<bool, OError> {
 		if !path.exists() {
 			return Ok(false);
 		}
 
 		let mut pb = PathBuf::from("otemot/storage");
 		pb.push(&key);
-		fs::rename(path, pb).map_err(|_| Status::InternalServerError)?;
+		fs::rename(path, pb)?;
 		Ok(true)
 	}
 
-	fn delete(&self, key: String) -> Result<bool, Status> {
+	fn delete(&self, key: String) -> Result<bool, OError> {
 		let mut path = PathBuf::from("otemot/storage");
 		path.push(key);
 		if !path.exists() {
 			Ok(false)
 		} else {
-			fs::remove_file(path).map_err(|_| Status::InternalServerError)?;
+			fs::remove_file(path)?;
 			Ok(true)
 		}
 	}

@@ -1,8 +1,8 @@
+use crate::error::OError;
 use crate::schema::{avatars, users};
 use crate::user::model::User;
 use diesel::prelude::*;
 use diesel::PgConnection;
-use rocket::http::Status;
 use uuid::Uuid;
 
 #[table_name = "avatars"]
@@ -29,17 +29,13 @@ impl Avatar {
 		avatar: CreateAvatar,
 		username: &str,
 		connection: &PgConnection,
-	) -> Result<(), Status> {
+	) -> Result<(), OError> {
 		let user = users::table
 			.filter(users::username.eq(username))
-			.first::<User>(connection)
-			.map_err(|_| Status::InternalServerError)?;
-		let other_avatar = avatars::table
+			.first::<User>(connection)?;
+		avatars::table
 			.filter(avatars::user_id.eq(user.id))
-			.first::<Avatar>(connection);
-		if other_avatar.is_ok() {
-			return Err(Status::BadRequest);
-		}
+			.first::<Avatar>(connection)?;
 		let new_id = Uuid::new_v4();
 		let new_avatar = Avatar {
 			id: new_id.to_string(),
@@ -52,8 +48,7 @@ impl Avatar {
 
 		diesel::insert_into(avatars::table)
 			.values(&new_avatar)
-			.execute(connection)
-			.map_err(|_| Status::InternalServerError)?;
+			.execute(connection)?;
 		Ok(())
 	}
 }
