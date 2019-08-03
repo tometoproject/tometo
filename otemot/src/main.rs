@@ -90,6 +90,13 @@ fn main() {
 		.mount("/storage", StaticFiles::from("otemot/storage"))
 		.attach(cors);
 
+	#[catch(401)]
+	fn unauthorized() -> Json<ErrorJson> {
+		Json(ErrorJson {
+			message: String::from("Please log out and log in again!"),
+		})
+	}
+
 	#[catch(404)]
 	fn not_found() -> Json<ErrorJson> {
 		Json(ErrorJson {
@@ -107,5 +114,5 @@ fn main() {
 	rocket = user::mount(rocket);
 	rocket = avatar::mount(rocket);
 	rocket = status::mount(rocket);
-	rocket.register(catchers![not_found, server_error]).launch();
+	rocket.register(catchers![not_found, server_error, unauthorized]).launch();
 }
