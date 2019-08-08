@@ -8,6 +8,7 @@ edition = "2018"
 rocket = "0.4.2"
 rocket_contrib = { version = "0.4.2", features = ["json", "serve"], default-features = false }
 rocket_cors = "0.5"
+rocket-multipart-form-data = "0.7"
 diesel = { version = "1.4.2", features = ["postgres", "r2d2", "chrono"] }
 config = { version = "0.9.3", features = ["json"], default-features = false }
 serde = "1.0"
@@ -17,3 +18,7 @@ bcrypt = "0.4"
 md5 = "0.6"
 jsonwebtoken = "5.0"
 uuid = { version = "0.6", features = ["serde", "v4"] }
+rusoto_core = "0.40"
+rusoto_s3 = "0.40"
+either = "1.5"
+futures = "0.1"
