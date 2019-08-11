@@ -48,7 +48,7 @@ impl Storage for LocalStorage {
 
 			Either::Right(bytes) => {
 				let mut f = File::create(pb)?;
-				f.write_all(&bytes);
+				f.write_all(&bytes)?;
 			}
 		}
 		Ok(true)
