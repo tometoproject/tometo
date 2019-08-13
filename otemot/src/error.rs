@@ -34,9 +34,9 @@ impl From<Error> for OError {
 					let message = info.details().unwrap_or_else(|| info.message());
 					return OError::BadRequest(new_ejson(message));
 				}
-				OError::InternalServerError(new_ejson("Database error"))
+				OError::InternalServerError(new_ejson(&format!("Database Error: {:?}", kind)))
 			}
-			_ => OError::InternalServerError(new_ejson("Database error")),
+			_ => OError::InternalServerError(new_ejson("Database Error")),
 		}
 	}
 }

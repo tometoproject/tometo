@@ -1,4 +1,4 @@
-use crate::error::OError;
+use crate::error::{OError, new_ejson};
 use crate::schema::{avatars, users};
 use crate::user::model::User;
 use diesel::prelude::*;
@@ -33,9 +33,12 @@ impl Avatar {
 		let user = users::table
 			.filter(users::username.eq(username))
 			.first::<User>(connection)?;
-		avatars::table
+		let existing_avatar = avatars::table
 			.filter(avatars::user_id.eq(user.id))
-			.first::<Avatar>(connection)?;
+			.first::<Avatar>(connection);
+		if existing_avatar.is_ok() {
+			return Err(OError::BadRequest(new_ejson("You can only have one avatar!")));
+		}
 		let new_id = Uuid::new_v4();
 		let new_avatar = Avatar {
 			id: new_id.to_string(),
