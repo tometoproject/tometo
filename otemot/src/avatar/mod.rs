@@ -9,6 +9,9 @@ use rocket_contrib::json::Json;
 use rocket_multipart_form_data::{
 	MultipartFormData, MultipartFormDataField, MultipartFormDataOptions, RawField, TextField,
 };
+use rocket::http::ContentType;
+use rocket::Data;
+use rocket_multipart_form_data::{mime, MultipartFormDataOptions, MultipartFormDataField, MultipartFormData};
 
 pub mod model;
 
