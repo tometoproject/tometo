@@ -34,6 +34,8 @@ pub struct GetStatusResponse {
 	pub audio: String,
 	pub content: String,
 	pub timestamps: String,
+	pub pic1: String,
+	pub pic2: String,
 }
 
 impl Status {
@@ -71,10 +73,14 @@ impl Status {
 		let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
 		let audio_path = storage.get(format!("{}.mp3", &status.id))?;
 		let timestamps_path = storage.get(format!("{}.json", &status.id))?;
+		let pic1_path = storage.get(format!("{}-1.png", &status.avatar_id))?;
+		let pic2_path = storage.get(format!("{}-2.png", &status.avatar_id))?;
 		Ok(GetStatusResponse {
 			audio: audio_path,
 			content: status.content,
 			timestamps: timestamps_path,
+			pic1: pic1_path,
+			pic2: pic2_path,
 		})
 	}
 }
