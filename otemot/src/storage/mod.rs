@@ -1,7 +1,7 @@
 use crate::error::OError;
 use crate::storage::local::LocalStorage;
-use std::path::PathBuf;
 use either::Either;
+use std::path::PathBuf;
 
 pub mod local;
 pub mod s3;

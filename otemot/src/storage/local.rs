@@ -1,10 +1,10 @@
 use crate::error::{new_ejson, OError};
 use crate::storage::Storage;
+use either::Either;
 use std::fs;
-use std::path::PathBuf;
 use std::fs::File;
 use std::io::Write;
-use either::Either;
+use std::path::PathBuf;
 
 #[derive(Debug, Clone, Default)]
 pub struct LocalStorage {

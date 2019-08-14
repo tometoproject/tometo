@@ -4,11 +4,11 @@ use crate::schema::{avatars, statuses, users};
 use crate::storage::{create_storage, Storage};
 use crate::user::model::User;
 use diesel::prelude::*;
+use either::Either;
 use std::fs;
 use std::path::PathBuf;
 use std::process::Command;
 use uuid::Uuid;
-use either::Either;
 
 #[table_name = "statuses"]
 #[derive(Debug, Serialize, Deserialize, Queryable, Insertable, AsChangeset)]
@@ -101,8 +101,14 @@ fn genstatus(
 	audio_path.push("temp.mp3");
 	let mut text_path = PathBuf::from(&pbuf);
 	text_path.push("out.json");
-	storage.put(format!("{}.mp3", new_id.to_string()), Either::Left(audio_path))?;
-	storage.put(format!("{}.json", new_id.to_string()), Either::Left(text_path))?;
+	storage.put(
+		format!("{}.mp3", new_id.to_string()),
+		Either::Left(audio_path),
+	)?;
+	storage.put(
+		format!("{}.json", new_id.to_string()),
+		Either::Left(text_path),
+	)?;
 
 	let new_status = Status {
 		id: new_id.to_string(),

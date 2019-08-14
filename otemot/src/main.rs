@@ -114,5 +114,7 @@ fn main() {
 	rocket = user::mount(rocket);
 	rocket = avatar::mount(rocket);
 	rocket = status::mount(rocket);
-	rocket.register(catchers![not_found, server_error, unauthorized]).launch();
+	rocket
+		.register(catchers![not_found, server_error, unauthorized])
+		.launch();
 }
