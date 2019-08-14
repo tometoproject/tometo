@@ -69,6 +69,8 @@ export default {
 					const word = this.$data.unplayed.shift()
 					this.$data.played.push(word)
 				}
+			} else {
+				this.$data.isLoud = false
 			}
 		},
 
