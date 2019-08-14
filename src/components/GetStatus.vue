@@ -4,7 +4,7 @@
 		<div v-else>
 			<div class="columns">
 				<div class="column is-one-quarter">
-					<img src="https://i.imgur.com/8yR89wl.jpg" />
+					<img v-bind:src="this.$data.images.pic1" />
 				</div>
 				<div class="column">
 					<h1 class="subtitle is-1">
@@ -20,6 +20,7 @@
 <script>
 import router from '../router'
 import config from '../../config.json'
+import { createAudioMeter } from '../audioMeter'
 
 export default {
 	name: 'GetStatus',
@@ -27,9 +28,19 @@ export default {
 		return {
 			unplayed: [],
 			played: [],
-			src: null,
+			audio: {
+				ctx: null,
+				src: null,
+				analyzer: null,
+				media: null,
+				dest: null
+			},
 			jsonLoaded: false,
 			fullyLoaded: false,
+			images: {
+				pic1: "",
+				pic2: ""
+			},
 			words: [],
 			interval: null,
 			index: 0
@@ -46,7 +57,7 @@ export default {
 		tick () {
 			if (this.isLoaded && this.$data.index < this.$data.words.length) {
 				const cur = this.$data.words[this.$data.index]
-				const time = this.$data.src.currentTime
+				const time = this.$data.audio.ctx.currentTime
 				if (time > Number(cur.begin)) {
 					this.$data.index += 1
 					const word = this.$data.unplayed.shift()
@@ -68,12 +79,20 @@ export default {
 		})
 		.then(res => {
 			this.$data.unplayed = res.content.split(' ')
-			this.$data.src = new Audio(res.audio)
+			this.$data.audio.ctx = new window.AudioContext()
+			this.$data.audio.media = new Audio(res.audio)
+			this.$data.audio.media.crossOrigin = 'anonymous'
+			this.$data.audio.src = this.$data.audio.ctx.createMediaElementSource(this.$data.audio.media)
+			this.$data.audio.analyzer = this.$data.audio.ctx.createAnalyser()
+			this.$data.audio.src.connect(this.$data.audio.analyzer)
+			this.$data.audio.analyzer.connect(this.$data.audio.ctx.destination)
+			this.$data.images.pic1 = res.pic1
+			this.$data.images.pic2 = res.pic2
 
-			this.$data.src.addEventListener('loadeddata', () => {
+			this.$data.audio.media.addEventListener('loadeddata', () => {
 				this.$data.fullyLoaded = true
 				this.$data.interval = setInterval(() => this.tick(), 10)
-				this.$data.src.play()
+				this.$data.audio.media.play()
 			})
 
 			return fetch(res.timestamps, {method: 'GET'})
