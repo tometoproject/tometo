@@ -27,7 +27,7 @@ impl S3Storage {
 impl Storage for S3Storage {
 	fn get(&self, key: String) -> Result<String, OError> {
 		// FIXME: substitute this with config variables
-		Ok(format!("https://tometo-devel.s3.fr-par.scw.cloud/{}", key))
+		Ok(format!("https://tometo-test.s3.fr-par.scw.cloud/{}", key))
 	}
 
 	fn put(&self, key: String, upload: Either<PathBuf, Vec<u8>>) -> Result<bool, OError> {
@@ -39,7 +39,8 @@ impl Storage for S3Storage {
 				file.read_to_end(&mut body)?;
 				request = PutObjectRequest {
 					// FIXME: substitute this with config variables
-					bucket: String::from("tometo-devel"),
+					bucket: String::from("tometo-test"),
+					acl: Some("public-read".into()),
 					key,
 					body: Some(body.into()),
 					..Default::default()
@@ -49,7 +50,8 @@ impl Storage for S3Storage {
 				let body = bytes.to_owned();
 				request = PutObjectRequest {
 					// FIXME: substitute this with config variables
-					bucket: String::from("tometo-devel"),
+					bucket: String::from("tometo-test"),
+					acl: Some("public-read".into()),
 					key,
 					body: Some(body.into()),
 					..Default::default()
@@ -57,22 +59,21 @@ impl Storage for S3Storage {
 			}
 		}
 		self.client
-			.put_object(request)
-			.map_err(|_e| OError::InternalServerError(new_ejson("uh oh!")))
-			.wait()?;
+			.put_object(request).sync()
+			.map_err(|_e| OError::InternalServerError(new_ejson(format!("Upload error: {:?}", _e).as_ref())))?;
 		Ok(true)
 	}
 
 	fn delete(&self, key: String) -> Result<bool, OError> {
 		let opt = DeleteObjectRequest {
 			// FIXME: substitute this with config variables
-			bucket: String::from("tometo-devel"),
+			bucket: String::from("tometo-test"),
 			key,
 			..Default::default()
 		};
 		self.client
 			.delete_object(opt)
-			.map_err(|_e| OError::InternalServerError(new_ejson("uh oh!")))
+			.map_err(|_e| OError::InternalServerError(new_ejson(format!("Upload error: {:?}", _e).as_ref())))
 			.wait()?;
 		Ok(true)
 	}
