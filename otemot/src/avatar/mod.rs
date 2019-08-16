@@ -1,7 +1,7 @@
 use crate::avatar::model::{Avatar, CreateAvatar};
 use crate::db;
 use crate::error::{new_ejson, OError};
-use crate::storage::{create_storage, Storage};
+use crate::storage::create_storage;
 use crate::user::model::SlimUser;
 use rocket::http::ContentType;
 use rocket::Data;
@@ -9,9 +9,6 @@ use rocket_contrib::json::Json;
 use rocket_multipart_form_data::{
 	MultipartFormData, MultipartFormDataField, MultipartFormDataOptions, RawField, TextField,
 };
-use rocket::http::ContentType;
-use rocket::Data;
-use rocket_multipart_form_data::{mime, MultipartFormDataOptions, MultipartFormDataField, MultipartFormData};
 
 pub mod model;
 

@@ -1,7 +1,7 @@
 use crate::avatar::model::Avatar;
 use crate::error::{new_ejson, OError};
 use crate::schema::{avatars, statuses, users};
-use crate::storage::{create_storage, Storage};
+use crate::storage::create_storage;
 use crate::user::model::User;
 use diesel::prelude::*;
 use either::Either;
@@ -51,13 +51,7 @@ impl Status {
 			.filter(avatars::user_id.eq(user.id))
 			.first::<Avatar>(connection)
 			.map_err(|_| OError::BadRequest(new_ejson("Create an avatar first!")))?;
-		let mut cfg = config::Config::default();
-		cfg.merge(config::File::new("config.json", config::FileFormat::Json))
-			.unwrap()
-			.merge(config::Environment::new().separator("_"))
-			.unwrap();
-		let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
-		let res = genstatus(status.content, avatar, connection, &storage)?;
+		let res = genstatus(status.content, avatar, connection)?;
 		Ok(res)
 	}
 
@@ -89,8 +83,13 @@ fn genstatus(
 	content: String,
 	avatar: Avatar,
 	conn: &PgConnection,
-	storage: &impl Storage,
 ) -> Result<Uuid, OError> {
+	let mut cfg = config::Config::default();
+	cfg.merge(config::File::new("config.json", config::FileFormat::Json))
+		 .unwrap()
+		 .merge(config::Environment::new().separator("_"))
+		 .unwrap();
+	let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
 	let new_id = Uuid::new_v4();
 	Command::new("/usr/bin/env")
 		.arg("node")
