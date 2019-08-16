@@ -18,22 +18,29 @@ impl S3Storage {
 	pub fn new() -> Self {
 		let mut cfg = config::Config::default();
 		cfg.merge(config::File::new("config.json", config::FileFormat::Json))
-			 .unwrap()
-			 .merge(config::Environment::new().separator("_"))
-			 .unwrap();
+			.unwrap()
+			.merge(config::Environment::new().separator("_"))
+			.unwrap();
 		let region = Region::Custom {
-			name: cfg.get::<String>("otemot.s3_storage.endpoint.name").unwrap(),
+			name: cfg
+				.get::<String>("otemot.s3_storage.endpoint.name")
+				.unwrap(),
 			endpoint: cfg.get::<String>("otemot.s3_storage.endpoint.url").unwrap(),
 		};
 		let client = S3Client::new(region);
-		S3Storage { client, config: cfg }
+		S3Storage {
+			client,
+			config: cfg,
+		}
 	}
 }
 
 impl Storage for S3Storage {
 	fn get(&self, key: String) -> Result<String, OError> {
 		let bucket = self.config.get::<String>("otemot.s3_storage.bucket")?;
-		let endpoint = self.config.get::<String>("otemot.s3_storage.endpoint.url")?;
+		let endpoint = self
+			.config
+			.get::<String>("otemot.s3_storage.endpoint.url")?;
 		Ok(format!("https://{}.{}/{}", bucket, endpoint, key))
 	}
 
@@ -64,9 +71,9 @@ impl Storage for S3Storage {
 				};
 			}
 		}
-		self.client
-			.put_object(request).sync()
-			.map_err(|_e| OError::InternalServerError(new_ejson(format!("Upload error: {:?}", _e).as_ref())))?;
+		self.client.put_object(request).sync().map_err(|_e| {
+			OError::InternalServerError(new_ejson(format!("Upload error: {:?}", _e).as_ref()))
+		})?;
 		Ok(true)
 	}
 
@@ -79,7 +86,9 @@ impl Storage for S3Storage {
 		};
 		self.client
 			.delete_object(opt)
-			.map_err(|_e| OError::InternalServerError(new_ejson(format!("Upload error: {:?}", _e).as_ref())))
+			.map_err(|_e| {
+				OError::InternalServerError(new_ejson(format!("Upload error: {:?}", _e).as_ref()))
+			})
 			.wait()?;
 		Ok(true)
 	}

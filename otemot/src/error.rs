@@ -1,5 +1,5 @@
-use diesel::result::{DatabaseErrorKind, Error};
 use config::ConfigError;
+use diesel::result::{DatabaseErrorKind, Error};
 use rocket::response::Responder;
 use rocket_contrib::json::Json;
 use std::convert::From;

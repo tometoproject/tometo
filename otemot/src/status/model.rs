@@ -79,16 +79,12 @@ impl Status {
 	}
 }
 
-fn genstatus(
-	content: String,
-	avatar: Avatar,
-	conn: &PgConnection,
-) -> Result<Uuid, OError> {
+fn genstatus(content: String, avatar: Avatar, conn: &PgConnection) -> Result<Uuid, OError> {
 	let mut cfg = config::Config::default();
 	cfg.merge(config::File::new("config.json", config::FileFormat::Json))
-		 .unwrap()
-		 .merge(config::Environment::new().separator("_"))
-		 .unwrap();
+		.unwrap()
+		.merge(config::Environment::new().separator("_"))
+		.unwrap();
 	let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
 	let new_id = Uuid::new_v4();
 	Command::new("/usr/bin/env")
