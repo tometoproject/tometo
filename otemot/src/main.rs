@@ -29,6 +29,7 @@ fn index() -> &'static str {
 }
 
 fn main() {
+	let _ = env_logger::try_init();
 	let mut cfg = config::Config::default();
 	cfg.merge(config::File::new("config.json", config::FileFormat::Json))
 		.unwrap()
