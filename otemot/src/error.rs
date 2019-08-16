@@ -1,4 +1,5 @@
 use diesel::result::{DatabaseErrorKind, Error};
+use config::ConfigError;
 use rocket::response::Responder;
 use rocket_contrib::json::Json;
 use std::convert::From;
@@ -44,5 +45,14 @@ impl From<Error> for OError {
 impl From<std::io::Error> for OError {
 	fn from(_: std::io::Error) -> OError {
 		OError::InternalServerError(new_ejson("Internal IO error"))
+	}
+}
+
+impl From<ConfigError> for OError {
+	fn from(err: ConfigError) -> OError {
+		if let ConfigError::NotFound(st) = err {
+			error!("Config property {} was not found!", st);
+		}
+		OError::InternalServerError(new_ejson("A server configuration error has occurred!"))
 	}
 }

@@ -11,35 +11,42 @@ use std::path::PathBuf;
 #[derive(Clone)]
 pub struct S3Storage {
 	client: S3Client,
+	config: config::Config,
 }
 
 impl S3Storage {
 	pub fn new() -> Self {
+		let mut cfg = config::Config::default();
+		cfg.merge(config::File::new("config.json", config::FileFormat::Json))
+			 .unwrap()
+			 .merge(config::Environment::new().separator("_"))
+			 .unwrap();
 		let region = Region::Custom {
-			name: String::from("fr-par"),
-			endpoint: String::from("https://s3.fr-par.scw.cloud"),
+			name: cfg.get::<String>("otemot.s3_storage.endpoint.name").unwrap(),
+			endpoint: cfg.get::<String>("otemot.s3_storage.endpoint.url").unwrap(),
 		};
 		let client = S3Client::new(region);
-		S3Storage { client }
+		S3Storage { client, config: cfg }
 	}
 }
 
 impl Storage for S3Storage {
 	fn get(&self, key: String) -> Result<String, OError> {
-		// FIXME: substitute this with config variables
-		Ok(format!("https://tometo-test.s3.fr-par.scw.cloud/{}", key))
+		let bucket = self.config.get::<String>("otemot.s3_storage.bucket")?;
+		let endpoint = self.config.get::<String>("otemot.s3_storage.endpoint.url")?;
+		Ok(format!("https://{}.{}/{}", bucket, endpoint, key))
 	}
 
 	fn put(&self, key: String, upload: Either<PathBuf, Vec<u8>>) -> Result<bool, OError> {
 		let request;
+		let bucket = self.config.get::<String>("otemot.s3_storage.bucket")?;
 		match upload {
 			Either::Left(path) => {
 				let mut body: Vec<u8> = vec![];
 				let mut file = File::open(path)?;
 				file.read_to_end(&mut body)?;
 				request = PutObjectRequest {
-					// FIXME: substitute this with config variables
-					bucket: String::from("tometo-test"),
+					bucket,
 					acl: Some("public-read".into()),
 					key,
 					body: Some(body.into()),
@@ -49,8 +56,7 @@ impl Storage for S3Storage {
 			Either::Right(bytes) => {
 				let body = bytes.to_owned();
 				request = PutObjectRequest {
-					// FIXME: substitute this with config variables
-					bucket: String::from("tometo-test"),
+					bucket,
 					acl: Some("public-read".into()),
 					key,
 					body: Some(body.into()),
@@ -65,9 +71,9 @@ impl Storage for S3Storage {
 	}
 
 	fn delete(&self, key: String) -> Result<bool, OError> {
+		let bucket = self.config.get::<String>("otemot.s3_storage.bucket")?;
 		let opt = DeleteObjectRequest {
-			// FIXME: substitute this with config variables
-			bucket: String::from("tometo-test"),
+			bucket,
 			key,
 			..Default::default()
 		};
