@@ -1,3 +1,4 @@
+use config::ConfigError;
 use diesel::result::{DatabaseErrorKind, Error};
 use rocket::response::Responder;
 use rocket_contrib::json::Json;
@@ -34,9 +35,9 @@ impl From<Error> for OError {
 					let message = info.details().unwrap_or_else(|| info.message());
 					return OError::BadRequest(new_ejson(message));
 				}
-				OError::InternalServerError(new_ejson("Database error"))
+				OError::InternalServerError(new_ejson(&format!("Database Error: {:?}", kind)))
 			}
-			_ => OError::InternalServerError(new_ejson("Database error")),
+			_ => OError::InternalServerError(new_ejson("Database Error")),
 		}
 	}
 }
@@ -44,5 +45,14 @@ impl From<Error> for OError {
 impl From<std::io::Error> for OError {
 	fn from(_: std::io::Error) -> OError {
 		OError::InternalServerError(new_ejson("Internal IO error"))
+	}
+}
+
+impl From<ConfigError> for OError {
+	fn from(err: ConfigError) -> OError {
+		if let ConfigError::NotFound(st) = err {
+			error!("Config property {} was not found!", st);
+		}
+		OError::InternalServerError(new_ejson("A server configuration error has occurred!"))
 	}
 }

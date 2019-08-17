@@ -1,9 +1,10 @@
 use crate::avatar::model::Avatar;
 use crate::error::{new_ejson, OError};
 use crate::schema::{avatars, statuses, users};
-use crate::storage::{create_storage, Storage};
+use crate::storage::create_storage;
 use crate::user::model::User;
 use diesel::prelude::*;
+use either::Either;
 use std::fs;
 use std::path::PathBuf;
 use std::process::Command;
@@ -33,6 +34,8 @@ pub struct GetStatusResponse {
 	pub audio: String,
 	pub content: String,
 	pub timestamps: String,
+	pub pic1: String,
+	pub pic2: String,
 }
 
 impl Status {
@@ -48,13 +51,7 @@ impl Status {
 			.filter(avatars::user_id.eq(user.id))
 			.first::<Avatar>(connection)
 			.map_err(|_| OError::BadRequest(new_ejson("Create an avatar first!")))?;
-		let mut cfg = config::Config::default();
-		cfg.merge(config::File::new("config.json", config::FileFormat::Json))
-			.unwrap()
-			.merge(config::Environment::new().separator("_"))
-			.unwrap();
-		let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
-		let res = genstatus(status.content, avatar, connection, &storage)?;
+		let res = genstatus(status.content, avatar, connection)?;
 		Ok(res)
 	}
 
@@ -70,20 +67,25 @@ impl Status {
 		let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
 		let audio_path = storage.get(format!("{}.mp3", &status.id))?;
 		let timestamps_path = storage.get(format!("{}.json", &status.id))?;
+		let pic1_path = storage.get(format!("{}-1.png", &status.avatar_id))?;
+		let pic2_path = storage.get(format!("{}-2.png", &status.avatar_id))?;
 		Ok(GetStatusResponse {
 			audio: audio_path,
 			content: status.content,
 			timestamps: timestamps_path,
+			pic1: pic1_path,
+			pic2: pic2_path,
 		})
 	}
 }
 
-fn genstatus(
-	content: String,
-	avatar: Avatar,
-	conn: &PgConnection,
-	storage: &impl Storage,
-) -> Result<Uuid, OError> {
+fn genstatus(content: String, avatar: Avatar, conn: &PgConnection) -> Result<Uuid, OError> {
+	let mut cfg = config::Config::default();
+	cfg.merge(config::File::new("config.json", config::FileFormat::Json))
+		.unwrap()
+		.merge(config::Environment::new().separator("_"))
+		.unwrap();
+	let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
 	let new_id = Uuid::new_v4();
 	Command::new("/usr/bin/env")
 		.arg("node")
@@ -100,8 +102,14 @@ fn genstatus(
 	audio_path.push("temp.mp3");
 	let mut text_path = PathBuf::from(&pbuf);
 	text_path.push("out.json");
-	storage.put(format!("{}.mp3", new_id.to_string()), &audio_path)?;
-	storage.put(format!("{}.json", new_id.to_string()), &text_path)?;
+	storage.put(
+		format!("{}.mp3", new_id.to_string()),
+		Either::Left(audio_path),
+	)?;
+	storage.put(
+		format!("{}.json", new_id.to_string()),
+		Either::Left(text_path),
+	)?;
 
 	let new_status = Status {
 		id: new_id.to_string(),

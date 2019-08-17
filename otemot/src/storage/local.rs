@@ -1,6 +1,9 @@
 use crate::error::{new_ejson, OError};
 use crate::storage::Storage;
+use either::Either;
 use std::fs;
+use std::fs::File;
+use std::io::Write;
 use std::path::PathBuf;
 
 #[derive(Debug, Clone, Default)]
@@ -32,14 +35,22 @@ impl Storage for LocalStorage {
 		}
 	}
 
-	fn put(&self, key: String, path: &PathBuf) -> Result<bool, OError> {
-		if !path.exists() {
-			return Ok(false);
-		}
-
+	fn put(&self, key: String, upload: Either<PathBuf, Vec<u8>>) -> Result<bool, OError> {
 		let mut pb = PathBuf::from("otemot/storage");
 		pb.push(&key);
-		fs::rename(path, pb)?;
+		match upload {
+			Either::Left(path) => {
+				if !path.exists() {
+					return Ok(false);
+				}
+				fs::rename(path, pb)?;
+			}
+
+			Either::Right(bytes) => {
+				let mut f = File::create(pb)?;
+				f.write_all(&bytes)?;
+			}
+		}
 		Ok(true)
 	}
 

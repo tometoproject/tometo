@@ -1,4 +1,4 @@
-#![feature(proc_macro_hygiene, decl_macro)]
+#![feature(proc_macro_hygiene, decl_macro, async_await)]
 #![warn(clippy::all)]
 
 #[macro_use]
@@ -7,6 +7,8 @@ extern crate rocket;
 extern crate diesel;
 #[macro_use]
 extern crate serde_derive;
+#[macro_use]
+extern crate log;
 
 mod avatar;
 mod db;
@@ -29,6 +31,7 @@ fn index() -> &'static str {
 }
 
 fn main() {
+	let _ = env_logger::try_init();
 	let mut cfg = config::Config::default();
 	cfg.merge(config::File::new("config.json", config::FileFormat::Json))
 		.unwrap()
@@ -114,5 +117,7 @@ fn main() {
 	rocket = user::mount(rocket);
 	rocket = avatar::mount(rocket);
 	rocket = status::mount(rocket);
-	rocket.register(catchers![not_found, server_error, unauthorized]).launch();
+	rocket
+		.register(catchers![not_found, server_error, unauthorized])
+		.launch();
 }
