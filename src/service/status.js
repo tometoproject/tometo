@@ -1,4 +1,6 @@
-import config from '../../config.json'
+import ctoml from '../../config.toml'
+import { parse } from '@iarna/toml'
+let config = parse(ctoml)
 
 export function postStatus (content, pitch) {
 	const requestOptions = {

@@ -51,7 +51,7 @@ pub fn decode_token(token: &str) -> Result<SlimUser, OError> {
 
 fn get_secret() -> String {
 	let mut cfg = config::Config::default();
-	cfg.merge(config::File::new("config.json", config::FileFormat::Json))
+	cfg.merge(config::File::new("config.toml", config::FileFormat::Toml))
 		.unwrap();
 	cfg.get::<String>("otemot.secrets.jwt")
 		.unwrap_or_else(|_| "temp".into())

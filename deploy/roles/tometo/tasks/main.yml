@@ -4,8 +4,8 @@
 - name: Install npm packages
   npm:
     path: {{ checkout_dir }}
-- name: Copy .env file
-  template: src=env.j2 dest={{ checkout_dir }}/.env
+- name: Copy config file
+  template: src=config.j2 dest={{ checkout_dir }}/config.toml
 - name: Run build script
   command: chdir={{ checkout_dir }} npm run build
 - name: Copy nginx config

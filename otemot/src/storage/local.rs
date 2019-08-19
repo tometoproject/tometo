@@ -14,7 +14,7 @@ pub struct LocalStorage {
 impl LocalStorage {
 	pub fn new() -> Self {
 		let mut cfg = config::Config::default();
-		cfg.merge(config::File::new("config.json", config::FileFormat::Json))
+		cfg.merge(config::File::new("config.toml", config::FileFormat::Toml))
 			.unwrap()
 			.merge(config::Environment::new().separator("_"))
 			.unwrap();

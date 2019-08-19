@@ -5,12 +5,15 @@ import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 import router from './router'
 import store from './store'
-import config from '../config.json'
+import ctoml from '../config.toml'
+import { parse } from '@iarna/toml'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 require('./custom.scss')
+
+let config = parse(ctoml)
 
 library.add(faMinus, faPlus)
 Vue.component('vue-fontawesome', FontAwesomeIcon)

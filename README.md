@@ -50,23 +50,17 @@ git clone git@marisa.cloud:tometo/tometo.git
 
 ### Configuration
 
-Configuration is done through a central config file called `config.json`, which
+Configuration is done through a central config file called `config.toml`, which
 provides configuration for both components. First, copy the example file:
 
 ```
-cp config.example.json config.json
+cp config.example.toml config.toml
 ```
 
 Don't worry about your config file getting put into version control, it's ignored
 by default.
 
-You can leave the `dsn` keys in both blocks as they are, unless you have two Sentry
-DSN keys.
-
-The `otemot.google_credentials` key points to a service account credential
-file that you should have downloaded while setting up the Google Cloud SDK.
-You can find more information on this
-[here](https://cloud.google.com/docs/authentication/getting-started).
+The config file should have documentation for every option.
 
 If you want to override config variables temporarily, you can set environment variables
 to match them. For example, to set the `otemot.secrets.cookie` key, you would set the
