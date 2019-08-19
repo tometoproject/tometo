@@ -7,7 +7,8 @@ const childProcess = require('child_process')
 const writeFile = util.promisify(fs.writeFile)
 const exec = util.promisify(childProcess.exec)
 const argv = require('minimist')(process.argv.slice(2))
-const config = require('../config.json')
+const toml = require('@iarna/toml')
+const config = toml.parse(fs.readFileSync('config.toml', { encoding: 'UTF-8' }))
 
 const client = new TextToSpeechClient({
 	keyFilename: config.otemot.google_credentials

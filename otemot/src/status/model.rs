@@ -60,7 +60,7 @@ impl Status {
 			.filter(statuses::id.eq(status.id))
 			.first::<Status>(connection)?;
 		let mut cfg = config::Config::default();
-		cfg.merge(config::File::new("config.json", config::FileFormat::Json))
+		cfg.merge(config::File::new("config.toml", config::FileFormat::Toml))
 			.unwrap()
 			.merge(config::Environment::new().separator("_"))
 			.unwrap();
@@ -81,7 +81,7 @@ impl Status {
 
 fn genstatus(content: String, avatar: Avatar, conn: &PgConnection) -> Result<Uuid, OError> {
 	let mut cfg = config::Config::default();
-	cfg.merge(config::File::new("config.json", config::FileFormat::Json))
+	cfg.merge(config::File::new("config.toml", config::FileFormat::Toml))
 		.unwrap()
 		.merge(config::Environment::new().separator("_"))
 		.unwrap();

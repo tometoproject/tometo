@@ -59,7 +59,7 @@ fn upload_avatar_pictures(content_type: &ContentType, data: Data) -> Result<Stri
 		RawField::Multiple(v) => v.first().unwrap(),
 	};
 	let mut cfg = config::Config::default();
-	cfg.merge(config::File::new("config.json", config::FileFormat::Json))
+	cfg.merge(config::File::new("config.toml", config::FileFormat::Toml))
 		.unwrap()
 		.merge(config::Environment::new().separator("_"))
 		.unwrap();

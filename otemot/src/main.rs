@@ -33,7 +33,7 @@ fn index() -> &'static str {
 fn main() {
 	let _ = env_logger::try_init();
 	let mut cfg = config::Config::default();
-	cfg.merge(config::File::new("config.json", config::FileFormat::Json))
+	cfg.merge(config::File::new("config.toml", config::FileFormat::Toml))
 		.unwrap()
 		.merge(config::Environment::new().separator("_"))
 		.unwrap();
@@ -58,8 +58,8 @@ fn main() {
 	cfg.get::<String>("otemot.external_url")
 		.expect("otemot.external_url unset!");
 	let tm_hostname = cfg
-		.get::<String>("tometo.hostname")
-		.expect("tometo.hostname unset!");
+		.get::<String>("tometo.external_url")
+		.expect("tometo.external_url unset!");
 	let c_environment = cfg.get::<String>("otemot.env").expect("otemot.env unset!");
 	let environment;
 	match c_environment.as_str() {
