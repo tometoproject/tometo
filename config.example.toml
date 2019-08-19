@@ -1,0 +1,72 @@
+# Welcome to the Tometo configuration file!
+# This is where most of the runtime configuration for both the frontend (Tometo)
+# and the backend (Otemot) is done.
+
+# Configuration for the frontend
+[tometo]
+
+# What external hostname the frontend should be reachable by. To make sure TLS
+# functions correctly, change "http" to "https".
+external_url = "http://localhost:1234"
+
+# The Sentry (http://sentry.io) DSN. This is optional.
+dsn = "AAAA"
+
+# Configuration for the backend
+[otemot]
+
+# The database URL to be used when connecting. Must be a PostgreSQL connection
+# string.
+database_url = "postgres://myuser:mypassword@localhost:otemot_dev"
+
+# Path to where your Google Cloud credentials file ("Service Account Key") is
+# stored. This is needed for text-to-speech generation.
+google_credentials = "/path/to/serviceaccount.json"
+
+# Hostname (WITHOUT port or protocol) of the backend
+hostname = "127.0.0.1"
+
+# Port that'll get appended to the hostname
+port = 4001
+
+# External URL that the frontend is going to reach the backend by. If you're
+# only deploying the frontend, this configuration option needs to be set.
+external_url = "http://localhost:4001"
+
+# Rust environment for internal use. Set this to "development", "staging" or
+# "production".
+env = "development"
+
+# Storage method to use. Otemot supports multiple ways to store generated files
+# (TTS audio, images, etc). The default is to just store them locally in a folder,
+# but this can get unscalable really quickly. The following storages are supported:
+# - local
+# - s3 (using Amazon's S3 protocol, but doesn't need to be on their servers)
+storage = "local"
+
+# Optional configuration that only needs to be correct when you're using the "s3"
+# storage method.
+[otemot.s3_storage]
+
+# The name of the bucket you want to upload and read files into/from.
+bucket = "my-bucket"
+
+# Endpoint configuration. Endpoints are constructed like this:
+# https://{name}.{url}/{bucket}
+[otemot.s3_storage.endpoint]
+
+# The name of your endpoint, this is usually a region name
+name = "de-ber"
+
+# The endpoint URL
+url = "s3.amazonclone.com"
+
+# Secrets that should NEVER be checked into version control or be made public
+[otemot.secrets]
+
+# Cookie secret key. Generate one using the following command:
+# `openssl rand -base64 32`
+cookie = "replaceme"
+
+# Json Web Token (JWT) encryption cookie, for additional login security
+jwt = "replacemetoo"
