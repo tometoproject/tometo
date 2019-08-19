@@ -20,7 +20,9 @@
 
 <script>
 import router from '../router'
-import config from '../../config.json'
+import ctoml from '../../config.toml'
+import { parse } from '@iarna/toml'
+let config = parse(ctoml)
 
 export default {
 	name: 'GetStatus',

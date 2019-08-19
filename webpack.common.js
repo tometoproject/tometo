@@ -34,6 +34,11 @@ module.exports = {
 						}
 					}
 				]
+			},
+			{
+				test: /\.toml$/,
+				loader: 'raw-loader',
+				exclude: /node_modules/
 			}
 		]
 	},
