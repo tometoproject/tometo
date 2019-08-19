@@ -15,5 +15,4 @@ otemot/storage/*
 otemot/storage/*
 !otemot/storage.gitkeep
 .DS_Store
-config.json
 config.toml
