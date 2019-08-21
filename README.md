@@ -1,7 +1,5 @@
 # tometo
 
-<!-- test -->
-
 Tometo is a social network focused on text-to-speech.
 
 ## Reporting Issues
@@ -17,6 +15,7 @@ kept in the `./otemot` folder.
 In order to get the system running on your computer, you'll need some
 prerequisites:
 
+- Mercurial (think of it as Git)
 - A PostgreSQL server, and its development headers (sometimes called `libpq-dev` or `postgresql-devel`)
 - Node.js, the latest LTS or Stable version should work
 - Rust, the latest Stable version should work, although you do need at least
@@ -42,11 +41,10 @@ pip3 install --user numpy
 pip3 install --user aeneas 
 ```
 
-Then, you can clone the repository. Make sure you have a user account and that
-you've added your SSH key to GitLab (if not, you can use the HTTPS checkout):
+Then, you can clone the repository.
 
 ```
-git clone git@marisa.cloud:tometo/tometo.git
+hg clone https://callie.marisa.cloud/tometo/tometo
 ```
 
 ### Configuration
