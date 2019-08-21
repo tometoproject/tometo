@@ -21,16 +21,15 @@ This is why we recommend that, even when you're not sure it's a bug, to report
 it anyways.
 
 Please search for already existing or similar reports first before you open
-an issue, although GitLab does show similar issue titles as you go about
-creating your bug report.
+an issue.
 
 It also makes our lives much easier if the issue title is as descriptive as
 possible. This can be the specific error message given, the steps you used
 to reproduce it, or something else that's unique to the bug you're
 experiencing.
 
-Filing a bug report happens in the `tometo/issues` repository, and you can
-find a link to create a new issue [here](https://marisa.cloud/tometo/issues/issues/new).
+Filing a bug report happens on our bug tracker, and you can
+find a link to create a new issue [here](https://bugs.marisa.cloud/projects/tometo/issues/new).
 
 If you're running Tometo locally, please include as much information as possible
 about your setup, what Rust version you use, what Node version, your operating
@@ -45,17 +44,14 @@ RUST_BACKTRACE=1 npm run watch
 
 ## Pull Requests
 
-_(or Merge Requests, as GitLab calls them)_
-
-Pull/Merge Requests are how we usually land code for Tometo. We use a simple
+Pull Requests are how we usually land code for Tometo. We use a simple
 model, where every contributor pushes changes either to their fork or to a branch
 on the main repository, and then brings those changes into the master branch.
 
-_(Please make Pull Requests against the `master` branch)_
+Keep in mind this refers to Mercurial's _named branches_, not bookmarks. We
+think it's worth going with named branches for the sake of familiarity of Git users.
 
-If you're bringing latest changes from `master` into your branch, please always
-rebase instead of merging. Also, please make sure that fixup commits are squashed
-into other related commits with meaningful commit messages.
+_(Please make Pull Requests against the `default` branch)_
 
 Always make sure that your code conforms to the style guidelines by running the
 following:
@@ -65,18 +61,16 @@ npm run lint
 cargo fmt
 ```
 
-(otherwise, our CI will complain for you)
-
 Please don't annoy anyone to review your pull request, people have limited time,
 and sometimes other things have priorities.
 
 ## Issue Triage
 
-Issues on `tometo/issues` have specific labels, which should be mostly self-explanatory,
-but here's some notes on them anyways:
+Issues on the bug tracker can be for different _trackers_, and have other
+configuration options. Here's some notes on them:
 
-- Don't use `Priority: Critical` or preferably even `Priority: High` unless discussed previously
-- `Epic` refers to an issue that tracks a multitude of other issues, e.g. a large feature
-- The `Status:` labels can be assigned using the [issue board](https://marisa.cloud/tometo/issues/boards)
+- Don't set a priority unless you know what you're doing
+- The `Epic` tracker refers to issues that track a multitude of other issues,
+  e.g. for a large feature
 
 [discord]: https://discord.gg/xqTEcaw
