@@ -6,8 +6,7 @@ Tometo is a social network focused on text-to-speech.
 
 ## Reporting Issues
 
-To report an issue, you will need a user account. After signing up and
-verifying your email, you can report an issue by opening a new issue [here](https://marisa.cloud/tometo/issues/issues/new).
+Please report issues on the [Bug Tracker](https://bugs.marisa.cloud/projects/tometo).
 
 ## Local Setup
 
