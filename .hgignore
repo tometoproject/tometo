@@ -9,7 +9,7 @@ deploy/inventory/*
 !deploy/inventory/example
 stats.json
 target/
-**/*.rs.bk
+.*\.rs\.bk
 otemot/gentts/
 otemot/storage/*
 otemot/storage/*
