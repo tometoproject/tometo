@@ -81,8 +81,8 @@ fn create_avatar(
 	};
 
 	let avatar = CreateAvatar {
-		pitch: single_pitch.text.parse::<i16>().unwrap(),
-		speed: single_speed.text.parse::<f32>().unwrap(),
+		pitch: single_pitch.text.parse::<i16>()?,
+		speed: single_speed.text.parse::<f32>()?,
 		language: single_lang.text.clone(),
 		gender: single_gender.text.clone(),
 	};

@@ -3,6 +3,7 @@ use diesel::result::{DatabaseErrorKind, Error};
 use rocket::response::Responder;
 use rocket_contrib::json::Json;
 use std::convert::From;
+use std::num::{ParseFloatError, ParseIntError};
 
 #[derive(Serialize, Debug, Deserialize)]
 pub struct ErrorJson {
@@ -54,5 +55,19 @@ impl From<ConfigError> for OError {
 			error!("Config property {} was not found!", st);
 		}
 		OError::InternalServerError(new_ejson("A server configuration error has occurred!"))
+	}
+}
+
+impl From<ParseIntError> for OError {
+	fn from(_: ParseIntError) -> OError {
+		OError::BadRequest(new_ejson(
+			"Failed to parse integer! Did you input a number?",
+		))
+	}
+}
+
+impl From<ParseFloatError> for OError {
+	fn from(_: ParseFloatError) -> OError {
+		OError::BadRequest(new_ejson("Failed to parse float! Did you input a number?"))
 	}
 }
