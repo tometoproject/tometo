@@ -29,7 +29,7 @@ impl Avatar {
 		avatar: CreateAvatar,
 		username: &str,
 		connection: &PgConnection,
-	) -> Result<(), OError> {
+	) -> Result<String, OError> {
 		let user = users::table
 			.filter(users::username.eq(username))
 			.first::<User>(connection)?;
@@ -54,6 +54,6 @@ impl Avatar {
 		diesel::insert_into(avatars::table)
 			.values(&new_avatar)
 			.execute(connection)?;
-		Ok(())
+		Ok(new_id.to_string())
 	}
 }
