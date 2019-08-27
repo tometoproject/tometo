@@ -115,6 +115,6 @@ npm run watch
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md).
+See [our contributing information](https://bugs.marisa.cloud/projects/tometo/wiki/Contributing).
 
 
