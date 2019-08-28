@@ -17,7 +17,7 @@ dsn = "AAAA"
 
 # The database URL to be used when connecting. Must be a PostgreSQL connection
 # string.
-database_url = "postgres://myuser:mypassword@localhost:otemot_dev"
+database_url = "postgres://myuser:mypassword@localhost/otemot_dev"
 
 # Path to where your Google Cloud credentials file ("Service Account Key") is
 # stored. This is needed for text-to-speech generation.
