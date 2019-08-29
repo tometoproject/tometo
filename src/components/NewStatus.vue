@@ -2,16 +2,12 @@
 	<section v-on:keyup.enter="submitForm">
 		<h1 class="title is-2">New Status</h1>
 
-		<b-field label="Content">
-			<b-input maxlength="500" type="textarea" v-model="content" />
-		</b-field>
+		<fieldset class="field">
+				<label class="label">Content</label>
+				<textarea class="textarea" maxlength="500" type="textarea" v-model="content"></textarea>
+		</fieldset>
 
-		<b-field label="Pitch">
-			<b-numberinput :editable="false" min="0" max="30" v-model="pitch" />
-		</b-field>
-
-		<b-button @click="submitForm" :disabled="loading">Submit</b-button>
-		<b-loading :is-full-page="false" :active.sync="loading"></b-loading>
+		<button class="button is-info" @click="submitForm" :disabled="loading">Submit</button>
 	</section>
 </template>
 
@@ -23,7 +19,6 @@ export default {
 	data () {
 		return {
 			content: '',
-			pitch: 10,
 		}
 	},
 	beforeMount () {
@@ -38,7 +33,7 @@ export default {
 	methods: {
 		submitForm () {
 			let { content, pitch } = this
-			this.$store.dispatch('newStatus', { content, pitch })
+			this.$store.dispatch('newStatus', { content })
 		}
 	}
 }
