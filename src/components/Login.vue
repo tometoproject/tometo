@@ -4,12 +4,12 @@
 
 		<fieldset class="field">
 				<label class="label is-large">Username</label>
-				<input class="input is-large" type="text" v-model="username"></input>
+				<input class="input is-large" type="text" v-model="username" />
 		</fieldset>
 
 		<fieldset class="field">
 				<label class="label is-large">Password</label>
-				<input class="input is-large" type="password" v-model="password"></input>
+				<input class="input is-large" type="password" v-model="password" />
 		</fieldset>
 
 		<button class="button is-info" @click="submitForm" :disabled="loading">Submit</button>

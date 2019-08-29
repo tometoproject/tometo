@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { register, login, logout } from './service/auth'
 import { postStatus } from './service/status'
+import { createAvatar } from './service/avatar'
 import router from './router'
 
 Vue.use(Vuex)
@@ -92,6 +93,17 @@ export default new Vuex.Store({
 				commit('toggleLoading')
 				commit('setErrorFlash', error)
 			})
+		},
+		createAvatar({ commit }, { name, pitch, speed, language, gender, pic1, pic2 }) {
+			commit('toggleLoading')
+
+			createAvatar(name, pitch, speed, language, gender, pic1, pic2).then(data => {
+				commit('toggleLoading')
+				router.push('/')
+			}, error => {
+				commit('toggleLoading')
+				commit('setErrorFlash', error)
+			})
 		}
-	}
+ 	}
 })
