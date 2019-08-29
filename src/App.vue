@@ -29,17 +29,17 @@ export default {
 		infoFlashMessage () {
 			return this.$store.state.flash.info
 		},
-			cookiesAcknowledged () {
-					return this.$store.state.cookiesAcknowledged
-			}
+		cookiesAcknowledged () {
+				return this.$store.state.cookiesAcknowledged
+		}
 	},
 	components: {
 		'app-header': Header
 	},
 	methods: {
-			hideCookies () {
-					this.$store.commit('acknowledgeCookies')
-			}
+		hideCookies () {
+			this.$store.commit('acknowledgeCookies')
+		}
 	}
 }
 </script>
