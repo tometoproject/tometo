@@ -1,4 +1,4 @@
-use crate::db;
+use crate::db::{self, DefaultMessage};
 use crate::error::{new_ejson, OError};
 use crate::user::model::{CreateUser, LoginUser, SlimUser, User};
 use rocket::http::{Cookie, Cookies};
@@ -8,7 +8,10 @@ pub mod model;
 pub mod token;
 
 #[post("/", data = "<user>")]
-fn register(user: Json<CreateUser>, connection: db::Connection) -> Result<String, OError> {
+fn register(
+	user: Json<CreateUser>,
+	connection: db::Connection,
+) -> Result<Json<DefaultMessage>, OError> {
 	let user = user.into_inner();
 
 	if user.username.is_empty()
@@ -22,7 +25,9 @@ fn register(user: Json<CreateUser>, connection: db::Connection) -> Result<String
 	}
 
 	User::create(user, &connection)?;
-	Ok(String::from("Successfully created User!"))
+	Ok(Json(DefaultMessage {
+		message: "Successfully registered! You can log in now.".into(),
+	}))
 }
 
 #[post("/", data = "<user>")]

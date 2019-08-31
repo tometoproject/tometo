@@ -14,6 +14,11 @@ pub fn connect(db_url: String) -> PgPool {
 
 pub struct Connection(pub PooledConnection<ConnectionManager<PgConnection>>);
 
+#[derive(Serialize)]
+pub struct DefaultMessage {
+	pub message: String,
+}
+
 impl<'a, 'r> FromRequest<'a, 'r> for Connection {
 	type Error = ();
 

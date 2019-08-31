@@ -1,10 +1,11 @@
 use crate::avatar::model::{Avatar, CreateAvatar};
-use crate::db;
+use crate::db::{self, DefaultMessage};
 use crate::error::{new_ejson, OError};
 use crate::storage::create_storage;
 use crate::user::model::SlimUser;
 use rocket::http::ContentType;
 use rocket::Data;
+use rocket_contrib::json::Json;
 use rocket_multipart_form_data::mime;
 use rocket_multipart_form_data::{
 	MultipartFormData, MultipartFormDataField, MultipartFormDataOptions, RawField, TextField,
@@ -18,7 +19,7 @@ fn create_avatar(
 	content_type: &ContentType,
 	data: Data,
 	connection: db::Connection,
-) -> Result<String, OError> {
+) -> Result<Json<DefaultMessage>, OError> {
 	let mut options = MultipartFormDataOptions::new();
 	options
 		.allowed_fields
@@ -109,7 +110,9 @@ fn create_avatar(
 		format!("{}-2.png", id),
 		either::Either::Right(single_pic2.raw.clone()),
 	)?;
-	Ok("Avatar successfully created!".into())
+	Ok(Json(DefaultMessage {
+		message: "Avatar successfully created!".into(),
+	}))
 }
 
 pub fn mount(rocket: rocket::Rocket) -> rocket::Rocket {

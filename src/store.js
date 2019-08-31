@@ -55,10 +55,10 @@ export default new Vuex.Store({
 		register ({ commit }, { username, password, confirmPassword, email }) {
 			commit('toggleLoading')
 
-			register(username, password, confirmPassword, email).then(user => {
+			register(username, password, confirmPassword, email).then(data => {
 				commit('toggleLoading')
 				router.push('/')
-				commit('setInfoFlash', 'Registered successfully. You can sign in now.')
+				commit('setInfoFlash', data.message)
 			}, error => {
 				commit('toggleLoading')
 				commit('setErrorFlash', error)
@@ -99,6 +99,7 @@ export default new Vuex.Store({
 
 			createAvatar(name, pitch, speed, language, gender, pic1, pic2).then(data => {
 				commit('toggleLoading')
+				commit('setInfoFlash', data.message)
 				router.push('/')
 			}, error => {
 				commit('toggleLoading')
