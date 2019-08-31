@@ -9,13 +9,37 @@
 
     <fieldset class="field">
       <label class="label">Pitch <i>(Number from 0 to 30)</i></label>
-      <input class="input is-large" type="number" v-model="pitch" value="10" />
+      <input class="input is-large" type="number" v-model="pitch" value="10" max="30" min="0" />
     </fieldset>
 
     <fieldset class="field">
-      <label class="label">Speed <i>(Number from 0 to 2)</i></label>
-      <input class="input is-large" type="number" v-model="speed" value="1.0" />
+      <label class="label">Speed <i>(Number from 0.1 to 2.0)</i></label>
+      <input class="input is-large" type="number" v-model="speed" value="1.0" step="0.1" max="2" min="0.1" />
     </fieldset>
+
+    <div class="columns">
+      <div class="column">
+        <fieldset class="field">
+          <label class="label">Language</label>
+          <div class="select">
+            <select v-model="language">
+              <option value="en">English</option>
+            </select>
+          </div>
+        </fieldset>
+      </div>
+      <div class="column">
+        <fieldset class="field">
+          <label class="label">Voice Sound</label>
+          <div class="select">
+            <select v-model="gender">
+              <option value="f">Female</option>
+              <option value="m">Male</option>
+            </select>
+          </div>
+        </fieldset>
+      </div>
+    </div>
 
     <fieldset class="field">
       <label class="label">Closed Mouth image</label>
