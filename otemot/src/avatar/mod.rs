@@ -5,6 +5,7 @@ use crate::storage::create_storage;
 use crate::user::model::SlimUser;
 use rocket::http::ContentType;
 use rocket::Data;
+use rocket_multipart_form_data::mime;
 use rocket_multipart_form_data::{
 	MultipartFormData, MultipartFormDataField, MultipartFormDataOptions, RawField, TextField,
 };
@@ -31,13 +32,19 @@ fn create_avatar(
 	options
 		.allowed_fields
 		.push(MultipartFormDataField::text("gender"));
-	options
-		.allowed_fields
-		.push(MultipartFormDataField::raw("pic1").size_limit(1_000_000));
-	options
-		.allowed_fields
-		.push(MultipartFormDataField::raw("pic2").size_limit(1_000_000));
-	let formdata = MultipartFormData::parse(content_type, data, options).unwrap();
+	options.allowed_fields.push(
+		MultipartFormDataField::raw("pic1")
+			.size_limit(1_000_000)
+			.content_type(Some(mime::IMAGE_JPEG))
+			.content_type(Some(mime::IMAGE_PNG)),
+	);
+	options.allowed_fields.push(
+		MultipartFormDataField::raw("pic2")
+			.size_limit(1_000_000)
+			.content_type(Some(mime::IMAGE_JPEG))
+			.content_type(Some(mime::IMAGE_PNG)),
+	);
+	let formdata = MultipartFormData::parse(content_type, data, options)?;
 	let pitch = formdata.texts.get("pitch");
 	let speed = formdata.texts.get("speed");
 	let language = formdata.texts.get("language");
