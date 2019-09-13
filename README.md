@@ -20,7 +20,7 @@ prerequisites:
 - Node.js, the latest LTS or Stable version should work
 - Rust, the latest Stable version should work, although you do need at least
   version 1.32.0
-- Python 3, accessible under the `python3` executable, as well as `pip3`
+- Python 3 and `pip`
   (plus development headers, sometimes separate as `python3-devel`)
 - eSpeak (and its development headers, sometimes separate as `espeak-devel`)
 - FFmpeg
