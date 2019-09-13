@@ -84,6 +84,8 @@
 </template>
 
 <script>
+ import router from '../router'
+
  export default {
    name: 'CreateAvatar',
    data () {
@@ -141,6 +143,10 @@
        }
        this.$data.cycle = !this.$data.cycle
      }
-   }
+   },
+   beforeMount () {
+     if (!this.$store.state.username)
+       router.back()
+   },
  }
 </script>
