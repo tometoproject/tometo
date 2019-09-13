@@ -77,7 +77,7 @@ There's not much more to it! We provide a couple of convenience commands for
 doing stuff:
 
 - `npm start`: Runs the frontend and watches for changes
-- `npm run build`: Builds a production-ready JavaScript distribution in `dist/`
+- `npm run build`: Builds a production-ready bundles in `dist/`
 - `npm run watch`: Runs and watches both the front and the backend (run `cargo install cargo-watch` first)
 
 ### Otemot Setup
