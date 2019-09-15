@@ -57,3 +57,23 @@ export function logout () {
 			return data
 		}))
 }
+
+export function poll () {
+	const requestOptions = {
+		method: 'GET',
+		credentials: 'include'
+	}
+
+	return fetch(`${config.otemot.external_url}/api/poll`, requestOptions)
+		.then(res => res.text().then(text => {
+			const data = text && JSON.parse(text)
+			if (res.status === 401) {
+				return null
+			}
+			if (!res.ok) {
+				const error = (data && data.message) || res.statusText
+				return Promise.reject(error)
+			}
+			return data
+		}))
+}

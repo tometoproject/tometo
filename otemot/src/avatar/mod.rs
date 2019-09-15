@@ -1,10 +1,12 @@
 use crate::avatar::model::{Avatar, CreateAvatar};
-use crate::db;
+use crate::db::{self, DefaultMessage};
 use crate::error::{new_ejson, OError};
 use crate::storage::create_storage;
 use crate::user::model::SlimUser;
 use rocket::http::ContentType;
 use rocket::Data;
+use rocket_contrib::json::Json;
+use rocket_multipart_form_data::mime;
 use rocket_multipart_form_data::{
 	MultipartFormData, MultipartFormDataField, MultipartFormDataOptions, RawField, TextField,
 };
@@ -17,7 +19,7 @@ fn create_avatar(
 	content_type: &ContentType,
 	data: Data,
 	connection: db::Connection,
-) -> Result<String, OError> {
+) -> Result<Json<DefaultMessage>, OError> {
 	let mut options = MultipartFormDataOptions::new();
 	options
 		.allowed_fields
@@ -31,30 +33,26 @@ fn create_avatar(
 	options
 		.allowed_fields
 		.push(MultipartFormDataField::text("gender"));
-	options
-		.allowed_fields
-		.push(MultipartFormDataField::raw("pic1").size_limit(1_000_000));
-	options
-		.allowed_fields
-		.push(MultipartFormDataField::raw("pic2").size_limit(1_000_000));
-	let formdata = MultipartFormData::parse(content_type, data, options).unwrap();
+	options.allowed_fields.push(
+		MultipartFormDataField::raw("pic1")
+			.size_limit(1_000_000)
+			.content_type(Some(mime::IMAGE_JPEG))
+			.content_type(Some(mime::IMAGE_PNG)),
+	);
+	options.allowed_fields.push(
+		MultipartFormDataField::raw("pic2")
+			.size_limit(1_000_000)
+			.content_type(Some(mime::IMAGE_JPEG))
+			.content_type(Some(mime::IMAGE_PNG)),
+	);
+	let formdata = MultipartFormData::parse(content_type, data, options)?;
 	let pitch = formdata.texts.get("pitch");
 	let speed = formdata.texts.get("speed");
 	let language = formdata.texts.get("language");
 	let gender = formdata.texts.get("gender");
 	let pic1 = formdata.raw.get("pic1");
 	let pic2 = formdata.raw.get("pic2");
-	if pitch.is_none()
-		|| speed.is_none()
-		|| language.is_none()
-		|| gender.is_none()
-		|| pic1.is_none()
-		|| pic2.is_none()
-	{
-		return Err(OError::BadRequest(new_ejson(
-			"Please fill out all of the fields!",
-		)));
-	}
+
 	let single_lang = match language.unwrap() {
 		TextField::Single(v) => v,
 		TextField::Multiple(v) => v.first().unwrap(),
@@ -79,7 +77,17 @@ fn create_avatar(
 		RawField::Single(v) => v,
 		RawField::Multiple(v) => v.first().unwrap(),
 	};
-
+	if single_pitch.text.is_empty()
+		|| single_speed.text.is_empty()
+		|| single_lang.text.is_empty()
+		|| single_gender.text.is_empty()
+		|| single_pic1.raw.is_empty()
+		|| single_pic2.raw.is_empty()
+	{
+		return Err(OError::BadRequest(new_ejson(
+			"Please fill out all of the fields!",
+		)));
+	}
 	let avatar = CreateAvatar {
 		pitch: single_pitch.text.parse::<i16>()?,
 		speed: single_speed.text.parse::<f32>()?,
@@ -102,7 +110,9 @@ fn create_avatar(
 		format!("{}-2.png", id),
 		either::Either::Right(single_pic2.raw.clone()),
 	)?;
-	Ok("Avatar successfully created!".into())
+	Ok(Json(DefaultMessage {
+		message: "Avatar successfully created!".into(),
+	}))
 }
 
 pub fn mount(rocket: rocket::Rocket) -> rocket::Rocket {

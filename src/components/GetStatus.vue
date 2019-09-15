@@ -116,7 +116,7 @@ export default {
 			this.$data.images.pic1 = res.pic1
 			this.$data.images.pic2 = res.pic2
 
-			this.$data.audio.media.addEventListener('loadeddata', () => {
+			this.$data.audio.media.addEventListener('canplaythrough', () => {
 				this.$data.fullyLoaded = true
 				this.$data.interval = setInterval(() => this.tick(), 100)
 				this.$data.audio.media.play()

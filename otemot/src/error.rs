@@ -2,6 +2,7 @@ use config::ConfigError;
 use diesel::result::{DatabaseErrorKind, Error};
 use rocket::response::Responder;
 use rocket_contrib::json::Json;
+use rocket_multipart_form_data::MultipartFormDataError;
 use std::convert::From;
 use std::num::{ParseFloatError, ParseIntError};
 
@@ -69,5 +70,19 @@ impl From<ParseIntError> for OError {
 impl From<ParseFloatError> for OError {
 	fn from(_: ParseFloatError) -> OError {
 		OError::BadRequest(new_ejson("Failed to parse float! Did you input a number?"))
+	}
+}
+
+impl From<MultipartFormDataError> for OError {
+	fn from(err: MultipartFormDataError) -> OError {
+		match err {
+			MultipartFormDataError::DataTooLargeError(_) => {
+				OError::BadRequest(new_ejson("The file you uploaded is too large!"))
+			}
+			MultipartFormDataError::DataTypeError(_) => {
+				OError::BadRequest(new_ejson("The file you uploaded was not an image!"))
+			}
+			_ => OError::BadRequest(new_ejson("Please check all of the fields and try again!")),
+		}
 	}
 }
