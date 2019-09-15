@@ -12,5 +12,6 @@ tasks:
       rustc --version
       cargo --version
   - lint: |
+      source $HOME/.cargo/env
       cd tometo
       script/lint
