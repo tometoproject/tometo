@@ -6,7 +6,8 @@ sources:
   - hg+https://callie.marisa.cloud/tometo/tometo
 tasks:
   - setup: |
-      curl https://sh.rustup.rs -sSf | sh -s -- -y
+      curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain nightly-2019-09-11
+      source $HOME/.cargo/env
       rustup --version
       rustc --version
       cargo --version
