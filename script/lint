@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-npm i
+npm i --no-progress
 npx eslint src/ otemot/tts.js
 
 cargo check

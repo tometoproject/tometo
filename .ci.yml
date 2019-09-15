@@ -2,10 +2,14 @@ image: archlinux
 packages:
   - nodejs
   - npm
-  - rust
 sources:
   - hg+https://callie.marisa.cloud/tometo/tometo
 tasks:
+  - setup: |
+      curl https://sh.rustup.rs -sSf | sh -s -- -y
+      rustup --version
+      rustc --version
+      cargo --version
   - lint: |
       cd tometo
       script/lint
