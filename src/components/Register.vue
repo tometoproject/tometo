@@ -2,23 +2,23 @@
 	<section v-on:keyup.enter="submitForm">
 		<h1 class="title is-2">Register</h1>
 		<fieldset class="field">
-				<label class="label is-large">Username</label>
-				<input class="input is-large" type="text" v-model="username"></input>
+			<label class="label is-large">Username</label>
+			<input class="input is-large" type="text" v-model="username"></input>
 		</fieldset>
 
 		<fieldset class="field">
-				<label class="label is-large">Email</label>
-				<input class="input is-large" type="email" v-model="email"></input>
+			<label class="label is-large">Email</label>
+			<input class="input is-large" type="email" v-model="email"></input>
 		</fieldset>
 
 		<fieldset class="field">
-				<label class="label is-large">Password</label>
-				<input class="input is-large" type="password" v-model="password"></input>
+			<label class="label is-large">Password</label>
+			<input class="input is-large" type="password" v-model="password"></input>
 		</fieldset>
 
 		<fieldset class="field">
-				<label class="label is-large">Password Confirmation</label>
-				<input class="input is-large" type="password" v-model="confirmPassword"></input>
+			<label class="label is-large">Password Confirmation</label>
+			<input class="input is-large" type="password" v-model="confirmPassword"></input>
 		</fieldset>
 
 		<button class="button is-info" @click="submitForm" :disabled="loading">Submit</button>

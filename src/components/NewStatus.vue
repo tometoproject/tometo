@@ -3,8 +3,8 @@
 		<h1 class="title is-2">New Status</h1>
 
 		<fieldset class="field">
-				<label class="label">Content</label>
-				<textarea class="textarea" maxlength="500" type="textarea" v-model="content"></textarea>
+			<label class="label">Content</label>
+			<textarea class="textarea" maxlength="500" type="textarea" v-model="content"></textarea>
 		</fieldset>
 
 		<button class="button is-info" @click="submitForm" :disabled="loading">Submit</button>
