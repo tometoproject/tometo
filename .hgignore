@@ -13,7 +13,6 @@ target/
 otemot/gentts/
 otemot/storage/*
 otemot/storage/*
-otemot/src/schema.rs
 !otemot/storage.gitkeep
 .DS_Store
 config.toml
