@@ -6,5 +6,6 @@ packages:
 sources:
   - hg+https://callie.marisa.cloud/tometo/tometo
 tasks:
-  - cd tometo
-  - script/lint
+  - lint: |
+      cd tometo
+      script/lint
