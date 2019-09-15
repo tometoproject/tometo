@@ -1,4 +1,4 @@
-# tometo
+# tometo [![builds.sr.ht status](https://builds.sr.ht/~marisa/tometo.svg)](https://builds.sr.ht/~marisa/tometo?)
 
 Tometo is a social network focused on text-to-speech.
 
