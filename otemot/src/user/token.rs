@@ -13,15 +13,18 @@ struct Claim {
 	iat: i64,
 	/// Expiry
 	exp: i64,
+	/// ID
+	id: i32,
 	/// Username
 	username: String,
 }
 
 impl Claim {
-	fn with_username(username: &str) -> Self {
+	fn with_user_data(id: i32, username: &str) -> Self {
 		Claim {
 			iss: "localhost".into(),
 			sub: "auth".into(),
+			id,
 			username: username.to_owned(),
 			iat: Local::now().timestamp(),
 			exp: (Local::now() + Duration::hours(24)).timestamp(),
@@ -32,13 +35,14 @@ impl Claim {
 impl From<Claim> for SlimUser {
 	fn from(claims: Claim) -> Self {
 		SlimUser {
+			id: claims.id,
 			username: claims.username,
 		}
 	}
 }
 
 pub fn create_token(data: &SlimUser) -> Result<String, OError> {
-	let claims = Claim::with_username(data.username.as_str());
+	let claims = Claim::with_user_data(data.id, data.username.as_str());
 	encode(&Header::default(), &claims, get_secret().as_ref())
 		.map_err(|_err| OError::InternalServerError(new_ejson("Error while creating JWT!")))
 }

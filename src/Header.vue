@@ -2,7 +2,8 @@
 	<nav class="navbar" role="navigation" aria-label="main navigation">
 		<div class="navbar-brand">
 			<router-link to="/" class="navbar-item"><strong>Tometo</strong></router-link>
-			<router-link to="/status/new" class="navbar-item" v-if="user">New Status</router-link>
+			<router-link to="/status/new" class="navbar-item" v-if="user && hasAvatar">New Status</router-link>
+			<router-link to="/avatar/new" class="navbar-item" v-if="user && !hasAvatar">Create Avatar</router-link>
 			<a
 				@click="toggleBurger"
 				class="navbar-burger burger"
@@ -43,6 +44,9 @@ export default {
 	computed: {
 		user () {
 			return this.$store.state.username
+		},
+		hasAvatar () {
+			return this.$store.state.hasAvatar
 		}
 	},
 	methods: {
@@ -52,6 +56,9 @@ export default {
 		logout () {
 			this.$store.dispatch('logout')
 		}
+	},
+	beforeCreate () {
+		this.$store.dispatch('poll')
 	}
 }
 </script>

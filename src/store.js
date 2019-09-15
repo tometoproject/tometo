@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { register, login, logout } from './service/auth'
+import { register, login, logout, poll } from './service/auth'
 import { postStatus } from './service/status'
 import { createAvatar } from './service/avatar'
 import router from './router'
@@ -11,6 +11,7 @@ export default new Vuex.Store({
 	state: {
 		username: localStorage.getItem('username') || null,
 		cookiesAcknowledged: localStorage.getItem('cookiesAcknowledged') || false,
+		hasAvatar: false,
 		loading: false,
 		flash: {
 			error: null,
@@ -49,6 +50,9 @@ export default new Vuex.Store({
 		acknowledgeCookies (state) {
 			localStorage.setItem('cookiesAcknowledged', true)
 			state.cookiesAcknowledged = true
+		},
+		setHasAvatar (state) {
+			state.hasAvatar = true
 		}
 	},
 	actions: {
@@ -94,17 +98,29 @@ export default new Vuex.Store({
 				commit('setErrorFlash', error)
 			})
 		},
-		createAvatar({ commit }, { name, pitch, speed, language, gender, pic1, pic2 }) {
+		createAvatar ({ commit }, { name, pitch, speed, language, gender, pic1, pic2 }) {
 			commit('toggleLoading')
 
 			createAvatar(name, pitch, speed, language, gender, pic1, pic2).then(data => {
 				commit('toggleLoading')
+				commit('setHasAvatar')
 				commit('setInfoFlash', data.message)
 				router.push('/')
 			}, error => {
 				commit('toggleLoading')
 				commit('setErrorFlash', error)
 			})
+		},
+		poll ({ commit }) {
+			poll().then(data => {
+				if (!data) {
+					commit('clearUsername')
+				}
+
+				if (data.hasAvatar) {
+					commit('setHasAvatar')
+				}
+			})
 		}
- 	}
+	}
 })

@@ -1,6 +1,7 @@
+use crate::avatar::model::Avatar;
 use crate::db::Connection;
 use crate::error::{new_ejson, OError};
-use crate::schema::users;
+use crate::schema::{avatars, users};
 use crate::user::token::decode_token;
 use bcrypt::{hash, verify, DEFAULT_COST};
 use chrono::{NaiveDateTime, Utc};
@@ -23,12 +24,19 @@ pub struct User {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct SlimUser {
+	pub id: i32,
 	pub username: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct PollResponse {
+	pub has_avatar: bool,
 }
 
 impl From<User> for SlimUser {
 	fn from(user: User) -> Self {
 		SlimUser {
+			id: user.id,
 			username: user.username,
 		}
 	}
@@ -83,15 +91,29 @@ impl User {
 		Ok(())
 	}
 
-	pub fn check_password(user: &LoginUser, connection: &PgConnection) -> Result<(), OError> {
+	pub fn check_password(user: &LoginUser, connection: &PgConnection) -> Result<i32, OError> {
 		let db_user = users::table
 			.filter(users::username.eq(&user.username))
 			.first::<User>(connection)?;
 		match verify(&user.password, &db_user.password) {
-			Ok(valid) if valid => Ok(()),
+			Ok(valid) if valid => Ok(db_user.id),
 			Ok(valid) if !valid => Err(OError::BadRequest(new_ejson("Password doesn't match!"))),
 			_ => Err(OError::InternalServerError(new_ejson(
 				"Error while verifying password",
+			))),
+		}
+	}
+
+	pub fn check_avatar(user: &SlimUser, connection: &PgConnection) -> Result<bool, OError> {
+		let av = avatars::table
+			.filter(avatars::user_id.eq(user.id))
+			.first::<Avatar>(connection);
+
+		match av {
+			Ok(_) => Ok(true),
+			Err(diesel::result::Error::NotFound) => Ok(false),
+			Err(_) => Err(OError::InternalServerError(new_ejson(
+				"Unexpected database error!",
 			))),
 		}
 	}
