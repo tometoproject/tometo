@@ -20,7 +20,7 @@ prerequisites:
 - Node.js, the latest LTS or Stable version should work
 - Rust, the latest Stable version should work, although you do need at least
   version 1.32.0
-- Python 3, accessible under the `python3` executable, as well as `pip3`
+- Python 3 and `pip`
   (plus development headers, sometimes separate as `python3-devel`)
 - eSpeak (and its development headers, sometimes separate as `espeak-devel`)
 - FFmpeg
@@ -77,7 +77,7 @@ There's not much more to it! We provide a couple of convenience commands for
 doing stuff:
 
 - `npm start`: Runs the frontend and watches for changes
-- `npm run build`: Builds a production-ready JavaScript distribution in `dist/`
+- `npm run build`: Builds a production-ready bundles in `dist/`
 - `npm run watch`: Runs and watches both the front and the backend (run `cargo install cargo-watch` first)
 
 ### Otemot Setup
