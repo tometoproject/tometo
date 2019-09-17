@@ -65,7 +65,7 @@ impl Status {
 			.merge(config::Environment::new().separator("_"))
 			.unwrap();
 		let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
-		let audio_path = storage.get(format!("{}.mp3", &status.id))?;
+		let audio_path = storage.get(format!("{}.ogg", &status.id))?;
 		let timestamps_path = storage.get(format!("{}.json", &status.id))?;
 		let pic1_path = storage.get(format!("{}-1.png", &status.avatar_id))?;
 		let pic2_path = storage.get(format!("{}-2.png", &status.avatar_id))?;
@@ -99,11 +99,11 @@ fn genstatus(content: String, avatar: Avatar, conn: &PgConnection) -> Result<Uui
 	let mut pbuf = PathBuf::from("otemot/gentts");
 	pbuf.push(&new_id.to_string());
 	let mut audio_path = PathBuf::from(&pbuf);
-	audio_path.push("temp.mp3");
+	audio_path.push("temp.ogg");
 	let mut text_path = PathBuf::from(&pbuf);
 	text_path.push("out.json");
 	storage.put(
-		format!("{}.mp3", new_id.to_string()),
+		format!("{}.ogg", new_id.to_string()),
 		Either::Left(audio_path),
 	)?;
 	storage.put(
