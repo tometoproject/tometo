@@ -2,12 +2,7 @@
 
 # This is based on a CI server running Arch Linux
 
-pacman -S nodejs npm python espeak ffmpeg postgresql
 curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain $(cat rust-toolchain)
-initdb -D /var/lib/postgres/data
-sudo systemctl start postgresql
-sudo -u postgres createuser -s ci
+source $HOME/.cargo/env
 npm install
 cargo build
-cargo install diesel_cli --no-default-features --features postgres
-cd otemot; DATABASE_URL=postgres://ci@localhost/otemot_dev diesel setup
