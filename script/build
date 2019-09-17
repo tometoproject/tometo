@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+echo "Building frontend"
+npx webpack --config webpack.prod.js
+
+echo "Building backend"
+cargo build --release
+
+echo "Done, FE builds in dist/, BE builds in otemot/target/release/"

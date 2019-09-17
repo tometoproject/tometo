@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+
+echo "Starting local setup"
+
+if [ -x "$(command -v cargo)" ]
+then
+    echo "SUCCESS: Rust and Cargo are installed"
+else
+    echo "WARNING: Rust and/or Cargo not installed!"
+    echo "Please install Rust: https://rustup.rs"
+fi
+
+if [ -x "$(command -v node)" ]
+then
+    echo "SUCCESS: Node.js is installed"
+else
+    echo "WARNING: Node.js not installed!"
+    echo "Please install Node.js: https://nodejs.org"
+fi
+
+if [ -x "$(command -v pip)" ]
+then
+    echo "SUCCESS: Python and Pip are installed"
+else
+    echo "WARNING: Python and/or Pip are not installed!"
+    echo "Please install Python via your package manager or from source"
+fi
+
+if [ -x "$(command -v ffmpeg)" ]
+then
+    echo "SUCCESS: ffmpeg is installed"
+else
+    echo "WARNING: ffmpeg is not installed!"
+    echo "Please install ffmpeg via your package manager or from source"
+fi
+
+if [ -x "$(command -v espeak)" ]
+then
+    echo "SUCCESS: espeak is installed"
+else
+    echo "WARNING: espeak is not installed!"
+    echo "Please install espeak via your package manager or from source"
+fi
+
+if [ -x "$(command -v pg_dump)" ]
+then
+    echo "SUCCESS: PostgreSQL is installed"
+else
+    echo "WARNING: PostgreSQL is not installed!"
+    echo "Please install PostgreSQL via your package manager or from source"
+fi
+
+echo "Installing Cargo tools"
+cargo install diesel_cli --no-default-features --features postgres
+cargo install cargo-watch
+
+echo "Copying configuration file"
+cp config.example.toml config.toml
+
+echo "Installing packages"
+npm i
+cargo build
+
+echo "Enter a Postgres database connection string:"
+read conn
+
+echo "Setting up database"
+cd otemot
+DATABASE_URL=$conn diesel setup
+
+echo "All done! Be sure to fill out the config.toml file and use the following scripts to run Tometo:"
+echo "script/run_f - Run only the frontend"
+echo "script/run_b - Run only the backend"
+echo "script/run - Run both frontend and backend"
+echo "script/watch - Run both frontend and backend and rerun on changes"
