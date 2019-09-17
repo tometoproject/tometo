@@ -1,10 +1,12 @@
 use crate::error::OError;
 use crate::storage::local::LocalStorage;
+#[cfg(feature = "s3")]
 use crate::storage::s3::S3Storage;
 use either::Either;
 use std::path::PathBuf;
 
 pub mod local;
+#[cfg(feature = "s3")]
 pub mod s3;
 
 pub trait Storage {
@@ -15,6 +17,7 @@ pub trait Storage {
 
 pub fn create_storage(method: String) -> Box<(dyn Storage + 'static)> {
 	match method.as_ref() {
+		#[cfg(feature = "s3")]
 		"s3" => Box::new(S3Storage::new()),
 		"local" | _ => Box::new(LocalStorage::new()),
 	}

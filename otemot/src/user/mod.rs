@@ -57,9 +57,7 @@ fn logout(mut cookies: Cookies) {
 #[get("/")]
 fn poll(user: SlimUser, connection: db::Connection) -> Result<Json<PollResponse>, OError> {
 	let has_avatar = User::check_avatar(&user, &connection)?;
-	Ok(Json(PollResponse {
-		has_avatar,
-	}))
+	Ok(Json(PollResponse { has_avatar }))
 }
 
 pub fn mount(rocket: rocket::Rocket) -> rocket::Rocket {
