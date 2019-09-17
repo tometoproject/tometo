@@ -5,7 +5,7 @@ packages:
   - python
   - espeak
   - ffmpeg
-  - postgres
+  - postgresql
   - openssl
 sources:
   - hg+https://callie.marisa.cloud/tometo/tometo
