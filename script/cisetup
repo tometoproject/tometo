@@ -4,5 +4,5 @@
 
 curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain $(cat rust-toolchain)
 source $HOME/.cargo/env
-npm install
-cargo build
+npm install -q
+cargo build -q
