@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# This is based on a CI server running Arch Linux
-
 curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain $(cat rust-toolchain)
 source $HOME/.cargo/env
 npm install -q

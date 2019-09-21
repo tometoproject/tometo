@@ -5,10 +5,8 @@ name: default
 
 steps:
   - name: lint
-    image: archlinux/base
+    image: node:buster
     commands:
-      - pacman -Syy
-      - pacman -S --noconfirm nodejs npm python espeak ffmpeg postgresql openssl
       - script/cisetup
       - source $HOME/.cargo/env
       - script/lint
