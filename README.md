@@ -1,4 +1,4 @@
-# tometo [[![Build Status](https://ci.marisa.cloud/api/badges/t/tometo/status.svg)](https://ci.marisa.cloud/t/tometo)
+# tometo [![Build Status](https://ci.marisa.cloud/api/badges/t/tometo/status.svg)](https://ci.marisa.cloud/t/tometo)
 
 Tometo is a social network focused on text-to-speech.
 
