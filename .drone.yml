@@ -8,5 +8,4 @@ steps:
     image: node:buster
     commands:
       - script/cisetup
-      - source $HOME/.cargo/env
       - script/lint

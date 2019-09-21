@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+source $HOME/.cargo/env
 npm i --no-progress
 npx eslint src/ otemot/tts.js
 
