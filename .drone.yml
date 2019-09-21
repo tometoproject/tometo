@@ -7,7 +7,7 @@ steps:
   - name: lint
     image: archlinux/base
     commands:
-      - sudo pacman -S nodejs npm python espeak ffmpeg postgresql openssl
+      - pacman -S nodejs npm python espeak ffmpeg postgresql openssl
       - script/cisetup
       - source $HOME/.cargo/env
       - script/lint
