@@ -8,7 +8,7 @@ steps:
     image: archlinux/base
     commands:
       - pacman -Syy
-      - pacman -S nodejs npm python espeak ffmpeg postgresql openssl
+      - pacman -S --noconfirm nodejs npm python espeak ffmpeg postgresql openssl
       - script/cisetup
       - source $HOME/.cargo/env
       - script/lint
