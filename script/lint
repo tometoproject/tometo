@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 source $HOME/.cargo/env
 npm i --no-progress
