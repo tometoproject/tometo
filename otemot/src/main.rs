@@ -1,4 +1,4 @@
-#![feature(proc_macro_hygiene, decl_macro, async_await)]
+#![feature(proc_macro_hygiene, decl_macro)]
 #![warn(clippy::all)]
 
 #[macro_use]
