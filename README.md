@@ -21,8 +21,7 @@ prerequisites:
 - Git
 - A PostgreSQL server, and its development headers (sometimes called `libpq-dev` or `postgresql-devel`)
 - Node.js, the latest LTS or Stable version should work
-- Rust, the latest Stable version should work, although you do need at least
-  version 1.32.0
+- Rust (the correct nightly version should automatically install)
 - Python 3 and `pip`
   (plus development headers, sometimes separate as `python3-devel`)
 - eSpeak (and its development headers, sometimes separate as `espeak-devel`)
