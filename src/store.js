@@ -117,7 +117,7 @@ export default new Vuex.Store({
 					commit('clearUsername')
 				}
 
-				if (data.hasAvatar) {
+				if (data.has_avatar) {
 					commit('setHasAvatar')
 				}
 			})
