@@ -1,5 +1,8 @@
 # tometo [![Build Status](https://ci.marisa.cloud/api/badges/t/tometo/status.svg)](https://ci.marisa.cloud/t/tometo)
 
+__If you're reading this on GitHub: The repository you're looking at is only a
+mirror! It's automatically pulled from [our main repository](https://marie.marisa.cloud/t/tometo).__
+
 Tometo is a social network focused on text-to-speech.
 
 ## Reporting Issues
