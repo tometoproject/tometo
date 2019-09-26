@@ -9,6 +9,8 @@ Tometo is a social network focused on text-to-speech.
 
 Please report issues on the [Bug Tracker](https://bugs.marisa.cloud/projects/tometo).
 
+## Documentation
+
 If you want to work on Tometo, or just play around with it locally, please
 follow the [Installation documentation](https://docs.tometo.org/installation/).
 There's other documentation on there that might be worth reading, too.
