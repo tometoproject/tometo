@@ -19,9 +19,10 @@ dsn = "AAAA"
 # string.
 database_url = "postgres://myuser:mypassword@localhost/otemot_dev"
 
-# Path to where your Google Cloud credentials file ("Service Account Key") is
-# stored. This is needed for text-to-speech generation.
-google_credentials = "/path/to/serviceaccount.json"
+# Synthesize speech by either using eSpeak locally or connecting to the Google
+# Text-to-Speech API. The latter scales better, and should probably be used in
+# production, but for local development, eSpeak works just fine.
+speech = "espeak"
 
 # Hostname (WITHOUT port or protocol) of the backend
 hostname = "127.0.0.1"
@@ -44,6 +45,13 @@ env = "development"
 # - s3 (using Amazon's S3 protocol, but doesn't need to be on their servers)
 storage = "local"
 
+# Optional configuration that only needs to be correct when you have "speech"
+# set to "google"
+[otemot.google]
+# Path to where your Google Cloud credentials file ("Service Account Key") is
+# stored. This is needed for text-to-speech generation.
+credentials_path = "/path/to/serviceaccount.json"
+
 # Optional configuration that only needs to be correct when you're using the "s3"
 # storage method.
 [otemot.s3_storage]
@@ -64,9 +72,9 @@ url = "s3.amazonclone.com"
 # Secrets that should NEVER be checked into version control or be made public
 [otemot.secrets]
 
-# Cookie secret key. Generate one using the following command:
+# Cookie secret key. Generate your own using the following command:
 # `openssl rand -base64 32`
-cookie = "replaceme"
+cookie = "sPX8hOxLJGPtqJNWKSU7dsKjirCHQMuXwY8imjoF0w8="
 
 # Json Web Token (JWT) encryption cookie, for additional login security
-jwt = "replacemetoo"
+jwt = "replaceme"
