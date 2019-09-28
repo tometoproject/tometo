@@ -10,28 +10,11 @@ const argv = require('minimist')(process.argv.slice(2))
 const toml = require('@iarna/toml')
 const config = toml.parse(fs.readFileSync('config.toml', { encoding: 'UTF-8' }))
 
-const client = new TextToSpeechClient({
-	keyFilename: config.otemot.google_credentials
-})
-const text = argv._[0]
 const name = argv.n
-
-const rq = {
-	input: { text },
-	voice: { languageCode: 'en-US', name: 'en-US-Standard-B' },
-	audioConfig: {
-		audioEncoding: 'OGG_OPUS',
-		pitch: argv.p || 0,
-		speakingRate: argv.s || 1.0
-	}
-}
 
 mkdir(`${__dirname}/gentts/${name}`).then(() => {
 	console.log('synthesizing speech...')
-	return client.synthesizeSpeech(rq)
-}).then(response => {
-	console.log('writing audio...')
-	return writeFile(`${__dirname}/gentts/${name}/temp.ogg`, response[0].audioContent, 'binary')
+	return synthesize()
 }).then(() => {
 	console.log('writing text...')
 	return writeFile(`${__dirname}/gentts/${name}/temp.txt`, argv._[0].split(' ').join('\n'), 'UTF-8')
@@ -41,3 +24,26 @@ mkdir(`${__dirname}/gentts/${name}`).then(() => {
 }).then(() => {
 	console.log('done!')
 })
+
+async function synthesize () {
+	if (config.otemot.speech === 'google') {
+		const client = new TextToSpeechClient({
+			keyFilename: config.otemot.google.credentials_path
+		})
+		const rq = {
+			input: { text: argv._[0] },
+			voice: { languageCode: 'en-US', name: 'en-US-Standard-B' },
+			audioConfig: {
+				audioEncoding: 'OGG_OPUS',
+				pitch: argv.p || 0,
+				speakingRate: argv.s || 1.0
+			}
+		}
+		let res = await client.synthesizeSpeech(rq)
+		await writeFile(`${__dirname}/gentts/${name}/temp.ogg`, res[0].audioContent, 'binary')
+	} else {
+		await exec(`espeak -p ${((argv.p + 20) * 2.5) - 1} -w ${__dirname}/gentts/${name}/temp.wav "${argv._[0]}"`)
+		await exec(`ffmpeg -i ${__dirname}/gentts/${name}/temp.wav -c:a libopus -b:a 96K ${__dirname}/gentts/${name}/temp.ogg`)
+	}
+	return true
+}
