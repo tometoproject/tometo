@@ -42,7 +42,9 @@ async function synthesize () {
 		let res = await client.synthesizeSpeech(rq)
 		await writeFile(`${__dirname}/gentts/${name}/temp.ogg`, res[0].audioContent, 'binary')
 	} else {
-		await exec(`espeak -p ${((argv.p + 20) * 2.5) - 1} -w ${__dirname}/gentts/${name}/temp.wav "${argv._[0]}"`)
+		let scalePitch = Math.round(((argv.p + 20) / 40 * 99))
+		let scaleSpeed = Math.round(((argv.s - 0.25) / 3.75 * 370) + 80)
+		await exec(`espeak -p ${scalePitch} -s ${scaleSpeed} -w ${__dirname}/gentts/${name}/temp.wav "${argv._[0]}"`)
 		await exec(`ffmpeg -i ${__dirname}/gentts/${name}/temp.wav -c:a libopus -b:a 96K ${__dirname}/gentts/${name}/temp.ogg`)
 	}
 	return true
