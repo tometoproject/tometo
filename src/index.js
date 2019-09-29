@@ -3,7 +3,7 @@ import App from './App.vue'
 import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 import router from './router'
-import store from './store'
+import store from './store/index'
 import ctoml from '../config.toml'
 import { parse } from '@iarna/toml'
 

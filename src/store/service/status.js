@@ -1,12 +1,12 @@
-import ctoml from '../../config.toml'
+import ctoml from '../../../config.toml'
 import { parse } from '@iarna/toml'
 let config = parse(ctoml)
 
-export function postStatus (content, pitch) {
+export function doCreateStatus (content) {
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ content, pitch }),
+		body: JSON.stringify({ content }),
 		credentials: 'include'
 	}
 

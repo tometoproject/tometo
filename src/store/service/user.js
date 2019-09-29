@@ -1,8 +1,8 @@
-import ctoml from '../../config.toml'
+import ctoml from '../../../config.toml'
 import { parse } from '@iarna/toml'
 let config = parse(ctoml)
 
-export function register (username, password, confirmPassword, email) {
+export function doRegister (username, password, confirmPassword, email) {
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -20,7 +20,7 @@ export function register (username, password, confirmPassword, email) {
 		})).then(user => user)
 }
 
-export function login (username, password) {
+export function doLogin (username, password) {
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -41,7 +41,7 @@ export function login (username, password) {
 		})
 }
 
-export function logout () {
+export function doLogout () {
 	const requestOptions = {
 		method: 'DELETE',
 		credentials: 'include'
@@ -58,7 +58,7 @@ export function logout () {
 		}))
 }
 
-export function poll () {
+export function doPoll () {
 	const requestOptions = {
 		method: 'GET',
 		credentials: 'include'

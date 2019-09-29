@@ -1,8 +1,8 @@
-import ctoml from '../../config.toml'
+import ctoml from '../../../config.toml'
 import { parse } from '@iarna/toml'
 let config = parse(ctoml)
 
-export function createAvatar (name, pitch, speed, language, gender, pic1, pic2) {
+export function doCreateAvatar (name, pitch, speed, language, gender, pic1, pic2) {
 	let formdata = new FormData()
 	// formdata.set('name', name)
 	formdata.set('pitch', pitch)
