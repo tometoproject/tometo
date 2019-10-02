@@ -4,8 +4,8 @@
 		<div v-else>
 			<div class="columns">
 				<div class="column is-one-quarter">
-					<img v-if="!isLoud" v-bind:src="this.$data.images.pic1" />
-					<img v-if="isLoud" v-bind:src="this.$data.images.pic2" />
+					<img v-if="!audio.isLoud" v-bind:src="this.$data.images.pic1" />
+					<img v-if="audio.isLoud" v-bind:src="this.$data.images.pic2" />
 				</div>
 				<div class="column">
 					<h1 class="subtitle is-1">
@@ -71,6 +71,7 @@ export default {
 			if (this.isLoaded && this.$data.text.index < this.$data.text.words.length) {
 				const cur = this.$data.text.words[this.$data.text.index]
 				const time = this.$data.audio.ctx.currentTime
+				console.log(this.$data.audio.ctx.currentTime)
 				if (this.getVolume() > 1) {
 					this.$data.audio.isLoud = true
 				} else {
@@ -113,8 +114,21 @@ export default {
 				clearInterval(this.$data.text.interval)
 				this.$data.audio.playing = !this.$data.audio.playing
 			}
+		},
+
+		initAudio () {
+			this.$data.audio.ctx = new window.AudioContext()
+			this.$data.audio.src = this.$data.audio.ctx.createMediaElementSource(this.$data.audio.media)
+			this.$data.audio.analyzer = this.$data.audio.ctx.createAnalyser()
+			this.$data.audio.analyzer.fftSize = 512
+			this.$data.audio.analyzer.smoothingTimeConstant = 0.9
+			this.$data.audio.src.connect(this.$data.audio.analyzer)
+			this.$data.audio.analyzer.connect(this.$data.audio.ctx.destination)
+			this.$data.audio.ctx.suspend()
 		}
 	},
+
+
 
 	mounted () {
 		fetch(`${config.otemot.external_url}/api/status/${this.$route.params.id}`)
@@ -128,21 +142,22 @@ export default {
 		})
 		.then(res => {
 			this.$data.text.unplayed = res.content.split(' ')
-			this.$data.audio.ctx = new window.AudioContext()
 			this.$data.audio.media = new Audio(res.audio)
 			this.$data.audio.media.crossOrigin = 'anonymous'
-			this.$data.audio.src = this.$data.audio.ctx.createMediaElementSource(this.$data.audio.media)
-			this.$data.audio.analyzer = this.$data.audio.ctx.createAnalyser()
-			this.$data.audio.analyzer.fftSize = 512
-			this.$data.audio.analyzer.smoothingTimeConstant = 0.9
-			this.$data.audio.src.connect(this.$data.audio.analyzer)
-			this.$data.audio.analyzer.connect(this.$data.audio.ctx.destination)
+			this.initAudio()
 			this.$data.images.pic1 = res.pic1
 			this.$data.images.pic2 = res.pic2
-			this.$data.audio.ctx.suspend()
 
 			this.$data.audio.media.addEventListener('canplaythrough', () => {
 				this.$data.loaded.audio = true
+			})
+
+			this.$data.audio.media.addEventListener('ended', () => {
+				this.initAudio()
+				this.$data.text.unplayed = this.$data.text.played
+				this.$data.text.played = []
+				this.$data.text.index = 0
+				clearInterval(this.$data.text.interval)
 			})
 
 			return fetch(res.timestamps, {method: 'GET'})
