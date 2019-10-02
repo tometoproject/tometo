@@ -4,13 +4,18 @@
 		<div v-else>
 			<div class="columns">
 				<div class="column is-one-quarter">
-					<img v-if="!isLoud" v-bind:src="this.$data.images.pic1" />
-					<img v-if="isLoud" v-bind:src="this.$data.images.pic2" />
+					<img v-if="!audio.isLoud" v-bind:src="this.$data.images.pic1" />
+					<img v-if="audio.isLoud" v-bind:src="this.$data.images.pic2" />
 				</div>
 				<div class="column">
 					<h1 class="subtitle is-1">
-						<span class="has-text-info">{{ this.$data.played.join(' ') }}</span>
-						{{ this.$data.unplayed.join(' ') }}
+						<div class="button is-info is-large is-rounded" v-on:click="togglePlaying" id="playbutton">
+							<span v-if="audio.playing && isLoaded">❚❚</span>
+							<span v-else-if="!audio.playing && isLoaded">▶</span>
+							<span v-else>侢</span>
+						</div>
+						<span class="has-text-info">{{ this.$data.text.played.join(' ') }}</span>
+						{{ this.$data.text.unplayed.join(' ') }}
 					</h1>
 				</div>
 			</div>
@@ -28,51 +33,57 @@ export default {
 	name: 'GetStatus',
 	data () {
 		return {
-			unplayed: [],
-			played: [],
 			audio: {
 				ctx: null,
 				src: null,
 				analyzer: null,
 				media: null,
-				dest: null
+				dest: null,
+				isLoud: false,
+				playing: false
 			},
-			jsonLoaded: false,
-			fullyLoaded: false,
+			loaded: {
+				audio: false,
+				json: false
+			},
 			images: {
 				pic1: "",
 				pic2: ""
 			},
-			words: [],
-			isLoud: false,
-			interval: null,
-			index: 0
+			text: {
+				unplayed: [],
+				played: [],
+				words: [],
+				interval: null,
+				index: 0
+			}
 		}
 	},
 
 	computed: {
 		isLoaded () {
-			return this.$data.jsonLoaded && this.$data.fullyLoaded
+			return this.$data.loaded.json && this.$data.loaded.audio
 		}
 	},
 
 	methods: {
 		tick () {
-			if (this.isLoaded && this.$data.index < this.$data.words.length) {
-				const cur = this.$data.words[this.$data.index]
+			if (this.isLoaded && this.$data.text.index < this.$data.text.words.length) {
+				const cur = this.$data.text.words[this.$data.text.index]
 				const time = this.$data.audio.ctx.currentTime
+				console.log(this.$data.audio.ctx.currentTime)
 				if (this.getVolume() > 1) {
-					this.$data.isLoud = true
+					this.$data.audio.isLoud = true
 				} else {
-					this.$data.isLoud = false
+					this.$data.audio.isLoud = false
 				}
 				if (time > Number(cur.begin)) {
-					this.$data.index += 1
-					const word = this.$data.unplayed.shift()
-					this.$data.played.push(word)
+					this.$data.text.index += 1
+					const word = this.$data.text.unplayed.shift()
+					this.$data.text.played.push(word)
 				}
 			} else {
-				this.$data.isLoud = false
+				this.$data.audio.isLoud = false
 			}
 		},
 
@@ -89,8 +100,35 @@ export default {
 			average /= array.length
 
 			return average
+		},
+
+		togglePlaying () {
+			if (this.$data.audio.media.paused && this.isLoaded) {
+				this.$data.text.interval = setInterval(() => this.tick(), 100)
+				this.$data.audio.ctx.resume()
+				this.$data.audio.media.play()
+				this.$data.audio.playing = !this.$data.audio.playing
+			} else if (!this.$data.audio.media.paused && this.isLoaded) {
+				this.$data.audio.media.pause()
+				this.$data.audio.ctx.suspend()
+				clearInterval(this.$data.text.interval)
+				this.$data.audio.playing = !this.$data.audio.playing
+			}
+		},
+
+		initAudio () {
+			this.$data.audio.ctx = new window.AudioContext()
+			this.$data.audio.src = this.$data.audio.ctx.createMediaElementSource(this.$data.audio.media)
+			this.$data.audio.analyzer = this.$data.audio.ctx.createAnalyser()
+			this.$data.audio.analyzer.fftSize = 512
+			this.$data.audio.analyzer.smoothingTimeConstant = 0.9
+			this.$data.audio.src.connect(this.$data.audio.analyzer)
+			this.$data.audio.analyzer.connect(this.$data.audio.ctx.destination)
+			this.$data.audio.ctx.suspend()
 		}
 	},
+
+
 
 	mounted () {
 		fetch(`${config.otemot.external_url}/api/status/${this.$route.params.id}`)
@@ -103,40 +141,36 @@ export default {
 			}
 		})
 		.then(res => {
-			this.$data.unplayed = res.content.split(' ')
-			this.$data.audio.ctx = new window.AudioContext()
+			this.$data.text.unplayed = res.content.split(' ')
 			this.$data.audio.media = new Audio(res.audio)
 			this.$data.audio.media.crossOrigin = 'anonymous'
-			this.$data.audio.src = this.$data.audio.ctx.createMediaElementSource(this.$data.audio.media)
-			this.$data.audio.analyzer = this.$data.audio.ctx.createAnalyser()
-			this.$data.audio.analyzer.fftSize = 512
-			this.$data.audio.analyzer.smoothingTimeConstant = 0.9
-			this.$data.audio.src.connect(this.$data.audio.analyzer)
-			this.$data.audio.analyzer.connect(this.$data.audio.ctx.destination)
+			this.initAudio()
 			this.$data.images.pic1 = res.pic1
 			this.$data.images.pic2 = res.pic2
 
 			this.$data.audio.media.addEventListener('canplaythrough', () => {
-				this.$data.fullyLoaded = true
-				this.$data.interval = setInterval(() => this.tick(), 100)
-				this.$data.audio.media.play()
+				this.$data.loaded.audio = true
+			})
+
+			this.$data.audio.media.addEventListener('ended', () => {
+				this.initAudio()
+				this.$data.text.unplayed = this.$data.text.played
+				this.$data.text.played = []
+				this.$data.text.index = 0
+				clearInterval(this.$data.text.interval)
 			})
 
 			return fetch(res.timestamps, {method: 'GET'})
 		})
 		.then(res2 => res2.json())
 		.then(res2 => {
-			this.$data.words = res2.fragments
-			this.$data.jsonLoaded = true
+			this.$data.text.words = res2.fragments
+			this.$data.loaded.json = true
 		})
 	},
 
 	beforeDestroy () {
-		clearInterval(this.$data.interval)
+		clearInterval(this.$data.text.interval)
 	}
 }
 </script>
-
-<style>
-
-</style>

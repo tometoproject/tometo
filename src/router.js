@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import Home from './components/Home.vue'
 import Register from './components/Register.vue'
 import Login from './components/Login.vue'
-import NewStatus from './components/NewStatus.vue'
+import CreateStatus from './components/CreateStatus.vue'
 import GetStatus from './components/GetStatus.vue'
 import CreateAvatar from './components/CreateAvatar.vue'
 
@@ -16,7 +16,7 @@ export default new VueRouter({
 		{ path: '/', component: Home },
 		{ path: '/register', component: Register },
 		{ path: '/login', component: Login },
-		{ path: '/status/new', component: NewStatus },
+		{ path: '/status/new', component: CreateStatus },
 		{ path: '/status/:id', component: GetStatus },
 		{ path: '/avatar/new', component: CreateAvatar }
 	]

@@ -15,7 +15,7 @@
 import router from '../router'
 
 export default {
-	name: 'NewStatus',
+	name: 'CreateStatus',
 	data () {
 		return {
 			content: '',
@@ -33,7 +33,7 @@ export default {
 	methods: {
 		submitForm () {
 			let { content, pitch } = this
-			this.$store.dispatch('newStatus', { content })
+			this.$store.dispatch('createStatus', { content })
 		}
 	}
 }
