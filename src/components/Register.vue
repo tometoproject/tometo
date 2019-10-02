@@ -46,7 +46,8 @@ export default {
 		}
 	},
 	methods: {
-		submitForm () {
+		submitForm (e) {
+			e.preventDefault()
 			let { username, email, password, confirmPassword } = this
 			this.$store.dispatch('register', { username, password, confirmPassword, email })
 		}

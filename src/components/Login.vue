@@ -37,7 +37,8 @@ export default {
 		}
 	},
 	methods: {
-		submitForm () {
+		submitForm (e) {
+			e.preventDefault()
 			let { username, password } = this
 			this.$store.dispatch('login', { username, password })
 		}

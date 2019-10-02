@@ -31,7 +31,8 @@ export default {
 		}
 	},
 	methods: {
-		submitForm () {
+		submitForm (e) {
+			e.preventDefault()
 			let { content, pitch } = this
 			this.$store.dispatch('createStatus', { content })
 		}
