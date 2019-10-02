@@ -14,13 +14,14 @@ export function register ({ commmit }, { username, password, confirmPassword, em
   })
 }
 
-export function login ({ commit }, { username, password }) {
+export function login ({ commit, dispatch }, { username, password }) {
   commit('toggleLoading')
 
   doLogin(username, password).then(user => {
     commit('toggleLoading')
     commit('setUsername', user.username)
     router.push('/')
+    dispatch('poll')
     commit('setInfoFlash', 'Signed in successfully.')
   }, error => {
     commit('toggleLoading')
