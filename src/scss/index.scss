@@ -1,0 +1,25 @@
+$bp-medium: 54em;
+$bp-small: 26em;
+
+$c-black: #252525;
+$c-yellow: #ff6;
+$c-white: #fff;
+$c-blue: #00f;
+$c-lightblue: #6491ff;
+$c-lightgray: #eee;
+$c-gray: #d5d5d5;
+
+@mixin medium {
+    @media (max-width: $bp-medium) {
+        @content;
+    }
+}
+
+@mixin small {
+    @media (max-width: $bp-small) {
+        @content;
+    }
+}
+
+@import './base';
+@import './nav';

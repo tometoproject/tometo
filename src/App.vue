@@ -1,9 +1,9 @@
 <template>
-	<div id="app">
+	<div id="app" class="center">
 		<div class="container">
 			<app-header></app-header>
 		</div>
-		<section class="section">
+		<section class="page">
 			<div class="container">
 					<div class="notification is-info" @click="hideCookies" v-if="!cookiesAcknowledged">
 							We use cookies to keep you logged in, but nothing else.<br>
