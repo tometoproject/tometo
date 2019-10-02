@@ -1,28 +1,28 @@
 <template>
-	<section v-on:keyup.enter="submitForm">
-		<h1 class="title is-2">Register</h1>
-		<fieldset class="field">
-			<label class="label is-large">Username</label>
-			<input class="input is-large" type="text" v-model="username"></input>
+	<form v-on:keyup.enter="submitForm">
+		<h1>Register</h1>
+		<fieldset>
+			<label>Username</label>
+			<input type="text" v-model="username"></input>
 		</fieldset>
 
-		<fieldset class="field">
-			<label class="label is-large">Email</label>
-			<input class="input is-large" type="email" v-model="email"></input>
+		<fieldset>
+			<label>Email</label>
+			<input type="email" v-model="email"></input>
 		</fieldset>
 
-		<fieldset class="field">
-			<label class="label is-large">Password</label>
-			<input class="input is-large" type="password" v-model="password"></input>
+		<fieldset>
+			<label>Password</label>
+			<input type="password" v-model="password"></input>
 		</fieldset>
 
-		<fieldset class="field">
-			<label class="label is-large">Password Confirmation</label>
-			<input class="input is-large" type="password" v-model="confirmPassword"></input>
+		<fieldset>
+			<label>Password Confirmation</label>
+			<input type="password" v-model="confirmPassword"></input>
 		</fieldset>
 
-		<button class="button is-info" @click="submitForm" :disabled="loading">Submit</button>
-	</section>
+		<button @click="submitForm" :disabled="loading">Submit</button>
+	</form>
 </template>
 
 <script>

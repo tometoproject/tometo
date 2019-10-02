@@ -8,13 +8,13 @@
 					<img v-if="audio.isLoud" v-bind:src="this.$data.images.pic2" />
 				</div>
 				<div class="column">
-					<h1 class="subtitle is-1">
-						<div class="button is-info is-large is-rounded" v-on:click="togglePlaying" id="playbutton">
+					<h1>
+						<div v-on:click="togglePlaying" id="playbutton">
 							<span v-if="audio.playing && isLoaded">❚❚</span>
 							<span v-else-if="!audio.playing && isLoaded">▶</span>
 							<span v-else>侢</span>
 						</div>
-						<span class="has-text-info">{{ this.$data.text.played.join(' ') }}</span>
+						<span>{{ this.$data.text.played.join(' ') }}</span>
 						{{ this.$data.text.unplayed.join(' ') }}
 					</h1>
 				</div>

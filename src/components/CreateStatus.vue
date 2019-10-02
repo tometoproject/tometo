@@ -1,14 +1,14 @@
 <template>
-	<section v-on:keyup.enter="submitForm">
-		<h1 class="title is-2">New Status</h1>
+	<form v-on:keyup.enter="submitForm">
+		<h1>New Status</h1>
 
-		<fieldset class="field">
-			<label class="label">Content</label>
-			<textarea class="textarea" maxlength="500" type="textarea" v-model="content"></textarea>
+		<fieldset>
+			<label>Content</label>
+			<textarea maxlength="500" type="textarea" v-model="content"></textarea>
 		</fieldset>
 
-		<button class="button is-info" @click="submitForm" :disabled="loading">Submit</button>
-	</section>
+		<button @click="submitForm" :disabled="loading">Submit</button>
+	</form>
 </template>
 
 <script>

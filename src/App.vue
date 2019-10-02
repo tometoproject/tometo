@@ -1,16 +1,16 @@
 <template>
 	<div id="app" class="center">
-		<div class="container">
+		<div>
 			<app-header></app-header>
 		</div>
 		<section class="page">
-			<div class="container">
-					<div class="notification is-info" @click="hideCookies" v-if="!cookiesAcknowledged">
+			<div>
+					<div @click="hideCookies" v-if="!cookiesAcknowledged">
 							We use cookies to keep you logged in, but nothing else.<br>
 							<i>Click anywhere on this notification to close it.</i>
 					</div>
-					<div class="notification is-info" v-if="infoFlashMessage">{{ infoFlashMessage }}</div>
-					<div class="notification is-danger" v-if="errorFlashMessage">{{ errorFlashMessage }}</div>
+					<div v-if="infoFlashMessage">{{ infoFlashMessage }}</div>
+					<div v-if="errorFlashMessage">{{ errorFlashMessage }}</div>
 				<router-view></router-view>
 			</div>
 		</section>

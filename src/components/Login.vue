@@ -1,19 +1,19 @@
 <template>
-	<section v-on:keyup.enter="submitForm">
-		<h1 class="title is-2">Login</h1>
+	<form v-on:keyup.enter="submitForm">
+		<h1>Login</h1>
 
-		<fieldset class="field">
-				<label class="label is-large">Username</label>
-				<input class="input is-large" type="text" v-model="username" />
+		<fieldset>
+				<label>Username</label>
+				<input type="text" v-model="username" />
 		</fieldset>
 
-		<fieldset class="field">
-				<label class="label is-large">Password</label>
-				<input class="input is-large" type="password" v-model="password" />
+		<fieldset>
+				<label>Password</label>
+				<input type="password" v-model="password" />
 		</fieldset>
 
-		<button class="button is-info" @click="submitForm" :disabled="loading">Submit</button>
-	</section>
+		<button @click="submitForm" :disabled="loading">Submit</button>
+	</form>
 </template>
 
 <script>
