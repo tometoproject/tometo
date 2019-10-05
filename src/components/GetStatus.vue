@@ -4,8 +4,8 @@
 		<div v-else>
 			<div class="grid grid-2-50">
 				<div class="column is-one-quarter">
-					<img v-if="!audio.isLoud" v-bind:src="this.$data.images.pic1" />
-					<img v-if="audio.isLoud" v-bind:src="this.$data.images.pic2" />
+					<img class="centered" v-if="!audio.isLoud" v-bind:src="this.$data.images.pic1" />
+					<img class="centered" v-if="audio.isLoud" v-bind:src="this.$data.images.pic2" />
 				</div>
 				<div class="column">
 					<span class="button v-mid fullwidth" v-on:click="togglePlaying" id="playbutton">
