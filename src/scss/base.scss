@@ -119,6 +119,10 @@ h1 {
     font-size: 1.7em;
 }
 
+h1.uncentered {
+    text-align: left;
+}
+
 h2 {
     border-bottom: 1px solid $c-black;
     padding-bottom: .2em;

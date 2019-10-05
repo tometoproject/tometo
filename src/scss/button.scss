@@ -1,4 +1,5 @@
-button {
+button,
+.button {
     font-family: $font-serif;
     border: 1px $c-blue;
     border-style: solid dashed;
@@ -24,5 +25,11 @@ button {
         &:hover {
             text-decoration: none;
         }
+    }
+
+    &.fullwidth {
+        width: 100%;
+        text-align: center;
+        display: block;
     }
 }

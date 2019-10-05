@@ -2,20 +2,20 @@
 	<section>
 		<h1 v-if="!isLoaded">Loading...</h1>
 		<div v-else>
-			<div class="columns">
+			<div class="grid grid-2-50">
 				<div class="column is-one-quarter">
 					<img v-if="!audio.isLoud" v-bind:src="this.$data.images.pic1" />
 					<img v-if="audio.isLoud" v-bind:src="this.$data.images.pic2" />
 				</div>
 				<div class="column">
-					<h1>
-						<div v-on:click="togglePlaying" id="playbutton">
-							<span v-if="audio.playing && isLoaded">❚❚</span>
-							<span v-else-if="!audio.playing && isLoaded">▶</span>
-							<span v-else>侢</span>
-						</div>
-						<span>{{ this.$data.text.played.join(' ') }}</span>
-						{{ this.$data.text.unplayed.join(' ') }}
+					<span class="button v-mid fullwidth" v-on:click="togglePlaying" id="playbutton">
+						<span v-if="audio.playing && isLoaded">❚❚</span>
+						<span v-else-if="!audio.playing && isLoaded">▶</span>
+						<span v-else>侢</span>
+					</span>
+					<h1 class="uncentered">
+						<span class="v-mid lh-default blue">{{ this.$data.text.played.join(' ') }}</span>
+						<span class="v-mid lh-default">{{ this.$data.text.unplayed.join(' ') }}</span>
 					</h1>
 				</div>
 			</div>
@@ -122,6 +122,7 @@ export default {
 			this.$data.audio.analyzer = this.$data.audio.ctx.createAnalyser()
 			this.$data.audio.analyzer.fftSize = 512
 			this.$data.audio.analyzer.smoothingTimeConstant = 0.9
+			this.$data.audio.playing = false
 			this.$data.audio.src.connect(this.$data.audio.analyzer)
 			this.$data.audio.analyzer.connect(this.$data.audio.ctx.destination)
 			this.$data.audio.ctx.suspend()
