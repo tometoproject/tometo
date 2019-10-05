@@ -5,3 +5,20 @@
 .lh-default {
     line-height: 180%;
 }
+
+.flash {
+    width: 100%;
+    text-align: center;
+    border-width: 1px;
+    border-style: solid dashed;
+    border-color: $c-black;
+    padding: 1rem 0;
+
+    &.info {
+        border-color: $c-blue;
+    }
+
+    &.error {
+        border-color: $c-red;
+    }
+}

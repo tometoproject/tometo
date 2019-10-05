@@ -5,12 +5,12 @@
 		</div>
 		<section class="page">
 			<div>
-					<div @click="hideCookies" v-if="!cookiesAcknowledged">
-							We use cookies to keep you logged in, but nothing else.<br>
-							<i>Click anywhere on this notification to close it.</i>
-					</div>
-					<div v-if="infoFlashMessage">{{ infoFlashMessage }}</div>
-					<div v-if="errorFlashMessage">{{ errorFlashMessage }}</div>
+				<div class="flash info" @click="hideCookies" v-if="!cookiesAcknowledged">
+					We use cookies to keep you logged in, but nothing else.<br>
+					<i>Click anywhere on this notification to close it.</i>
+				</div>
+				<div class="flash" v-if="infoFlashMessage">{{ infoFlashMessage }}</div>
+				<div class="flash error" v-if="errorFlashMessage">{{ errorFlashMessage }}</div>
 				<router-view></router-view>
 			</div>
 		</section>
@@ -30,7 +30,7 @@ export default {
 			return this.$store.state.flash.info
 		},
 		cookiesAcknowledged () {
-				return this.$store.state.cookiesAcknowledged
+			return this.$store.state.cookiesAcknowledged
 		}
 	},
 	components: {
@@ -38,7 +38,7 @@ export default {
 	},
 	methods: {
 		hideCookies () {
-			this.$store.commit('acknowledgeCookies')
+			this.$store.commit('setCookies')
 		}
 	}
 }
