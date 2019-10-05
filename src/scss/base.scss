@@ -1,7 +1,7 @@
 @import 'https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700&display=swap';
 
 html {
-    font: 16px/180% 'Libre Baskerville', 'DejaVu Serif', 'Bitstream Vera Serif', 'Georgia', serif;
+    font: 16px/180% $font-serif;
             text-size-adjust: none;
     -webkit-text-size-adjust: none;
 }
@@ -21,7 +21,7 @@ html {
 }
 
 pre, code {
-    font-family: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Consolas', monospace;
+    font-family: $font-monospace;
 }
 
 pre {
@@ -60,7 +60,7 @@ html, body {
 }
 
 .page {
-    padding: 1rem 4rem;
+    padding: 1rem 2rem;
     background-color: $c-white;
     box-shadow: 0 0 6px rgba(0, 0, 0, .2);
 }

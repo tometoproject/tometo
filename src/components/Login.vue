@@ -3,13 +3,13 @@
 		<h1>Login</h1>
 
 		<fieldset>
-				<label>Username</label>
-				<input type="text" v-model="username" />
+			<label>Username</label>
+			<input type="text" v-model="username" />
 		</fieldset>
 
 		<fieldset>
-				<label>Password</label>
-				<input type="password" v-model="password" />
+			<label>Password</label>
+			<input type="password" v-model="password" />
 		</fieldset>
 
 		<button @click="submitForm" :disabled="loading">Submit</button>
@@ -45,7 +45,3 @@ export default {
 	}
 }
 </script>
-
-<style>
-
-</style>
