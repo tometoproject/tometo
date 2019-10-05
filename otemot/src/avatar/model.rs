@@ -9,6 +9,7 @@ use uuid::Uuid;
 #[derive(Debug, Serialize, Deserialize, Queryable, AsChangeset, Insertable)]
 pub struct Avatar {
 	pub id: String,
+	pub name: String,
 	pub user_id: i32,
 	pub pitch: i16,
 	pub speed: f32,
@@ -18,6 +19,7 @@ pub struct Avatar {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CreateAvatar {
+	pub name: String,
 	pub pitch: i16,
 	pub speed: f32,
 	pub language: String,
@@ -44,6 +46,7 @@ impl Avatar {
 		let new_id = Uuid::new_v4();
 		let new_avatar = Avatar {
 			id: new_id.to_string(),
+			name: avatar.name,
 			user_id: user.id,
 			pitch: avatar.pitch,
 			speed: avatar.speed,

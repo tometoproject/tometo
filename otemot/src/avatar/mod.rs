@@ -23,6 +23,9 @@ fn create_avatar(
 	let mut options = MultipartFormDataOptions::new();
 	options
 		.allowed_fields
+		.push(MultipartFormDataField::text("name"));
+	options
+		.allowed_fields
 		.push(MultipartFormDataField::text("pitch"));
 	options
 		.allowed_fields
@@ -46,6 +49,7 @@ fn create_avatar(
 			.content_type(Some(mime::IMAGE_PNG)),
 	);
 	let formdata = MultipartFormData::parse(content_type, data, options)?;
+	let name = formdata.texts.get("name");
 	let pitch = formdata.texts.get("pitch");
 	let speed = formdata.texts.get("speed");
 	let language = formdata.texts.get("language");
@@ -53,6 +57,10 @@ fn create_avatar(
 	let pic1 = formdata.raw.get("pic1");
 	let pic2 = formdata.raw.get("pic2");
 
+	let single_name = match name.unwrap() {
+		TextField::Single(v) => v,
+		TextField::Multiple(v) => v.first().unwrap(),
+	};
 	let single_lang = match language.unwrap() {
 		TextField::Single(v) => v,
 		TextField::Multiple(v) => v.first().unwrap(),
@@ -77,7 +85,8 @@ fn create_avatar(
 		RawField::Single(v) => v,
 		RawField::Multiple(v) => v.first().unwrap(),
 	};
-	if single_pitch.text.is_empty()
+	if single_name.text.is_empty()
+		|| single_pitch.text.is_empty()
 		|| single_speed.text.is_empty()
 		|| single_lang.text.is_empty()
 		|| single_gender.text.is_empty()
@@ -89,6 +98,7 @@ fn create_avatar(
 		)));
 	}
 	let avatar = CreateAvatar {
+		name: single_name.text.clone(),
 		pitch: single_pitch.text.parse::<i16>()?,
 		speed: single_speed.text.parse::<f32>()?,
 		language: single_lang.text.clone(),

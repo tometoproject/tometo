@@ -13,7 +13,8 @@
 						<span v-else-if="!audio.playing && isLoaded">▶</span>
 						<span v-else>侢</span>
 					</span>
-					<h1 class="uncentered">
+					<p><span class="blue">{{ this.$data.name }}</span> says:</p>
+					<h1 class="uncentered no-margin">
 						<span class="v-mid lh-default blue">{{ this.$data.text.played.join(' ') }}</span>
 						<span class="v-mid lh-default">{{ this.$data.text.unplayed.join(' ') }}</span>
 					</h1>
@@ -50,6 +51,7 @@ export default {
 				pic1: "",
 				pic2: ""
 			},
+			name: "",
 			text: {
 				unplayed: [],
 				played: [],
@@ -71,7 +73,6 @@ export default {
 			if (this.isLoaded && this.$data.text.index < this.$data.text.words.length) {
 				const cur = this.$data.text.words[this.$data.text.index]
 				const time = this.$data.audio.ctx.currentTime
-				console.log(this.$data.audio.ctx.currentTime)
 				if (this.getVolume() > 1) {
 					this.$data.audio.isLoud = true
 				} else {
@@ -148,6 +149,7 @@ export default {
 			this.initAudio()
 			this.$data.images.pic1 = res.pic1
 			this.$data.images.pic2 = res.pic2
+			this.$data.name = res.avatar_name
 
 			this.$data.audio.media.addEventListener('canplaythrough', () => {
 				this.$data.loaded.audio = true
