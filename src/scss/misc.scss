@@ -1,0 +1,38 @@
+.color--blue {
+    color: $c-lightblue;
+}
+
+.text--lhdefault {
+    line-height: 180%;
+}
+
+.text--vmid {
+    vertical-align: middle;
+}
+
+img.img--centered {
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+}
+
+img.img--vmid {
+    vertical-align: middle;
+}
+
+.flash {
+    width: 100%;
+    text-align: center;
+    border-width: 1px;
+    border-style: solid dashed;
+    border-color: $c-black;
+    padding: 1rem 0;
+
+    &.flash--info {
+        border-color: $c-blue;
+    }
+
+    &.flash--error {
+        border-color: $c-red;
+    }
+}

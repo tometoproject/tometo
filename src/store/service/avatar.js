@@ -4,7 +4,7 @@ let config = parse(ctoml)
 
 export function doCreateAvatar (name, pitch, speed, language, gender, pic1, pic2) {
 	let formdata = new FormData()
-	// formdata.set('name', name)
+	formdata.set('name', name)
 	formdata.set('pitch', pitch)
 	formdata.set('speed', speed)
 	formdata.set('language', language)

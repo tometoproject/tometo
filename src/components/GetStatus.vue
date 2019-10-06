@@ -2,20 +2,21 @@
 	<section>
 		<h1 v-if="!isLoaded">Loading...</h1>
 		<div v-else>
-			<div class="columns">
-				<div class="column is-one-quarter">
-					<img v-if="!audio.isLoud" v-bind:src="this.$data.images.pic1" />
-					<img v-if="audio.isLoud" v-bind:src="this.$data.images.pic2" />
+			<div class="grid grid--2-50">
+				<div>
+					<img class="img--centered" v-if="!audio.isLoud" v-bind:src="this.$data.images.pic1" />
+					<img class="img--centered" v-if="audio.isLoud" v-bind:src="this.$data.images.pic2" />
 				</div>
-				<div class="column">
-					<h1 class="subtitle is-1">
-						<div class="button is-info is-large is-rounded" v-on:click="togglePlaying" id="playbutton">
-							<span v-if="audio.playing && isLoaded">❚❚</span>
-							<span v-else-if="!audio.playing && isLoaded">▶</span>
-							<span v-else>侢</span>
-						</div>
-						<span class="has-text-info">{{ this.$data.text.played.join(' ') }}</span>
-						{{ this.$data.text.unplayed.join(' ') }}
+				<div>
+					<span class="button button--vmid button--fullwidth" v-on:click="togglePlaying" id="playbutton">
+						<span v-if="audio.playing && isLoaded">❚❚</span>
+						<span v-else-if="!audio.playing && isLoaded">▶</span>
+						<span v-else>侢</span>
+					</span>
+					<p><span class="color--blue">{{ this.$data.name }}</span> says:</p>
+					<h1 class="h1--uncentered h1--nomargin">
+						<span class="text--vmid text--lhdefault color--blue">{{ this.$data.text.played.join(' ') }}</span>
+						<span class="text--vmid text--lhdefault">{{ this.$data.text.unplayed.join(' ') }}</span>
 					</h1>
 				</div>
 			</div>
@@ -50,6 +51,7 @@ export default {
 				pic1: "",
 				pic2: ""
 			},
+			name: "",
 			text: {
 				unplayed: [],
 				played: [],
@@ -71,7 +73,6 @@ export default {
 			if (this.isLoaded && this.$data.text.index < this.$data.text.words.length) {
 				const cur = this.$data.text.words[this.$data.text.index]
 				const time = this.$data.audio.ctx.currentTime
-				console.log(this.$data.audio.ctx.currentTime)
 				if (this.getVolume() > 1) {
 					this.$data.audio.isLoud = true
 				} else {
@@ -122,6 +123,7 @@ export default {
 			this.$data.audio.analyzer = this.$data.audio.ctx.createAnalyser()
 			this.$data.audio.analyzer.fftSize = 512
 			this.$data.audio.analyzer.smoothingTimeConstant = 0.9
+			this.$data.audio.playing = false
 			this.$data.audio.src.connect(this.$data.audio.analyzer)
 			this.$data.audio.analyzer.connect(this.$data.audio.ctx.destination)
 			this.$data.audio.ctx.suspend()
@@ -147,6 +149,7 @@ export default {
 			this.initAudio()
 			this.$data.images.pic1 = res.pic1
 			this.$data.images.pic2 = res.pic2
+			this.$data.name = res.avatar_name
 
 			this.$data.audio.media.addEventListener('canplaythrough', () => {
 				this.$data.loaded.audio = true

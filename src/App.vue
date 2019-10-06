@@ -1,16 +1,16 @@
 <template>
-	<div id="app">
-		<div class="container">
+	<div id="app" class="center">
+		<div>
 			<app-header></app-header>
 		</div>
-		<section class="section">
-			<div class="container">
-					<div class="notification is-info" @click="hideCookies" v-if="!cookiesAcknowledged">
-							We use cookies to keep you logged in, but nothing else.<br>
-							<i>Click anywhere on this notification to close it.</i>
-					</div>
-					<div class="notification is-info" v-if="infoFlashMessage">{{ infoFlashMessage }}</div>
-					<div class="notification is-danger" v-if="errorFlashMessage">{{ errorFlashMessage }}</div>
+		<section class="page">
+			<div>
+				<div class="flash flash--info" @click="hideCookies" v-if="!cookiesAcknowledged">
+					We use cookies to keep you logged in, but nothing else.<br>
+					<i>Click anywhere on this notification to close it.</i>
+				</div>
+				<div class="flash" v-if="infoFlashMessage">{{ infoFlashMessage }}</div>
+				<div class="flash flash--error" v-if="errorFlashMessage">{{ errorFlashMessage }}</div>
 				<router-view></router-view>
 			</div>
 		</section>
@@ -30,7 +30,7 @@ export default {
 			return this.$store.state.flash.info
 		},
 		cookiesAcknowledged () {
-				return this.$store.state.cookiesAcknowledged
+			return this.$store.state.cookiesAcknowledged
 		}
 	},
 	components: {
@@ -38,7 +38,7 @@ export default {
 	},
 	methods: {
 		hideCookies () {
-			this.$store.commit('acknowledgeCookies')
+			this.$store.commit('setCookies')
 		}
 	}
 }

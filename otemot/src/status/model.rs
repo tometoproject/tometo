@@ -31,6 +31,7 @@ pub struct GetStatus {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct GetStatusResponse {
+	pub avatar_name: String,
 	pub audio: String,
 	pub content: String,
 	pub timestamps: String,
@@ -59,6 +60,9 @@ impl Status {
 		let status = statuses::table
 			.filter(statuses::id.eq(status.id))
 			.first::<Status>(connection)?;
+		let avatar = avatars::table
+			.filter(avatars::id.eq(&status.avatar_id))
+			.first::<Avatar>(connection)?;
 		let mut cfg = config::Config::default();
 		cfg.merge(config::File::new("config.toml", config::FileFormat::Toml))
 			.unwrap()
@@ -73,6 +77,7 @@ impl Status {
 			audio: audio_path,
 			content: status.content,
 			timestamps: timestamps_path,
+			avatar_name: avatar.name,
 			pic1: pic1_path,
 			pic2: pic2_path,
 		})

@@ -1,5 +1,5 @@
 use crate::db;
-use crate::error::OError;
+use crate::error::{OError, new_ejson};
 use crate::status::model::{CreateStatus, GetStatus, GetStatusResponse, Status};
 use crate::user::model::SlimUser;
 use rocket_contrib::json::Json;
@@ -14,6 +14,9 @@ fn create_status(
 	connection: db::Connection,
 ) -> Result<Json<Uuid>, OError> {
 	let status = status.into_inner();
+	if status.content.is_empty() {
+		return Err(OError::BadRequest(new_ejson("Status should not be empty!")));
+	}
 
 	let res = Status::create(status, &user.username, &connection)?;
 

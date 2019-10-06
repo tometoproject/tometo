@@ -1,7 +1,7 @@
 import { doRegister, doLogin, doLogout, doPoll } from '../service/user'
 import router from '../../router'
 
-export function register ({ commmit }, { username, password, confirmPassword, email }) {
+export function register ({ commit }, { username, password, confirmPassword, email }) {
   commit('toggleLoading')
 
   doRegister(username, password, confirmPassword, email).then(data => {
@@ -41,7 +41,7 @@ export function poll ({ commit }) {
       commit('clearUsername')
     }
 
-    if (data.has_avatar) {
+    if (data && data.has_avatar) {
       commit('setHasAvatar')
     }
   })

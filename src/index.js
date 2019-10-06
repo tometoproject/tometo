@@ -7,7 +7,7 @@ import store from './store/index'
 import ctoml from '../config.toml'
 import { parse } from '@iarna/toml'
 
-require('./custom.scss')
+require('./scss/index.scss')
 
 let config = parse(ctoml)
 

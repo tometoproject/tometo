@@ -1,6 +1,7 @@
 table! {
     avatars (id) {
         id -> Text,
+        name -> Text,
         user_id -> Int4,
         pitch -> Int2,
         speed -> Float4,
