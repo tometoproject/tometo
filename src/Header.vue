@@ -1,7 +1,7 @@
 <template>
 	<nav role="navigation" aria-label="main navigation">
 		<span>
-			<router-link to="/"><img class="v-mid" width=30 src="https://tometo.org/img/tome.png"><strong> Tometo</strong></router-link>
+			<router-link to="/"><img class="img--vmid" width=30 src="https://tometo.org/img/tome.png"><strong> Tometo</strong></router-link>
 			<router-link to="/status/new" v-if="user && hasAvatar">New Status</router-link>
 			<router-link to="/avatar/new" v-if="user && !hasAvatar">Create Avatar</router-link>
 		</span>

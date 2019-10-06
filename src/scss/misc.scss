@@ -1,15 +1,23 @@
-.blue {
+.color--blue {
     color: $c-lightblue;
 }
 
-.lh-default {
+.text--lhdefault {
     line-height: 180%;
 }
 
-.centered {
+.text--vmid {
+    vertical-align: middle;
+}
+
+img.img--centered {
     text-align: center;
     margin: 0 auto;
     display: block;
+}
+
+img.img--vmid {
+    vertical-align: middle;
 }
 
 .flash {
@@ -20,15 +28,11 @@
     border-color: $c-black;
     padding: 1rem 0;
 
-    &.info {
+    &.flash--info {
         border-color: $c-blue;
     }
 
-    &.error {
+    &.flash--error {
         border-color: $c-red;
     }
-}
-
-.no-margin {
-    margin: 0;
 }

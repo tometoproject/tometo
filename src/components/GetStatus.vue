@@ -2,21 +2,21 @@
 	<section>
 		<h1 v-if="!isLoaded">Loading...</h1>
 		<div v-else>
-			<div class="grid grid-2-50">
-				<div class="column is-one-quarter">
-					<img class="centered" v-if="!audio.isLoud" v-bind:src="this.$data.images.pic1" />
-					<img class="centered" v-if="audio.isLoud" v-bind:src="this.$data.images.pic2" />
+			<div class="grid grid--2-50">
+				<div>
+					<img class="img--centered" v-if="!audio.isLoud" v-bind:src="this.$data.images.pic1" />
+					<img class="img--centered" v-if="audio.isLoud" v-bind:src="this.$data.images.pic2" />
 				</div>
-				<div class="column">
-					<span class="button v-mid fullwidth" v-on:click="togglePlaying" id="playbutton">
+				<div>
+					<span class="button button--vmid button--fullwidth" v-on:click="togglePlaying" id="playbutton">
 						<span v-if="audio.playing && isLoaded">❚❚</span>
 						<span v-else-if="!audio.playing && isLoaded">▶</span>
 						<span v-else>侢</span>
 					</span>
-					<p><span class="blue">{{ this.$data.name }}</span> says:</p>
-					<h1 class="uncentered no-margin">
-						<span class="v-mid lh-default blue">{{ this.$data.text.played.join(' ') }}</span>
-						<span class="v-mid lh-default">{{ this.$data.text.unplayed.join(' ') }}</span>
+					<p><span class="color--blue">{{ this.$data.name }}</span> says:</p>
+					<h1 class="h1--uncentered h1--nomargin">
+						<span class="text--vmid text--lhdefault color--blue">{{ this.$data.text.played.join(' ') }}</span>
+						<span class="text--vmid text--lhdefault">{{ this.$data.text.unplayed.join(' ') }}</span>
 					</h1>
 				</div>
 			</div>

@@ -27,9 +27,13 @@ button,
         }
     }
 
-    &.fullwidth {
+    &.button--fullwidth {
         width: 100%;
         text-align: center;
         display: block;
+    }
+
+    &.button--vmid {
+        vertical-align: middle;
     }
 }

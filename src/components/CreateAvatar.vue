@@ -17,8 +17,8 @@
             <input type="number" v-model="speed" value="1.0" step="0.1" max="2" min="0.1" />
         </fieldset>
 
-        <div class="columns">
-            <div class="column">
+        <div>
+            <div>
                 <fieldset>
                     <label>Language</label>
                     <div>
@@ -28,7 +28,7 @@
                     </div>
                 </fieldset>
             </div>
-            <div class="column">
+            <div>
                 <fieldset>
                     <label>Voice Sound</label>
                     <div>
@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <div class="grid grid-2-50">
+        <div class="grid grid--2-50">
             <div>
                 <fieldset>
                     <label>Closed Mouth image</label>

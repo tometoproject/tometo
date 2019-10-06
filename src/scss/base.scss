@@ -119,8 +119,12 @@ h1 {
     font-size: 1.7em;
 }
 
-h1.uncentered {
+h1.h1--uncentered {
     text-align: left;
+}
+
+h1.h1--nomargin {
+    margin: 0;
 }
 
 h2 {
@@ -147,10 +151,6 @@ blockquote {
 
 img {
     max-width: 100%;
-}
-
-.v-mid {
-    vertical-align: middle;
 }
 
 figure {
