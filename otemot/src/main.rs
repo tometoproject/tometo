@@ -43,8 +43,6 @@ fn main() {
 		.expect("otemot.database_url unset!");
 	cfg.get::<String>("otemot.storage")
 		.expect("otemot.storage unset!");
-	cfg.get::<String>("otemot.google_credentials")
-		.expect("otemot.google_credentials unset!");
 	let cookie_secret = cfg
 		.get::<String>("otemot.secrets.cookie")
 		.expect("otemot.secrets.cookie unset!");
