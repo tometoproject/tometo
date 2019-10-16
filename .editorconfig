@@ -7,12 +7,6 @@ root = true
 [*]
 end_of_line = lf
 insert_final_newline = true
-
-[*.{js,vue,json,html}]
 indent_style = tab
 charset = utf-8
-
-[*.rs]
-indent_style = tab
-charset = utf-8
-
+tab_width = 2
