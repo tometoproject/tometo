@@ -17,48 +17,34 @@
 			<input type="number" v-model="speed" value="1.0" step="0.1" max="2" min="0.1" />
 		</fieldset>
 
-		<div>
-			<div>
-				<fieldset>
-					<label>Language</label>
-					<div>
-						<select v-model="language">
-							<option value="en">English</option>
-						</select>
-					</div>
-				</fieldset>
-			</div>
-			<div>
-				<fieldset>
-					<label>Voice Sound</label>
-					<div>
-						<select v-model="gender">
-							<option value="f">Female</option>
-							<option value="m">Male</option>
-						</select>
-					</div>
-				</fieldset>
-			</div>
-		</div>
+		<fieldset>
+			<label>Language</label>
+			<select v-model="language">
+				<option value="en">English</option>
+			</select>
+		</fieldset>
+		<fieldset>
+			<label>Voice Sound</label>
+			<select v-model="gender">
+				<option value="f">Female</option>
+				<option value="m">Male</option>
+			</select>
+		</fieldset>
 
 		<div class="grid grid--2-50">
 			<div>
 				<fieldset>
 					<label>Closed Mouth image</label>
-					<div>
-						<label>
-							<input type="file" accept="image/png, image/jpeg" v-on:change="updatePic(1, $event)" />
-						</label>
-					</div>
+					<label>
+						<input type="file" accept="image/png, image/jpeg" v-on:change="updatePic(1, $event)" />
+					</label>
 				</fieldset>
 
 				<fieldset>
 					<label>Open Mouth image</label>
-					<div>
-						<label>
-							<input type="file" accept="image/png, image/jpeg" v-on:change="updatePic(2, $event)" />
-						</label>
-					</div>
+					<label>
+						<input type="file" accept="image/png, image/jpeg" v-on:change="updatePic(2, $event)" />
+					</label>
 				</fieldset>
 			</div>
 

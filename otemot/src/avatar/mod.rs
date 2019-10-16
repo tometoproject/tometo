@@ -1,4 +1,4 @@
-use crate::avatar::model::{Avatar, CreateAvatar};
+use crate::avatar::model::{Avatar, CreateAvatar, EditAvatarResponse};
 use crate::db::{self, DefaultMessage};
 use crate::error::{new_ejson, OError};
 use crate::storage::create_storage;
@@ -125,6 +125,14 @@ fn create_avatar(
 	}))
 }
 
+#[get("/<id>")]
+fn get_edit_avatar(id: String, connection: db::Connection, user: SlimUser) -> Result<Json<EditAvatarResponse>, OError> {
+	let avatar = Avatar::get(&id, &connection, &user)?;
+	Ok(Json(avatar))
+}
+
 pub fn mount(rocket: rocket::Rocket) -> rocket::Rocket {
-	rocket.mount("/api/avatar/new", routes![create_avatar])
+	rocket
+		.mount("/api/avatar/new", routes![create_avatar])
+		.mount("/api/avatar/edit", routes![get_edit_avatar])
 }

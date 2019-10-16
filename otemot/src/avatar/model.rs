@@ -1,6 +1,6 @@
 use crate::error::{new_ejson, OError};
 use crate::schema::{avatars, users};
-use crate::user::model::User;
+use crate::user::model::{User, SlimUser};
 use diesel::prelude::*;
 use diesel::PgConnection;
 use uuid::Uuid;
@@ -24,6 +24,11 @@ pub struct CreateAvatar {
 	pub speed: f32,
 	pub language: String,
 	pub gender: String,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct EditAvatarResponse {
+	pub name: String,
 }
 
 impl Avatar {
@@ -58,5 +63,18 @@ impl Avatar {
 			.values(&new_avatar)
 			.execute(connection)?;
 		Ok(new_id.to_string())
+	}
+
+	pub fn get(id: &str, connection: &PgConnection, user: &SlimUser) -> Result<EditAvatarResponse, OError> {
+		let avatar = avatars::table
+			.filter(avatars::id.eq(id))
+			.first::<Avatar>(connection)?;
+		if user.id != avatar.user_id {
+			return Err(OError::BadRequest(new_ejson("Unauthorized!")));
+		}
+
+		Ok(EditAvatarResponse {
+			name: avatar.name,
+		})
 	}
 }
