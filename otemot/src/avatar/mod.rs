@@ -193,16 +193,10 @@ fn post_edit_avatar(
 		.unwrap();
 	let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
 	if !single_pic1.is_empty() {
-		storage.put(
-			format!("{}-1.png", &id),
-			either::Either::Right(single_pic1),
-		)?;
+		storage.put(format!("{}-1.png", &id), either::Either::Right(single_pic1))?;
 	}
 	if !single_pic2.is_empty() {
-		storage.put(
-			format!("{}-2.png", &id),
-			either::Either::Right(single_pic2),
-		)?;
+		storage.put(format!("{}-2.png", &id), either::Either::Right(single_pic2))?;
 	}
 
 	Ok(Json(DefaultMessage {
@@ -213,5 +207,8 @@ fn post_edit_avatar(
 pub fn mount(rocket: rocket::Rocket) -> rocket::Rocket {
 	rocket
 		.mount("/api/avatar/new", routes![create_avatar])
-		.mount("/api/avatar/edit", routes![get_edit_avatar, post_edit_avatar])
+		.mount(
+			"/api/avatar/edit",
+			routes![get_edit_avatar, post_edit_avatar],
+		)
 }
