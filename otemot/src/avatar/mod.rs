@@ -1,4 +1,4 @@
-use crate::avatar::model::{Avatar, CreateAvatar};
+use crate::avatar::model::{Avatar, CreateAvatar, EditAvatarResponse};
 use crate::db::{self, DefaultMessage};
 use crate::error::{new_ejson, OError};
 use crate::storage::create_storage;
@@ -125,6 +125,90 @@ fn create_avatar(
 	}))
 }
 
+#[get("/<id>")]
+fn get_edit_avatar(
+	id: String,
+	connection: db::Connection,
+	user: SlimUser,
+) -> Result<Json<EditAvatarResponse>, OError> {
+	let avatar = Avatar::get(&id, &connection, &user)?;
+	Ok(Json(avatar))
+}
+
+#[post("/<id>", data = "<data>")]
+fn post_edit_avatar(
+	id: String,
+	user: SlimUser,
+	content_type: &ContentType,
+	data: Data,
+	connection: db::Connection,
+) -> Result<Json<DefaultMessage>, OError> {
+	let mut options = MultipartFormDataOptions::new();
+	options
+		.allowed_fields
+		.push(MultipartFormDataField::text("name"));
+	options.allowed_fields.push(
+		MultipartFormDataField::raw("pic1")
+			.size_limit(1_000_000)
+			.content_type(Some(mime::IMAGE_JPEG))
+			.content_type(Some(mime::IMAGE_PNG)),
+	);
+	options.allowed_fields.push(
+		MultipartFormDataField::raw("pic2")
+			.size_limit(1_000_000)
+			.content_type(Some(mime::IMAGE_JPEG))
+			.content_type(Some(mime::IMAGE_PNG)),
+	);
+	let formdata = MultipartFormData::parse(content_type, data, options)?;
+	let name = formdata.texts.get("name");
+	let pic1 = formdata.raw.get("pic1");
+	let pic2 = formdata.raw.get("pic2");
+
+	let single_name = match name.unwrap() {
+		TextField::Single(v) => v,
+		TextField::Multiple(v) => v.first().unwrap(),
+	};
+
+	let single_pic1 = match pic1 {
+		Some(p) => match p {
+			RawField::Single(v) => v.raw.clone(),
+			RawField::Multiple(v) => v.first().unwrap().raw.clone(),
+		},
+		None => "".into(),
+	};
+	let single_pic2 = match pic2 {
+		Some(p) => match p {
+			RawField::Single(v) => v.raw.clone(),
+			RawField::Multiple(v) => v.first().unwrap().raw.clone(),
+		},
+		None => "".into(),
+	};
+
+	Avatar::edit(&id, single_name.text.clone(), &user.id, &connection)?;
+
+	let mut cfg = config::Config::default();
+	cfg.merge(config::File::new("config.toml", config::FileFormat::Toml))
+		.unwrap()
+		.merge(config::Environment::new().separator("_"))
+		.unwrap();
+	let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
+	if !single_pic1.is_empty() {
+		storage.put(format!("{}-1.png", &id), either::Either::Right(single_pic1))?;
+	}
+	if !single_pic2.is_empty() {
+		storage.put(format!("{}-2.png", &id), either::Either::Right(single_pic2))?;
+	}
+
+	Ok(Json(DefaultMessage {
+		message: "Avatar successfully updated!".into(),
+	}))
+}
+
 pub fn mount(rocket: rocket::Rocket) -> rocket::Rocket {
-	rocket.mount("/api/avatar/new", routes![create_avatar])
+	rocket
+		.mount("/api/avatar/new", routes![create_avatar])
+		.mount(
+			"/api/avatar/edit",
+			routes![get_edit_avatar, post_edit_avatar],
+		)
 }
