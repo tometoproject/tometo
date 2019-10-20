@@ -34,10 +34,12 @@ export function doCreateAvatar (name, pitch, speed, language, gender, pic1, pic2
 export function doEditAvatar (id, name, pic1, pic2) {
 	let formdata = new FormData()
 	formdata.set('name', name)
-	if (pic1.length !== 0)
+	if (pic1.length !== 0) {
 		formdata.set('pic1', pic1)
-	if (pic2.length !== 0)
+	}
+	if (pic2.length !== 0) {
 		formdata.set('pic2', pic2)
+	}
 
 	const requestOptions = {
 		method: 'POST',
