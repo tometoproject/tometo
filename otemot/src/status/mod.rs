@@ -1,5 +1,5 @@
 use crate::db;
-use crate::error::{OError, new_ejson};
+use crate::error::{new_ejson, OError};
 use crate::status::model::{CreateStatus, GetStatus, GetStatusResponse, Status};
 use crate::user::model::SlimUser;
 use rocket_contrib::json::Json;
