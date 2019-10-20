@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 import mutations from './mutations'
 import { register, login, logout, poll } from './actions/user'
 import { createStatus } from './actions/status'
-import { createAvatar } from './actions/avatar'
+import { createAvatar, editAvatar } from './actions/avatar'
 
 Vue.use(Vuex)
 
@@ -26,6 +26,7 @@ export default new Vuex.Store({
 		logout,
 		poll,
 		createStatus,
-		createAvatar
+		createAvatar,
+		editAvatar
 	}
 })

@@ -168,13 +168,20 @@ fn post_edit_avatar(
 		TextField::Single(v) => v,
 		TextField::Multiple(v) => v.first().unwrap(),
 	};
-	let single_pic1 = match pic1.unwrap() {
-		RawField::Single(v) => v,
-		RawField::Multiple(v) => v.first().unwrap(),
+
+	let single_pic1 = match pic1 {
+		Some(p) => match p {
+			RawField::Single(v) => v.raw.clone(),
+			RawField::Multiple(v) => v.first().unwrap().raw.clone(),
+		},
+		None => "".into(),
 	};
-	let single_pic2 = match pic2.unwrap() {
-		RawField::Single(v) => v,
-		RawField::Multiple(v) => v.first().unwrap(),
+	let single_pic2 = match pic2 {
+		Some(p) => match p {
+			RawField::Single(v) => v.raw.clone(),
+			RawField::Multiple(v) => v.first().unwrap().raw.clone(),
+		},
+		None => "".into(),
 	};
 
 	Avatar::edit(&id, single_name.text.clone(), &user.id, &connection)?;
@@ -185,16 +192,16 @@ fn post_edit_avatar(
 		.merge(config::Environment::new().separator("_"))
 		.unwrap();
 	let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
-	if !single_pic1.raw.is_empty() {
+	if !single_pic1.is_empty() {
 		storage.put(
 			format!("{}-1.png", &id),
-			either::Either::Right(single_pic1.raw.clone()),
+			either::Either::Right(single_pic1),
 		)?;
 	}
-	if !single_pic2.raw.is_empty() {
+	if !single_pic2.is_empty() {
 		storage.put(
 			format!("{}-2.png", &id),
-			either::Either::Right(single_pic2.raw.clone()),
+			either::Either::Right(single_pic2),
 		)?;
 	}
 
@@ -206,5 +213,5 @@ fn post_edit_avatar(
 pub fn mount(rocket: rocket::Rocket) -> rocket::Rocket {
 	rocket
 		.mount("/api/avatar/new", routes![create_avatar])
-		.mount("/api/avatar/edit", routes![get_edit_avatar])
+		.mount("/api/avatar/edit", routes![get_edit_avatar, post_edit_avatar])
 }

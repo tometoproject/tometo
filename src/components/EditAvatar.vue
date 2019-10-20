@@ -17,7 +17,7 @@
 		<fieldset>
 			<label>Open Mouth image</label>
 			<label>
-				<input type="file" accept="image/png, image/jpeg" v-on:change="updatePic(1, $event)" />
+				<input type="file" accept="image/png, image/jpeg" v-on:change="updatePic(2, $event)" />
 			</label>
 		</fieldset>
 
@@ -34,7 +34,9 @@ export default {
 	name: 'EditAvatar',
 	data () {
 		return {
-			name: ''
+			name: '',
+			pic1: '',
+			pic2: '',
 		}
 	},
 	computed: {
@@ -44,8 +46,17 @@ export default {
 	},
 
 	methods: {
-		submitForm () {
+		updatePic (num, evt) {
+			if (evt.target.files.length > 0) {
+				this.$data[`pic${String(num)}`] = evt.target.files[0]
+			}
+		},
 
+		submitForm (e) {
+			e.preventDefault()
+			let id = this.$route.params.id
+			let { name, pic1, pic2 } = this
+			this.$store.dispatch('editAvatar', { id, name, pic1, pic2 })
 		}
 	},
 
@@ -65,7 +76,7 @@ export default {
 				return data
 			})).then(data => {
 				this.$data.name = data.name
-			}, err => {
+			}, error => {
 				this.$store.commit('setErrorFlash', error)
 			})
 	}
