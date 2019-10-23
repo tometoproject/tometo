@@ -1,10 +1,10 @@
 import { doCreateStatus } from '../service/status'
 import router from '../../router'
 
-export function createStatus ({ commit }, { content }) {
+export function createStatus ({ commit }, { content, id }) {
 	commit('toggleLoading')
 
-	doCreateStatus(content).then(data => {
+	doCreateStatus(content, id).then(data => {
 		commit('toggleLoading')
 		router.push(`/status/${data}`)
 	}, error => {

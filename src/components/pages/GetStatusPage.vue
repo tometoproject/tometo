@@ -20,6 +20,8 @@
 					</h1>
 				</div>
 			</div>
+			<h2>Comments</h2>
+			<CreateStatusForm :status-id="this.$route.params.id" />
 		</div>
 	</section>
 </template>
@@ -27,6 +29,7 @@
 <script>
 import router from '../../router'
 import ctoml from '../../../config.toml'
+import CreateStatusForm from '../forms/CreateStatusForm.vue'
 import { parse } from '@iarna/toml'
 let config = parse(ctoml)
 
@@ -60,6 +63,9 @@ export default {
 				index: 0
 			}
 		}
+	},
+	components: {
+		CreateStatusForm
 	},
 
 	computed: {

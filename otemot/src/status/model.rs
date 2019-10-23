@@ -22,6 +22,7 @@ pub struct Status {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CreateStatus {
 	pub content: String,
+	pub id: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -52,7 +53,7 @@ impl Status {
 			.filter(avatars::user_id.eq(user.id))
 			.first::<Avatar>(connection)
 			.map_err(|_| OError::BadRequest(new_ejson("Create an avatar first!")))?;
-		let res = genstatus(status.content, avatar, connection)?;
+		let res = genstatus(status.content, status.id, avatar, connection)?;
 		Ok(res)
 	}
 
@@ -84,7 +85,7 @@ impl Status {
 	}
 }
 
-fn genstatus(content: String, avatar: Avatar, conn: &PgConnection) -> Result<Uuid, OError> {
+fn genstatus(content: String, id: Option<String>, avatar: Avatar, conn: &PgConnection) -> Result<Uuid, OError> {
 	let mut cfg = config::Config::default();
 	cfg.merge(config::File::new("config.toml", config::FileFormat::Toml))
 		.unwrap()
@@ -120,7 +121,7 @@ fn genstatus(content: String, avatar: Avatar, conn: &PgConnection) -> Result<Uui
 		id: new_id.to_string(),
 		content,
 		avatar_id: avatar.id,
-		related_status_id: None,
+		related_status_id: id,
 	};
 
 	diesel::insert_into(statuses::table)

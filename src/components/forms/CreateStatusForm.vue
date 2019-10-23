@@ -17,6 +17,9 @@ export default {
 			content: ''
 		}
 	},
+	props: {
+		statusId: String
+	},
 	computed: {
 		loading () {
 			return this.$store.state.loading
@@ -25,8 +28,8 @@ export default {
 	methods: {
 		submitForm (e) {
 			e.preventDefault()
-			let { content } = this
-			this.$store.dispatch('createStatus', { content })
+			let { content, statusId } = this
+			this.$store.dispatch('createStatus', { content, id: statusId })
 		}
 	}
 }

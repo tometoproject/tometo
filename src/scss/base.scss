@@ -182,9 +182,8 @@ table {
 }
 
 hr {
-	border: none;
+	border: $c-gray .5px dashed;
 	text-align: center;
 	font-size: 60px;
-	color: $c-gray;
 	opacity: .9;
 }
