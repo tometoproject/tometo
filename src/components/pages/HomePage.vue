@@ -9,7 +9,7 @@
 import { mapMutations } from 'vuex'
 
 export default {
-	name: 'Home',
+	name: 'HomePage',
 	computed: {
 		message () {
 			return this.$store.state.message

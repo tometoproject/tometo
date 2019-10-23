@@ -20,7 +20,7 @@
 
 <script>
 export default {
-	name: 'Header',
+	name: 'TheHeader',
 	computed: {
 		user () {
 			return this.$store.state.username

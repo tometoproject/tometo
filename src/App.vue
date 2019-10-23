@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import Header from './Header.vue'
+import TheHeader from './components/TheHeader.vue'
 
 export default {
 	name: 'App',
@@ -34,7 +34,7 @@ export default {
 		}
 	},
 	components: {
-		'app-header': Header
+		'app-header': TheHeader
 	},
 	methods: {
 		hideCookies () {

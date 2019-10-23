@@ -58,10 +58,10 @@
 </template>
 
 <script>
-import router from '../router'
+import router from '../../router'
 
 export default {
-	name: 'CreateAvatar',
+	name: 'CreateAvatarPage',
 	data () {
 		return {
 			name: '',

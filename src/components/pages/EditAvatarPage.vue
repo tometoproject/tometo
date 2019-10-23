@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import ctoml from '../../config.toml'
+import ctoml from '../../../config.toml'
 import { parse } from '@iarna/toml'
 let config = parse(ctoml)
 
 export default {
-	name: 'EditAvatar',
+	name: 'EditAvatarPage',
 	data () {
 		return {
 			name: '',
