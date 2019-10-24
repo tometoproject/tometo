@@ -48,7 +48,7 @@ export default {
 	methods: {
 		updatePic (num, evt) {
 			if (evt.target.files.length > 0) {
-				this.$data[`pic${String(num)}`] = evt.target.files[0]
+				this[`pic${String(num)}`] = evt.target.files[0]
 			}
 		},
 
@@ -75,7 +75,7 @@ export default {
 				}
 				return data
 			})).then(data => {
-				this.$data.name = data.name
+				this.name = data.name
 			}, error => {
 				this.$store.commit('setErrorFlash', error)
 			})

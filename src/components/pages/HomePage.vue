@@ -9,14 +9,6 @@
 import { mapMutations } from 'vuex'
 
 export default {
-	name: 'HomePage',
-	computed: {
-		message () {
-			return this.$store.state.message
-		}
-	},
-	methods: {
-		...mapMutations(['changeMessage'])
-	}
+	name: 'HomePage'
 }
 </script>
