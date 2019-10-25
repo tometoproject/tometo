@@ -1,14 +1,17 @@
 import { doCreateStatus } from '../service/status'
 import router from '../../router'
 
-export function createStatus ({ commit }, { content, id }) {
+export async function createStatus ({ commit }, { content, id, redirect }) {
 	commit('toggleLoading')
 
-	doCreateStatus(content, id).then(data => {
+	try {
+		let data = await doCreateStatus(content, id)
 		commit('toggleLoading')
-		router.push(`/status/${data}`)
-	}, error => {
+		if (redirect) {
+			router.push(`/status/${data}`)
+		}
+	} catch (error) {
 		commit('toggleLoading')
 		commit('setErrorFlash', error)
-	})
+	}
 }

@@ -13,7 +13,7 @@
 				:pic2="status.pic2"
 				:audioUrl="status.audio"
 				:name="status.avatar_name" />
-			<CreateStatusForm :status-id="this.$route.params.id" />
+			<CreateStatusForm :status-id="this.$route.params.id" v-on:posted="onCommentPosted" noRedirect />
 		</div>
 	</section>
 </template>
@@ -44,6 +44,24 @@ export default {
 		StatusDisplay
 	},
 
+	methods: {
+		async fetchComments () {
+			let res = await fetch(`${config.otemot.external_url}/api/status/${this.$route.params.id}/comments`)
+			if (res.ok) {
+				res = await res.json()
+				return res
+			} else {
+				this.$store.commit('setErrorFlash', 'Unable to load status comments!')
+				return []
+			}
+		},
+
+		async onCommentPosted () {
+			let comments = await this.fetchComments()
+			this.comments = comments
+		}
+	},
+
 	mounted () {
 		fetch(`${config.otemot.external_url}/api/status/${this.$route.params.id}`)
 		.then(res => {
@@ -62,13 +80,7 @@ export default {
 			this.timestamps = res.timestamps
 			this.ready = true
 
-			return fetch(`${config.otemot.external_url}/api/status/${this.$route.params.id}/comments`)
-		}).then(res => {
-			if (res.ok) {
-				return res.json()
-			} else {
-				this.$store.commit('setErrorFlash', 'Unable to load status comments!')
-			}
+			return this.fetchComments()
 		}).then(res => {
 			this.comments = res
 		})

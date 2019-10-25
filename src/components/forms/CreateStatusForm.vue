@@ -18,7 +18,8 @@ export default {
 		}
 	},
 	props: {
-		statusId: String
+		statusId: String,
+		noRedirect: Boolean
 	},
 	computed: {
 		loading () {
@@ -29,7 +30,9 @@ export default {
 		submitForm (e) {
 			e.preventDefault()
 			let { content, statusId } = this
-			this.$store.dispatch('createStatus', { content, id: statusId })
+			this.$store.dispatch('createStatus', { content, id: statusId, redirect: !this.noRedirect }).then(() => {
+				this.$emit('posted')
+			})
 		}
 	}
 }
