@@ -30,8 +30,15 @@ fn get_status(id: String, connection: db::Connection) -> Result<Json<GetStatusRe
 	Ok(Json(res))
 }
 
+#[get("/<id>/comments")]
+fn get_status_comments(id: String, connection: db::Connection) -> Result<Json<Vec<GetStatusResponse>>, OError> {
+	let status = GetStatus { id };
+	let res = Status::get_comments(status, &connection)?;
+	Ok(Json(res))
+}
+
 pub fn mount(rocket: rocket::Rocket) -> rocket::Rocket {
 	rocket
 		.mount("/api/status/new", routes![create_status])
-		.mount("/api/status", routes![get_status])
+		.mount("/api/status", routes![get_status, get_status_comments])
 }

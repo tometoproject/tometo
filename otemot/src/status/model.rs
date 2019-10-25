@@ -83,6 +83,37 @@ impl Status {
 			pic2: pic2_path,
 		})
 	}
+
+	pub fn get_comments(status: GetStatus, connection: &PgConnection) -> Result<Vec<GetStatusResponse>, OError> {
+		let mut result = Vec::new();
+		let status_comments = statuses::table
+			.filter(statuses::related_status_id.eq(status.id))
+			.load::<Status>(connection)?;
+		let mut cfg = config::Config::default();
+		cfg.merge(config::File::new("config.toml", config::FileFormat::Toml))
+			 .unwrap()
+			 .merge(config::Environment::new().separator("_"))
+			 .unwrap();
+		let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
+		for status in status_comments {
+			let avatar = avatars::table
+				.filter(avatars::id.eq(&status.avatar_id))
+				.first::<Avatar>(connection)?;
+			let audio_path = storage.get(format!("{}.ogg", &status.id))?;
+			let timestamps_path = storage.get(format!("{}.json", &status.id))?;
+			let pic1_path = storage.get(format!("{}-1.png", &status.avatar_id))?;
+			let pic2_path = storage.get(format!("{}-2.png", &status.avatar_id))?;
+			result.push(GetStatusResponse {
+				audio: audio_path,
+				content: status.content,
+				timestamps: timestamps_path,
+				avatar_name: avatar.name,
+				pic1: pic1_path,
+				pic2: pic2_path,
+			});
+		}
+		Ok(result)
+	}
 }
 
 fn genstatus(content: String, id: Option<String>, avatar: Avatar, conn: &PgConnection) -> Result<Uuid, OError> {
