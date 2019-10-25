@@ -1,5 +1,5 @@
 <template>
-	<div class="grid grid--2-50">
+	<div v-if="!condensed" class="grid grid--2-50">
 		<div>
 			<img class="img--centered img--avatar" v-if="!audio.isLoud" v-bind:src="pic1" />
 			<img class="img--centered img--avatar" v-if="audio.isLoud" v-bind:src="pic2" />
@@ -17,6 +17,26 @@
 			</h1>
 		</div>
 	</div>
+	<div class="grid grid--2-30" v-else>
+		<div>
+			<img class="img--centered img--avatar-small" v-if="!audio.isLoud" v-bind:src="pic1" />
+			<img class="img--centered img--avatar-small" v-if="audio.isLoud" v-bind:src="pic2" />
+		</div>
+		<div>
+			<p>
+				<span class="button button--vmid" v-on:click="togglePlaying">
+					<span v-if="audio.playing && isLoaded">❚❚</span>
+					<span v-else-if="!audio.playing && isLoaded">▶</span>
+					<span v-else>侢</span>
+				</span>
+				&nbsp;<span class="color--blue">{{ name }}</span> says:
+			</p>
+			<h2 class="h2--noborder">
+				<span class="text--vmid text--lhdefault color--blue">{{ text.played.join(' ') }}</span>
+				<span class="text--vmid text--lhdefault">{{ text.unplayed.join(' ') }}</span>
+			</h2>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -26,7 +46,14 @@ let config = parse(ctoml)
 
 export default {
 	name: 'StatusDisplay',
-	props: ['timestamps', 'pic1', 'pic2', 'audioUrl', 'name'],
+	props: {
+		timestamps: String,
+		pic1: String,
+		pic2: String,
+		audioUrl: String,
+		name: String,
+		condensed: Boolean
+	},
 	data () {
 		return {
 			audio: {

@@ -2,8 +2,17 @@
 	<section>
 		<h1 v-if="!ready">Loading...</h1>
 		<div v-else>
-			<StatusDisplay :timestamps="timestamps" :pic1="pic1" :pic2="pic2" :audioUrl="audio" :name="name" />
+			<StatusDisplay :timestamps="timestamps" :pic1="pic1" :pic2="pic2" :audioUrl="audio" :name="avatar_name" />
 			<h2>Comments</h2>
+			<StatusDisplay
+				v-for="(status, k) in comments"
+				:key="k"
+				condensed
+				:timestamps="status.timestamps"
+				:pic1="status.pic1"
+				:pic2="status.pic2"
+				:audioUrl="status.audio"
+				:name="status.avatar_name" />
 			<CreateStatusForm :status-id="this.$route.params.id" />
 		</div>
 	</section>
@@ -25,7 +34,7 @@ export default {
 			pic1: '',
 			pic2: '',
 			audio: null,
-			name: '',
+			avatar_name: '',
 			comments: [],
 			ready: false
 		}
@@ -49,7 +58,7 @@ export default {
 			this.pic1 = res.pic1
 			this.pic2 = res.pic2
 			this.audio = res.audio
-			this.name = res.avatar_name
+			this.avatar_name = res.avatar_name
 			this.timestamps = res.timestamps
 			this.ready = true
 
