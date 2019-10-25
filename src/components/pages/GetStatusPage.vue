@@ -1,8 +1,8 @@
 <template>
 	<section>
-		<h1 v-if="!jsonLoaded">Loading...</h1>
+		<h1 v-if="!ready">Loading...</h1>
 		<div v-else>
-			<StatusDisplay :words="words" :pic1="pic1" :pic2="pic2" :audioUrl="audio" :name="name" />
+			<StatusDisplay :timestamps="timestamps" :pic1="pic1" :pic2="pic2" :audioUrl="audio" :name="name" />
 			<h2>Comments</h2>
 			<CreateStatusForm :status-id="this.$route.params.id" />
 		</div>
@@ -21,12 +21,13 @@ export default {
 	name: 'GetStatusPage',
 	data () {
 		return {
-			jsonLoaded: false,
-			words: [],
+			timestamps: '',
 			pic1: '',
 			pic2: '',
 			audio: null,
-			name: ''
+			name: '',
+			comments: [],
+			ready: false
 		}
 	},
 	components: {
@@ -40,8 +41,8 @@ export default {
 			if (res.ok) {
 				return res.json()
 			} else {
+				this.$store.commit('setErrorFlash', 'Unable to load status!')
 				router.back()
-				// TODO: add a good error message
 			}
 		})
 		.then(res => {
@@ -49,13 +50,18 @@ export default {
 			this.pic2 = res.pic2
 			this.audio = res.audio
 			this.name = res.avatar_name
+			this.timestamps = res.timestamps
+			this.ready = true
 
-			return fetch(res.timestamps)
-		})
-		.then(res2 => res2.json())
-		.then(res2 => {
-			this.words = res2.fragments
-			this.jsonLoaded = true
+			return fetch(`${config.otemot.external_url}/api/status/${this.$route.params.id}/comments`)
+		}).then(res => {
+			if (res.ok) {
+				return res.json()
+			} else {
+				this.$store.commit('setErrorFlash', 'Unable to load status comments!')
+			}
+		}).then(res => {
+			this.comments = res
 		})
 	}
 }

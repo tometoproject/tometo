@@ -5,9 +5,9 @@
 			<img class="img--centered img--avatar" v-if="audio.isLoud" v-bind:src="pic2" />
 		</div>
 		<div>
-			<span class="button button--vmid button--fullwidth" v-on:click="togglePlaying" id="playbutton">
-				<span v-if="audio.playing && audioLoaded">❚❚</span>
-				<span v-else-if="!audio.playing && audioLoaded">▶</span>
+			<span class="button button--vmid button--fullwidth" v-on:click="togglePlaying">
+				<span v-if="audio.playing && isLoaded">❚❚</span>
+				<span v-else-if="!audio.playing && isLoaded">▶</span>
 				<span v-else>侢</span>
 			</span>
 			<p><span class="color--blue">{{ name }}</span> says:</p>
@@ -20,9 +20,13 @@
 </template>
 
 <script>
+import ctoml from '../../config.toml'
+import { parse } from '@iarna/toml'
+let config = parse(ctoml)
+
 export default {
 	name: 'StatusDisplay',
-	props: ['words', 'pic1', 'pic2', 'audioUrl', 'name'],
+	props: ['timestamps', 'pic1', 'pic2', 'audioUrl', 'name'],
 	data () {
 		return {
 			audio: {
@@ -35,12 +39,22 @@ export default {
 				playing: false
 			},
 			text: {
+				words: [],
 				unplayed: [],
 				played: [],
 				interval: null,
 				index: 0
 			},
-			audioLoaded: false
+			loaded: {
+				audio: false,
+				json: false
+			}
+		}
+	},
+
+	computed: {
+		isLoaded () {
+			return this.loaded.audio && this.loaded.json
 		}
 	},
 
@@ -58,12 +72,12 @@ export default {
 		},
 
 		togglePlaying () {
-			if (this.audio.media.paused && this.audioLoaded) {
+			if (this.audio.media.paused && this.isLoaded) {
 				this.text.interval = setInterval(() => this.tick(), 100)
 				this.audio.ctx.resume()
 				this.audio.media.play()
 				this.audio.playing = true
-			} else if (!this.audio.media.paused && this.audioLoaded) {
+			} else if (!this.audio.media.paused && this.isLoaded) {
 				this.audio.media.pause()
 				this.audio.ctx.suspend()
 				clearInterval(this.text.interval)
@@ -72,8 +86,8 @@ export default {
 		},
 
 		tick () {
-			if (this.audioLoaded && this.text.index < this.words.length) {
-				const cur = this.words[this.text.index]
+			if (this.isLoaded && this.text.index < this.text.words.length) {
+				const cur = this.text.words[this.text.index]
 				const time = this.audio.ctx.currentTime
 				this.audio.isLoud = this.getVolume() > 1 ? true : false
 				if (time > Number(cur.begin)) {
@@ -103,23 +117,28 @@ export default {
 	},
 
 	mounted () {
-		let unplayed = this.words.map(w => w.lines).flat()
-		this.text.unplayed = unplayed
-		this.audio.media = new Audio(this.audioUrl)
-		this.audio.media.crossOrigin = 'anonymous'
-		this.initAudio()
+		fetch(this.timestamps)
+			.then(res => res.json())
+			.then(res => {
+				this.text.words = res.fragments
+				this.text.unplayed = this.text.words.map(w => w.lines).flat()
+				this.audio.media = new Audio(this.audioUrl)
+				this.audio.media.crossOrigin = 'anonymous'
+				this.loaded.json = true
+				this.initAudio()
 
-		this.audio.media.addEventListener('canplaythrough', () => {
-			this.audioLoaded = true
-		})
+				this.audio.media.addEventListener('canplaythrough', () => {
+					this.loaded.audio = true
+				})
 
-		this.audio.media.addEventListener('ended', () => {
-			this.initAudio()
-			this.text.unplayed = this.text.played
-			this.text.played = []
-			this.text.index = 0
-			clearInterval(this.text.interval)
-		})
+				this.audio.media.addEventListener('ended', () => {
+					this.initAudio()
+					this.text.unplayed = this.text.played
+					this.text.played = []
+					this.text.index = 0
+					clearInterval(this.text.interval)
+				})
+			})
 	},
 
 	beforeDestroy () {
