@@ -31,6 +31,7 @@ export default {
 			e.preventDefault()
 			let { content, statusId } = this
 			this.$store.dispatch('createStatus', { content, id: statusId, redirect: !this.noRedirect }).then(() => {
+				this.content = ''
 				this.$emit('posted')
 			})
 		}
