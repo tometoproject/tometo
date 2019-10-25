@@ -34,7 +34,6 @@ pub struct GetStatus {
 pub struct GetStatusResponse {
 	pub avatar_name: String,
 	pub audio: String,
-	pub content: String,
 	pub timestamps: String,
 	pub pic1: String,
 	pub pic2: String,
@@ -76,7 +75,6 @@ impl Status {
 		let pic2_path = storage.get(format!("{}-2.png", &status.avatar_id))?;
 		Ok(GetStatusResponse {
 			audio: audio_path,
-			content: status.content,
 			timestamps: timestamps_path,
 			avatar_name: avatar.name,
 			pic1: pic1_path,
@@ -105,7 +103,6 @@ impl Status {
 			let pic2_path = storage.get(format!("{}-2.png", &status.avatar_id))?;
 			result.push(GetStatusResponse {
 				audio: audio_path,
-				content: status.content,
 				timestamps: timestamps_path,
 				avatar_name: avatar.name,
 				pic1: pic1_path,
