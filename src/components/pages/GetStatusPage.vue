@@ -73,6 +73,10 @@ export default {
 			}
 		})
 		.then(res => {
+			if (res.related_status_id) {
+				router.push(`/status/${res.related_status_id}`)
+			}
+
 			this.pic1 = res.pic1
 			this.pic2 = res.pic2
 			this.audio = res.audio
