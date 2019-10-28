@@ -58,10 +58,10 @@
 </template>
 
 <script>
-import router from '../router'
+import router from '../../router'
 
 export default {
-	name: 'CreateAvatar',
+	name: 'CreateAvatarPage',
 	data () {
 		return {
 			name: '',
@@ -81,18 +81,18 @@ export default {
 			return this.$store.state.loading
 		},
 		bothFilesAreEntered () {
-			if (this.$data.pic1 instanceof File && this.$data.pic2 instanceof File) {
-				this.$data.interval = setInterval(this.picCycle, 500)
+			if (this.pic1 instanceof File && this.pic2 instanceof File) {
+				this.interval = setInterval(this.picCycle, 500)
 				return true
 			} else {
-				clearInterval(this.$data.interval)
+				clearInterval(this.interval)
 			}
 		}
 	},
 	methods: {
 		updatePic (num, evt) {
 			if (evt.target.files.length > 0) {
-				this.$data[`pic${String(num)}`] = evt.target.files[0]
+				this[`pic${String(num)}`] = evt.target.files[0]
 			}
 		},
 		submitForm (e) {
@@ -101,19 +101,19 @@ export default {
 			this.$store.dispatch('createAvatar', { name, pitch, speed, language, gender, pic1, pic2 })
 		},
 		fileName (num) {
-			return this.$data[`pic${String(num)}`].name
+			return this[`pic${String(num)}`].name
 		},
 		picCycle () {
 			let reader = new FileReader()
 			reader.addEventListener('load', () => {
-				this.$data.imagePreview = reader.result
+				this.imagePreview = reader.result
 			})
-			if (this.$data.cycle) {
-				reader.readAsDataURL(this.$data.pic1)
+			if (this.cycle) {
+				reader.readAsDataURL(this.pic1)
 			} else {
-				reader.readAsDataURL(this.$data.pic2)
+				reader.readAsDataURL(this.pic2)
 			}
-			this.$data.cycle = !this.$data.cycle
+			this.cycle = !this.cycle
 		}
 	},
 	beforeMount () {

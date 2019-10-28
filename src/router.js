@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Home from './components/Home.vue'
-import Register from './components/Register.vue'
-import Login from './components/Login.vue'
-import CreateStatus from './components/CreateStatus.vue'
-import GetStatus from './components/GetStatus.vue'
-import CreateAvatar from './components/CreateAvatar.vue'
-import EditAvatar from './components/EditAvatar.vue'
+import Home from './components/pages/HomePage.vue'
+import Register from './components/pages/RegisterPage.vue'
+import Login from './components/pages/LoginPage.vue'
+import CreateStatus from './components/pages/CreateStatusPage.vue'
+import GetStatus from './components/pages/GetStatusPage.vue'
+import CreateAvatar from './components/pages/CreateAvatarPage.vue'
+import EditAvatar from './components/pages/EditAvatarPage.vue'
 
 Vue.use(VueRouter)
 

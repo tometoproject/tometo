@@ -22,6 +22,7 @@ pub struct Status {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CreateStatus {
 	pub content: String,
+	pub id: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -33,10 +34,10 @@ pub struct GetStatus {
 pub struct GetStatusResponse {
 	pub avatar_name: String,
 	pub audio: String,
-	pub content: String,
 	pub timestamps: String,
 	pub pic1: String,
 	pub pic2: String,
+	pub related_status_id: Option<String>,
 }
 
 impl Status {
@@ -52,7 +53,15 @@ impl Status {
 			.filter(avatars::user_id.eq(user.id))
 			.first::<Avatar>(connection)
 			.map_err(|_| OError::BadRequest(new_ejson("Create an avatar first!")))?;
-		let res = genstatus(status.content, avatar, connection)?;
+		if status.id.is_some() {
+			let related_status = statuses::table
+				.filter(statuses::id.eq(status.id.clone().unwrap()))
+				.first::<Status>(connection)?;
+			if related_status.related_status_id.is_some() {
+				return Err(OError::BadRequest(new_ejson("You can't comment on a comment!")));
+			}
+		}
+		let res = genstatus(status.content, status.id, avatar, connection)?;
 		Ok(res)
 	}
 
@@ -75,16 +84,47 @@ impl Status {
 		let pic2_path = storage.get(format!("{}-2.png", &status.avatar_id))?;
 		Ok(GetStatusResponse {
 			audio: audio_path,
-			content: status.content,
 			timestamps: timestamps_path,
 			avatar_name: avatar.name,
 			pic1: pic1_path,
 			pic2: pic2_path,
+			related_status_id: status.related_status_id,
 		})
+	}
+
+	pub fn get_comments(status: GetStatus, connection: &PgConnection) -> Result<Vec<GetStatusResponse>, OError> {
+		let mut result = Vec::new();
+		let status_comments = statuses::table
+			.filter(statuses::related_status_id.eq(status.id))
+			.load::<Status>(connection)?;
+		let mut cfg = config::Config::default();
+		cfg.merge(config::File::new("config.toml", config::FileFormat::Toml))
+			 .unwrap()
+			 .merge(config::Environment::new().separator("_"))
+			 .unwrap();
+		let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
+		for status in status_comments {
+			let avatar = avatars::table
+				.filter(avatars::id.eq(&status.avatar_id))
+				.first::<Avatar>(connection)?;
+			let audio_path = storage.get(format!("{}.ogg", &status.id))?;
+			let timestamps_path = storage.get(format!("{}.json", &status.id))?;
+			let pic1_path = storage.get(format!("{}-1.png", &status.avatar_id))?;
+			let pic2_path = storage.get(format!("{}-2.png", &status.avatar_id))?;
+			result.push(GetStatusResponse {
+				audio: audio_path,
+				timestamps: timestamps_path,
+				avatar_name: avatar.name,
+				pic1: pic1_path,
+				pic2: pic2_path,
+				related_status_id: None,
+			});
+		}
+		Ok(result)
 	}
 }
 
-fn genstatus(content: String, avatar: Avatar, conn: &PgConnection) -> Result<Uuid, OError> {
+fn genstatus(content: String, id: Option<String>, avatar: Avatar, conn: &PgConnection) -> Result<Uuid, OError> {
 	let mut cfg = config::Config::default();
 	cfg.merge(config::File::new("config.toml", config::FileFormat::Toml))
 		.unwrap()
@@ -120,7 +160,7 @@ fn genstatus(content: String, avatar: Avatar, conn: &PgConnection) -> Result<Uui
 		id: new_id.to_string(),
 		content,
 		avatar_id: avatar.id,
-		related_status_id: None,
+		related_status_id: id,
 	};
 
 	diesel::insert_into(statuses::table)

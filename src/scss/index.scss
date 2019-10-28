@@ -14,15 +14,15 @@ $font-serif: 'Libre Baskerville', 'DejaVu Serif', 'Bitstream Vera Serif', 'Georg
 $font-monospace: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Consolas', monospace;
 
 @mixin medium {
-    @media (max-width: $bp-medium) {
-        @content;
-    }
+	@media (max-width: $bp-medium) {
+		@content;
+	}
 }
 
 @mixin small {
-    @media (max-width: $bp-small) {
-        @content;
-    }
+	@media (max-width: $bp-small) {
+		@content;
+	}
 }
 
 @import './base';

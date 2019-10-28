@@ -1,7 +1,5 @@
 <template>
 	<form v-on:keyup.enter="submitForm">
-		<h1>New Status</h1>
-
 		<fieldset>
 			<label>Content</label>
 			<textarea maxlength="500" type="textarea" v-model="content"></textarea>
@@ -12,18 +10,16 @@
 </template>
 
 <script>
-import router from '../router'
-
 export default {
-	name: 'CreateStatus',
+	name: 'CreateStatusForm',
 	data () {
 		return {
-			content: '',
+			content: ''
 		}
 	},
-	beforeMount () {
-		if (!this.$store.state.username)
-			router.back()
+	props: {
+		statusId: String,
+		noRedirect: Boolean
 	},
 	computed: {
 		loading () {
@@ -33,8 +29,11 @@ export default {
 	methods: {
 		submitForm (e) {
 			e.preventDefault()
-			let { content, pitch } = this
-			this.$store.dispatch('createStatus', { content })
+			let { content, statusId } = this
+			this.$store.dispatch('createStatus', { content, id: statusId, redirect: !this.noRedirect }).then(() => {
+				this.content = ''
+				this.$emit('posted')
+			})
 		}
 	}
 }
