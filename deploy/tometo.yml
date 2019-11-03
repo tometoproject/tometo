@@ -1,5 +1,0 @@
----
-- hosts: tometo
-  remote_user: lu
-  roles:
-    - tometo
