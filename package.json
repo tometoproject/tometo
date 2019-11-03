@@ -9,7 +9,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git@marisa.cloud:tometo/tometo.git"
+		"url": "ssh://git@marisa.cloud:222/t/tometo.git"
 	},
 	"dependencies": {
 		"@babel/core": "^7.4.5",
