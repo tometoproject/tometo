@@ -99,14 +99,20 @@ fn create_avatar(
 		)));
 	}
 
-	let parsed_pitch: u32 = single_pitch.text.parse().map_err(|_| OError::BadRequest(new_ejson("Please enter a number within range for the pitch!")))?;
+	let parsed_pitch: u32 = single_pitch.text.parse().map_err(|_| {
+		OError::BadRequest(new_ejson(
+			"Please enter a number within range for the pitch!",
+		))
+	})?;
 	if parsed_pitch > 30 {
 		return Err(OError::BadRequest(new_ejson(
 			"Please enter a pitch within bounds!",
 		)));
 	}
 
-	let parsed_speed: f32 = single_speed.text.parse().map_err(|_| OError::BadRequest(new_ejson("Please enter a number within range for speed!")))?;
+	let parsed_speed: f32 = single_speed.text.parse().map_err(|_| {
+		OError::BadRequest(new_ejson("Please enter a number within range for speed!"))
+	})?;
 	if parsed_speed > 2.0 || parsed_speed < 0.1 {
 		return Err(OError::BadRequest(new_ejson(
 			"Please enter a speed within bounds!",
