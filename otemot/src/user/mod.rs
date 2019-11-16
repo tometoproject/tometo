@@ -24,6 +24,12 @@ fn register(
 		)));
 	}
 
+	if !mailchecker::is_valid(&user.email) {
+		return Err(OError::BadRequest(new_ejson(
+			"Please enter a valid E-mail address!",
+		)));
+	}
+
 	User::create(user, &connection)?;
 	Ok(Json(DefaultMessage {
 		message: "Successfully registered! You can log in now.".into(),
@@ -45,7 +51,7 @@ fn login(
 	cookies.add_private(Cookie::new("auth", token));
 	Ok(Json(SlimUser {
 		id,
-		username: user.username.clone(),
+		username: user.username,
 	}))
 }
 
