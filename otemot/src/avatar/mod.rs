@@ -85,6 +85,7 @@ fn create_avatar(
 		RawField::Single(v) => v,
 		RawField::Multiple(v) => v.first().unwrap(),
 	};
+
 	if single_name.text.is_empty()
 		|| single_pitch.text.is_empty()
 		|| single_speed.text.is_empty()
@@ -97,6 +98,27 @@ fn create_avatar(
 			"Please fill out all of the fields!",
 		)));
 	}
+
+	let parsed_pitch: u32 = single_pitch.text.parse().map_err(|_| {
+		OError::BadRequest(new_ejson(
+			"Please enter a number within range for the pitch!",
+		))
+	})?;
+	if parsed_pitch > 30 {
+		return Err(OError::BadRequest(new_ejson(
+			"Please enter a pitch within bounds!",
+		)));
+	}
+
+	let parsed_speed: f32 = single_speed.text.parse().map_err(|_| {
+		OError::BadRequest(new_ejson("Please enter a number within range for speed!"))
+	})?;
+	if parsed_speed > 2.0 || parsed_speed < 0.1 {
+		return Err(OError::BadRequest(new_ejson(
+			"Please enter a speed within bounds!",
+		)));
+	}
+
 	let avatar = CreateAvatar {
 		name: single_name.text.clone(),
 		pitch: single_pitch.text.parse::<i16>()?,

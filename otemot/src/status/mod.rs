@@ -31,7 +31,10 @@ fn get_status(id: String, connection: db::Connection) -> Result<Json<GetStatusRe
 }
 
 #[get("/<id>/comments")]
-fn get_status_comments(id: String, connection: db::Connection) -> Result<Json<Vec<GetStatusResponse>>, OError> {
+fn get_status_comments(
+	id: String,
+	connection: db::Connection,
+) -> Result<Json<Vec<GetStatusResponse>>, OError> {
 	let status = GetStatus { id };
 	let res = Status::get_comments(status, &connection)?;
 	Ok(Json(res))

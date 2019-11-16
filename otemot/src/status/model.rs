@@ -58,7 +58,9 @@ impl Status {
 				.filter(statuses::id.eq(status.id.clone().unwrap()))
 				.first::<Status>(connection)?;
 			if related_status.related_status_id.is_some() {
-				return Err(OError::BadRequest(new_ejson("You can't comment on a comment!")));
+				return Err(OError::BadRequest(new_ejson(
+					"You can't comment on a comment!",
+				)));
 			}
 		}
 		let res = genstatus(status.content, status.id, avatar, connection)?;
@@ -92,16 +94,19 @@ impl Status {
 		})
 	}
 
-	pub fn get_comments(status: GetStatus, connection: &PgConnection) -> Result<Vec<GetStatusResponse>, OError> {
+	pub fn get_comments(
+		status: GetStatus,
+		connection: &PgConnection,
+	) -> Result<Vec<GetStatusResponse>, OError> {
 		let mut result = Vec::new();
 		let status_comments = statuses::table
 			.filter(statuses::related_status_id.eq(status.id))
 			.load::<Status>(connection)?;
 		let mut cfg = config::Config::default();
 		cfg.merge(config::File::new("config.toml", config::FileFormat::Toml))
-			 .unwrap()
-			 .merge(config::Environment::new().separator("_"))
-			 .unwrap();
+			.unwrap()
+			.merge(config::Environment::new().separator("_"))
+			.unwrap();
 		let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
 		for status in status_comments {
 			let avatar = avatars::table
@@ -124,7 +129,12 @@ impl Status {
 	}
 }
 
-fn genstatus(content: String, id: Option<String>, avatar: Avatar, conn: &PgConnection) -> Result<Uuid, OError> {
+fn genstatus(
+	content: String,
+	id: Option<String>,
+	avatar: Avatar,
+	conn: &PgConnection,
+) -> Result<Uuid, OError> {
 	let mut cfg = config::Config::default();
 	cfg.merge(config::File::new("config.toml", config::FileFormat::Toml))
 		.unwrap()
