@@ -15,6 +15,7 @@
 				<span class="text--vmid text--lhdefault color--blue">{{ text.played.join(' ') }}</span>
 				<span class="text--vmid text--lhdefault">{{ text.unplayed.join(' ') }}</span>
 			</h1>
+			<p class="text--small"><a :href="audioUrl">🔽 Download audio</a></p>
 		</div>
 	</div>
 	<div class="grid grid--2-30" v-else>
@@ -35,6 +36,7 @@
 				<span class="text--vmid text--lhdefault color--blue">{{ text.played.join(' ') }}</span>
 				<span class="text--vmid text--lhdefault">{{ text.unplayed.join(' ') }}</span>
 			</h2>
+			<p class="text--small"><a :href="audioUrl">🔽 Download audio</a></p>
 		</div>
 	</div>
 </template>
