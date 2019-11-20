@@ -1,5 +1,5 @@
 <template>
-	<form v-on:keyup.enter="submitForm">
+	<form v-on:keydown.enter="submitForm">
 		<h1>Register</h1>
 		<fieldset>
 			<label>Username</label>

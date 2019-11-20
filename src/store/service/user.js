@@ -17,7 +17,7 @@ export function doRegister (username, password, confirmPassword, email) {
 				return Promise.reject(error)
 			}
 			return data
-		})).then(user => user)
+		}))
 }
 
 export function doLogin (username, password) {
@@ -36,9 +36,7 @@ export function doLogin (username, password) {
 				return Promise.reject(error)
 			}
 			return data
-		})).then(data => {
-			return data
-		})
+		}))
 }
 
 export function doLogout () {
