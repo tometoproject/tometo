@@ -55,11 +55,11 @@ cargo install diesel_cli --no-default-features --features postgres
 cargo install cargo-watch
 
 echo "Installing aeneas..."
-pip install --user numpy
-pip install --user aeneas
+pip3 install --user numpy
+pip3 install --user aeneas
 
 echo "Running aeneas self-diagnostics..."
-python -m aeneas.diagnostics
+python3 -m aeneas.diagnostics
 
 echo "Copying configuration file"
 cp config.example.toml config.toml
