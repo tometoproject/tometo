@@ -55,9 +55,9 @@ fn main() {
 	let port = cfg.get::<u16>("otemot.port").expect("otemot.port unset!");
 	cfg.get::<String>("otemot.external_url")
 		.expect("otemot.external_url unset!");
-	let tm_hostname = cfg
-		.get::<String>("tometo.external_url")
-		.expect("tometo.external_url unset!");
+	let origins = cfg
+		.get::<Vec<String>>("otemot.origins")
+		.expect("otemot.origins unset!");
 	let c_environment = cfg.get::<String>("otemot.env").expect("otemot.env unset!");
 	let environment;
 	match c_environment.as_str() {
@@ -74,7 +74,7 @@ fn main() {
 		.finalize()
 		.unwrap();
 	let cors = CorsOptions {
-		allowed_origins: AllowedOrigins::some_exact(&[tm_hostname]),
+		allowed_origins: AllowedOrigins::some_exact(origins.as_slice()),
 		allowed_methods: vec![Method::Get, Method::Post, Method::Delete]
 			.into_iter()
 			.map(From::from)
