@@ -1,4 +1,4 @@
-# tometo [![Build Status](https://ci.marisa.cloud/api/badges/t/tometo/status.svg)](https://ci.marisa.cloud/t/tometo)
+# tometo [![builds.sr.ht status](https://builds.sr.ht/~marisa/tometo.svg)](https://builds.sr.ht/~marisa/tometo?)
 
 Tometo is a social network focused on text-to-speech. It's written in
 [Rust](https://rust-lang.org) using the [Rocket](https://rocket.rs) web library,
