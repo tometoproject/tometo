@@ -5,8 +5,8 @@ Tometo is a social network focused on text-to-speech. It's written in
 [Diesel](https://diesel.rs) for talking to a PostgreSQL server, can generate TTS
 audio from Google Cloud, and optionally store generated artifacts on
 S3-compatible services. The frontend is written in JavaScript using
-[Vue](https://vuejs.org), with [Vue Rouer](https://router.vuejs.org) for routingand
-[Vuex](https://vuex.vuejs.org) for state management.
+[Vue](https://vuejs.org), with [Vue Rouer](https://router.vuejs.org) for routing
+and [Vuex](https://vuex.vuejs.org) for state management.
 
 ## Reporting Issues
 
