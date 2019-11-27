@@ -6,4 +6,4 @@ source $HOME/.cargo/env
 npm i --no-progress
 npx eslint src/ otemot/tts.js
 
-cargo check
+cargo check -q
