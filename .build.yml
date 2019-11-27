@@ -11,5 +11,6 @@ sources:
   - git+https://github.com/tometoproject/tometo
 tasks:
   - lint: |
+      cd tometo
       script/cisetup
       script/lint
