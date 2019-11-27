@@ -1,0 +1,15 @@
+image: archlinux
+packages:
+  - nodejs
+  - npm
+  - python
+  - espeak
+  - ffmpeg
+  - postgresql
+  - openssl
+sources:
+  - git+https://github.com/tometoproject/tometo
+tasks:
+  - lint: |
+      script/cisetup
+      script/lint
