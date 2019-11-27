@@ -23,6 +23,7 @@ script/build
 echo "Archiving..."
 mkdir tometo
 cp target/release/otemot tometo/server
+cp -r otemot/migrations tometo/
 cp -r dist/ tometo/client
 cp config.example.toml tometo/config.toml
 tar czf "tometo-$1-$2.tar.gz" tometo/
