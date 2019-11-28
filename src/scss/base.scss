@@ -1,7 +1,7 @@
 @import 'https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700&display=swap';
 
 html {
-	font: 16px/180% $font-serif;
+	font: 16px/180% $font-sans;
 	text-size-adjust: none;
 	-webkit-text-size-adjust: none;
 }
@@ -32,6 +32,7 @@ pre {
 h1, h2, h3, h4, h5, h6 {
 	font-variant-ligatures: common-ligatures discretionary-ligatures;
 	font-feature-settings: 'liga' on, 'dlig' on;
+	font-family: $font-serif;
 }
 
 * {
@@ -87,6 +88,10 @@ a code,
 a:hover, .link:hover {
 	color: $c-lightblue;
 	text-decoration: underline;
+}
+
+.link--no-underline:hover {
+	text-decoration: none;
 }
 
 a:hover code {

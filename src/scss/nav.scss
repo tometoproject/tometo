@@ -1,5 +1,63 @@
 nav {
-	.nav-right {
-		float: right;
+	display: flex;
+	height: 60px;
+	justify-content: space-between;
+	margin: 0 auto;
+	max-width: 1600px;
+}
+
+.nav__subnav {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.nav__brandimg:hover {
+	text-decoration: none;
+}
+
+.nav__brand {
+	font-size: 1.5rem;
+	font-family: $font-serif;
+	display: inline-block;
+	color: $c-black;
+	vertical-align: middle;
+	margin: 0;
+	margin-right: 10px;
+
+	&:hover {
+		color: $c-lightblue;
+		text-decoration: none;
+	}
+}
+
+.nav__brand--small {
+	font-size: 1rem;
+}
+
+.nav__brand--is-dev {
+	color: $c-red;
+}
+
+.nav__brand--is-stage {
+	color: $c-orange;
+}
+
+.nav__item {
+	vertical-align: middle;
+	line-height: 60px;
+}
+
+@include small {
+	nav {
+		padding: 0 30px;
+	}
+
+	.nav__brand {
+		display: none;
+	}
+
+	.nav__item {
+		line-height: 22.4px;
 	}
 }

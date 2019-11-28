@@ -1,9 +1,7 @@
 <template>
-	<div id="app" class="center">
-		<div>
-			<app-header></app-header>
-		</div>
-		<section class="page">
+	<div id="app">
+		<app-header></app-header>
+		<section class="page center">
 			<div>
 				<div class="flash flash--info" @click="hideCookies" v-if="!cookiesAcknowledged">
 					We use cookies to keep you logged in, but nothing else.<br>

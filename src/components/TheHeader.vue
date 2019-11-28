@@ -1,14 +1,21 @@
 <template>
 	<nav role="navigation" aria-label="main navigation">
-		<span>
-			<router-link to="/"><img class="img--vmid" width=30 src="https://tometo.org/img/tome.png"></router-link>
-			<router-link class="text--vmid" to="/status/new" v-if="user && hasAvatar">New Status</router-link>
-			<router-link class="text--vmid" to="/avatar/new" v-if="user && !hasAvatar">Create Avatar</router-link>
+		<span class="nav__subnav">
+			<router-link class="link--no-underline" to="/">
+				<img class="nav__brandimg img--vmid" width=50 src="https://tometo.org/img/tome.png">
+				<p class="nav__brand">
+					tometo alpha
+					<span class="nav__brand--small nav__brand--is-dev" v-if="isDevelopment">(development)</span>
+					<span class="nav__brand--small nav__brand--is-stage" v-if="isStaging">(staging)</span>
+				</p>
+			</router-link>
+			<router-link class="nav__item" to="/status/new" v-if="user && hasAvatar">New Status</router-link>
+			<router-link class="nav__item" to="/avatar/new" v-if="user && !hasAvatar">Create Avatar</router-link>
 		</span>
-		<span class="nav-right">
+		<span class="nav__subnav">
 			<span v-if="!user">
-				<router-link to="/register"><strong>Register</strong></router-link> |
-				<router-link to="/login"><strong>Log in</strong></router-link>
+				<router-link class="nav__item" to="/register"><strong>Register</strong></router-link> |
+				<router-link class="nav__item" to="/login"><strong>Log in</strong></router-link>
 			</span>
 			<span v-else>
 				<span>Logged in as <strong>{{ user }}</strong></span> |
@@ -19,6 +26,10 @@
 </template>
 
 <script>
+import ctoml from '../../config.toml'
+import { parse } from '@iarna/toml'
+let config = parse(ctoml)
+
 export default {
 	name: 'TheHeader',
 	computed: {
@@ -27,6 +38,12 @@ export default {
 		},
 		hasAvatar () {
 			return this.$store.state.hasAvatar
+		},
+		isDevelopment () {
+			return config.both.env === 'development'
+		},
+		isStaging () {
+			return config.both.env === 'staging'
 		}
 	},
 	methods: {

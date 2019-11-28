@@ -2,6 +2,13 @@
 # This is where most of the runtime configuration for both the frontend (Tometo)
 # and the backend (Otemot) is done.
 
+# Configuration for both back- and frontend
+[both]
+
+# Environment for internal use. Set this to "development", "staging" or
+# "production".
+env = "development"
+
 # Configuration for the frontend
 [tometo]
 
@@ -34,10 +41,6 @@ port = 4001
 # External URL that the frontend is going to reach the backend by. If you're
 # only deploying the frontend, this configuration option needs to be set.
 external_url = "http://localhost:4001"
-
-# Rust environment for internal use. Set this to "development", "staging" or
-# "production".
-env = "development"
 
 # Storage method to use. Otemot supports multiple ways to store generated files
 # (TTS audio, images, etc). The default is to just store them locally in a folder,

@@ -58,7 +58,7 @@ fn main() {
 	let origins = cfg
 		.get::<Vec<String>>("otemot.origins")
 		.expect("otemot.origins unset!");
-	let c_environment = cfg.get::<String>("otemot.env").expect("otemot.env unset!");
+	let c_environment = cfg.get::<String>("both.env").expect("both.env unset!");
 	let environment;
 	match c_environment.as_str() {
 		"development" => environment = Environment::Development,
