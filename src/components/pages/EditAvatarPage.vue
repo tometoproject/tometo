@@ -76,6 +76,7 @@ export default {
 				return data
 			})).then(data => {
 				this.name = data.name
+				document.title = `Edit ${this.name} - Tometo`
 			}, error => {
 				this.$store.commit('setErrorFlash', error)
 			})

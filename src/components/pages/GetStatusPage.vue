@@ -84,6 +84,7 @@ export default {
 			this.avatar_name = res.avatar_name
 			this.timestamps = res.timestamps
 			this.ready = true
+			document.title = `${this.avatar_name}'s Status - Tometo`
 
 			return this.fetchComments()
 		}).then(res => {
