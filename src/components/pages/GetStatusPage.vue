@@ -69,7 +69,8 @@ export default {
 				return res.json()
 			} else {
 				this.$store.commit('setErrorFlash', 'Unable to load status!')
-				router.back()
+				// TODO: Redirect this somewhere else
+				return router.push('/')
 			}
 		})
 		.then(res => {
