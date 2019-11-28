@@ -3,11 +3,11 @@ use crate::error::{new_ejson, OError};
 use crate::schema::{avatars, statuses, users};
 use crate::storage::create_storage;
 use crate::user::model::User;
+use crate::tts;
 use diesel::prelude::*;
 use either::Either;
 use std::fs;
 use std::path::PathBuf;
-use std::process::Command;
 use uuid::Uuid;
 
 #[table_name = "statuses"]
@@ -142,14 +142,8 @@ fn genstatus(
 		.unwrap();
 	let storage = create_storage(cfg.get::<String>("otemot.storage").unwrap());
 	let new_id = Uuid::new_v4();
-	Command::new("/usr/bin/env")
-		.arg("node")
-		.arg("otemot/tts.js")
-		.arg(&content)
-		.args(&["-p", &avatar.pitch.to_string()])
-		.args(&["-s", &avatar.speed.to_string()])
-		.args(&["-n", &new_id.to_string()])
-		.output()?;
+	tts::synthesize(&new_id.to_string(), content.clone(), Some(avatar.pitch), Some(avatar.speed))
+		.map_err(|err| OError::InternalServerError(new_ejson(&format!("Error while generating status: {}", err))))?;
 
 	let mut pbuf = PathBuf::from("otemot/gentts");
 	pbuf.push(&new_id.to_string());

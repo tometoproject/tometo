@@ -17,6 +17,7 @@ mod schema;
 mod status;
 mod storage;
 mod user;
+mod tts;
 
 use crate::error::ErrorJson;
 use rocket::config::{Config as RocketConfig, Environment};
