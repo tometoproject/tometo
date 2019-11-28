@@ -8,12 +8,12 @@
 		</fieldset>
 
 		<fieldset>
-			<label>Pitch <i>(Number from 0 to 30)</i></label>
+			<label>Pitch <i>(Number from -20 to 20)</i></label>
 			<input type="number" v-model="pitch" value="10" max="30" min="0" />
 		</fieldset>
 
 		<fieldset>
-			<label>Speed <i>(Number from 0.1 to 2.0)</i></label>
+			<label>Speed <i>(Number from 0.25 to 4.0)</i></label>
 			<input type="number" v-model="speed" value="1.0" step="0.1" max="2" min="0.1" />
 		</fieldset>
 
