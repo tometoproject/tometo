@@ -1,6 +1,9 @@
 const path = require('path')
+const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const GitRevisionPlugin = require('git-revision-webpack-plugin')
+const grp = new GitRevisionPlugin()
 
 module.exports = {
 	entry: ['babel-polyfill', './src/index.js'],
@@ -46,6 +49,10 @@ module.exports = {
 		new VueLoaderPlugin(),
 		new MiniCssExtractPlugin({
 			filename: 'style.css'
+		}),
+		new webpack.DefinePlugin({
+			'VERSION': JSON.stringify(grp.version()),
+			'BRANCH': JSON.stringify(grp.branch())
 		})
 	]
 }

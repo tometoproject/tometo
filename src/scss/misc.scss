@@ -56,3 +56,12 @@ img.img--avatar-small {
 	background-color: $c-orange;
 	color: $c-white;
 }
+
+.footer {
+	text-align: center;
+	color: $c-darkgray;
+}
+
+.footer__link {
+	opacity: 0.5;
+}
