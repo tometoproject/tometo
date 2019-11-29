@@ -16,6 +16,7 @@ mod error;
 mod schema;
 mod status;
 mod storage;
+mod tts;
 mod user;
 
 use crate::error::ErrorJson;

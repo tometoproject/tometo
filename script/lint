@@ -4,6 +4,6 @@ set -e
 
 source $HOME/.cargo/env
 npm i --no-progress
-npx eslint src/ otemot/tts.js
+npx eslint src/
 
 cargo check -q
