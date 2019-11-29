@@ -40,7 +40,24 @@ pub fn synthesize(name: &str, text: String, pitch: Option<i16>, speed: Option<f3
 		buffer.write_all(&decode(body["audioContent"].as_str().unwrap()).unwrap())?;
 		buffer.flush()?;
 	} else {
-		// TODO
+		let scale_pitch = (pitch.unwrap() + 20) / 40 * 99;
+		let scale_speed = (((speed.unwrap() - 0.25 ) / 3.75 * 370.0) + 80.0).floor();
+		Command::new("espeak")
+			.args(&[
+				"-p", &scale_pitch.to_string(),
+				"-s", &scale_speed.to_string(),
+				"-w", &format!("otemot/gentts/{}/temp.wav", name),
+				&text,
+			])
+			.output()?;
+		Command::new("ffmpeg")
+			.args(&[
+				"-i", &format!("otemot/gentts/{}/temp.wav", name),
+				"-c:a", "libopus",
+				"-b:a", "96K",
+				&format!("otemot/gentts/{}/temp.ogg", name),
+			])
+			.output()?;
 	}
 
 	fs::write(format!("otemot/gentts/{}/temp.txt", name), &text.split(' ').collect::<Vec<&str>>().join("\n"))?;
