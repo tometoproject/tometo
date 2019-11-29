@@ -14,7 +14,6 @@
 	"dependencies": {
 		"@babel/core": "^7.4.5",
 		"@babel/preset-env": "^7.4.5",
-		"@google-cloud/text-to-speech": "^1.1.2",
 		"@iarna/toml": "^2.2.3",
 		"@sentry/browser": "^5.3.0",
 		"@sentry/integrations": "^5.3.1",
@@ -24,9 +23,7 @@
 		"babel-polyfill": "^6.26.0",
 		"clean-webpack-plugin": "^3.0.0",
 		"css-loader": "^3.0.0",
-		"make-dir": "^3.0.0",
 		"mini-css-extract-plugin": "^0.7.0",
-		"minimist": "^1.2.0",
 		"optimize-css-assets-webpack-plugin": "^5.0.1",
 		"raw-loader": "^3.1.0",
 		"sass": "^1.21.0",
