@@ -1,6 +1,6 @@
 [package]
 name = "otemot"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["marisa <marisa@mokou.zone>"]
 edition = "2018"
 
