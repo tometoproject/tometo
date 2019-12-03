@@ -19,7 +19,7 @@ export function login ({ commit, dispatch }, { username, password }) {
 
 	doLogin(username, password).then(user => {
 		commit('toggleLoading')
-		commit('setUsername', user.username)
+		commit('setUsername', user.data.username)
 		router.push('/')
 		dispatch('poll')
 		commit('setInfoFlash', 'Signed in successfully.')

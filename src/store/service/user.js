@@ -6,7 +6,7 @@ export function doRegister (username, password, confirmPassword, email) {
 	const requestOptions = {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ username, password, confirmPassword, email })
+		body: JSON.stringify({user: { username, password, confirmPassword, email }})
 	}
 
 	return fetch(`${config.otemot.external_url}/api/register`, requestOptions)
