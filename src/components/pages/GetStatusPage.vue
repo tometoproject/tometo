@@ -49,7 +49,7 @@ export default {
 			let res = await fetch(`${config.otemot.external_url}/api/status/${this.$route.params.id}/comments`)
 			if (res.ok) {
 				res = await res.json()
-				return res
+				return res.data
 			} else {
 				this.$store.commit('setErrorFlash', 'Unable to load status comments!')
 				return []
