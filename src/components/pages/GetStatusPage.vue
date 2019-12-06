@@ -74,15 +74,15 @@ export default {
 			}
 		})
 		.then(res => {
-			if (res.related_status_id) {
+			if (res.data.related_status_id) {
 				router.push(`/status/${res.related_status_id}`)
 			}
 
-			this.pic1 = res.pic1
-			this.pic2 = res.pic2
-			this.audio = res.audio
-			this.avatar_name = res.avatar_name
-			this.timestamps = res.timestamps
+			this.pic1 = res.data.pic1
+			this.pic2 = res.data.pic2
+			this.audio = res.data.audio
+			this.avatar_name = res.data.avatar_name
+			this.timestamps = res.data.timestamps
 			this.ready = true
 			document.title = `${this.avatar_name}'s Status - Tometo`
 

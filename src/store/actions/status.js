@@ -8,7 +8,7 @@ export async function createStatus ({ commit }, { content, id, redirect }) {
 		let data = await doCreateStatus(content, id)
 		commit('toggleLoading')
 		if (redirect) {
-			router.push(`/status/${data}`)
+			router.push(`/status/${data.data.id}`)
 		}
 	} catch (error) {
 		commit('toggleLoading')
