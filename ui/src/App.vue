@@ -23,11 +23,8 @@
 </template>
 
 <script>
-import ctoml from '../config.toml'
-import { parse } from '@iarna/toml'
-let config = parse(ctoml)
 import TheHeader from './components/TheHeader.vue'
-import { version } from '../package.json'
+import { version } from '../../package.json'
 
 export default {
 	name: 'App',
@@ -49,10 +46,10 @@ export default {
 			return this.$store.state.cookiesAcknowledged
 		},
 		isStaging () {
-			return config.both.env === 'staging'
+			return process.env.TOMETO_ENV === 'staging'
 		},
 		isDevelopment () {
-			return config.both.env === 'development'
+			return process.env.TOMETO_ENV === 'development'
 		}
 	},
 	components: {

@@ -26,10 +26,6 @@
 </template>
 
 <script>
-import ctoml from '../../../config.toml'
-import { parse } from '@iarna/toml'
-let config = parse(ctoml)
-
 export default {
 	name: 'EditAvatarPage',
 	data () {
@@ -66,7 +62,7 @@ export default {
 			credentials: 'include'
 		}
 
-		fetch(`${config.otemot.external_url}/api/avatar/edit/${this.$route.params.id}`, requestOptions)
+		fetch(`${process.env.TOMETO_BACKEND_URL}/api/avatar/edit/${this.$route.params.id}`, requestOptions)
 			.then(res => res.text().then(text => {
 				const data = text && JSON.parse(text)
 				if (!res.ok) {

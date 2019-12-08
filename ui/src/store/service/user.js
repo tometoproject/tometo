@@ -1,7 +1,3 @@
-import ctoml from '../../../config.toml'
-import { parse } from '@iarna/toml'
-let config = parse(ctoml)
-
 export function doRegister (username, password, confirmPassword, email) {
 	const requestOptions = {
 		method: 'POST',
@@ -9,7 +5,7 @@ export function doRegister (username, password, confirmPassword, email) {
 		body: JSON.stringify({user: { username, password, confirmPassword, email }})
 	}
 
-	return fetch(`${config.otemot.external_url}/api/register`, requestOptions)
+	return fetch(`${process.env.TOMETO_BACKEND_URL}/api/register`, requestOptions)
 		.then(res => res.text().then(text => {
 			const data = text && JSON.parse(text)
 			if (!res.ok) {
@@ -28,7 +24,7 @@ export function doLogin (username, password) {
 		credentials: 'include'
 	}
 
-	return fetch(`${config.otemot.external_url}/api/auth`, requestOptions)
+	return fetch(`${process.env.TOMETO_BACKEND_URL}/api/auth`, requestOptions)
 		.then(res => res.text().then(text => {
 			const data = text && JSON.parse(text)
 			if (!res.ok) {
@@ -45,7 +41,7 @@ export function doLogout () {
 		credentials: 'include'
 	}
 
-	return fetch(`${config.otemot.external_url}/api/auth`, requestOptions)
+	return fetch(`${process.env.TOMETO_BACKEND_URL}/api/auth`, requestOptions)
 		.then(res => res.text().then(text => {
 			const data = text && JSON.parse(text)
 			if (!res.ok) {
@@ -62,7 +58,7 @@ export function doPoll () {
 		credentials: 'include'
 	}
 
-	return fetch(`${config.otemot.external_url}/api/poll`, requestOptions)
+	return fetch(`${process.env.TOMETO_BACKEND_URL}/api/poll`, requestOptions)
 		.then(res => res.text().then(text => {
 			const data = text && JSON.parse(text)
 			if (res.status === 401) {

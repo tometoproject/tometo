@@ -1,7 +1,3 @@
-import ctoml from '../../../config.toml'
-import { parse } from '@iarna/toml'
-let config = parse(ctoml)
-
 export function doCreateStatus (content, id) {
 	const requestOptions = {
 		method: 'POST',
@@ -10,7 +6,7 @@ export function doCreateStatus (content, id) {
 		credentials: 'include'
 	}
 
-	return fetch(`${config.otemot.external_url}/api/status/new`, requestOptions)
+	return fetch(`${process.env.TOMETO_BACKEND_URL}/api/status/new`, requestOptions)
 		.then(res => res.text().then(text => {
 			const data = text && JSON.parse(text)
 			if (!res.ok) {

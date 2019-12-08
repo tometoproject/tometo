@@ -20,11 +20,8 @@
 
 <script>
 import router from '../../router'
-import ctoml from '../../../config.toml'
 import CreateStatusForm from '../forms/CreateStatusForm.vue'
 import StatusDisplay from '../StatusDisplay.vue'
-import { parse } from '@iarna/toml'
-let config = parse(ctoml)
 
 export default {
 	name: 'GetStatusPage',
@@ -46,7 +43,7 @@ export default {
 
 	methods: {
 		async fetchComments () {
-			let res = await fetch(`${config.otemot.external_url}/api/status/${this.$route.params.id}/comments`)
+			let res = await fetch(`${process.env.TOMETO_BACKEND_URL}/api/status/${this.$route.params.id}/comments`)
 			if (res.ok) {
 				res = await res.json()
 				return res.data
@@ -63,7 +60,7 @@ export default {
 	},
 
 	mounted () {
-		fetch(`${config.otemot.external_url}/api/status/${this.$route.params.id}`)
+		fetch(`${process.env.TOMETO_BACKEND_URL}/api/status/${this.$route.params.id}`)
 		.then(res => {
 			if (res.ok) {
 				return res.json()

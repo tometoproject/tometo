@@ -42,10 +42,6 @@
 </template>
 
 <script>
-import ctoml from '../../config.toml'
-import { parse } from '@iarna/toml'
-let config = parse(ctoml)
-
 export default {
 	name: 'StatusDisplay',
 	props: {

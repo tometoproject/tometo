@@ -4,12 +4,8 @@ import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 import router from './router'
 import store from './store/index'
-import ctoml from '../config.toml'
-import { parse } from '@iarna/toml'
 
 require('./scss/index.scss')
-
-let config = parse(ctoml)
 
 Vue.config.productionTip = false
 
@@ -20,7 +16,7 @@ new Vue({
 }).$mount('#content')
 
 Sentry.init({
-	dsn: config.tometo.dsn,
+	dsn: process.env.TOMETO_DSN,
 	integrations: [
 		new Integrations.Vue({
 			Vue,

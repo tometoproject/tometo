@@ -1,7 +1,3 @@
-import ctoml from '../../../config.toml'
-import { parse } from '@iarna/toml'
-let config = parse(ctoml)
-
 export function doCreateAvatar (name, pitch, speed, language, gender, pic1, pic2) {
 	let formdata = new FormData()
 	formdata.set('name', name)
@@ -18,7 +14,7 @@ export function doCreateAvatar (name, pitch, speed, language, gender, pic1, pic2
 		credentials: 'include'
 	}
 
-	return fetch(`${config.otemot.external_url}/api/avatar/new`, requestOptions)
+	return fetch(`${process.env.TOMETO_BACKEND_URL}/api/avatar/new`, requestOptions)
 		.then(res => res.text().then(text => {
 			const data = text && JSON.parse(text)
 			if (!res.ok) {
@@ -47,7 +43,7 @@ export function doEditAvatar (id, name, pic1, pic2) {
 		credentials: 'include'
 	}
 
-	return fetch(`${config.otemot.external_url}/api/avatar/edit/${id}`, requestOptions)
+	return fetch(`${process.env.TOMETO_BACKEND_URL}/api/avatar/edit/${id}`, requestOptions)
 		.then(res => res.text().then(text => {
 			const data = text && JSON.parse(text)
 			if (!res.ok) {

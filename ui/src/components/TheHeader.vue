@@ -32,10 +32,6 @@
 </template>
 
 <script>
-import ctoml from '../../config.toml'
-import { parse } from '@iarna/toml'
-let config = parse(ctoml)
-
 export default {
 	name: 'TheHeader',
 	computed: {
@@ -46,10 +42,10 @@ export default {
 			return this.$store.state.hasAvatar
 		},
 		isDevelopment () {
-			return config.both.env === 'development'
+			return process.env.TOMETO_ENV === 'development'
 		},
 		isStaging () {
-			return config.both.env === 'staging'
+			return process.env.TOMETO_ENV === 'staging'
 		}
 	},
 	methods: {

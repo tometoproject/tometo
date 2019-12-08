@@ -3,14 +3,15 @@ const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const GitRevisionPlugin = require('git-revision-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
 const grp = new GitRevisionPlugin()
 
 module.exports = {
-	entry: ['babel-polyfill', './src/index.js'],
+	entry: ['babel-polyfill', './ui/src/index.js'],
 	output: {
 		filename: 'bundle.js',
 		chunkFilename: '[name].bundle.js',
-		path: path.resolve(__dirname, 'dist')
+		path: path.resolve(__dirname, '../dist')
 	},
 	module: {
 		rules: [
@@ -53,6 +54,7 @@ module.exports = {
 		new webpack.DefinePlugin({
 			'VERSION': JSON.stringify(grp.version()),
 			'BRANCH': JSON.stringify(grp.branch())
-		})
+		}),
+		new Dotenv()
 	]
 }
