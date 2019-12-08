@@ -2,7 +2,6 @@
 
 set -e
 
-source $HOME/.cargo/env
 npm i --no-progress
 npx eslint ui/src/ --ext .js,.vue
 
