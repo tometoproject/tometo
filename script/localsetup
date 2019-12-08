@@ -2,12 +2,12 @@
 
 echo "Starting local setup"
 
-if [ -x "$(command -v cargo)" ]
+if [ -x "$(command -v elixir)" ]
 then
-    echo "SUCCESS: Rust and Cargo are installed"
+    echo "SUCCESS: Elixir is installed!"
 else
-    echo "WARNING: Rust and/or Cargo not installed!"
-    echo "Please install Rust: https://rustup.rs"
+    echo "WARNING: Elixir is not installed!"
+    echo "Please install Elixir: https://elixir-lang.org/install.html"
 fi
 
 if [ -x "$(command -v node)" ]
@@ -50,10 +50,6 @@ else
     echo "Please install PostgreSQL via your package manager or from source"
 fi
 
-echo "Installing Cargo tools"
-cargo install diesel_cli --no-default-features --features postgres
-cargo install cargo-watch
-
 echo "Installing aeneas..."
 pip3 install --user numpy
 pip3 install --user aeneas
@@ -61,21 +57,16 @@ pip3 install --user aeneas
 echo "Running aeneas self-diagnostics..."
 python3 -m aeneas.diagnostics
 
-echo "Copying configuration file"
-cp config.example.toml config.toml
-
 echo "Installing packages"
 npm i
-cargo build
+cd aph; mix deps.get; cd ..
 
-echo "Enter a Postgres database connection string:"
-read conn
+echo ""
+echo "All done! Be sure to fill out the aph/config/dev.exs file and create the database:"
+echo "cd aph; mix ecto.create"
 
-echo "Setting up database"
-cd otemot
-DATABASE_URL=$conn diesel setup
-
-echo "All done! Be sure to fill out the config.toml file and use the following scripts to run Tometo:"
+echo ""
+echo "You can then use the following scripts to run Tometo:"
 echo "script/run_f - Run only the frontend"
 echo "script/run_b - Run only the backend"
 echo "script/run - Run both frontend and backend"

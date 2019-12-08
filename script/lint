@@ -4,6 +4,6 @@ set -e
 
 source $HOME/.cargo/env
 npm i --no-progress
-npx eslint src/
+npx eslint ui/src/
 
-cargo check -q
+cd aph; mix format --dry-run
