@@ -2,8 +2,7 @@
 
 set -e
 
-source $HOME/.cargo/env
 npm i --no-progress
-npx eslint src/
+npx eslint ui/src/ --ext .js,.vue
 
-cargo check -q
+cd aph; mix format --dry-run

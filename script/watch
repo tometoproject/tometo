@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-npx concurrently -n "f,b" "npx webpack-dev-server --config webpack.dev.js" "cargo watch -x run -w otemot/ -i 'otemot/storage/*' -i 'otemot/gentts/*'"
+npx concurrently -n "f,b" "npx webpack-dev-server --config ui/webpack.dev.js" "cd aph; mix phx.server"

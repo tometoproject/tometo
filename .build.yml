@@ -3,10 +3,12 @@ packages:
   - nodejs
   - npm
   - openssl
+  - elixir
 sources:
   - git+https://github.com/tometoproject/tometo
 tasks:
   - lint: |
       cd tometo
-      script/cisetup
+      mix local.hex --force
+      cd aph; mix deps.get; cd ..
       script/lint

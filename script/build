@@ -3,9 +3,9 @@
 set -e
 
 echo "Building frontend"
-npx webpack --config webpack.prod.js
+npx webpack --config ui/webpack.prod.js
 
 echo "Building backend"
-cargo build --release
+cd aph; mix release
 
-echo "Done, FE builds in dist/, BE builds in otemot/target/release/"
+echo "Done, FE builds in dist/, BE builds in aph/_build/prod/"

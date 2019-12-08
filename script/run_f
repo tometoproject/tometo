@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-npx webpack-dev-server --config webpack.dev.js
+npx webpack-dev-server --config ui/webpack.dev.js
