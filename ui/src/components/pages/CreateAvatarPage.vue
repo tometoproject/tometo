@@ -117,14 +117,6 @@ export default {
   computed: {
     loading () {
       return this.$store.state.loading
-    },
-    bothFilesAreEntered () {
-      if (this.pic1 instanceof File && this.pic2 instanceof File) {
-        this.interval = setInterval(this.picCycle, 500)
-        return true
-      } else {
-        clearInterval(this.interval)
-      }
     }
   },
   beforeMount () {
@@ -134,6 +126,15 @@ export default {
     updatePic (num, evt) {
       if (evt.target.files.length > 0) {
         this[`pic${String(num)}`] = evt.target.files[0]
+      }
+    },
+    bothFilesAreEntered () {
+      if (this.pic1 instanceof File && this.pic2 instanceof File) {
+        this.interval = setInterval(this.picCycle, 500)
+        return true
+      } else {
+        clearInterval(this.interval)
+        return false
       }
     },
     submitForm (e) {

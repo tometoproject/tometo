@@ -6,7 +6,7 @@
       <input
         v-model="username"
         type="text"
-      ></input>
+      >
     </fieldset>
 
     <fieldset>
@@ -14,7 +14,7 @@
       <input
         v-model="email"
         type="email"
-      ></input>
+      >
     </fieldset>
 
     <fieldset>
@@ -22,7 +22,7 @@
       <input
         v-model="password"
         type="password"
-      ></input>
+      >
     </fieldset>
 
     <fieldset>
@@ -30,7 +30,7 @@
       <input
         v-model="confirmPassword"
         type="password"
-      ></input>
+      >
     </fieldset>
 
     <button
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import router from '../../router'
+
 export default {
   name: 'RegisterPage',
   data () {

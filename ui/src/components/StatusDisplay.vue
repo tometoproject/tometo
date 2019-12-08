@@ -60,7 +60,7 @@
           <span v-else-if="!audio.playing && isLoaded">▶</span>
           <span v-else>侢</span>
         </span>
-				&nbsp;<span class="color--blue">{{ name }}</span> says:
+        &nbsp;<span class="color--blue">{{ name }}</span> says:
       </p>
       <h2 class="h2--noborder">
         <span class="text--vmid text--lhdefault color--blue">{{ text.played.join(' ') }}</span>
@@ -77,11 +77,26 @@
 export default {
   name: 'StatusDisplay',
   props: {
-    timestamps: String,
-    pic1: String,
-    pic2: String,
-    audioUrl: String,
-    name: String,
+    timestamps: {
+      type: String,
+      default: ''
+    },
+    pic1: {
+      type: String,
+      default: ''
+    },
+    pic2: {
+      type: String,
+      default: ''
+    },
+    audioUrl: {
+      type: String,
+      default: ''
+    },
+    name: {
+      type: String,
+      default: ''
+    },
     condensed: Boolean
   },
   data () {

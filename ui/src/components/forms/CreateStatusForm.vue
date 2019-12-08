@@ -22,7 +22,10 @@
 export default {
   name: 'CreateStatusForm',
   props: {
-    statusId: String,
+    statusId: {
+      type: String,
+      default: ''
+    },
     noRedirect: Boolean
   },
   data () {
