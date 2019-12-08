@@ -1,19 +1,25 @@
+# ui
 node_modules/
 npm-debug.log
 dist/*
 !dist/index.html
 serve_dist/
 .cache/
-.env
-deploy/inventory/*
-!deploy/inventory/example
 stats.json
-target/
-.*\.rs\.bk
-otemot/gentts/
-otemot/storage/*
-otemot/storage/*
-!otemot/storage.gitkeep
+
+# both
+.env
 .DS_Store
-config.toml
-releases/
+
+# aph
+cover/
+deps/
+doc/
+/.fetch
+erl_crash.dump
+*.ez
+aph-*.tar
+/priv/static/
+gentts/
+_build/
+aph/priv/static/
