@@ -1,31 +1,31 @@
 {
-	"env": {
-		"browser": true,
-		"es6": true
-	},
-	"extends": [
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
     "standard",
     "plugin:vue/recommended"
   ],
-	"globals": {
-		"Atomics": "readonly",
-		"SharedArrayBuffer": "readonly",
-		"System": "readonly",
-		"import": "readonly",
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly",
+    "System": "readonly",
+    "import": "readonly",
     "VERSION": "readonly",
     "COMMIT": "readonly",
     "BRANCH": "readonly"
-	},
-	"parserOptions": {
-		"parser": "babel-eslint",
-		"ecmaVersion": 2018,
-		"sourceType": "module"
-	},
-	"plugins": [
-		"vue"
-	],
-	"rules": {
-		"indent": ["error", 2],
-		"no-mixed-spaces-and-tabs": "error"
-	}
+  },
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "vue"
+  ],
+  "rules": {
+    "indent": ["error", 2],
+    "no-mixed-spaces-and-tabs": "error"
+  }
 }

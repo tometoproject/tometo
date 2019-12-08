@@ -1,8 +1,8 @@
 # tometo [![builds.sr.ht status](https://builds.sr.ht/~marisa/tometo.svg)](https://builds.sr.ht/~marisa/tometo?)
 
 Tometo is a social network focused on text-to-speech. It's written in
-[Rust](https://rust-lang.org) using the [Rocket](https://rocket.rs) web library,
-[Diesel](https://diesel.rs) for talking to a PostgreSQL server, can generate TTS
+[Elixir](https://elixir-lang.org) using the
+[Phoenix](https://phoenixframework.org) web library, can generate TTS
 audio from Google Cloud, and optionally store generated artifacts on
 S3-compatible services. The frontend is written in JavaScript using
 [Vue](https://vuejs.org), with [Vue Rouer](https://router.vuejs.org) for routing
