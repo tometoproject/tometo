@@ -9,6 +9,6 @@ sources:
 tasks:
   - lint: |
       cd tometo
-      mix local.hex
+      mix local.hex --force
       cd aph; mix deps.get; cd ..
       script/lint
