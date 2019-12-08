@@ -9,24 +9,24 @@ import { createAvatar, editAvatar } from './actions/avatar'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-	state: {
-		username: localStorage.getItem('username') || null,
-		cookiesAcknowledged: localStorage.getItem('cookiesAcknowledged') || false,
-		hasAvatar: false,
-		loading: false,
-		flash: {
-			error: null,
-			info: null
-		}
-	},
-	mutations,
-	actions: {
-		register,
-		login,
-		logout,
-		poll,
-		createStatus,
-		createAvatar,
-		editAvatar
-	}
+  state: {
+    username: localStorage.getItem('username') || null,
+    cookiesAcknowledged: localStorage.getItem('cookiesAcknowledged') || false,
+    hasAvatar: false,
+    loading: false,
+    flash: {
+      error: null,
+      info: null
+    }
+  },
+  mutations,
+  actions: {
+    register,
+    login,
+    logout,
+    poll,
+    createStatus,
+    createAvatar,
+    editAvatar
+  }
 })

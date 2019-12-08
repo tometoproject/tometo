@@ -10,17 +10,17 @@ require('./scss/index.scss')
 Vue.config.productionTip = false
 
 new Vue({
-	router,
-	store,
-	render: h => h(App)
+  router,
+  store,
+  render: h => h(App)
 }).$mount('#content')
 
 Sentry.init({
-	dsn: process.env.TOMETO_DSN,
-	integrations: [
-		new Integrations.Vue({
-			Vue,
-			attachProps: true
-		})
-	]
+  dsn: process.env.TOMETO_DSN,
+  integrations: [
+    new Integrations.Vue({
+      Vue,
+      attachProps: true
+    })
+  ]
 })

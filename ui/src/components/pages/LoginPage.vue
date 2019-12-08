@@ -1,47 +1,57 @@
 <template>
-	<form v-on:keydown.enter="submitForm">
-		<h1>Login</h1>
+  <form @keydown.enter="submitForm">
+    <h1>Login</h1>
 
-		<fieldset>
-			<label>Username</label>
-			<input type="text" v-model="username" />
-		</fieldset>
+    <fieldset>
+      <label>Username</label>
+      <input
+        v-model="username"
+        type="text"
+      >
+    </fieldset>
 
-		<fieldset>
-			<label>Password</label>
-			<input type="password" v-model="password" />
-		</fieldset>
+    <fieldset>
+      <label>Password</label>
+      <input
+        v-model="password"
+        type="password"
+      >
+    </fieldset>
 
-		<button @click="submitForm" :disabled="loading">Submit</button>
-	</form>
+    <button
+      :disabled="loading"
+      @click="submitForm"
+    >
+      Submit
+    </button>
+  </form>
 </template>
 
 <script>
 import router from '../../router'
 
 export default {
-	name: 'LoginPage',
-	data () {
-		return {
-			username: '',
-			password: ''
-		}
-	},
-	beforeMount () {
-		if (this.$store.state.username)
-			router.back()
-	},
-	computed: {
-		loading () {
-			return this.$store.state.loading
-		}
-	},
-	methods: {
-		submitForm (e) {
-			e.preventDefault()
-			let { username, password } = this
-			this.$store.dispatch('login', { username, password })
-		}
-	}
+  name: 'LoginPage',
+  data () {
+    return {
+      username: '',
+      password: ''
+    }
+  },
+  computed: {
+    loading () {
+      return this.$store.state.loading
+    }
+  },
+  beforeMount () {
+    if (this.$store.state.username) { router.back() }
+  },
+  methods: {
+    submitForm (e) {
+      e.preventDefault()
+      let { username, password } = this
+      this.$store.dispatch('login', { username, password })
+    }
+  }
 }
 </script>

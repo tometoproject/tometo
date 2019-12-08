@@ -1,81 +1,97 @@
 <template>
-	<form v-on:keyup-enter="submitForm">
-		<h1>Edit your Avatar</h1>
+  <form @keyup-enter="submitForm">
+    <h1>Edit your Avatar</h1>
 
-		<fieldset>
-			<label>Name</label>
-			<input type="text" v-model="name" />
-		</fieldset>
+    <fieldset>
+      <label>Name</label>
+      <input
+        v-model="name"
+        type="text"
+      >
+    </fieldset>
 
-		<fieldset>
-			<label>Closed Mouth image</label>
-			<label>
-				<input type="file" accept="image/png, image/jpeg" v-on:change="updatePic(1, $event)" />
-			</label>
-		</fieldset>
+    <fieldset>
+      <label>Closed Mouth image</label>
+      <label>
+        <input
+          type="file"
+          accept="image/png, image/jpeg"
+          @change="updatePic(1, $event)"
+        >
+      </label>
+    </fieldset>
 
-		<fieldset>
-			<label>Open Mouth image</label>
-			<label>
-				<input type="file" accept="image/png, image/jpeg" v-on:change="updatePic(2, $event)" />
-			</label>
-		</fieldset>
+    <fieldset>
+      <label>Open Mouth image</label>
+      <label>
+        <input
+          type="file"
+          accept="image/png, image/jpeg"
+          @change="updatePic(2, $event)"
+        >
+      </label>
+    </fieldset>
 
-		<button @click="submitForm" :disabled="loading">Submit</button>
-	</form>
+    <button
+      :disabled="loading"
+      @click="submitForm"
+    >
+      Submit
+    </button>
+  </form>
 </template>
 
 <script>
 export default {
-	name: 'EditAvatarPage',
-	data () {
-		return {
-			name: '',
-			pic1: '',
-			pic2: '',
-		}
-	},
-	computed: {
-		loading () {
-			return this.$store.state.loading
-		}
-	},
+  name: 'EditAvatarPage',
+  data () {
+    return {
+      name: '',
+      pic1: '',
+      pic2: ''
+    }
+  },
+  computed: {
+    loading () {
+      return this.$store.state.loading
+    }
+  },
 
-	methods: {
-		updatePic (num, evt) {
-			if (evt.target.files.length > 0) {
-				this[`pic${String(num)}`] = evt.target.files[0]
-			}
-		},
+  beforeMount () {
+    const requestOptions = {
+      method: 'GET',
+      credentials: 'include'
+    }
 
-		submitForm (e) {
-			e.preventDefault()
-			let id = this.$route.params.id
-			let { name, pic1, pic2 } = this
-			this.$store.dispatch('editAvatar', { id, name, pic1, pic2 })
-		}
-	},
+    fetch(`${process.env.TOMETO_BACKEND_URL}/api/avatar/edit/${this.$route.params.id}`, requestOptions)
+      .then(res => res.text().then(text => {
+        const data = text && JSON.parse(text)
+        if (!res.ok) {
+          const error = (data && data.message) || res.statusText
+          return Promise.reject(error)
+        }
+        return data
+      })).then(data => {
+        this.name = data.name
+        document.title = `Edit ${this.name} - Tometo`
+      }, error => {
+        this.$store.commit('setErrorFlash', error)
+      })
+  },
 
-	beforeMount () {
-		const requestOptions = {
-			method: 'GET',
-			credentials: 'include'
-		}
+  methods: {
+    updatePic (num, evt) {
+      if (evt.target.files.length > 0) {
+        this[`pic${String(num)}`] = evt.target.files[0]
+      }
+    },
 
-		fetch(`${process.env.TOMETO_BACKEND_URL}/api/avatar/edit/${this.$route.params.id}`, requestOptions)
-			.then(res => res.text().then(text => {
-				const data = text && JSON.parse(text)
-				if (!res.ok) {
-					const error = (data && data.message) || res.statusText
-					return Promise.reject(error)
-				}
-				return data
-			})).then(data => {
-				this.name = data.name
-				document.title = `Edit ${this.name} - Tometo`
-			}, error => {
-				this.$store.commit('setErrorFlash', error)
-			})
-	}
+    submitForm (e) {
+      e.preventDefault()
+      let id = this.$route.params.id
+      let { name, pic1, pic2 } = this
+      this.$store.dispatch('editAvatar', { id, name, pic1, pic2 })
+    }
+  }
 }
 </script>
