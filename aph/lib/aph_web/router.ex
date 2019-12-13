@@ -1,5 +1,7 @@
 defmodule AphWeb.Router do
   use AphWeb, :router
+  use Plug.ErrorHandler
+  use Sentry.Plug
 
   pipeline :api do
     plug :accepts, ["json"]

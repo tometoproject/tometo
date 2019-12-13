@@ -11,6 +11,15 @@ database_url =
     For example: ecto://USER:PASS@HOST/DATABASE
     """
 
+sentry_dsn = System.get_env("SENTRY_DSN") || "aaaa"
+
+config :sentry,
+  dsn: sentry_dsn,
+  environment_name: System.get_env("RELEASE_LEVEL") || "prod",
+  enable_source_code_context: true,
+  root_source_code_path: File.cwd!,
+  included_environments: [:staging, :prod]
+
 config :aph, Aph.Repo,
   # ssl: true,
   url: database_url,

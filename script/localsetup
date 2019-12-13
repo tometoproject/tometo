@@ -63,7 +63,7 @@ cd aph; mix deps.get; cd ..
 
 echo ""
 echo "All done! Be sure to fill out the aph/config/dev.exs file and create the database:"
-echo "cd aph; mix ecto.create"
+echo "cd aph; mix ecto.setup"
 
 echo ""
 echo "You can then use the following scripts to run Tometo:"
