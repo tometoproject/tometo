@@ -1,5 +1,6 @@
 defmodule AphWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :aph
+  use Sentry.Phoenix.Endpoint
 
   plug CORSPlug
 

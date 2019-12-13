@@ -38,6 +38,12 @@ defmodule AphWeb.AvatarController do
   end
 
   def show(conn, %{"id" => id}) do
+    if !is_number(id) do
+      conn
+      |> put_status(:bad_request)
+      |> put_view(AphWeb.ErrorView)
+      |> render(:"400", message: "Invalid Avatar ID!")
+    end
     avatar = Main.get_avatar(id)
     render(conn, :show, avatar: avatar)
   end

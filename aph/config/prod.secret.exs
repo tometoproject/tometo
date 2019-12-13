@@ -18,7 +18,7 @@ config :sentry,
   environment_name: System.get_env("RELEASE_LEVEL") || "prod",
   enable_source_code_context: true,
   root_source_code_path: File.cwd!,
-  included_environments: [:staging, :prod]
+  included_environments: ~w(staging prod)
 
 config :aph, Aph.Repo,
   # ssl: true,

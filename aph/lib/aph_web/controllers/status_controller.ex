@@ -56,6 +56,12 @@ defmodule AphWeb.StatusController do
   end
 
   def show(conn, %{"id" => id}) do
+    if !is_number(id) do
+      conn
+      |> put_status(:bad_request)
+      |> put_view(AphWeb.ErrorView)
+      |> render(:"400", message: "Invalid Status ID!")
+    end
     status = Main.get_status_for_display!(id)
     render(conn, :show_display, status: status)
   end
