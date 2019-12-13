@@ -25,18 +25,12 @@ module.exports = {
         exclude: /node_modules/
       },
       {
-        test: /\.s[ac]ss$/,
+        test: /\.css$/,
         exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
-          { loader: 'css-loader', options: { url: false, sourceMap: true } },
-          {
-            loader: 'sass-loader',
-            options: {
-              implementation: require('sass'),
-              sourceMap: true
-            }
-          }
+          { loader: 'css-loader', options: { url: false, sourceMap: true, importLoaders: 1 } },
+          { loader: 'postcss-loader' }
         ]
       },
       {

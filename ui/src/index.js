@@ -5,7 +5,7 @@ import * as Integrations from '@sentry/integrations'
 import router from './router'
 import store from './store/index'
 
-require('./scss/index.scss')
+require('./css/index.css')
 
 Vue.config.productionTip = false
 

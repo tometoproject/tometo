@@ -1,0 +1,42 @@
+button,
+.button {
+  font-family: var(--font-serif);
+  border: 1px var(--c-blue);
+  border-style: solid dashed;
+  padding: 7px 10px;
+  background: transparent;
+  font-size: 16px;
+  color: var(--c-blue);
+  font-weight: bold;
+  transition: .1s all;
+}
+
+button:hover,
+.button:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: var(--c-lightblue);
+  border-color: var(--c-lightblue);
+}
+
+button[disabled="disabled"],
+.button[disabled="disabled"]{
+  color: var(--c-gray);
+  border-color: var(--c-gray);
+  cursor: default;
+}
+
+button[disabled="disabled"]:hover,
+.button[disabled="disabled"]:hover {
+  text-decoration: none;
+}
+
+.button--fullwidth {
+  width: 100%;
+  text-align: center;
+  display: block;
+}
+
+.button--vmid {
+  vertical-align: middle;
+}
