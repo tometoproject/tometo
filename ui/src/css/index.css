@@ -1,6 +1,4 @@
 :root {
-  --bp-medium: 54em;
-  --bp-small: 26em;
   --c-black: #252525;
   --c-yellow: #ff6;
   --c-white: #fff;
@@ -15,6 +13,9 @@
   --font-sans: sans-serif;
   --font-monospace: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Consolas', monospace;
 }
+
+@custom-media --bp-medium (max-width: 54em);
+@custom-media --bp-small (max-width: 26em);
 
 @import './base.css';
 @import './grid.css';

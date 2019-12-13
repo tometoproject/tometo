@@ -48,7 +48,7 @@ nav {
   line-height: 60px;
 }
 
-@media (max-width: var(--bp-small)) {
+@media (--bp-small) {
   nav {
 	padding: 0 30px;
   }
