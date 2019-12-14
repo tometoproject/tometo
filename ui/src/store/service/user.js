@@ -20,7 +20,7 @@ export function doLogin (username, password) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password, remember_me: "true" }),
     credentials: 'include'
   }
 

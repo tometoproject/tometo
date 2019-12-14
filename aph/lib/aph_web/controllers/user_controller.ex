@@ -1,38 +1,32 @@
 defmodule AphWeb.UserController do
   use AphWeb, :controller
 
+  import AphWeb.Authorize
+
   alias Aph.Accounts
   alias Aph.Accounts.User
-  alias AphWeb.Guardian
+  alias AphWeb.Auth.Token
 
   action_fallback AphWeb.FallbackController
 
+  plug :user_check when action in [:update, :delete, :poll]
+
   def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Accounts.create_user(user_params),
-         {:ok, _token, _claims} <- Guardian.encode_and_sign(user) do
-      conn
-      |> put_status(:created)
-      |> render(:show, user: user)
+    case Accounts.create_user(user_params) do
+      {:ok, %User{email: email} = user} ->
+        conn
+        |> put_status(:ok)
+        |> render(:show, user: user)
+
+      {:error, _changeset} ->
+        conn
+        |> put_status(:bad_request)
+        |> put_view(AphWeb.ErrorView)
+        |> render(:"400", message: "Please check the values!")
     end
   end
 
-  def login(conn, %{"username" => username, "password" => password}) do
-    with {:ok, user, token} <- Guardian.authenticate(username, password) do
-      conn
-      |> put_status(:ok)
-      |> AphWeb.Guardian.Plug.remember_me(user)
-      |> render(:show, user: user)
-    end
-  end
-
-  def logout(conn, attrs \\ {}) do
-    # TODO: Make this more secure
-    Guardian.Plug.clear_remember_me(conn)
-  end
-
-  def poll(conn, attrs \\ {}) do
-    user = Guardian.Plug.current_resource(conn)
-
+  def poll(%Plug.Conn{assigns: %{current_user: user}} = conn, attrs \\ {}) do
     case Accounts.check_avatar(user) do
       :ok -> conn |> put_status(:ok) |> render(:poll, has_avatar: true)
       :error -> conn |> put_status(:ok) |> render(:poll, has_avatar: false)

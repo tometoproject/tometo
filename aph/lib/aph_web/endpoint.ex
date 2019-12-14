@@ -26,5 +26,10 @@ defmodule AphWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
 
+  plug Plug.Session,
+    store: :cookie,
+    key: "aph",
+    signing_salt: "change_me_later"
+
   plug AphWeb.Router
 end

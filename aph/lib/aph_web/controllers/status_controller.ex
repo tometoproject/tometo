@@ -4,7 +4,6 @@ defmodule AphWeb.StatusController do
   alias Aph.Main
   alias Aph.Repo
   alias Aph.Main.Status
-  alias AphWeb.Guardian
 
   action_fallback AphWeb.FallbackController
 
@@ -13,13 +12,14 @@ defmodule AphWeb.StatusController do
     render(conn, "index.json", statuses: statuses)
   end
 
-  def create(conn, %{"content" => content, "id" => id}) do
-    %{id: user_id} = Guardian.Plug.current_resource(conn)
-
+  def create(%Plug.Conn{assigns: %{current_user: user}} = conn, %{
+        "content" => content,
+        "parent_id" => id
+      }) do
     with other_status when is_nil(other_status) == false <- Repo.get(Status, id) do
       if !other_status.related_status_id do
         with {:ok, status} <-
-               Main.create_status(user_id, %{content: content, related_status_id: id}) do
+               Main.create_status(user.id, %{content: content, related_status_id: id}) do
           conn
           |> put_status(:created)
           |> render(:show, status: status)
@@ -39,10 +39,8 @@ defmodule AphWeb.StatusController do
     end
   end
 
-  def create(conn, %{"content" => content}) do
-    %{id: user_id} = Guardian.Plug.current_resource(conn)
-
-    with {:ok, %Status{} = status} <- Main.create_status(user_id, %{content: content}) do
+  def create(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"content" => content}) do
+    with {:ok, %Status{} = status} <- Main.create_status(user.id, %{content: content}) do
       conn
       |> put_status(:created)
       |> render(:show, status: status)
@@ -56,12 +54,6 @@ defmodule AphWeb.StatusController do
   end
 
   def show(conn, %{"id" => id}) do
-    if !is_number(id) do
-      conn
-      |> put_status(:bad_request)
-      |> put_view(AphWeb.ErrorView)
-      |> render(:"400", message: "Invalid Status ID!")
-    end
     status = Main.get_status_for_display!(id)
     render(conn, :show_display, status: status)
   end

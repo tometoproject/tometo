@@ -17,7 +17,7 @@ config :sentry,
   dsn: sentry_dsn,
   environment_name: System.get_env("RELEASE_LEVEL") || "prod",
   enable_source_code_context: true,
-  root_source_code_path: File.cwd!,
+  root_source_code_path: File.cwd!(),
   included_environments: ~w(staging prod)
 
 config :aph, Aph.Repo,

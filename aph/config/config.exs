@@ -9,9 +9,9 @@ config :aph, AphWeb.Endpoint,
   render_errors: [view: AphWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: Aph.PubSub, adapter: Phoenix.PubSub.PG2]
 
-config :aph, AphWeb.Guardian,
-  issuer: "aph",
-  secret_key: "XsjICLNS/tqcS6lHj2L4D8srPeo2ZKrWSeDNTXVVwmpWyWHNveGatx/Pg7n49NT7"
+config :phauxth,
+  user_context: Aph.Accounts,
+  token_module: AphWeb.Auth.Token
 
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

@@ -46,7 +46,8 @@ defmodule Aph.MixProject do
       {:argon2_elixir, "~> 2.1"},
       {:cors_plug, "~> 2.0"},
       {:httpoison, "~> 1.6"},
-      {:sentry, "~> 7.0"}
+      {:sentry, "~> 7.0"},
+      {:phauxth, "~> 2.3"}
     ]
   end
 

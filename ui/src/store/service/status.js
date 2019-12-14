@@ -1,8 +1,13 @@
 export function doCreateStatus (content, id) {
+  let body = { content }
+  if (id.length > 0) {
+    body.parent_id = id
+  }
+
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ content, id }),
+    body: JSON.stringify(body),
     credentials: 'include'
   }
 
