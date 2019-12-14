@@ -2,6 +2,10 @@ defmodule Aph.Accounts do
   import Ecto.Query, warn: false
   alias Aph.Repo
 
+  #
+  # USERS
+  #
+
   alias Aph.Accounts.User
 
   def list_users do
@@ -43,5 +47,37 @@ defmodule Aph.Accounts do
 
   def change_user(%User{} = user) do
     User.changeset(user, %{})
+  end
+
+  #
+  # INVITATIONS
+  #
+
+  alias Aph.Accounts.Invitation
+
+  def list_invitations do
+    Repo.all(Invitation)
+  end
+
+  def get_invitation!(id), do: Repo.get!(Invitation, id)
+
+  def create_invitation(attrs \\ %{}) do
+    %Invitation{}
+    |> Invitation.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def update_invitation(%Invitation{} = invitation, attrs) do
+    invitation
+    |> Invitation.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_invitation(%Invitation{} = invitation) do
+    Repo.delete(invitation)
+  end
+
+  def change_invitation(%Invitation{} = invitation) do
+    Invitation.changeset(invitation, %{})
   end
 end
