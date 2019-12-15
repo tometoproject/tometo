@@ -18,7 +18,7 @@ config :aph, Aph.Repo,
 
 config :aph, AphWeb.Endpoint,
   render_errors: [view: AphWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: Aph.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Aph.PubSub, adapter: Phoenix.PubSub.PG2],
   http: [port: 4001],
   url: [host: "localhost"],
   secret_key_base: "ym9e4r4KwYYerVHZkJxpoHC8vYcVQEELGyoIoLy8kcvol8cD67RvJdB8oV/ldlxH",
