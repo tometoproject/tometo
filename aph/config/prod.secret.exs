@@ -47,7 +47,8 @@ cookie_secret =
 config :aph,
   tts: tts_strategy,
   hostname: hostname,
-  google_key: google_key
+  google_key: google_key,
+  cookie_secret: cookie_secret
 
 database_url =
   System.get_env("DATABASE_URL") ||
@@ -80,7 +81,6 @@ secret_key_base =
 config :aph, AphWeb.Endpoint,
   http: [:inet6, port: String.to_integer(System.get_env("PORT") || "4001")],
   secret_key_base: secret_key_base,
-  cookie_secret: cookie_secret
 
 # ## Using releases (Elixir v1.9+)
 #

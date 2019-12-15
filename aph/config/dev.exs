@@ -3,6 +3,7 @@ use Mix.Config
 config :aph,
   tts: "espeak",
   hostname: "http://localhost:4001",
+  cookie_secret: "9RGqJxYrnc3eoQHrDBBdZsSCMytNFWqgsvD572DfPcm2uH+ycGFye8ulrwaFi+zp",
   # This is only useful if you are using the "google" TTS strategy.
   google_key: "replaceme"
 
@@ -20,7 +21,6 @@ config :aph, AphWeb.Endpoint,
   http: [port: 4001],
   url: [host: "localhost"],
   secret_key_base: "ym9e4r4KwYYerVHZkJxpoHC8vYcVQEELGyoIoLy8kcvol8cD67RvJdB8oV/ldlxH",
-  cookie_secret: "9RGqJxYrnc3eoQHrDBBdZsSCMytNFWqgsvD572DfPcm2uH+ycGFye8ulrwaFi+zp",
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
