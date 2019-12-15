@@ -25,7 +25,7 @@ defmodule AphWeb.UserController do
     end
   end
 
-  def poll(%Plug.Conn{assigns: %{current_user: user}} = conn) do
+  def poll(%Plug.Conn{assigns: %{current_user: user}} = conn, _attrs) do
     case Accounts.check_avatar(user) do
       :ok -> conn |> put_status(:ok) |> render(:poll, has_avatar: true)
       :error -> conn |> put_status(:ok) |> render(:poll, has_avatar: false)
