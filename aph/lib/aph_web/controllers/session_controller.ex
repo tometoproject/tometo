@@ -14,7 +14,7 @@ defmodule AphWeb.SessionController do
         conn
         |> add_session(user, remember)
         |> put_status(:ok)
-        |> render(:success, user: user)
+        |> render(:success, user: user, id: Plug.Conn.get_session(conn, :phauxth_session_id))
 
       {:error, _err} ->
         conn
