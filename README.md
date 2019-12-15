@@ -20,6 +20,6 @@ There's other documentation on there that might be worth reading, too.
 
 ## License
 
-Tometo is licensed under the [Prosperity public license](./LICENSE), meaning you
+Tometo is licensed under the [Prosperity public license](https://prosperitylicense.com/), meaning you
 can't use it commercially. This doesn't make it Open Source software, but that
 distinction is not important to us.
