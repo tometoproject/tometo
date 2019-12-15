@@ -2,6 +2,18 @@
 # from environment variables. You can also hardcode secrets,
 # although such is generally not recommended and you have to
 # remember to add this file to your .gitignore.
+#
+# You can set the following environment variables:
+# - TTS_STRATEGY (required)
+# - APH_HOSTNAME (required)
+# - DATABASE_URL (required)
+# - COOKIE_SECRET (required)
+# - SENTRY_DSN
+# - RELEASE_LEVEL (for Sentry)
+# - GOOGLE_API_KEY
+# - POOL_SIZE
+# - PORT
+
 use Mix.Config
 
 google_key =
@@ -24,6 +36,13 @@ hostname =
   environment variable APH_HOSTNAME is missing.
   This should be the URL your frontend can reach Aph by.
   """
+
+cookie_secret =
+  System.get_env("COOKIE_SECRET") ||
+    raise """
+    environment variable COOKIE_SECRET is missing.
+    You can generate one by calling: mix phx.gen.secret
+    """
 
 config :aph,
   tts: tts_strategy,
@@ -60,7 +79,8 @@ secret_key_base =
 
 config :aph, AphWeb.Endpoint,
   http: [:inet6, port: String.to_integer(System.get_env("PORT") || "4001")],
-  secret_key_base: secret_key_base
+  secret_key_base: secret_key_base,
+  cookie_secret: cookie_secret
 
 # ## Using releases (Elixir v1.9+)
 #

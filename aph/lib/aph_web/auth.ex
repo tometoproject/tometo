@@ -23,7 +23,7 @@ defmodule AphWeb.Auth.Token do
   alias Phoenix.Token
   alias AphWeb.Endpoint
 
-  @token_salt "ksdfjslk"
+  @token_salt "user auth"
 
   def sign(data, opts \\ {}) do
     Token.sign(Endpoint, @token_salt, data, opts)

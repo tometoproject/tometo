@@ -29,7 +29,7 @@ defmodule AphWeb.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "aph",
-    signing_salt: "change_me_later"
+    signing_salt: Application.get_env(AphWeb.Endpoint, :cookie_secret)
 
   plug AphWeb.Router
 end
