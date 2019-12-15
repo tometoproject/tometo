@@ -66,7 +66,7 @@ defmodule Aph.TTS do
          {:ok, _} <- File.rm_rf("gentts/#{name}") do
       :ok
     else
-      e -> {:tts_error, name}
+      e -> {:tts_error, e}
     end
   end
 

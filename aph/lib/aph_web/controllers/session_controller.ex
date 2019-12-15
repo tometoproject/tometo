@@ -16,7 +16,7 @@ defmodule AphWeb.SessionController do
         |> put_status(:ok)
         |> render(:success, user: user)
 
-      {:error, err} ->
+      {:error, _err} ->
         conn
         |> put_status(:bad_request)
         |> put_view(AphWeb.ErrorView)
@@ -52,10 +52,8 @@ defmodule AphWeb.SessionController do
     |> add_remember_me(user.id, remember)
   end
 
-  defp add_remember_me(conn, user_id, remember) do
-    if remember == "true" do
-      Remember.add_rem_cookie(conn, user_id)
-    end
+  defp add_remember_me(conn, user_id, "true") do
+    Remember.add_rem_cookie(conn, user_id)
   end
 
   defp add_remember_me(conn, _, _), do: conn

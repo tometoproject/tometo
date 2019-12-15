@@ -5,7 +5,6 @@ defmodule AphWeb.UserController do
 
   alias Aph.Accounts
   alias Aph.Accounts.User
-  alias AphWeb.Auth.Token
 
   action_fallback AphWeb.FallbackController
 
@@ -13,7 +12,7 @@ defmodule AphWeb.UserController do
 
   def create(conn, %{"user" => user_params}) do
     case Accounts.create_user(user_params) do
-      {:ok, %User{email: email} = user} ->
+      {:ok, user} ->
         conn
         |> put_status(:ok)
         |> render(:show, user: user)
@@ -26,7 +25,7 @@ defmodule AphWeb.UserController do
     end
   end
 
-  def poll(%Plug.Conn{assigns: %{current_user: user}} = conn, attrs \\ {}) do
+  def poll(%Plug.Conn{assigns: %{current_user: user}} = conn) do
     case Accounts.check_avatar(user) do
       :ok -> conn |> put_status(:ok) |> render(:poll, has_avatar: true)
       :error -> conn |> put_status(:ok) |> render(:poll, has_avatar: false)
