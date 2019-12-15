@@ -4,6 +4,32 @@
 # remember to add this file to your .gitignore.
 use Mix.Config
 
+google_key =
+  System.get_env("GOOGLE_API_KEY") ||
+    raise """
+    environment variable GOOGLE_API_KEY is missing.
+    This should be a Google Cloud service account API key.
+    """
+
+tts_strategy =
+  System.get_env("TTS_STRATEGY") ||
+    raise """
+    environment variable TTS_STRATEGY is missing.
+    This can be either "espeak" or "google".
+    """
+
+hostname =
+  System.get_env("APH_HOSTNAME") ||
+  raise """
+  environment variable APH_HOSTNAME is missing.
+  This should be the URL your frontend can reach Aph by.
+  """
+
+config :aph,
+  tts: tts_strategy,
+  hostname: hostname,
+  google_key: google_key
+
 database_url =
   System.get_env("DATABASE_URL") ||
     raise """
@@ -33,7 +59,7 @@ secret_key_base =
     """
 
 config :aph, AphWeb.Endpoint,
-  http: [:inet6, port: String.to_integer(System.get_env("PORT") || "4000")],
+  http: [:inet6, port: String.to_integer(System.get_env("PORT") || "4001")],
   secret_key_base: secret_key_base
 
 # ## Using releases (Elixir v1.9+)

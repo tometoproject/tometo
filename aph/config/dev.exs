@@ -1,8 +1,9 @@
 use Mix.Config
 
 config :aph,
-  storage: "espeak",
+  tts: "espeak",
   hostname: "http://localhost:4001",
+  # This is only useful if you are using the "google" TTS strategy.
   google_key: "replaceme"
 
 # Configure your database!

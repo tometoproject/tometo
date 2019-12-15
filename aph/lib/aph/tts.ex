@@ -2,7 +2,7 @@ defmodule Aph.TTS do
   def synthesize(name, text, pitch, speed) do
     File.mkdir_p!("gentts/#{name}")
 
-    if Application.get_env(:aph, :storage) == "google" do
+    if Application.get_env(:aph, :tts) == "google" do
       api_key = Application.get_env(:aph, :google_key)
 
       body =
