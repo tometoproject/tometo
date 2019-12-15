@@ -1,7 +1,7 @@
 use Mix.Config
 
 config :aph, AphWeb.Endpoint,
-  url: [host: "localhost", port: 4001],
+  url: [host: "localhost", port: 4001]
 
 # Do not print debug messages in production
 config :logger, level: :info
