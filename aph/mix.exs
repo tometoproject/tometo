@@ -4,7 +4,7 @@ defmodule Aph.MixProject do
   def project do
     [
       app: :aph,
-      version: "0.1.1",
+      version: "0.1.2",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
@@ -41,12 +41,11 @@ defmodule Aph.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:guardian, "~> 2.0"},
-      {:comeonin, "~> 5.1"},
       {:argon2_elixir, "~> 2.1"},
       {:cors_plug, "~> 2.0"},
       {:httpoison, "~> 1.6"},
-      {:sentry, "~> 7.0"}
+      {:sentry, "~> 7.0"},
+      {:phauxth, "~> 2.3"}
     ]
   end
 

@@ -1,6 +1,8 @@
 defmodule Aph.Main.Avatar do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Aph.Main.Status
+  alias Aph.Accounts.User
 
   schema "avatars" do
     field :gender, :string
@@ -8,7 +10,8 @@ defmodule Aph.Main.Avatar do
     field :name, :string
     field :pitch, :integer
     field :speed, :float
-    field :user_id, :id
+    belongs_to :user, User
+    has_many :statuses, Status
 
     timestamps()
   end

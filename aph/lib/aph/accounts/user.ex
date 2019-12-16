@@ -1,12 +1,16 @@
 defmodule Aph.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Aph.Main.Avatar
+  alias Aph.Accounts.Session
 
   schema "users" do
     field :email, :string
     field :password, :string, virtual: true
     field :encrypted_password, :string
     field :username, :string
+    has_many :avatars, Avatar
+    has_many :sessions, Session
 
     timestamps()
   end

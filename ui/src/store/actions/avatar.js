@@ -7,7 +7,7 @@ export function createAvatar ({ commit }, { name, pitch, speed, language, gender
   doCreateAvatar(name, pitch, speed, language, gender, pic1, pic2).then(data => {
     commit('toggleLoading')
     commit('setHasAvatar')
-    commit('setInfoFlash', data.message)
+    commit('setInfoFlash', `Avatar ${data.name} created!`)
     // FIXME: Redirect this somewhere smarter
     router.push('/')
   }, error => {

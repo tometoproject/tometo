@@ -7,6 +7,14 @@ export default {
     state.username = null
     localStorage.removeItem('username')
   },
+  setSessionId (state, id) {
+    localStorage.setItem('sessionId', id)
+    state.sessionId = id
+  },
+  clearSessionId (state, id) {
+    state.sessionId = null
+    localStorage.removeItem('sessionId')
+  },
   toggleLoading (state) {
     state.loading = !state.loading
   },

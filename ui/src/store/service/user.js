@@ -20,7 +20,7 @@ export function doLogin (username, password) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password }),
+    body: JSON.stringify({ username, password, remember_me: 'true' }),
     credentials: 'include'
   }
 
@@ -35,13 +35,13 @@ export function doLogin (username, password) {
     }))
 }
 
-export function doLogout () {
+export function doLogout (id) {
   const requestOptions = {
     method: 'DELETE',
     credentials: 'include'
   }
 
-  return fetch(`${process.env.TOMETO_BACKEND_URL}/api/auth`, requestOptions)
+  return fetch(`${process.env.TOMETO_BACKEND_URL}/api/auth?id=${id}`, requestOptions)
     .then(res => res.text().then(text => {
       const data = text && JSON.parse(text)
       if (!res.ok) {

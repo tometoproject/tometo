@@ -5,24 +5,21 @@ defmodule AphWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-  end
-
-  pipeline :user_auth do
-    plug AphWeb.AuthPipeline
+    plug :fetch_session
+    plug Phauxth.Authenticate
+    plug Phauxth.Remember, create_session_func: &AphWeb.Auth.create_session/1
   end
 
   scope "/api", AphWeb do
     pipe_through :api
     get "/", DefaultController, :index
     post "/register", UserController, :create
-    post "/auth", UserController, :login
+    post "/auth", SessionController, :create
     get "/status/:id", StatusController, :show
     get "/status/:id/comments", StatusController, :show_comments
-  end
 
-  scope "/api", AphWeb do
-    pipe_through [:api, :user_auth]
-    delete "/auth", UserController, :logout
+    # Routes where authorization is required (this is set in the controller)
+    delete "/auth", SessionController, :delete
     get "/poll", UserController, :poll
     get "/avatar/:id", AvatarController, :show
     put "/avatar/:id/update", AvatarController, :update

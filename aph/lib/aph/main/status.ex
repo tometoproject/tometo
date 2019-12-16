@@ -1,11 +1,13 @@
 defmodule Aph.Main.Status do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Aph.Main.Avatar
 
   schema "statuses" do
     field :content, :string
-    field :avatar_id, :id
-    field :related_status_id, :id
+    belongs_to :avatar, Avatar
+    belongs_to :status, __MODULE__, foreign_key: :related_status_id
+    has_many :statuses, __MODULE__
 
     timestamps()
   end

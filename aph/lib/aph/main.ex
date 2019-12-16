@@ -54,7 +54,7 @@ defmodule Aph.Main do
   def get_status!(id), do: Repo.get!(Status, id)
 
   def get_status_for_display!(id) do
-    status = Repo.get!(Status, id)
+    [status] = Repo.all(from(s in Status, where: s.id == ^id, preload: :avatar))
     format_status_for_display(status)
   end
 
@@ -62,7 +62,8 @@ defmodule Aph.Main do
     query =
       from s in Status,
         where: s.related_status_id == ^id,
-        select: s
+        select: s,
+        preload: :avatar
 
     statuses = Repo.all(query)
     Enum.map(statuses, fn s -> format_status_for_display(s) end)
@@ -70,7 +71,7 @@ defmodule Aph.Main do
 
   defp format_status_for_display(%Status{} = status) do
     hostname = Application.get_env(:aph, :hostname)
-    avatar = Repo.get_by!(Avatar, id: status.avatar_id)
+    avatar = status.avatar
     audio_path = "#{hostname}/storage/st#{status.id}.ogg"
     timestamps_path = "#{hostname}/storage/st#{status.id}.json"
     pic1_path = "#{hostname}/storage/av#{avatar.id}-1.png"

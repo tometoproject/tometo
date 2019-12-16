@@ -20,6 +20,7 @@ export function login ({ commit, dispatch }, { username, password }) {
   doLogin(username, password).then(user => {
     commit('toggleLoading')
     commit('setUsername', user.data.username)
+    commit('setSessionId', user.data.session_id)
     router.push('/')
     dispatch('poll')
     commit('setInfoFlash', 'Signed in successfully.')
@@ -29,9 +30,10 @@ export function login ({ commit, dispatch }, { username, password }) {
   })
 }
 
-export function logout ({ commit }) {
-  doLogout().then(data => {
+export function logout ({ commit, state }) {
+  doLogout(state.sessionId).then(data => {
     commit('clearUsername')
+    commit('clearSessionId')
   })
 }
 
