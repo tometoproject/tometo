@@ -18,7 +18,7 @@ else
     echo "Please install Node.js: https://nodejs.org"
 fi
 
-if [ -x "$(command -v pip)" ]
+if [ -x "$(command -v pip3)" ]
 then
     echo "SUCCESS: Python and Pip are installed"
 else
