@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="!condensed"
-    class="grid grid--2-50"
+    class="grid grid--gap grid--2-50"
   >
     <div>
       <img
@@ -36,7 +36,7 @@
   </div>
   <div
     v-else
-    class="grid grid--2-30"
+    class="grid grid--gap grid--2-30"
   >
     <div>
       <img

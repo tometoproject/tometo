@@ -53,7 +53,7 @@
       </select>
     </fieldset>
 
-    <div class="grid grid--2-50">
+    <div class="grid grid--gap grid--2-50">
       <div>
         <fieldset>
           <label>Closed Mouth image</label>

@@ -8,6 +8,7 @@ import CreateStatus from './components/pages/CreateStatusPage.vue'
 import GetStatus from './components/pages/GetStatusPage.vue'
 import CreateAvatar from './components/pages/CreateAvatarPage.vue'
 import EditAvatar from './components/pages/EditAvatarPage.vue'
+import InvitationPage from './components/pages/InvitationPage.vue'
 
 Vue.use(VueRouter)
 
@@ -61,6 +62,13 @@ let router = new VueRouter({
       component: EditAvatar,
       meta: {
         title: 'Loading Avatar...'
+      }
+    },
+    {
+      path: '/user/invitations',
+      component: InvitationPage,
+      meta: {
+        title: 'Your invitations - Tometo'
       }
     }
   ]
