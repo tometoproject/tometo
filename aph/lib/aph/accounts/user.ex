@@ -11,6 +11,7 @@ defmodule Aph.Accounts.User do
     field :username, :string
     has_many :avatars, Avatar
     has_many :sessions, Session
+    has_one :invitation, Invitation
 
     timestamps()
   end

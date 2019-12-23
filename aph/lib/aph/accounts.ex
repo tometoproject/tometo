@@ -65,7 +65,7 @@ defmodule Aph.Accounts do
     Repo.all(Invitation)
   end
 
-  def get_invitation!(id), do: Repo.get!(Invitation, id)
+  def get_invitation(id), do: Repo.get(Invitation, id)
 
   def create_invitation(attrs \\ %{}) do
     %Invitation{}

@@ -6,6 +6,10 @@ defmodule AphWeb.InvitationView do
     %{data: render_many(invitations, InvitationView, "invitation.json")}
   end
 
+  def render("for_user.json", %{invitations: invitations}) do
+    %{data: render_many(invitations, InvitationView, "invitation.json"), limit: 10}
+  end
+
   def render("show.json", %{invitation: invitation}) do
     %{data: render_one(invitation, InvitationView, "invitation.json")}
   end

@@ -25,5 +25,7 @@ defmodule AphWeb.Router do
     put "/avatar/:id/update", AvatarController, :update
     post "/avatar/new", AvatarController, :create
     post "/status/new", StatusController, :create
+    get "/invitations", InvitationController, :for_user
+    post "/invitations", InvitationController, :create
   end
 end
