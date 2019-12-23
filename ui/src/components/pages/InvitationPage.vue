@@ -3,7 +3,7 @@
     <h1>Invitations</h1>
 
     <div class="text-center">
-      <p>You have <strong>6</strong> invitations left.</p>
+      <p>You have <strong>{{ this.limit - this.invitations.length }}</strong> invitations left.</p>
       <button>New invitation</button>
     </div>
 
@@ -12,18 +12,44 @@
       <p><strong>Link</strong></p>
       <p><strong>Status</strong></p>
       <p><strong>Used by</strong></p>
-      <p><a class="link">tometo.org/i/205933593</a></p>
-      <p><strong>NOT USED</strong></p>
-      <p></p>
-      <p><a class="link">tometo.org/i/394853054</a></p>
-      <p><strong>USED</strong></p>
-      <p>user-1</p>
+    </div>
+    <div class="grid grid--3-2-1-1" v-for="(inv, k) in invitations" :key="k">
+      <p><a>tometo.org/i/{{ inv.code }}</a></p>
+      <p>
+        <strong v-if="inv.used_by">USED</strong>
+        <strong v-else>UNUSED</strong>
+      </p>
+      <p>{{ inv.used_by  }}</p>
     </div>
   </main>
 </template>
 
 <script>
+import router from '../../router'
+
 export default {
- 
+  name: 'InvitationPage',
+  data () {
+    return {
+      invitations: [],
+      limit: 0
+    }
+  },
+
+  mounted () {
+    fetch(`${process.env.TOMETO_BACKEND_URL}/api/invitations`, { credentials: 'include' })
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        } else {
+          this.$store.commit('setErrorFlash', 'Unable to load invitations!')
+          return router.push('/')
+        }
+      })
+      .then(res => {
+        this.limit = res.limit
+        this.invitations = res.data
+      })
+  }
 }
 </script>
