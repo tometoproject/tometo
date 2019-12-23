@@ -15,7 +15,7 @@ defmodule AphWeb.InvitationView do
   end
 
   def render("invitation.json", %{invitation: invitation}) do
-    %{id: invitation.id,
-      code: invitation.code}
+    %{code: invitation.code,
+      used_by: invitation.used_by}
   end
 end

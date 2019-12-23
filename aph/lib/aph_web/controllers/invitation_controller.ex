@@ -25,7 +25,7 @@ defmodule AphWeb.InvitationController do
     end
 
     inv = %{
-      code: "AAA",
+      code: UUID.uuid4(),
       created_by: user.id
     }
     with {:ok, %Invitation{} = invitation} <- Accounts.create_invitation(inv) do

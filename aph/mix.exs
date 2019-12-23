@@ -45,7 +45,8 @@ defmodule Aph.MixProject do
       {:cors_plug, "~> 2.0"},
       {:httpoison, "~> 1.6"},
       {:sentry, "~> 7.0"},
-      {:phauxth, "~> 2.3"}
+      {:phauxth, "~> 2.3"},
+      {:uuid, "~> 1.1"}
     ]
   end
 
