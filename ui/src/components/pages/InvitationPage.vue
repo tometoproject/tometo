@@ -4,7 +4,7 @@
 
     <div class="text-center">
       <p>You have <strong>{{ limit - invitations.length }}</strong> invitations left.</p>
-      <button>New invitation</button>
+      <button @click="createInvitation">New invitation</button>
     </div>
 
     <h2>Your invitations</h2>
@@ -62,6 +62,22 @@ export default {
   methods: {
     composeInviteUrl (code) {
       return `${this.frontend_url}/i/${code}`
+    },
+
+    createInvitation (ev) {
+      ev.preventDefault()
+      fetch(`${process.env.TOMETO_BACKEND_URL}/api/invitations`, { method: 'POST', credentials: 'include' })
+        .then(res => {
+          if (res.ok) {
+            return res.json()
+          } else {
+            this.$store.commit('setErrorFlash', 'Unable to create invitation!')
+            return
+          }
+        })
+        .then(res => {
+          this.invitations.unshift(res.data)
+        })
     }
   }
 }
