@@ -3,6 +3,7 @@ defmodule Aph.Accounts.User do
   import Ecto.Changeset
   alias Aph.Main.Avatar
   alias Aph.Accounts.Session
+  alias Aph.Accounts.Invitation
 
   schema "users" do
     field :email, :string
@@ -11,7 +12,8 @@ defmodule Aph.Accounts.User do
     field :username, :string
     has_many :avatars, Avatar
     has_many :sessions, Session
-    has_one :invitation, Invitation
+    has_many :created_invitations, Invitation
+    has_one :used_invitation, Invitation
 
     timestamps()
   end

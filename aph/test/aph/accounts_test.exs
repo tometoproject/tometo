@@ -107,7 +107,10 @@ defmodule Aph.AccountsTest do
 
     test "update_invitation/2 with valid data updates the invitation" do
       invitation = invitation_fixture()
-      assert {:ok, %Invitation{} = invitation} = Accounts.update_invitation(invitation, @update_attrs)
+
+      assert {:ok, %Invitation{} = invitation} =
+               Accounts.update_invitation(invitation, @update_attrs)
+
       assert invitation.code == "some updated code"
     end
 

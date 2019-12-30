@@ -50,8 +50,13 @@ defmodule AphWeb.InvitationControllerTest do
   describe "update invitation" do
     setup [:create_invitation]
 
-    test "renders invitation when data is valid", %{conn: conn, invitation: %Invitation{id: id} = invitation} do
-      conn = put(conn, Routes.invitation_path(conn, :update, invitation), invitation: @update_attrs)
+    test "renders invitation when data is valid", %{
+      conn: conn,
+      invitation: %Invitation{id: id} = invitation
+    } do
+      conn =
+        put(conn, Routes.invitation_path(conn, :update, invitation), invitation: @update_attrs)
+
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, Routes.invitation_path(conn, :show, id))
@@ -63,7 +68,9 @@ defmodule AphWeb.InvitationControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, invitation: invitation} do
-      conn = put(conn, Routes.invitation_path(conn, :update, invitation), invitation: @invalid_attrs)
+      conn =
+        put(conn, Routes.invitation_path(conn, :update, invitation), invitation: @invalid_attrs)
+
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

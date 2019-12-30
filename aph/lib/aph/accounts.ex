@@ -67,6 +67,10 @@ defmodule Aph.Accounts do
 
   def get_invitation(id), do: Repo.get(Invitation, id)
 
+  def get_invitation_by_code(code) do
+    Repo.one(from(i in Invitation, where: i.code == ^code, preload: :created_user))
+  end
+
   def create_invitation(attrs \\ %{}) do
     %Invitation{}
     |> Invitation.changeset(attrs)

@@ -9,14 +9,19 @@ defmodule AphWeb.InvitationController do
 
   action_fallback AphWeb.FallbackController
 
-  def index(conn, _params) do
-    invitations = Accounts.list_invitations()
-    render(conn, "index.json", invitations: invitations)
+  def get(conn, %{"code" => code}) do
+    invitation = Accounts.get_invitation_by_code(code)
+
+    conn
+    |> put_status(:ok)
+    |> render("show.json", invitation: invitation)
   end
 
   def create(%Plug.Conn{assigns: %{current_user: user}} = conn, _attrs) do
     # Get all existing invitations and check if the user is over their limit
-    existing_invs = Repo.one(from(i in Invitation, where: i.created_by == ^user.id, select: count()))
+    existing_invs =
+      Repo.one(from(i in Invitation, where: i.created_by == ^user.id, select: count()))
+
     if existing_invs > 10 do
       conn
       |> put_status(:bad_request)
@@ -28,6 +33,7 @@ defmodule AphWeb.InvitationController do
       code: UUID.uuid4(),
       created_by: user.id
     }
+
     with {:ok, %Invitation{} = invitation} <- Accounts.create_invitation(inv) do
       conn
       |> put_status(:created)
@@ -36,22 +42,9 @@ defmodule AphWeb.InvitationController do
   end
 
   def for_user(%Plug.Conn{assigns: %{current_user: user}} = conn, _attrs) do
-    query = from(i in Invitation, where: i.created_by == ^user.id, preload: :user)
+    query = from(i in Invitation, where: i.created_by == ^user.id, preload: :used_user)
     invitations = Repo.all(query)
     render(conn, "for_user.json", invitations: invitations)
-  end
-
-  def show(conn, %{"id" => id}) do
-    invitation = Accounts.get_invitation!(id)
-    render(conn, "show.json", invitation: invitation)
-  end
-
-  def update(conn, %{"id" => id, "invitation" => invitation_params}) do
-    invitation = Accounts.get_invitation!(id)
-
-    with {:ok, %Invitation{} = invitation} <- Accounts.update_invitation(invitation, invitation_params) do
-      render(conn, "show.json", invitation: invitation)
-    end
   end
 
   def delete(conn, %{"id" => id}) do

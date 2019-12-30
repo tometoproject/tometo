@@ -1,6 +1,7 @@
 defmodule AphWeb.InvitationView do
   use AphWeb, :view
   alias AphWeb.InvitationView
+  alias AphWeb.UserView
 
   def render("index.json", %{invitations: invitations}) do
     %{data: render_many(invitations, InvitationView, "invitation.json")}
@@ -15,7 +16,13 @@ defmodule AphWeb.InvitationView do
   end
 
   def render("invitation.json", %{invitation: invitation}) do
-    %{code: invitation.code,
-      used_by: invitation.used_by}
-  end
+    created = if Ecto.assoc_loaded?(invitation.created_user), do: render_one(invitation.created_user, UserView, "user.json"), else: invitation.created_by
+    used = if Ecto.assoc_loaded?(invitation.used_user), do: render_one(invitation.used_user, UserView, "user.json"), else: invitation.used_by
+
+    %{
+      code: invitation.code,
+      created_by: created,
+      used_by: used
+    }
+   end
 end

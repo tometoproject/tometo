@@ -3,7 +3,7 @@
     <h1>Invitations</h1>
 
     <div class="text-center">
-      <p>You have <strong>{{ this.limit - this.invitations.length }}</strong> invitations left.</p>
+      <p>You have <strong>{{ limit - invitations.length }}</strong> invitations left.</p>
       <button>New invitation</button>
     </div>
 
@@ -13,13 +13,19 @@
       <p><strong>Status</strong></p>
       <p><strong>Used by</strong></p>
     </div>
-    <div class="grid grid--3-2-1-1" v-for="(inv, k) in invitations" :key="k">
-      <p><a>tometo.org/i/{{ inv.code }}</a></p>
+    <div
+      v-for="(inv, k) in invitations"
+      :key="k"
+      class="grid grid--3-2-1-1"
+    >
+      <p><a :href="composeInviteUrl(inv.code)">{{ inv.code }}</a></p>
       <p>
         <strong v-if="inv.used_by">USED</strong>
         <strong v-else>UNUSED</strong>
       </p>
-      <p>{{ inv.used_by  }}</p>
+      <p v-if="inv.used_by">
+        {{ inv.used_by.username }}
+      </p>
     </div>
   </main>
 </template>
@@ -32,7 +38,8 @@ export default {
   data () {
     return {
       invitations: [],
-      limit: 0
+      limit: 0,
+      frontend_url: process.env.TOMETO_FRONTEND_URL
     }
   },
 
@@ -50,6 +57,12 @@ export default {
         this.limit = res.limit
         this.invitations = res.data
       })
+  },
+
+  methods: {
+    composeInviteUrl (code) {
+      return `${this.frontend_url}/i/${code}`
+    }
   }
 }
 </script>
