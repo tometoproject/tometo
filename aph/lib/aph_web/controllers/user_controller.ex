@@ -10,14 +10,20 @@ defmodule AphWeb.UserController do
 
   plug :user_check when action in [:update, :delete, :poll]
 
-  def create(conn, %{"user" => user_params}) do
-    case Accounts.create_user(user_params) do
-      {:ok, user} ->
+  def create(conn, %{"user" => user_params, "code" => code}) do
+    with {:ok, changeset} <- Accounts.create_user(user_params, code),
+         {:ok, _changeset} <- Accounts.update_invitation_with_user(changeset, code) do
+      conn
+      |> put_status(:ok)
+      |> render(:show, user: changeset)
+    else
+      {:invitation_error, reason} ->
         conn
-        |> put_status(:ok)
-        |> render(:show, user: user)
+        |> put_status(:bad_request)
+        |> put_view(AphWeb.ErrorView)
+        |> render(:"400", message: reason)
 
-      {:error, _changeset} ->
+      {:error, _} ->
         conn
         |> put_status(:bad_request)
         |> put_view(AphWeb.ErrorView)

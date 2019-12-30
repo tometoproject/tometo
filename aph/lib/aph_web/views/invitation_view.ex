@@ -16,13 +16,20 @@ defmodule AphWeb.InvitationView do
   end
 
   def render("invitation.json", %{invitation: invitation}) do
-    created = if Ecto.assoc_loaded?(invitation.created_user), do: render_one(invitation.created_user, UserView, "user.json"), else: invitation.created_by
-    used = if Ecto.assoc_loaded?(invitation.used_user), do: render_one(invitation.used_user, UserView, "user.json"), else: invitation.used_by
+    created =
+      if Ecto.assoc_loaded?(invitation.created_user),
+        do: render_one(invitation.created_user, UserView, "user.json"),
+        else: invitation.created_by
+
+    used =
+      if Ecto.assoc_loaded?(invitation.used_user),
+        do: render_one(invitation.used_user, UserView, "user.json"),
+        else: invitation.used_by
 
     %{
       code: invitation.code,
       created_by: created,
       used_by: used
     }
-   end
+  end
 end

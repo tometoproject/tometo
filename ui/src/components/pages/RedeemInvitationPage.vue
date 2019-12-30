@@ -22,8 +22,7 @@ export default {
         if (res.ok) {
           return res.json()
         } else {
-          this.$store.commit('setErrorFlash', 'Unable to load invitation!')
-          return
+          return this.$store.commit('setErrorFlash', 'Unable to load invitation!')
         }
       })
       .then(res => {

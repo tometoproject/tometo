@@ -24,7 +24,7 @@ let router = new VueRouter({
       }
     },
     {
-      path: '/register',
+      path: '/register/:code',
       component: Register,
       meta: {
         title: 'Register - Tometo'

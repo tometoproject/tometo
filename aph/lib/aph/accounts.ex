@@ -8,6 +8,7 @@ defmodule Aph.Accounts do
 
   alias Aph.Accounts.User
   alias Aph.Accounts.Session
+  alias Aph.Accounts.Invitation
 
   def list_users do
     Repo.all(User)
@@ -30,10 +31,24 @@ defmodule Aph.Accounts do
     end
   end
 
-  def create_user(attrs \\ %{}) do
-    %User{}
-    |> User.changeset(attrs)
-    |> Repo.insert()
+  def create_user(attrs \\ %{}, code) do
+    invitation = Repo.get_by(Invitation, code: code)
+
+    cond do
+      !code ->
+        {:invitation_error, "Please supply an invitation code!"}
+
+      !invitation ->
+        {:invitation_error, "No invitation found for that code!"}
+
+      invitation.used_by ->
+        {:invitation_error, "Invitation is already used!"}
+
+      true ->
+        %User{}
+        |> User.changeset(attrs)
+        |> Repo.insert()
+    end
   end
 
   def check_avatar(%User{} = user) do
@@ -59,8 +74,6 @@ defmodule Aph.Accounts do
   # INVITATIONS
   #
 
-  alias Aph.Accounts.Invitation
-
   def list_invitations do
     Repo.all(Invitation)
   end
@@ -75,6 +88,12 @@ defmodule Aph.Accounts do
     %Invitation{}
     |> Invitation.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def update_invitation_with_user(%User{} = user, code) do
+    invitation = Repo.get_by(Invitation, code: code)
+    invitation = Ecto.Changeset.change(invitation, used_by: user.id)
+    Repo.update(invitation)
   end
 
   def update_invitation(%Invitation{} = invitation, attrs) do

@@ -4,7 +4,9 @@
 
     <div class="text-center">
       <p>You have <strong>{{ limit - invitations.length }}</strong> invitations left.</p>
-      <button @click="createInvitation">New invitation</button>
+      <button @click="createInvitation">
+        New invitation
+      </button>
     </div>
 
     <h2>Your invitations</h2>
@@ -71,8 +73,7 @@ export default {
           if (res.ok) {
             return res.json()
           } else {
-            this.$store.commit('setErrorFlash', 'Unable to create invitation!')
-            return
+            return this.$store.commit('setErrorFlash', 'Unable to create invitation!')
           }
         })
         .then(res => {

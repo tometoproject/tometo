@@ -28,7 +28,6 @@ defmodule AphWeb.InvitationController do
       |> put_view(AphWeb.ErrorView)
       |> render(:"400", message: "You can only have 10 invitations!")
     else
-
       inv = %{
         code: UUID.uuid4(),
         created_by: user.id

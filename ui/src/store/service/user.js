@@ -1,8 +1,8 @@
-export function doRegister (username, password, confirmPassword, email) {
+export function doRegister (username, password, confirmPassword, email, code) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ user: { username, password, confirmPassword, email } })
+    body: JSON.stringify({ user: { username, password, confirmPassword, email }, code })
   }
 
   return fetch(`${process.env.TOMETO_BACKEND_URL}/api/register`, requestOptions)

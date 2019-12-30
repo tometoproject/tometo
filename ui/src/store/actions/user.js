@@ -1,10 +1,10 @@
 import { doRegister, doLogin, doLogout, doPoll } from '../service/user'
 import router from '../../router'
 
-export function register ({ commit }, { username, password, confirmPassword, email }) {
+export function register ({ commit }, { username, password, confirmPassword, email, code }) {
   commit('toggleLoading')
 
-  doRegister(username, password, confirmPassword, email).then(data => {
+  doRegister(username, password, confirmPassword, email, code).then(data => {
     commit('toggleLoading')
     router.push('/')
     commit('setInfoFlash', data.message)
