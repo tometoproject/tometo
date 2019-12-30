@@ -22,22 +22,23 @@ defmodule AphWeb.InvitationController do
     existing_invs =
       Repo.one(from(i in Invitation, where: i.created_by == ^user.id, select: count()))
 
-    if existing_invs > 10 do
+    if existing_invs >= 10 do
       conn
       |> put_status(:bad_request)
       |> put_view(AphWeb.ErrorView)
       |> render(:"400", message: "You can only have 10 invitations!")
-    end
+    else
 
-    inv = %{
-      code: UUID.uuid4(),
-      created_by: user.id
-    }
+      inv = %{
+        code: UUID.uuid4(),
+        created_by: user.id
+      }
 
-    with {:ok, %Invitation{} = invitation} <- Accounts.create_invitation(inv) do
-      conn
-      |> put_status(:created)
-      |> render("show.json", invitation: invitation)
+      with {:ok, %Invitation{} = invitation} <- Accounts.create_invitation(inv) do
+        conn
+        |> put_status(:created)
+        |> render("show.json", invitation: invitation)
+      end
     end
   end
 
