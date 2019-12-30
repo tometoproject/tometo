@@ -9,6 +9,7 @@ import GetStatus from './components/pages/GetStatusPage.vue'
 import CreateAvatar from './components/pages/CreateAvatarPage.vue'
 import EditAvatar from './components/pages/EditAvatarPage.vue'
 import InvitationPage from './components/pages/InvitationPage.vue'
+import RedeemInvitationPage from './components/pages/RedeemInvitationPage.vue'
 
 Vue.use(VueRouter)
 
@@ -69,6 +70,13 @@ let router = new VueRouter({
       component: InvitationPage,
       meta: {
         title: 'Your invitations - Tometo'
+      }
+    },
+    {
+      path: '/i/:code',
+      component: RedeemInvitationPage,
+      meta: {
+        title: 'Redeem Invitation - Tometo'
       }
     }
   ]
