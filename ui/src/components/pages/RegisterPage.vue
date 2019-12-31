@@ -67,7 +67,7 @@ export default {
     submitForm (e) {
       e.preventDefault()
       let { username, email, password, confirmPassword } = this
-      this.$store.dispatch('register', { username, password, confirmPassword, email })
+      this.$store.dispatch('register', { username, password, confirmPassword, email, code: this.$route.params.code })
     }
   }
 }

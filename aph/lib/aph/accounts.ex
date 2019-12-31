@@ -2,8 +2,13 @@ defmodule Aph.Accounts do
   import Ecto.Query, warn: false
   alias Aph.Repo
 
+  #
+  # USERS
+  #
+
   alias Aph.Accounts.User
   alias Aph.Accounts.Session
+  alias Aph.Accounts.Invitation
 
   def list_users do
     Repo.all(User)
@@ -26,10 +31,24 @@ defmodule Aph.Accounts do
     end
   end
 
-  def create_user(attrs \\ %{}) do
-    %User{}
-    |> User.changeset(attrs)
-    |> Repo.insert()
+  def create_user(attrs \\ %{}, code) do
+    invitation = Repo.get_by(Invitation, code: code)
+
+    cond do
+      !code ->
+        {:invitation_error, "Please supply an invitation code!"}
+
+      !invitation ->
+        {:invitation_error, "No invitation found for that code!"}
+
+      invitation.used_by ->
+        {:invitation_error, "Invitation is already used!"}
+
+      true ->
+        %User{}
+        |> User.changeset(attrs)
+        |> Repo.insert()
+    end
   end
 
   def check_avatar(%User{} = user) do
@@ -49,6 +68,46 @@ defmodule Aph.Accounts do
 
   def change_user(%User{} = user) do
     User.changeset(user, %{})
+  end
+
+  #
+  # INVITATIONS
+  #
+
+  def list_invitations do
+    Repo.all(Invitation)
+  end
+
+  def get_invitation(id), do: Repo.get(Invitation, id)
+
+  def get_invitation_by_code(code) do
+    Repo.one(from(i in Invitation, where: i.code == ^code, preload: :created_user))
+  end
+
+  def create_invitation(attrs \\ %{}) do
+    %Invitation{}
+    |> Invitation.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def update_invitation_with_user(%User{} = user, code) do
+    invitation = Repo.get_by(Invitation, code: code)
+    invitation = Ecto.Changeset.change(invitation, used_by: user.id)
+    Repo.update(invitation)
+  end
+
+  def update_invitation(%Invitation{} = invitation, attrs) do
+    invitation
+    |> Invitation.changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_invitation(%Invitation{} = invitation) do
+    Repo.delete(invitation)
+  end
+
+  def change_invitation(%Invitation{} = invitation) do
+    Invitation.changeset(invitation, %{})
   end
 
   #

@@ -17,6 +17,7 @@ defmodule AphWeb.Router do
     post "/auth", SessionController, :create
     get "/status/:id", StatusController, :show
     get "/status/:id/comments", StatusController, :show_comments
+    get "/invitations/:code", InvitationController, :get
 
     # Routes where authorization is required (this is set in the controller)
     delete "/auth", SessionController, :delete
@@ -25,5 +26,7 @@ defmodule AphWeb.Router do
     put "/avatar/:id/update", AvatarController, :update
     post "/avatar/new", AvatarController, :create
     post "/status/new", StatusController, :create
+    get "/invitations", InvitationController, :for_user
+    post "/invitations", InvitationController, :create
   end
 end

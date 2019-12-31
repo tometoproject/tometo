@@ -57,6 +57,7 @@
         </span>
         <span v-else>
           <span>Logged in as <strong>{{ user }}</strong></span> |
+          <span><strong><router-link to="/user/invitations">Invitations</router-link></strong></span> |
           <span><strong><a
             class="link"
             @click="logout"
