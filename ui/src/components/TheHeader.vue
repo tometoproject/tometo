@@ -49,7 +49,7 @@
           <span v-if="!hasInvitationsOn">
           <router-link
             class="nav__item"
-            to="/register"
+            to="/register/fakeinvitation"
           ><strong>Register</strong></router-link> |</span>
           <router-link
             class="nav__item"
