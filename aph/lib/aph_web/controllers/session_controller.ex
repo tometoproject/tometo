@@ -11,10 +11,14 @@ defmodule AphWeb.SessionController do
   def create(conn, %{"username" => username, "password" => password, "remember_me" => remember}) do
     case Login.authenticate(%{username: username, password: password}) do
       {:ok, user} ->
+        {:ok, %{id: session_id}} = Accounts.create_session(%{user_id: user.id})
+
         conn
-        |> add_session(user, remember)
+        |> put_session(:phauxth_session_id, session_id)
+        |> configure_session(renew: true)
+        |> add_remember_me(user.id, remember)
         |> put_status(:ok)
-        |> render(:success, user: user, id: Plug.Conn.get_session(conn, :phauxth_session_id))
+        |> render(:success, user: user, id: session_id)
 
       {:error, _err} ->
         conn
@@ -41,15 +45,6 @@ defmodule AphWeb.SessionController do
         |> put_view(AphWeb.ErrorView)
         |> render(:"401", message: "Unauthorized")
     end
-  end
-
-  defp add_session(conn, user, remember) do
-    {:ok, %{id: session_id}} = Accounts.create_session(%{user_id: user.id})
-
-    conn
-    |> put_session(:phauxth_session_id, session_id)
-    |> configure_session(renew: true)
-    |> add_remember_me(user.id, remember)
   end
 
   defp add_remember_me(conn, user_id, "true") do
