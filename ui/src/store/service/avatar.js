@@ -22,8 +22,8 @@ export function doCreateAvatar (name, pitch, speed, language, gender, pic1, pic2
         return Promise.reject(error)
       }
       return data
-    })).then(data => {
-      return data
+    })).then(res => {
+      return res.data
     })
 }
 
