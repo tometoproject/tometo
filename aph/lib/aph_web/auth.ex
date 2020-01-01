@@ -12,6 +12,7 @@ defmodule AphWeb.Auth.Login do
   def authenticate(%{username: username, password: password}) do
     case Accounts.get_by_username(username) do
       nil -> {:error, "No user found!"}
+      {:error, reason} -> {:error, reason}
       {:ok, user} -> Argon2.check_pass(user, password, hash_key: :encrypted_password)
     end
   end
