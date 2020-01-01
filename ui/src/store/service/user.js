@@ -16,11 +16,11 @@ export function doRegister (username, password, confirmPassword, email, code) {
     }))
 }
 
-export function doLogin (username, password) {
+export function doLogin (username, password, remember) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password, remember_me: 'true' }),
+    body: JSON.stringify({ username, password, remember_me: String(remember) }),
     credentials: 'include'
   }
 

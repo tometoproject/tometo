@@ -18,6 +18,11 @@
       >
     </fieldset>
 
+    <fieldset>
+      <input type="checkbox" class="text--vmid" v-model="remember" />
+      <span class="text--vmid">Remember me</span>
+    </fieldset>
+
     <button
       :disabled="loading"
       @click="submitForm"
@@ -35,7 +40,8 @@ export default {
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      remember: false
     }
   },
   computed: {
@@ -49,8 +55,8 @@ export default {
   methods: {
     submitForm (e) {
       e.preventDefault()
-      let { username, password } = this
-      this.$store.dispatch('login', { username, password })
+      let { username, password, remember } = this
+      this.$store.dispatch('login', { username, password, remember })
     }
   }
 }

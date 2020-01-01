@@ -14,10 +14,10 @@ export function register ({ commit }, { username, password, confirmPassword, ema
   })
 }
 
-export function login ({ commit, dispatch }, { username, password }) {
+export function login ({ commit, dispatch }, { username, password, remember }) {
   commit('toggleLoading')
 
-  doLogin(username, password).then(user => {
+  doLogin(username, password, remember).then(user => {
     commit('toggleLoading')
     commit('setUsername', user.data.username)
     commit('setSessionId', user.data.session_id)
