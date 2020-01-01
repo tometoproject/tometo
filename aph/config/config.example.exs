@@ -6,7 +6,8 @@ config :aph,
   hostname: "http://localhost:4001",
   cookie_secret: "9RGqJxYrnc3eoQHrDBBdZsSCMytNFWqgsvD572DfPcm2uH+ycGFye8ulrwaFi+zp",
   # This is only useful if you are using the "google" TTS strategy.
-  google_key: "replaceme"
+  google_key: "replaceme",
+  require_invitations: true
 
 config :aph, Aph.Repo,
   username: "lu",

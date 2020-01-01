@@ -33,8 +33,16 @@ defmodule Aph.Accounts do
 
   def create_user(attrs \\ %{}, code) do
     invitation = Repo.get_by(Invitation, code: code)
+    is_required = Application.get_env(:aph, :require_invitations)
 
     cond do
+      # Basically rubber-stamp the registration if the appropriate config option
+      # is set, for staging and testing purposes
+      !is_required ->
+        %User{}
+        |> User.changeset(attrs)
+        |> Repo.insert()
+
       !code ->
         {:invitation_error, "Please supply an invitation code!"}
 
@@ -91,9 +99,15 @@ defmodule Aph.Accounts do
   end
 
   def update_invitation_with_user(%User{} = user, code) do
+    is_required = Application.get_env(:aph, :require_invitations)
     invitation = Repo.get_by(Invitation, code: code)
-    invitation = Ecto.Changeset.change(invitation, used_by: user.id)
-    Repo.update(invitation)
+    cond do
+      !is_nil(invitation) and is_required ->
+        invitation = Ecto.Changeset.change(invitation, used_by: user.id)
+        Repo.update(invitation)
+      !is_required -> {:ok, ""}
+      true -> {:invitation_error, "No invitation found!"}
+    end
   end
 
   def update_invitation(%Invitation{} = invitation, attrs) do
