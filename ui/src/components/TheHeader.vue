@@ -46,10 +46,11 @@
       </span>
       <span class="nav__subnav">
         <span v-if="!user">
+          <span v-if="!hasInvitationsOn">
           <router-link
             class="nav__item"
             to="/register"
-          ><strong>Register</strong></router-link> |
+          ><strong>Register</strong></router-link> |</span>
           <router-link
             class="nav__item"
             to="/login"
@@ -83,6 +84,9 @@ export default {
     },
     isStaging () {
       return process.env.TOMETO_ENV === 'staging'
+    },
+    hasInvitationsOn () {
+      return process.env.T_INVITATIONS_REQUIRED === 'true'
     }
   },
   beforeCreate () {
