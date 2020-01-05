@@ -36,7 +36,7 @@ export default {
       pitch: 10,
       speed: 1.0,
       language: 'en',
-      gender: 'f',
+      gender: 'FEMALE',
       pic1: '',
       pic2: ''
     }
