@@ -43,6 +43,9 @@
         <option value="en">
           English
         </option>
+        <option value="fr">
+          French
+        </option>
       </select>
     </fieldset>
     <fieldset>
@@ -51,10 +54,10 @@
         v-model="gender"
         @input="$emit('update:aGender', $event.target.value)"
       >
-        <option value="f">
+        <option value="FEMALE">
           Female
         </option>
-        <option value="m">
+        <option value="MALE">
           Male
         </option>
       </select>
@@ -117,7 +120,7 @@ export default {
     },
     aGender: {
       type: String,
-      default: 'f'
+      default: 'FEMALE'
     }
   },
   data () {
