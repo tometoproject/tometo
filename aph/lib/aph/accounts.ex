@@ -101,12 +101,17 @@ defmodule Aph.Accounts do
   def update_invitation_with_user(%User{} = user, code) do
     is_required = Application.get_env(:aph, :require_invitations)
     invitation = Repo.get_by(Invitation, code: code)
+
     cond do
       !is_nil(invitation) and is_required ->
         invitation = Ecto.Changeset.change(invitation, used_by: user.id)
         Repo.update(invitation)
-      !is_required -> {:ok, ""}
-      true -> {:invitation_error, "No invitation found!"}
+
+      !is_required ->
+        {:ok, ""}
+
+      true ->
+        {:invitation_error, "No invitation found!"}
     end
   end
 

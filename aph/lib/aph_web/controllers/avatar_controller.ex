@@ -19,22 +19,29 @@ defmodule AphWeb.AvatarController do
         "pic1" => pic1,
         "pic2" => pic2
       }) do
-    with {:ok, %Avatar{} = avatar} <-
-           Main.create_avatar(
-             %{
-               name: name,
-               pitch: pitch,
-               speed: speed,
-               language: language,
-               gender: gender,
-               user_id: user.id
-             },
-             pic1,
-             pic2
-           ) do
+    if String.length(pic1) == 0 or String.length(pic2) == 0 do
       conn
-      |> put_status(:created)
-      |> render(:show, avatar: avatar)
+      |> put_status(:bad_request)
+      |> put_view(AphWeb.ErrorView)
+      |> render(:"400", message: "Please attach two images!")
+    else
+      with {:ok, %Avatar{} = avatar} <-
+             Main.create_avatar(
+               %{
+                 name: name,
+                 pitch: pitch,
+                 speed: speed,
+                 language: language,
+                 gender: gender,
+                 user_id: user.id
+               },
+               pic1,
+               pic2
+             ) do
+        conn
+        |> put_status(:created)
+        |> render(:show, avatar: avatar)
+      end
     end
   end
 
