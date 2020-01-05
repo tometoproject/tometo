@@ -1,7 +1,42 @@
 defmodule Aph.TTS do
-  @lang_map %{
+  @g_lang_map %{
+    ar: "ar-XA",
+    nl: "nl-NL",
+    en: "en-US",
+    fr: "fr-FR",
+    de: "de-DE",
+    hi: "hi-IN",
+    id: "id-ID",
+    it: "it-IT",
+    ja: "ja-JP",
+    ko: "ko-KR",
+    zh: "cmn-CN",
+    nb: "nb-NO",
+    pl: "pl-PL",
+    pt: "pt-PT",
+    ru: "ru-RU",
+    tr: "tr-TR",
+    vi: "vi-VN"
+  }
+
+  @a_lang_map %{
+    ar: :ara,
+    nl: :nld,
     en: :eng,
-    fr: :fra
+    fr: :fra,
+    de: :deu,
+    hi: :hin,
+    id: :ind,
+    it: :ita,
+    ja: :jpn,
+    ko: :kor,
+    zh: :cmn,
+    nb: :nor,
+    pl: :pol,
+    pt: :por,
+    ru: :rus,
+    tr: :tur,
+    vi: :vie
   }
 
   def synthesize(status, av) do
@@ -9,13 +44,16 @@ defmodule Aph.TTS do
 
     if Application.get_env(:aph, :tts) == "google" do
       api_key = Application.get_env(:aph, :google_key)
+      gender_num = if av.gender == "FEMALE", do: "A", else: "B"
+      lang = @g_lang_map[String.to_atom(av.language)]
 
       body =
         Jason.encode!(%{
           input: %{text: status.content},
-          voice: %{languageCode: av.language, ssmlGender: av.gender},
+          voice: %{languageCode: lang, name: "#{lang}-Standard-#{gender_num}"},
           audioConfig: %{audioEncoding: "OGG_OPUS", pitch: av.pitch || 0, speakingRate: av.speed || 1.0}
         })
+      IO.inspect body
 
       headers = [{"content-type", "application/json"}]
 
@@ -76,7 +114,7 @@ defmodule Aph.TTS do
   end
 
   defp align(name, text, lang) do
-    lang = @lang_map[String.to_atom(lang)]
+    lang = @a_lang_map[String.to_atom(lang)]
     with :ok <-
            File.write("gentts/#{name}/temp.txt", text |> String.split(" ") |> Enum.join("\n")),
          {_, 0} <-
@@ -85,7 +123,7 @@ defmodule Aph.TTS do
              "aeneas.tools.execute_task",
              "gentts/#{name}/temp.ogg",
              "gentts/#{name}/temp.txt",
-             "task_language=#{lang}|os_task_file_format=json|is_text_type=plain",
+             "task_language=#{Atom.to_string(lang)}|os_task_file_format=json|is_text_type=plain",
              "gentts/#{name}/out.json"
            ]) do
       :ok
