@@ -46,6 +46,9 @@
         <option value="nl">
           Dutch
         </option>
+        <option value="en">
+          English
+        </option>
         <option value="fr">
           French
         </option>
