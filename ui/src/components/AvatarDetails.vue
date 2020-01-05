@@ -40,8 +40,56 @@
         v-model="language"
         @input="$emit('update:aLanguage', $event.target.value)"
       >
+        <option value="ar">
+          Arabic
+        </option>
+        <option value="nl">
+          Dutch
+        </option>
         <option value="en">
           English
+        </option>
+        <option value="fr">
+          French
+        </option>
+        <option value="de">
+          German
+        </option>
+        <option value="hi">
+          Hindi
+        </option>
+        <option value="id">
+          Indonesian
+        </option>
+        <option value="it">
+          Italian
+        </option>
+        <option value="ja">
+          Japanese
+        </option>
+        <option value="ko">
+          Korean
+        </option>
+        <option value="zh">
+          Mandarin Chinese
+        </option>
+        <option value="nb">
+          Norwegian
+        </option>
+        <option value="pl">
+          Polish
+        </option>
+        <option value="pt">
+          Portuguese
+        </option>
+        <option value="ru">
+          Russian
+        </option>
+        <option value="tr">
+          Turkish
+        </option>
+        <option value="vi">
+          Vietnamese
         </option>
       </select>
     </fieldset>
@@ -51,10 +99,10 @@
         v-model="gender"
         @input="$emit('update:aGender', $event.target.value)"
       >
-        <option value="f">
+        <option value="FEMALE">
           Female
         </option>
-        <option value="m">
+        <option value="MALE">
           Male
         </option>
       </select>
@@ -117,7 +165,7 @@ export default {
     },
     aGender: {
       type: String,
-      default: 'f'
+      default: 'FEMALE'
     }
   },
   data () {

@@ -100,7 +100,7 @@ defmodule Aph.Main do
     validated = %Status{} |> Status.changeset(changeset)
 
     with {:ok, status} <- Repo.insert(validated),
-         :ok <- TTS.synthesize(status.id, status.content, av.pitch, av.speed),
+         :ok <- TTS.synthesize(status, av),
          :ok <- TTS.clean(status.id) do
       {:ok, status}
     else
