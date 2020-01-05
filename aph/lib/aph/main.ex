@@ -22,9 +22,15 @@ defmodule Aph.Main do
   end
 
   def update_avatar(%Avatar{} = avatar, attrs \\ %{}, pic1, pic2) do
-    with {:ok, avatar} <- avatar |> Avatar.changeset(attrs) |> Repo.update(),
-         :ok <- File.cp(pic1.path, elem(avatar_picture_path(avatar.id), 0)),
-         :ok <- File.cp(pic2.path, elem(avatar_picture_path(avatar.id), 1)) do
+    with {:ok, avatar} <- avatar |> Avatar.changeset(attrs) |> Repo.update() do
+      if !is_bitstring(pic1) do
+        :ok = File.cp(pic1.path, elem(avatar_picture_path(avatar.id), 0))
+      end
+
+      if !is_bitstring(pic2) do
+        :ok = File.cp(pic2.path, elem(avatar_picture_path(avatar.id), 1))
+      end
+
       {:ok, avatar}
     else
       {:error, _reason} = error -> error

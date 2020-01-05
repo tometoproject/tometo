@@ -19,7 +19,11 @@
     </fieldset>
 
     <fieldset>
-      <input type="checkbox" class="text--vmid" v-model="remember" />
+      <input
+        v-model="remember"
+        type="checkbox"
+        class="text--vmid"
+      >
       <span class="text--vmid">Remember me</span>
     </fieldset>
 

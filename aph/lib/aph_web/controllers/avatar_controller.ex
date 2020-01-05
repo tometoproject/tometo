@@ -19,7 +19,7 @@ defmodule AphWeb.AvatarController do
         "pic1" => pic1,
         "pic2" => pic2
       }) do
-    if String.length(pic1) == 0 or String.length(pic2) == 0 do
+    if is_bitstring(pic1) == 0 or is_bitstring(pic2) == 0 do
       conn
       |> put_status(:bad_request)
       |> put_view(AphWeb.ErrorView)

@@ -16,10 +16,10 @@ export function createAvatar ({ commit }, { name, pitch, speed, language, gender
   })
 }
 
-export function editAvatar ({ commit }, { id, name, pic1, pic2 }) {
+export function editAvatar ({ commit }, options) {
   commit('toggleLoading')
 
-  doEditAvatar(id, name, pic1, pic2).then(data => {
+  doEditAvatar(options).then(data => {
     commit('toggleLoading')
     commit('setHasAvatar')
     commit('setInfoFlash', data.message)

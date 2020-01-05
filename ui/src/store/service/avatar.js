@@ -27,18 +27,19 @@ export function doCreateAvatar (name, pitch, speed, language, gender, pic1, pic2
     })
 }
 
-export function doEditAvatar (id, name, pic1, pic2) {
+export function doEditAvatar (options) {
+  let { id, name, pitch, speed, language, gender, pic1, pic2 } = options
   let formdata = new FormData()
   formdata.set('name', name)
-  if (pic1.length !== 0) {
-    formdata.set('pic1', pic1)
-  }
-  if (pic2.length !== 0) {
-    formdata.set('pic2', pic2)
-  }
+  formdata.set('pitch', pitch)
+  formdata.set('speed', speed)
+  formdata.set('language', language)
+  formdata.set('gender', gender)
+  formdata.set('pic1', pic1)
+  formdata.set('pic2', pic2)
 
   const requestOptions = {
-    method: 'POST',
+    method: 'PUT',
     body: formdata,
     credentials: 'include'
   }

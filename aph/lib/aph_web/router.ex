@@ -23,7 +23,7 @@ defmodule AphWeb.Router do
     delete "/auth", SessionController, :delete
     get "/poll", UserController, :poll
     get "/avatar/:id", AvatarController, :show
-    put "/avatar/:id/update", AvatarController, :update
+    put "/avatar/edit/:id", AvatarController, :update
     post "/avatar/new", AvatarController, :create
     post "/status/new", StatusController, :create
     get "/invitations", InvitationController, :for_user

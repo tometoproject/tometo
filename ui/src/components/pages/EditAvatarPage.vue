@@ -2,35 +2,15 @@
   <form @keyup-enter="submitForm">
     <h1>Edit your Avatar</h1>
 
-    <fieldset>
-      <label>Name</label>
-      <input
-        v-model="name"
-        type="text"
-      >
-    </fieldset>
-
-    <fieldset>
-      <label>Closed Mouth image</label>
-      <label>
-        <input
-          type="file"
-          accept="image/png, image/jpeg"
-          @change="updatePic(1, $event)"
-        >
-      </label>
-    </fieldset>
-
-    <fieldset>
-      <label>Open Mouth image</label>
-      <label>
-        <input
-          type="file"
-          accept="image/png, image/jpeg"
-          @change="updatePic(2, $event)"
-        >
-      </label>
-    </fieldset>
+    <AvatarDetails
+      :a-name.sync="name"
+      :a-pitch.sync="pitch"
+      :a-speed.sync="speed"
+      :a-language.sync="language"
+      :a-gender.sync="gender"
+      @update:pic1="updatePic1"
+      @update:pic2="updatePic2"
+    />
 
     <button
       :disabled="loading"
@@ -42,11 +22,20 @@
 </template>
 
 <script>
+import AvatarDetails from '../AvatarDetails.vue'
+
 export default {
   name: 'EditAvatarPage',
+  components: {
+    AvatarDetails
+  },
   data () {
     return {
       name: '',
+      pitch: 10,
+      speed: 1.0,
+      language: 'en',
+      gender: 'f',
       pic1: '',
       pic2: ''
     }
@@ -63,16 +52,20 @@ export default {
       credentials: 'include'
     }
 
-    fetch(`${process.env.TOMETO_BACKEND_URL}/api/avatar/edit/${this.$route.params.id}`, requestOptions)
+    fetch(`${process.env.TOMETO_BACKEND_URL}/api/avatar/${this.$route.params.id}`, requestOptions)
       .then(res => res.text().then(text => {
         const data = text && JSON.parse(text)
         if (!res.ok) {
           const error = (data && data.message) || res.statusText
           return Promise.reject(error)
         }
-        return data
+        return data.data
       })).then(data => {
         this.name = data.name
+        this.pitch = data.pitch
+        this.speed = data.speed
+        this.language = data.language
+        this.gender = data.gender
         document.title = `Edit ${this.name} - Tometo`
       }, error => {
         this.$store.commit('setErrorFlash', error)
@@ -80,17 +73,19 @@ export default {
   },
 
   methods: {
-    updatePic (num, evt) {
-      if (evt.target.files.length > 0) {
-        this[`pic${String(num)}`] = evt.target.files[0]
-      }
+    updatePic1 (pic) {
+      this.pic1 = pic
+    },
+
+    updatePic2 (pic) {
+      this.pic2 = pic
     },
 
     submitForm (e) {
       e.preventDefault()
       let id = this.$route.params.id
-      let { name, pic1, pic2 } = this
-      this.$store.dispatch('editAvatar', { id, name, pic1, pic2 })
+      let { name, pitch, speed, language, gender, pic1, pic2 } = this
+      this.$store.dispatch('editAvatar', { id, name, pitch, speed, language, gender, pic1, pic2 })
     }
   }
 }
