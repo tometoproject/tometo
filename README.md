@@ -1,4 +1,4 @@
-# tometo [![builds.sr.ht status](https://builds.sr.ht/~marisa/tometo.svg)](https://builds.sr.ht/~marisa/tometo?)
+# tometo [CI Status](https://builds.sr.ht/~marisa/tometo?)
 
 Tometo is a social network focused on text-to-speech. It's written in
 [Elixir](https://elixir-lang.org) using the
@@ -10,7 +10,7 @@ and [Vuex](https://vuex.vuejs.org) for state management.
 
 ## Reporting Issues
 
-Please report issues on our [GitHub issue tracker](https://github.com/tometoproject/tometo/issues)!
+Please report issues on our [issue tracker](https://marisa.cloud/maniphest/task/edit/form/1/)!
 
 ## Documentation
 
