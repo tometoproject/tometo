@@ -1,4 +1,6 @@
-# tometo [CI Status](https://builds.sr.ht/~marisa/tometo?)
+# Tometo
+
+[![builds.sr.ht status](https://builds.sr.ht/~marisa/tometo.svg)](https://builds.sr.ht/~marisa/tometo?)
 
 Tometo is a social network focused on text-to-speech. It's written in
 [Elixir](https://elixir-lang.org) using the
