@@ -15,7 +15,7 @@ export default {
     CreateStatusForm
   },
   beforeMount () {
-    if (!this.$store.state.username) { router.back() }
+    if (!this.$store.state.user) { router.back() }
   }
 }
 </script>

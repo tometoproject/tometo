@@ -23,7 +23,7 @@ defmodule AphWeb.AvatarController do
       conn
       |> put_status(:bad_request)
       |> put_view(AphWeb.ErrorView)
-      |> render(:"400", message: "Please attach two images!")
+      |> render(:insufficient_input, message: "Please attach two images!")
     else
       with {:ok, %Avatar{} = avatar} <-
              Main.create_avatar(
@@ -66,7 +66,7 @@ defmodule AphWeb.AvatarController do
       conn
       |> put_status(:unauthorized)
       |> put_view(AphWeb.ErrorView)
-      |> render(:"401")
+      |> render(:wrong_user)
     end
 
     with {:ok, %Avatar{} = avatar} <-

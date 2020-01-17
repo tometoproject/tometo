@@ -13,20 +13,22 @@ defmodule AphWeb.Router do
   scope "/api", AphWeb do
     pipe_through :api
     get "/", DefaultController, :index
-    post "/register", UserController, :create
-    post "/auth", SessionController, :create
-    get "/status/:id", StatusController, :show
-    get "/status/:id/comments", StatusController, :show_comments
+    post "/users", UserController, :create
+    get "/users/:id/invitations", InvitationController, :for_user
+    get "/users/:id/poll", UserController, :poll
+
+    post "/sessions", SessionController, :create
+    delete "/sessions/:id", SessionController, :delete
+
+    post "/invitations", InvitationController, :create
     get "/invitations/:code", InvitationController, :get
 
-    # Routes where authorization is required (this is set in the controller)
-    delete "/auth", SessionController, :delete
-    get "/poll", UserController, :poll
-    get "/avatar/:id", AvatarController, :show
-    put "/avatar/edit/:id", AvatarController, :update
-    post "/avatar/new", AvatarController, :create
-    post "/status/new", StatusController, :create
-    get "/invitations", InvitationController, :for_user
-    post "/invitations", InvitationController, :create
+    post "/statuses", StatusController, :create
+    get "/statuses/:id", StatusController, :show
+    get "/statuses/:id/comments", StatusController, :show_comments
+
+    post "/avatars", AvatarController, :create
+    get "/avatars/:id", AvatarController, :show
+    put "/avatars/:id", AvatarController, :update
   end
 end

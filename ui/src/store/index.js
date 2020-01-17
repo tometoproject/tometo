@@ -10,7 +10,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    username: localStorage.getItem('username') || null,
+    user: JSON.parse(localStorage.getItem('user')) || null,
     sessionId: localStorage.getItem('sessionId') || null,
     cookiesAcknowledged: localStorage.getItem('cookiesAcknowledged') || false,
     hasAvatar: false,

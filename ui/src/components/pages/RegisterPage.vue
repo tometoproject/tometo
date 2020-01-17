@@ -61,7 +61,7 @@ export default {
     }
   },
   beforeMount () {
-    if (this.$store.state.username) { router.back() }
+    if (this.$store.state.user) { router.back() }
   },
   methods: {
     submitForm (e) {

@@ -1,11 +1,11 @@
 export default {
-  setUsername (state, username) {
-    localStorage.setItem('username', username)
-    state.username = username
+  setUser (state, user) {
+    localStorage.setItem('user', JSON.stringify(user))
+    state.user = user
   },
-  clearUsername (state) {
-    state.username = null
-    localStorage.removeItem('username')
+  clearUser (state) {
+    state.user = null
+    localStorage.removeItem('user')
   },
   setSessionId (state, id) {
     localStorage.setItem('sessionId', id)

@@ -2,12 +2,8 @@ defmodule AphWeb.AvatarView do
   use AphWeb, :view
   alias AphWeb.AvatarView
 
-  def render("index.json", %{avatars: avatars}) do
-    %{data: render_many(avatars, AvatarView, "avatar.json")}
-  end
-
   def render("show.json", %{avatar: avatar}) do
-    %{data: render_one(avatar, AvatarView, "avatar.json")}
+    render_one(avatar, AvatarView, "avatar.json")
   end
 
   def render("avatar.json", %{avatar: avatar}) do
@@ -18,7 +14,9 @@ defmodule AphWeb.AvatarView do
       speed: avatar.speed,
       language: avatar.language,
       gender: avatar.gender,
-      user_id: avatar.user_id
+      user_id: avatar.user_id,
+      inserted_at: avatar.inserted_at,
+      updated_at: avatar.updated_at
     }
   end
 end

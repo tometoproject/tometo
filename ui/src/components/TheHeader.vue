@@ -57,7 +57,7 @@
           ><strong>Log in</strong></router-link>
         </span>
         <span v-else>
-          <span>Logged in as <strong>{{ user }}</strong></span> |
+          <span>Logged in as <strong>{{ user.username }}</strong></span> |
           <span><strong><router-link to="/user/invitations">Invitations</router-link></strong></span> |
           <span><strong><a
             class="link"
@@ -74,7 +74,7 @@ export default {
   name: 'TheHeader',
   computed: {
     user () {
-      return this.$store.state.username
+      return this.$store.state.user
     },
     hasAvatar () {
       return this.$store.state.hasAvatar

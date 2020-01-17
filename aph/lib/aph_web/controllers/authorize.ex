@@ -12,7 +12,7 @@ defmodule AphWeb.Authorize do
     conn
     |> put_status(:unauthorized)
     |> put_view(AphWeb.ErrorView)
-    |> render(:"401", message: "You are not authorized to view this page!")
+    |> render(:no_auth)
     |> halt()
   end
 end

@@ -1,12 +1,16 @@
 defmodule AphWeb.SessionController do
   use AphWeb, :controller
 
+  import AphWeb.Authorize
+
   alias Phauxth.Remember
   alias Aph.Accounts
   alias Aph.Accounts.Session
   alias AphWeb.Auth.Login
 
   action_fallback AphWeb.FallbackController
+
+  plug :user_check when action in [:delete]
 
   def create(conn, %{"username" => username, "password" => password, "remember_me" => remember}) do
     case Login.authenticate(%{username: username, password: password}) do
@@ -17,14 +21,14 @@ defmodule AphWeb.SessionController do
         |> put_session(:phauxth_session_id, session_id)
         |> configure_session(renew: true)
         |> add_remember_me(user.id, remember)
-        |> put_status(:ok)
-        |> render(:success, user: user, id: session_id)
+        |> put_status(:created)
+        |> render(:show, user: user, id: session_id)
 
       {:error, _err} ->
         conn
-        |> put_status(:bad_request)
+        |> put_status(:unprocessable_entity)
         |> put_view(AphWeb.ErrorView)
-        |> render(:"400", message: "Incorrect username or password!")
+        |> render(:invalid_input, message: "Incorrect username or password!")
     end
   end
 
@@ -41,9 +45,9 @@ defmodule AphWeb.SessionController do
 
       _ ->
         conn
-        |> put_status(:unauthorized)
+        |> put_status(:unprocessable_entity)
         |> put_view(AphWeb.ErrorView)
-        |> render(:"401", message: "Unauthorized")
+        |> render(:invalid_input, message: "Unknown session ID!")
     end
   end
 

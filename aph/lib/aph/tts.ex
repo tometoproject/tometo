@@ -45,19 +45,25 @@ defmodule Aph.TTS do
     if Application.get_env(:aph, :tts) == "google" do
       api_key = Application.get_env(:aph, :google_key)
       lang = @g_lang_map[String.to_atom(av.language)]
-      gender_num = cond do
-        # en-US has no Standard-A voice for some reason
-        lang == "en-US" and av.gender == "FEMALE" -> "C"
-        lang == "en-US" and av.gender == "MALE" -> "B"
-        av.gender == "FEMALE" -> "A"
-        true -> "B"
-      end
+
+      gender_num =
+        cond do
+          # en-US has no Standard-A voice for some reason
+          lang == "en-US" and av.gender == "FEMALE" -> "C"
+          lang == "en-US" and av.gender == "MALE" -> "B"
+          av.gender == "FEMALE" -> "A"
+          true -> "B"
+        end
 
       body =
         Jason.encode!(%{
           input: %{text: status.content},
           voice: %{languageCode: lang, name: "#{lang}-Standard-#{gender_num}"},
-          audioConfig: %{audioEncoding: "OGG_OPUS", pitch: av.pitch || 0, speakingRate: av.speed || 1.0}
+          audioConfig: %{
+            audioEncoding: "OGG_OPUS",
+            pitch: av.pitch || 0,
+            speakingRate: av.speed || 1.0
+          }
         })
 
       headers = [{"content-type", "application/json"}]
@@ -120,6 +126,7 @@ defmodule Aph.TTS do
 
   defp align(name, text, lang) do
     lang = @a_lang_map[String.to_atom(lang)]
+
     with :ok <-
            File.write("gentts/#{name}/temp.txt", text |> String.split(" ") |> Enum.join("\n")),
          {_, 0} <-

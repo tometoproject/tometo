@@ -57,14 +57,12 @@ defmodule Aph.Main do
     Repo.all(Status)
   end
 
-  def get_status!(id), do: Repo.get!(Status, id)
-
-  def get_status_for_display!(id) do
-    [status] = Repo.all(from(s in Status, where: s.id == ^id, preload: :avatar))
-    format_status_for_display(status)
+  def get_status(id) do
+    s = Repo.one(from(s in Status, where: s.id == ^id, preload: :avatar))
+    Map.merge(s, format_status_for_display(s))
   end
 
-  def get_status_comments!(id) do
+  def get_status_comments(id) do
     query =
       from s in Status,
         where: s.related_status_id == ^id,
@@ -72,7 +70,7 @@ defmodule Aph.Main do
         preload: :avatar
 
     statuses = Repo.all(query)
-    Enum.map(statuses, fn s -> format_status_for_display(s) end)
+    Enum.map(statuses, fn s -> Map.merge(s, format_status_for_display(s)) end)
   end
 
   defp format_status_for_display(%Status{} = status) do
@@ -86,10 +84,8 @@ defmodule Aph.Main do
     %{
       audio: audio_path,
       timestamps: timestamps_path,
-      avatar_name: avatar.name,
       pic1: pic1_path,
-      pic2: pic2_path,
-      related_status_id: status.related_status_id
+      pic2: pic2_path
     }
   end
 

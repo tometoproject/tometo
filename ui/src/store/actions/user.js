@@ -1,13 +1,19 @@
-import { doRegister, doLogin, doLogout, doPoll } from '../service/user'
+import api from '../api'
 import router from '../../router'
 
 export function register ({ commit }, { username, password, confirmPassword, email, code }) {
   commit('toggleLoading')
 
-  doRegister(username, password, confirmPassword, email, code).then(data => {
+  const opts = {
+    method: 'POST',
+    url: '/api/users',
+    body: { user: { username, password, password_confirmation: confirmPassword, email }, code }
+  }
+
+  api.request(opts).then(data => {
     commit('toggleLoading')
     router.push('/')
-    commit('setInfoFlash', data.message)
+    commit('setInfoFlash', 'Successfully registered! You can log in now.')
   }, error => {
     commit('toggleLoading')
     commit('setErrorFlash', error)
@@ -17,10 +23,16 @@ export function register ({ commit }, { username, password, confirmPassword, ema
 export function login ({ commit, dispatch }, { username, password, remember }) {
   commit('toggleLoading')
 
-  doLogin(username, password, remember).then(user => {
+  const opts = {
+    method: 'POST',
+    url: '/api/sessions',
+    body: { username, password, remember_me: remember }
+  }
+
+  api.request(opts).then(data => {
     commit('toggleLoading')
-    commit('setUsername', user.data.username)
-    commit('setSessionId', user.data.session_id)
+    commit('setUser', data.user)
+    commit('setSessionId', data.session_id)
     router.push('/')
     dispatch('poll')
     commit('setInfoFlash', 'Signed in successfully.')
@@ -31,20 +43,34 @@ export function login ({ commit, dispatch }, { username, password, remember }) {
 }
 
 export function logout ({ commit, state }) {
-  doLogout(state.sessionId).then(data => {
-    commit('clearUsername')
+  const sessionId = state.sessionId
+
+  const opts = {
+    method: 'DELETE',
+    url: `/api/sessions/${sessionId}`
+  }
+
+  api.request(opts).then(data => {
+    commit('clearUser')
     commit('clearSessionId')
   })
 }
 
-export function poll ({ commit }) {
-  doPoll().then(data => {
+export function poll ({ commit, state }) {
+  const userId = state.user.id
+
+  const opts = {
+    method: 'GET',
+    url: `/api/users/${userId}/poll`
+  }
+
+  api.request(opts).then(data => {
     if (!data) {
-      commit('clearUsername')
+      commit('clearUser')
     }
 
     if (data && data.has_avatar) {
       commit('setHasAvatar')
     }
-  })
+  }).catch(e => {})
 }

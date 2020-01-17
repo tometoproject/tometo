@@ -5,9 +5,8 @@ defmodule Aph.Main.Status do
 
   schema "statuses" do
     field :content, :string
+    field :related_status_id, :id
     belongs_to :avatar, Avatar
-    belongs_to :status, __MODULE__, foreign_key: :related_status_id
-    has_many :statuses, __MODULE__
 
     timestamps()
   end
