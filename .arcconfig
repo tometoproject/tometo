@@ -1,3 +1,4 @@
 {
-  "phabricator.uri": "https://marisa.cloud"
+  "phabricator.uri": "https://marisa.cloud",
+  "history.immutable": true
 }
