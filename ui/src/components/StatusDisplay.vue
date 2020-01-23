@@ -3,18 +3,20 @@
     v-if="!condensed"
     class="grid grid--gap grid--2-50"
   >
-    <div>
+    <canvas id="avatar">
       <img
-        v-if="!audio.isLoud"
-        class="img--centered img--avatar"
+        style="display: none"
+        crossOrigin
+        id="pic1"
         :src="pic1"
       >
       <img
-        v-if="audio.isLoud"
-        class="img--centered img--avatar"
+        style="display: none"
+        crossOrigin
+        id="pic2"
         :src="pic2"
       >
-    </div>
+    </canvas>
     <div>
       <span
         class="button button--vmid button--fullwidth"
@@ -74,6 +76,8 @@
 </template>
 
 <script>
+import ThreeManager from '../lib/threeManager'
+
 export default {
   name: 'StatusDisplay',
   props: {
@@ -117,6 +121,7 @@ export default {
         interval: null,
         index: 0
       },
+      three: new ThreeManager(),
       loaded: {
         audio: false,
         json: false
@@ -140,9 +145,15 @@ export default {
         this.audio.media.crossOrigin = 'anonymous'
         this.loaded.json = true
         this.initAudio()
+        this.three.initWithDefaultOptions(350, 300, 'avatar')
+        this.three.initForGLTF()
 
         this.audio.media.addEventListener('canplaythrough', () => {
           this.loaded.audio = true
+          this.three.loadModel(`${process.env.TOMETO_BACKEND_URL}/storage/cube.glb`, 0).then(gltf => {
+            this.three.draw(document.getElementById('pic1'), 75, 0, 75, 37)
+            this.animate()
+          })
         })
 
         this.audio.media.addEventListener('ended', () => {
@@ -199,6 +210,15 @@ export default {
       } else {
         this.audio.isLoud = false
       }
+      this.updateImage()
+    },
+
+    updateImage () {
+      if (this.audio.isLoud) {
+        this.three.draw(document.getElementById('pic2'), 75, 0, 75, 37)
+      } else {
+        this.three.draw(document.getElementById('pic1'), 75, 0, 75, 37)
+      }
     },
 
     getVolume () {
@@ -214,6 +234,11 @@ export default {
       average /= array.length
 
       return average
+    },
+
+    animate () {
+      requestAnimationFrame(this.animate)
+      this.three.animate()
     }
   }
 }

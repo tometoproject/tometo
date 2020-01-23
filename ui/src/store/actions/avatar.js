@@ -47,6 +47,7 @@ export function editAvatar ({ commit }, { id, name, pitch, speed, language, gend
   const opts = {
     method: 'PUT',
     url: `/api/avatars/${id}`,
+    isMultipart: true,
     body: formdata
   }
 
