@@ -4,16 +4,18 @@
     class="grid grid--gap grid--2-50"
   >
     <canvas id="avatar">
-      <!--<img
-        v-if="!audio.isLoud"
-        class="img--centered img--avatar"
+      <img
+        style="display: none"
+        crossOrigin
+        id="pic1"
         :src="pic1"
       >
       <img
-        v-if="audio.isLoud"
-        class="img--centered img--avatar"
+        style="display: none"
+        crossOrigin
+        id="pic2"
         :src="pic2"
-      >-->
+      >
     </canvas>
     <div>
       <span
@@ -74,9 +76,7 @@
 </template>
 
 <script>
-import * as THREE from 'three'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import ThreeManager from '../lib/threeManager'
 
 export default {
   name: 'StatusDisplay',
@@ -121,14 +121,7 @@ export default {
         interval: null,
         index: 0
       },
-      three: {
-        scene: null,
-        camera: null,
-        renderer: null,
-        loader: null,
-        model: null,
-        controls: null
-      },
+      three: new ThreeManager(),
       loaded: {
         audio: false,
         json: false
@@ -146,43 +139,20 @@ export default {
     fetch(this.timestamps)
       .then(res => res.json())
       .then(res => {
-        let width = 350
-        let height = 300
         this.text.words = res.fragments
         this.text.unplayed = this.text.words.map(w => w.lines).flat()
         this.audio.media = new Audio(this.audioUrl)
         this.audio.media.crossOrigin = 'anonymous'
         this.loaded.json = true
         this.initAudio()
-        this.three.scene = new THREE.Scene()
-        this.three.scene.add(new THREE.AmbientLight(0x666666))
-        this.three.scene.add(new THREE.DirectionalLight(0xFFFFFF, 0.5))
-        this.three.scene.background = new THREE.Color('white')
-        this.three.camera = new THREE.PerspectiveCamera(70, width / height, 0.01, 100)
-        this.three.renderer = new THREE.WebGLRenderer({
-          canvas: document.getElementById('avatar'),
-          antialias: true
-        })
-        this.three.renderer.setSize(350, 300)
-        this.three.renderer.setClearColor(0xDDDDDD, 1)
-        this.three.controls = new OrbitControls(this.three.camera, this.three.renderer.domElement)
-        this.three.loader = new GLTFLoader()
+        this.three.initWithDefaultOptions(350, 300, 'avatar')
+        this.three.initForGLTF()
 
         this.audio.media.addEventListener('canplaythrough', () => {
           this.loaded.audio = true
-          this.three.loader.load(`${process.env.TOMETO_BACKEND_URL}/storage/bro.glb`, gltf => {
-            const box = new THREE.Box3()
-            let boxVec = new THREE.Vector3()
-            let modelZ = new THREE.Vector3(0, 0, 1)
-            box.setFromObject(gltf.scene)
-            box.getCenter(boxVec)
-            this.three.camera.position.copy(boxVec)
-            this.three.camera.position.add(new THREE.Vector3(2, 3, 3))
-            this.three.model = gltf.scene
-            this.three.scene.add(gltf.scene)
+          this.three.loadModel(`${process.env.TOMETO_BACKEND_URL}/storage/cube.glb`, 0).then(gltf => {
+            this.three.draw(document.getElementById('pic1'), 75, 0, 75, 37)
             this.animate()
-          }, undefined, error => {
-            console.error(error)
           })
         })
 
@@ -240,6 +210,15 @@ export default {
       } else {
         this.audio.isLoud = false
       }
+      this.updateImage()
+    },
+
+    updateImage () {
+      if (this.audio.isLoud) {
+        this.three.draw(document.getElementById('pic2'), 75, 0, 75, 37)
+      } else {
+        this.three.draw(document.getElementById('pic1'), 75, 0, 75, 37)
+      }
     },
 
     getVolume () {
@@ -259,8 +238,7 @@ export default {
 
     animate () {
       requestAnimationFrame(this.animate)
-      this.three.controls.update()
-      this.three.renderer.render(this.three.scene, this.three.camera)
+      this.three.animate()
     }
   }
 }
