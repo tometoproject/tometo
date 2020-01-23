@@ -3,8 +3,8 @@
     v-if="!condensed"
     class="grid grid--gap grid--2-50"
   >
-    <div>
-      <img
+    <canvas id="avatar">
+      <!--<img
         v-if="!audio.isLoud"
         class="img--centered img--avatar"
         :src="pic1"
@@ -13,8 +13,8 @@
         v-if="audio.isLoud"
         class="img--centered img--avatar"
         :src="pic2"
-      >
-    </div>
+      >-->
+    </canvas>
     <div>
       <span
         class="button button--vmid button--fullwidth"
@@ -74,6 +74,10 @@
 </template>
 
 <script>
+import * as THREE from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+
 export default {
   name: 'StatusDisplay',
   props: {
@@ -117,6 +121,14 @@ export default {
         interval: null,
         index: 0
       },
+      three: {
+        scene: null,
+        camera: null,
+        renderer: null,
+        loader: null,
+        model: null,
+        controls: null
+      },
       loaded: {
         audio: false,
         json: false
@@ -134,15 +146,44 @@ export default {
     fetch(this.timestamps)
       .then(res => res.json())
       .then(res => {
+        let width = 350
+        let height = 300
         this.text.words = res.fragments
         this.text.unplayed = this.text.words.map(w => w.lines).flat()
         this.audio.media = new Audio(this.audioUrl)
         this.audio.media.crossOrigin = 'anonymous'
         this.loaded.json = true
         this.initAudio()
+        this.three.scene = new THREE.Scene()
+        this.three.scene.add(new THREE.AmbientLight(0x666666))
+        this.three.scene.add(new THREE.DirectionalLight(0xFFFFFF, 0.5))
+        this.three.scene.background = new THREE.Color('white')
+        this.three.camera = new THREE.PerspectiveCamera(70, width / height, 0.01, 100)
+        this.three.renderer = new THREE.WebGLRenderer({
+          canvas: document.getElementById('avatar'),
+          antialias: true
+        })
+        this.three.renderer.setSize(350, 300)
+        this.three.renderer.setClearColor(0xDDDDDD, 1)
+        this.three.controls = new OrbitControls(this.three.camera, this.three.renderer.domElement)
+        this.three.loader = new GLTFLoader()
 
         this.audio.media.addEventListener('canplaythrough', () => {
           this.loaded.audio = true
+          this.three.loader.load(`${process.env.TOMETO_BACKEND_URL}/storage/bro.glb`, gltf => {
+            const box = new THREE.Box3()
+            let boxVec = new THREE.Vector3()
+            let modelZ = new THREE.Vector3(0, 0, 1)
+            box.setFromObject(gltf.scene)
+            box.getCenter(boxVec)
+            this.three.camera.position.copy(boxVec)
+            this.three.camera.position.add(new THREE.Vector3(2, 3, 3))
+            this.three.model = gltf.scene
+            this.three.scene.add(gltf.scene)
+            this.animate()
+          }, undefined, error => {
+            console.error(error)
+          })
         })
 
         this.audio.media.addEventListener('ended', () => {
@@ -214,6 +255,12 @@ export default {
       average /= array.length
 
       return average
+    },
+
+    animate () {
+      requestAnimationFrame(this.animate)
+      this.three.controls.update()
+      this.three.renderer.render(this.three.scene, this.three.camera)
     }
   }
 }

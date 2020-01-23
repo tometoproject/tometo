@@ -52,14 +52,14 @@ export default {
       credentials: 'include'
     }
 
-    fetch(`${process.env.TOMETO_BACKEND_URL}/api/avatar/${this.$route.params.id}`, requestOptions)
+    fetch(`${process.env.TOMETO_BACKEND_URL}/api/avatars/${this.$route.params.id}`, requestOptions)
       .then(res => res.text().then(text => {
         const data = text && JSON.parse(text)
         if (!res.ok) {
           const error = (data && data.message) || res.statusText
           return Promise.reject(error)
         }
-        return data.data
+        return data
       })).then(data => {
         this.name = data.name
         this.pitch = data.pitch
