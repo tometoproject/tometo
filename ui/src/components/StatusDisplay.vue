@@ -5,15 +5,15 @@
   >
     <canvas id="avatar">
       <img
+        id="pic1"
         style="display: none"
         crossOrigin
-        id="pic1"
         :src="pic1"
       >
       <img
+        id="pic2"
         style="display: none"
         crossOrigin
-        id="pic2"
         :src="pic2"
       >
     </canvas>

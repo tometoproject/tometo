@@ -4,9 +4,8 @@
 
 Tometo is a social network focused on text-to-speech. It's written in
 [Elixir](https://elixir-lang.org) using the
-[Phoenix](https://phoenixframework.org) web library, can generate TTS
-audio from Google Cloud, and optionally store generated artifacts on
-S3-compatible services. The frontend is written in JavaScript using
+[Phoenix](https://phoenixframework.org) web library and can generate TTS
+audio from Google Cloud. The frontend is written in JavaScript using
 [Vue](https://vuejs.org), with [Vue Rouer](https://router.vuejs.org) for routing
 and [Vuex](https://vuex.vuejs.org) for state management.
 
