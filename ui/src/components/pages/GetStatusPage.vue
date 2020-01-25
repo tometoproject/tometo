@@ -6,6 +6,7 @@
     <div v-else>
       <StatusDisplay
         :timestamps="timestamps"
+        :id="0"
         :pic1="pic1"
         :pic2="pic2"
         :audio-url="audio"
@@ -15,6 +16,7 @@
       <StatusDisplay
         v-for="(status, k) in comments"
         :key="k"
+        :id="k + 1"
         condensed
         :timestamps="status.timestamps"
         :pic1="status.pic1"

@@ -3,15 +3,15 @@
     v-if="!condensed"
     class="grid grid--gap grid--2-50"
   >
-    <canvas id="avatar">
+    <canvas :id="'avatar' + this.id">
       <img
-        id="pic1"
+        :id="this.id + 'pic1'"
         style="display: none"
         crossOrigin
         :src="pic1"
       >
       <img
-        id="pic2"
+        :id="this.id + 'pic2'"
         style="display: none"
         crossOrigin
         :src="pic2"
@@ -40,18 +40,20 @@
     v-else
     class="grid grid--gap grid--2-30"
   >
-    <div>
+    <canvas :id="'avatar' + this.id">
       <img
-        v-if="!audio.isLoud"
-        class="img--centered img--avatar-small"
+        :id="this.id + 'pic1'"
+        style="display: none"
+        crossOrigin
         :src="pic1"
       >
       <img
-        v-if="audio.isLoud"
-        class="img--centered img--avatar-small"
+        :id="this.id + 'pic2'"
+        style="display: none"
+        crossOrigin
         :src="pic2"
       >
-    </div>
+    </canvas>
     <div>
       <p>
         <span
@@ -101,7 +103,8 @@ export default {
       type: String,
       default: ''
     },
-    condensed: Boolean
+    condensed: Boolean,
+    id: Number
   },
   data () {
     return {
@@ -132,6 +135,10 @@ export default {
   computed: {
     isLoaded () {
       return this.loaded.audio && this.loaded.json
+    },
+
+    statusKey () {
+      return `avatar${this.id}`
     }
   },
 
@@ -139,19 +146,21 @@ export default {
     fetch(this.timestamps)
       .then(res => res.json())
       .then(res => {
+        const height = this.condensed ? 150 : 300
+        const width = this.condensed ? 240 : 350
         this.text.words = res.fragments
         this.text.unplayed = this.text.words.map(w => w.lines).flat()
         this.audio.media = new Audio(this.audioUrl)
         this.audio.media.crossOrigin = 'anonymous'
         this.loaded.json = true
         this.initAudio()
-        this.three.initWithDefaultOptions(350, 300, 'avatar')
+        this.three.initWithDefaultOptions(width, height, `avatar${this.id}`)
         this.three.initForGLTF()
 
         this.audio.media.addEventListener('canplaythrough', () => {
           this.loaded.audio = true
           this.three.loadModel(`${process.env.TOMETO_BACKEND_URL}/storage/cube.glb`, 0).then(gltf => {
-            this.three.draw(document.getElementById('pic1'), 75, 0, 75, 37)
+            this.three.draw(document.getElementById(`${this.id}pic1`), 75, 0, 75, 37)
             this.animate()
           })
         })
@@ -215,9 +224,9 @@ export default {
 
     updateImage () {
       if (this.audio.isLoud) {
-        this.three.draw(document.getElementById('pic2'), 75, 0, 75, 37)
+        this.three.draw(document.getElementById(`${this.id}pic2`), 75, 0, 75, 37)
       } else {
-        this.three.draw(document.getElementById('pic1'), 75, 0, 75, 37)
+        this.three.draw(document.getElementById('${this.id}pic1'), 75, 0, 75, 37)
       }
     },
 
