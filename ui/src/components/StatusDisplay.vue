@@ -3,7 +3,7 @@
     v-if="!condensed"
     class="grid grid--gap grid--2-50"
   >
-    <canvas :id="'avatar' + this.id">
+    <canvas :id="'avatar' + this.id" style="width: 100%; min-height: 100%;">
       <img
         :id="this.id + 'pic1'"
         style="display: none"
@@ -40,7 +40,7 @@
     v-else
     class="grid grid--gap grid--2-30"
   >
-    <canvas :id="'avatar' + this.id">
+    <canvas :id="'avatar' + this.id" style="width: 100%; height: 100%;">
       <img
         :id="this.id + 'pic1'"
         style="display: none"
@@ -154,7 +154,7 @@ export default {
         this.audio.media.crossOrigin = 'anonymous'
         this.loaded.json = true
         this.initAudio()
-        this.three.initWithDefaultOptions(width, height, `avatar${this.id}`)
+        this.three.initWithDefaultOptions(`avatar${this.id}`)
         this.three.initForGLTF()
 
         this.audio.media.addEventListener('canplaythrough', () => {

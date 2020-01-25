@@ -16,19 +16,19 @@ class ThreeManager {
     this.height = 0
   }
 
-  initWithDefaultOptions (width, height, id) {
-    this.width = width
-    this.height = height
+  initWithDefaultOptions (id) {
+    this.width = document.getElementById(id).offsetWidth
+    this.height = document.getElementById(id).offsetHeight
     this.scene = new THREE.Scene()
     this.scene.add(new THREE.AmbientLight(0x666666))
     this.scene.add(new THREE.DirectionalLight(0xFFFFFF, 0.5))
     this.scene.background = new THREE.Color('white')
-    this.camera = new THREE.PerspectiveCamera(70, width / height, 0.01, 100)
+    this.camera = new THREE.PerspectiveCamera(70, this.width / this.height, 0.01, 100)
     this.renderer = new THREE.WebGLRenderer({
       canvas: document.getElementById(id),
       antialias: true
     })
-    this.renderer.setSize(width, height)
+    this.renderer.setSize(this.width, this.height)
     this.renderer.setClearColor(0xDDDDDD, 1)
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
   }
@@ -47,7 +47,7 @@ class ThreeManager {
       box.setFromObject(gltf.scene)
       box.getCenter(boxVec)
       this.camera.position.copy(boxVec)
-      this.camera.position.add(new THREE.Vector3(2, 3, 3))
+      this.camera.position.add(new THREE.Vector3(1, 2, 2))
       this.model = gltf.scene.children[layer]
       this.scene.add(this.model)
       this.model.material.map = new THREE.CanvasTexture(this.canvas)
