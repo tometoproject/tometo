@@ -226,7 +226,7 @@ export default {
       if (this.audio.isLoud) {
         this.three.draw(document.getElementById(`${this.id}pic2`), 75, 0, 75, 37)
       } else {
-        this.three.draw(document.getElementById('${this.id}pic1'), 75, 0, 75, 37)
+        this.three.draw(document.getElementById(`${this.id}pic1`), 75, 0, 75, 37)
       }
     },
 
