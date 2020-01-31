@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
     ansible.playbook = "/home/vagrant/tometo/playbook.yml"
   end
   config.vm.network "forwarded_port", guest: 4001, host: 4001
-  config.vm.network "forwarded_port", guest: 1234, host: 1235
+  config.vm.network "forwarded_port", guest: 1234, host: 1234
   config.vm.provider "virtualbox" do |v|
     v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
   end
