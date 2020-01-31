@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
 
-npx concurrently -n "f,b" "npx webpack-dev-server --config webpack.dev.js" "cd aph; mix phx.server"
+if [[ "$*" == "vagrant" ]]
+then
+    npx concurrently -n "f,b" "npx webpack-dev-server --config webpack.dev.vagrant.js" "cd aph; mix phx.server"
+else
+    npx concurrently -n "f,b" "npx webpack-dev-server --config webpack.dev.js" "cd aph; mix phx.server"
+fi

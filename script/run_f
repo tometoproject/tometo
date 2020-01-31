@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
 
-npx webpack-dev-server --config ui/webpack.dev.js
+if [[ "$*" == "vagrant" ]]
+then
+    npx webpack-dev-server --config ui/webpack.dev.vagrant.js
+else
+    npx webpack-dev-server --config ui/webpack.dev.js
+fi
