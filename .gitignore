@@ -23,6 +23,6 @@ aph-*.tar
 gentts/
 _build/
 aph/priv/static/
+aph/config/config.exs
 # for now, include the cube model
 !aph/priv/static/cube.glb
-aph/config/config.exs
