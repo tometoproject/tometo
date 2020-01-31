@@ -26,3 +26,6 @@ aph/priv/static/
 # for now, include the cube model
 !aph/priv/static/cube.glb
 aph/config/config.exs
+
+# vagrant
+.vagrant
