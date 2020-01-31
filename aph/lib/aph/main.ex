@@ -76,10 +76,10 @@ defmodule Aph.Main do
   defp format_status_for_display(%Status{} = status) do
     hostname = Application.get_env(:aph, :hostname)
     avatar = status.avatar
-    audio_path = "#{hostname}/storage/st#{status.id}.ogg"
-    timestamps_path = "#{hostname}/storage/st#{status.id}.json"
-    pic1_path = "#{hostname}/storage/av#{avatar.id}-1.png"
-    pic2_path = "#{hostname}/storage/av#{avatar.id}-2.png"
+    audio_path = "#{hostname}/static/st#{status.id}.ogg"
+    timestamps_path = "#{hostname}/static/st#{status.id}.json"
+    pic1_path = "#{hostname}/static/av#{avatar.id}-1.png"
+    pic2_path = "#{hostname}/static/av#{avatar.id}-2.png"
 
     %{
       audio: audio_path,

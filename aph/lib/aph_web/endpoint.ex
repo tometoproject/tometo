@@ -5,7 +5,7 @@ defmodule AphWeb.Endpoint do
   plug CORSPlug
 
   plug Plug.Static,
-    at: "/storage",
+    at: "/static",
     from: :aph,
     gzip: false
 
