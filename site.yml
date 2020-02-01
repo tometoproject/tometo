@@ -42,6 +42,7 @@
   tags:
   - setup
 
+# Create Tometo configs and run database setup
 - hosts: all
   roles:
   - tometo

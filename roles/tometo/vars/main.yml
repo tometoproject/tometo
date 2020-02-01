@@ -1,0 +1,6 @@
+tometo_database_username: vagrant
+tometo_database_password: vagrant
+tometo_database_name: vagrant
+tometo_tts_strategy: espeak # espeak | google
+tometo_google_key: replaceme # only required for google tts strategy
+tometo_require_invitations: "false"
