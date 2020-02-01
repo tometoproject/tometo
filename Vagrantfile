@@ -3,7 +3,7 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/home/vagrant/tometo"
   config.vm.synced_folder ".", "/vagrant"
   config.vm.provision "ansible_local" do |ansible|
-    ansible.playbook = "/home/vagrant/tometo/playbook.yml"
+    ansible.playbook = "/home/vagrant/tometo/site.yml"
   end
   config.vm.network "forwarded_port", guest: 4001, host: 4001
   config.vm.network "forwarded_port", guest: 1234, host: 1234
