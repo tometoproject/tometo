@@ -1,4 +1,5 @@
 ## This playbook installs Tometo along with all of its dependencies onto the Vagrant guest machine.
+# TODO: Refactor Elixir/Erlang tasks for less duplication
 
 - hosts: all
   roles:
