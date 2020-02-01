@@ -12,6 +12,7 @@
   roles:
   - postgres
 
+# Install Elixir and Erlang
 - hosts: all
   roles:
   - elixir
@@ -34,6 +35,7 @@
   roles:
   - ffmpeg
 
+# Run Elixir scripts
 - hosts: all
   roles:
   - elixir
@@ -43,3 +45,10 @@
 - hosts: all
   roles:
   - tometo
+
+# Clean up Elixir-related .debs
+- hosts: all
+  roles:
+  - elixir
+  tags:
+  - cleanup
