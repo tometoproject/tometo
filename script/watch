@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
-npx concurrently -n "f,b" "npx webpack-dev-server --config ui/webpack.dev.js" "cd aph; mix phx.server"
+
+if [[ "$*" == "vagrant" ]]
+then
+    npx concurrently -n "f,b" "npx webpack-dev-server --config ui/webpack.dev.js --disable-host-check --host 0.0.0.0 --useLocalIp" "cd aph; mix phx.server"
+else
+    npx concurrently -n "f,b" "npx webpack-dev-server --config ui/webpack.dev.js" "cd aph; mix phx.server"
+fi

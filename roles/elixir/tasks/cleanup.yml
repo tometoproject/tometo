@@ -1,0 +1,7 @@
+- name: Clean up Erlang .debs
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - erlang-solutions_2.0_all.deb
+    - erlang-solutions_2.0_all.deb.1

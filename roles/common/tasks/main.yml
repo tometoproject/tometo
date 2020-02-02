@@ -1,0 +1,14 @@
+# - name: Update repositories cache
+#   become: true
+#   apt:
+#     update_cache: yes
+
+# - name: Update all packages to the latest version
+#   become: true
+#   apt:
+#     upgrade: dist
+
+- name: Use main package mirrors instead of US
+  become: true
+  shell:
+    cmd: sed -i 's/http:\/\/in./http:\/\//g' /etc/apt/sources.list

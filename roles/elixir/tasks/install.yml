@@ -1,0 +1,21 @@
+- name: Add Erlang repo to Ubuntu
+  become: true
+  shell:
+    cmd: "wget https://packages.erlang-solutions.com/erlang-solutions_2.0_all.deb && sudo dpkg -i erlang-solutions_2.0_all.deb"
+
+- name: Update repositories cache
+  become: true
+  apt:
+    update_cache: yes
+
+- name: Install Erlang
+  become: true
+  apt:
+    name: "esl-erlang"
+    state: present
+
+- name: Install Elixir
+  become: true
+  apt:
+    name: "elixir"
+    state: present

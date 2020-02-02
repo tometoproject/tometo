@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
 
-npx webpack-dev-server --config ui/webpack.dev.js
+if [[ "$*" == "vagrant" ]]
+then
+    npx webpack-dev-server --config ui/webpack.dev.js --disable-host-check --host 0.0.0.0 --useLocalIp
+else
+    npx webpack-dev-server --config ui/webpack.dev.js
+fi

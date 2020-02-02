@@ -1,0 +1,7 @@
+- name: Install Node.js 12.14.1 LTS
+  become: true
+  snap:
+    name:
+      - node
+    channel: 12
+    classic: yes

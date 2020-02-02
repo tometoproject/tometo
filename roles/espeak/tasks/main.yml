@@ -1,0 +1,11 @@
+- name: Install eSpeak
+  become: true
+  apt:
+    name: "espeak"
+    state: present
+
+- name: Install eSpeak development headers
+  become: true
+  apt:
+    name: "libespeak-dev"
+    state: present
