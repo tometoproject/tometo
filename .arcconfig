@@ -1,4 +1,6 @@
 {
   "phabricator.uri": "https://marisa.cloud",
-  "history.immutable": true
+  "history.immutable": true,
+  "arc.land.onto.default": "master",
+  "base": "git:merge-base(origin/master), arc:prompt"
 }
