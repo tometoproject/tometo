@@ -14,7 +14,7 @@ defmodule AphWeb.UserController do
          {:ok, _changeset} <- Accounts.update_invitation_with_user(changeset, code) do
       conn
       |> put_status(:created)
-      |> render(:show, changeset)
+      |> render(:show, user: changeset)
     else
       {:invitation_error, reason} ->
         conn
