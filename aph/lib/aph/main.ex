@@ -94,15 +94,12 @@ defmodule Aph.Main do
     changeset = Map.put(attrs, :avatar_id, av.id)
 
     validated = %Status{} |> Status.changeset(changeset)
+    {:ok, status} = Repo.insert(validated)
 
-    with {:ok, status} <- Repo.insert(validated),
-         :ok <- TTS.synthesize(status, av),
+    with :ok <- TTS.synthesize(status, av),
          :ok <- TTS.clean(status.id) do
       {:ok, status}
     else
-      {:error, err} ->
-        {:error, err}
-
       {:tts_error, err} ->
         Repo.delete!(%Status{id: status.id})
         {:error, "Error while generating Text-to-speech audio: #{err}!"}
