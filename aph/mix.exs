@@ -46,7 +46,8 @@ defmodule Aph.MixProject do
       {:httpoison, "~> 1.6"},
       {:sentry, "~> 7.0"},
       {:phauxth, "~> 2.3"},
-      {:uuid, "~> 1.1"}
+      {:uuid, "~> 1.1"},
+      {:ex_doc, "~> 0.21", only: :dev, runtime: false}
     ]
   end
 

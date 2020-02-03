@@ -8,6 +8,7 @@ defmodule Aph.TTS do
   and make HTTP calls.
   """
 
+  # This is the language map for the Google TTS API
   @g_lang_map %{
     ar: "ar-XA",
     nl: "nl-NL",
@@ -28,6 +29,7 @@ defmodule Aph.TTS do
     vi: "vi-VN"
   }
 
+  # This is the language map for `aeneas`
   @a_lang_map %{
     ar: :ara,
     nl: :nld,
@@ -157,7 +159,7 @@ defmodule Aph.TTS do
   This shells out to `aeneas` and obtains a JSON file that contains timestamps
   of when in the audio file which word is said.
   """
-  defp align(name, text, lang) do
+  def align(name, text, lang) do
     lang = @a_lang_map[String.to_atom(lang)]
 
     with :ok <-
