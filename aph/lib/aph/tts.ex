@@ -1,4 +1,13 @@
 defmodule Aph.TTS do
+  @moduledoc """
+  TTS generation and alignment functions.
+
+  This module takes care of everything related to TTS (text-to-speech)
+  generation and parsing/aligning. It's also the module that introduces the most
+  side effects in the entire app, because it has to shell out to various programs
+  and make HTTP calls.
+  """
+
   @g_lang_map %{
     ar: "ar-XA",
     nl: "nl-NL",
@@ -39,6 +48,15 @@ defmodule Aph.TTS do
     vi: :vie
   }
 
+  @doc """
+  Generates a TTS message.
+
+  Takes a Aph.Main.Status and a Aph.Main.Avatar.
+
+  First creates a temporary directory under `gentts/`, then depending on the
+  TTS synthesis configuration option pulls the audio from somewhere and saves it
+  in the temporary directory. Then calls TTS.align/3.
+  """
   def synthesize(status, av) do
     File.mkdir_p!("gentts/#{status.id}")
 
@@ -83,6 +101,8 @@ defmodule Aph.TTS do
         {:error, err} -> {:tts_error, err}
       end
     else
+      # Since espeak doesn't accept the same values that the Google TTS api does,
+      # we have to convert them from one scale to another.
       scale_pitch = (av.pitch + 20) / 40 * 99
       scale_speed = floor((av.speed - 0.25) / 3.75 * 370.0 + 80.0)
 
@@ -114,6 +134,11 @@ defmodule Aph.TTS do
     end
   end
 
+  @doc """
+  Removes temporary directory and moves files to a permanent location.
+
+  Takes the name of the temporary directory.
+  """
   def clean(name) do
     with :ok <- File.cp("gentts/#{name}/out.json", "priv/static/st#{name}.json"),
          :ok <- File.cp("gentts/#{name}/temp.ogg", "priv/static/st#{name}.ogg"),
@@ -124,6 +149,14 @@ defmodule Aph.TTS do
     end
   end
 
+  @doc """
+  Forcibly aligns an existing TTS message.
+
+  Takes the name/ID, the TTS text, and the language.
+
+  This shells out to `aeneas` and obtains a JSON file that contains timestamps
+  of when in the audio file which word is said.
+  """
   defp align(name, text, lang) do
     lang = @a_lang_map[String.to_atom(lang)]
 
