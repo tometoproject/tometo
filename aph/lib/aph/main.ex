@@ -103,9 +103,9 @@ defmodule Aph.Main do
       {:error, err} ->
         {:error, err}
 
-      {:tts_error, id} ->
-        Repo.delete!(%Status{id: id})
-        {:error, "Error while generating Text-to-speech audio!"}
+      {:tts_error, err} ->
+        Repo.delete!(%Status{id: status.id})
+        {:error, "Error while generating Text-to-speech audio: #{err}!"}
     end
   end
 

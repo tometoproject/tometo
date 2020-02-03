@@ -109,7 +109,7 @@ defmodule Aph.TTS do
            :ok <- align(status.id, status.content, av.language) do
         :ok
       else
-        {_error, 1} -> {:tts_error, status.id}
+        {_error, 1} -> {:tts_error, "espeak failed to create audio!"}
       end
     end
   end
