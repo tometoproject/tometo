@@ -5,8 +5,8 @@
     </h1>
     <div v-else>
       <StatusDisplay
-        :timestamps="timestamps"
         :id="0"
+        :timestamps="timestamps"
         :pic1="pic1"
         :pic2="pic2"
         :audio-url="audio"
@@ -15,8 +15,8 @@
       <h2>Comments</h2>
       <StatusDisplay
         v-for="(status, k) in comments"
-        :key="k"
         :id="k + 1"
+        :key="k"
         condensed
         :timestamps="status.timestamps"
         :pic1="status.pic1"

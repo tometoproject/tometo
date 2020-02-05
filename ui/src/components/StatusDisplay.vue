@@ -3,15 +3,18 @@
     v-if="!condensed"
     class="grid grid--gap grid--2-50"
   >
-    <canvas :id="'avatar' + this.id" style="width: 100%; min-height: 100%;">
+    <canvas
+      :id="'avatar' + id"
+      style="width: 100%; min-height: 100%;"
+    >
       <img
-        :id="this.id + 'pic1'"
+        :id="id + 'pic1'"
         style="display: none"
         crossOrigin
         :src="pic1"
       >
       <img
-        :id="this.id + 'pic2'"
+        :id="id + 'pic2'"
         style="display: none"
         crossOrigin
         :src="pic2"
@@ -40,15 +43,18 @@
     v-else
     class="grid grid--gap grid--2-30"
   >
-    <canvas :id="'avatar' + this.id" style="width: 100%; height: 100%;">
+    <canvas
+      :id="'avatar' + id"
+      style="width: 100%; height: 100%;"
+    >
       <img
-        :id="this.id + 'pic1'"
+        :id="id + 'pic1'"
         style="display: none"
         crossOrigin
         :src="pic1"
       >
       <img
-        :id="this.id + 'pic2'"
+        :id="id + 'pic2'"
         style="display: none"
         crossOrigin
         :src="pic2"
@@ -104,7 +110,10 @@ export default {
       default: ''
     },
     condensed: Boolean,
-    id: Number
+    id: {
+      type: Number,
+      default: 0
+    }
   },
   data () {
     return {
@@ -146,8 +155,6 @@ export default {
     fetch(this.timestamps)
       .then(res => res.json())
       .then(res => {
-        const height = this.condensed ? 150 : 300
-        const width = this.condensed ? 240 : 350
         this.text.words = res.fragments
         this.text.unplayed = this.text.words.map(w => w.lines).flat()
         this.audio.media = new Audio(this.audioUrl)
