@@ -167,7 +167,7 @@ export default {
         this.audio.media.addEventListener('canplaythrough', () => {
           this.loaded.audio = true
           this.three.loadModel(`${process.env.TOMETO_BACKEND_URL}/static/cube.glb`, 0).then(gltf => {
-            this.three.draw(document.getElementById(`${this.id}pic1`), 75, 0, 75, 37)
+            this.three.draw(document.getElementById(`${this.id}pic1`), 0, 0, 256, 256)
             this.animate()
           })
         })

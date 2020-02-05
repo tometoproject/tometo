@@ -36,6 +36,8 @@ class ThreeManager {
   initForGLTF () {
     this.loader = new GLTFLoader()
     this.canvas = document.createElement('canvas')
+    this.canvas.height = 256
+    this.canvas.width = 256
     this.canvasContext = this.canvas.getContext('2d')
   }
 
