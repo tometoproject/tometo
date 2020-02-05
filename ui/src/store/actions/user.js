@@ -57,20 +57,25 @@ export function logout ({ commit, state }) {
 }
 
 export function poll ({ commit, state }) {
-  const userId = state.user.id
+  if (state.user) {
+    const userId = state.user.id
 
-  const opts = {
-    method: 'GET',
-    url: `/api/users/${userId}/poll`
-  }
+    const opts = {
+      method: 'GET',
+      url: `/api/users/${userId}/poll`
+    }
 
-  api.request(opts).then(data => {
-    if (!data) {
+    api.request(opts).then(data => {
+      if (data && data.has_avatar) {
+        commit('setHasAvatar')
+      }
+    }).catch(e => {
+      // When there's an HTTP error (such as Unauthorized), clear localstorage
       commit('clearUser')
-    }
-
-    if (data && data.has_avatar) {
-      commit('setHasAvatar')
-    }
-  }).catch(e => {})
+      commit('clearSessionId')
+    })
+  } else {
+    // If user doesn't exist, clear the session ID too
+    commit('clearSessionId')
+  }
 }
