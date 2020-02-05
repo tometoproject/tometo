@@ -231,9 +231,9 @@ export default {
 
     updateImage () {
       if (this.audio.isLoud) {
-        this.three.draw(document.getElementById(`${this.id}pic2`), 75, 0, 75, 37)
+        this.three.draw(document.getElementById(`${this.id}pic2`), 0, 0, 256, 256)
       } else {
-        this.three.draw(document.getElementById(`${this.id}pic1`), 75, 0, 75, 37)
+        this.three.draw(document.getElementById(`${this.id}pic1`), 0, 0, 256, 256)
       }
     },
 
