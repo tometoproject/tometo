@@ -6,17 +6,23 @@ Tometo is a social network focused on text-to-speech. It's written in
 [Elixir](https://elixir-lang.org) using the
 [Phoenix](https://phoenixframework.org) web library and can generate TTS
 audio from Google Cloud. The frontend is written in JavaScript using
-[Vue](https://vuejs.org), with [Vue Rouer](https://router.vuejs.org) for routing
+[Vue](https://vuejs.org), with [Vue Router](https://router.vuejs.org) for routing
 and [Vuex](https://vuex.vuejs.org) for state management.
+
+## Quick Links
+
+- **All current tasks:** https://marisa.cloud/tag/tometo/
+- **Create a new Tometo task:** https://marisa.cloud/maniphest/task/edit/form/1/
+- **Documentation:** https://docs.tometo.org
 
 ## Reporting Issues
 
-Please report issues on our [issue tracker](https://marisa.cloud/maniphest/task/edit/form/1/)!
+Please follow our [documentation on reporting a bug](https://docs.tometo.org/contributing/bug.html)!
 
 ## Documentation
 
 If you want to work on Tometo, or just play around with it locally, please
-follow the [Installation documentation](https://docs.tometo.org/installation/).
+follow the [Installation documentation](https://docs.tometo.org/installation.html).
 There's other documentation on there that might be worth reading, too.
 
 ## License
