@@ -2,10 +2,6 @@
   tags:
     - install
 
-- import_tasks: setup.yml
-  tags:
-    - setup
-
 - import_tasks: cleanup.yml
   tags:
     - cleanup

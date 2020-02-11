@@ -1,3 +1,0 @@
-- name: Install Elixir scripts
-  shell:
-    cmd: yes | mix local.hex

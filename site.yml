@@ -17,8 +17,6 @@
 - hosts: all
   roles:
   - elixir
-  tags:
-  - install
 
 - hosts: all
   roles:
@@ -36,21 +34,13 @@
   roles:
   - ffmpeg
 
-# Run Elixir scripts
 - hosts: all
-  roles:
-  - elixir
-  tags:
-  - setup
+  tasks:
+    - name: Install Elixir scripts
+      shell:
+        cmd: "yes | mix local.hex"
 
 # Create Tometo configs and run database setup
 - hosts: all
   roles:
   - tometo
-
-# Clean up Elixir-related .debs
-- hosts: all
-  roles:
-  - elixir
-  tags:
-  - cleanup
