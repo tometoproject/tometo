@@ -1,6 +1,6 @@
 # Tometo
 
-[build status](https://builds.sr.ht/~marisa/tometo?)
+[![Build status](https://badge.buildkite.com/01b5ac8d7f2c0b0e20a6401bd35815de56291e1c342afcee61.svg)](https://buildkite.com/mokou/tometo)
 
 Tometo is a social network focused on text-to-speech. It's written in
 [Elixir](https://elixir-lang.org) using the
