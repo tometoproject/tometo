@@ -10,6 +10,9 @@ defmodule Aph.Accounts.User do
     field :password, :string, virtual: true
     field :encrypted_password, :string
     field :username, :string
+    field :admin, :boolean, default: false
+    field :mod, :boolean, default: false
+
     has_many :avatars, Avatar
     has_many :sessions, Session
     has_many :created_invitations, Invitation
@@ -22,13 +25,16 @@ defmodule Aph.Accounts.User do
   def changeset(user, attrs) do
     user
     |> cast(attrs, [:email, :username, :password])
-    |> validate_required([:email, :username, :password])
+    |> validate_required([:email, :username, :password, :admin, :mod])
     |> validate_format(:email, ~r/^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,10}$/)
     |> validate_length(:password, min: 6)
     |> unique_constraint(:email)
     |> unique_constraint(:username)
     |> put_hashed_password
   end
+
+  def admin?(user), do: user.admin
+  def mod?(user), do: user.mod
 
   defp put_hashed_password(
          %Ecto.Changeset{valid?: true, changes: %{password: password}} = changeset

@@ -34,6 +34,7 @@ defmodule Aph.Accounts do
   def create_user(attrs \\ %{}, code) do
     invitation = Repo.get_by(Invitation, code: code)
     is_required = Application.get_env(:aph, :require_invitations)
+    user_count = Repo.one(from(u in User, select: count()))
 
     cond do
       # Basically rubber-stamp the registration if the appropriate config option
@@ -41,6 +42,7 @@ defmodule Aph.Accounts do
       !is_required ->
         %User{}
         |> User.changeset(attrs)
+        |> Ecto.Changeset.change(admin: user_count == 0)
         |> Repo.insert()
 
       !code ->
