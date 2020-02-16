@@ -15,8 +15,8 @@ defmodule Aph.Accounts.User do
 
     has_many :avatars, Avatar
     has_many :sessions, Session
-    has_many :created_invitations, Invitation
-    has_one :used_invitation, Invitation
+    has_many :created_invitations, Invitation, foreign_key: :created_by
+    has_one :used_invitation, Invitation, foreign_key: :used_by
 
     timestamps()
   end
