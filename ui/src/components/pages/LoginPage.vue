@@ -24,7 +24,12 @@
         type="checkbox"
         class="text--vmid"
       >
-      <span class="text--vmid">Remember me</span>
+      <span
+        class="text--vmid remember"
+        @click="toggleRememberMe"
+      >
+        Remember me
+      </span>
     </fieldset>
 
     <button
@@ -35,6 +40,12 @@
     </button>
   </form>
 </template>
+
+<style>
+.remember:hover {
+  cursor: pointer;
+}
+</style>
 
 <script>
 import router from '../../router'
@@ -48,19 +59,26 @@ export default {
       remember: false
     }
   },
+
   computed: {
     loading () {
       return this.$store.state.loading
     }
   },
+
   beforeMount () {
     if (this.$store.state.user) { router.back() }
   },
+
   methods: {
     submitForm (e) {
       e.preventDefault()
       let { username, password, remember } = this
       this.$store.dispatch('login', { username, password, remember })
+    },
+
+    toggleRememberMe () {
+      this.remember = !this.remember
     }
   }
 }
