@@ -1,7 +1,7 @@
 {
   "name": "tometo",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.3.0",
   "sideEffects": false,
   "browserslist": "> 0.25%, not dead",
   "postcss": {
