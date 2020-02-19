@@ -7,9 +7,12 @@ const Dotenv = require('dotenv-webpack')
 const grp = new GitRevisionPlugin()
 
 module.exports = {
-  entry: ['./ui/src/index.js'],
+  entry: {
+    index: './ui/src/index.js',
+    admin: './ui/src/admin.js'
+  },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     chunkFilename: '[name].bundle.js',
     path: path.resolve(__dirname, '../dist')
   },
