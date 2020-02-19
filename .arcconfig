@@ -1,5 +1,5 @@
 {
-  "phabricator.uri": "https://marisa.cloud",
+  "phabricator.uri": "https://git.tometo.org",
   "history.immutable": false,
   "arc.land.onto.default": "master",
   "base": "git:merge-base(origin/master), arc:prompt"

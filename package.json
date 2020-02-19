@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://marisa.cloud/source/tometo.git"
+    "url": "https://git.tometo.org/source/tometo.git"
   },
   "dependencies": {
     "@babel/core": "^7.4.5",

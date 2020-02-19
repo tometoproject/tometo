@@ -11,8 +11,8 @@ and [Vuex](https://vuex.vuejs.org) for state management.
 
 ## Quick Links
 
-- **All current tasks:** https://marisa.cloud/tag/tometo/
-- **Create a new Tometo task:** https://marisa.cloud/maniphest/task/edit/form/1/
+- **All current tasks:** https://git.tometo.org/tag/tometo/
+- **Create a new Tometo task:** https://git.tometo.org/maniphest/task/edit/form/1/
 - **Documentation:** https://docs.tometo.org
 
 ## Reporting Issues

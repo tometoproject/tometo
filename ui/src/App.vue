@@ -33,8 +33,8 @@
       <span v-else>{{ version }}</span>
       • <a
         class="footer__link"
-        href="https://marisa.cloud/source/tometo"
-      >github</a>
+        href="https://git.tometo.org/source/tometo"
+      >source</a>
     </section>
   </div>
 </template>
