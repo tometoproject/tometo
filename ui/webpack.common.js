@@ -7,7 +7,7 @@ const Dotenv = require('dotenv-webpack')
 const grp = new GitRevisionPlugin()
 
 module.exports = {
-  entry: ['babel-polyfill', './ui/src/index.js'],
+  entry: ['./ui/src/index.js'],
   output: {
     filename: 'bundle.js',
     chunkFilename: '[name].bundle.js',
