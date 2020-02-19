@@ -3,6 +3,7 @@ node_modules/
 npm-debug.log
 dist/*
 !dist/index.html
+!dist/admin.html
 serve_dist/
 .cache/
 stats.json
