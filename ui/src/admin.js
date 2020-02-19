@@ -1,1 +1,5 @@
-console.log('hey!!!!!!!!!!!!!!')
+import Vue from 'vue'
+
+Vue.config.productionTip = false
+
+new Vue().$mount('#content')
