@@ -2,7 +2,7 @@
   <div class="container">
     <header class="navbar mt-2">
       <section class="navbar-section">
-        <a href="/admin" class="navbar-brand text-bold">Tometo Admin</a>
+        <router-link to="/admin" class="navbar-brand text-bold">Tometo Admin</router-link>
       </section>
     </header>
     <main class="container columns">
