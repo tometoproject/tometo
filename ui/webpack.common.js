@@ -6,42 +6,42 @@ const GitRevisionPlugin = require('git-revision-webpack-plugin')
 const Dotenv = require('dotenv-webpack')
 const grp = new GitRevisionPlugin()
 
-module.exports = {
-  entry: {
-    index: './ui/src/index.js',
-    admin: './ui/src/admin.js'
+const commonModuleRules = [
+  {
+    test: /\.vue$/,
+    loader: 'vue-loader'
   },
+  {
+    test: /\.js$/,
+    loader: 'babel-loader',
+    exclude: /node_modules/
+  },
+  {
+    test: /\.css$/,
+    exclude: /node_modules/,
+    use: [
+      MiniCssExtractPlugin.loader,
+      { loader: 'css-loader', options: { url: false, sourceMap: true, importLoaders: 1 } },
+      { loader: 'postcss-loader' }
+    ]
+  },
+  {
+    test: /\.toml$/,
+    loader: 'raw-loader',
+    exclude: /node_modules/
+  }
+]
+
+module.exports = [{
+  name: 'index',
+  entry: './ui/src/index.js',
   output: {
-    filename: '[name].js',
-    chunkFilename: '[name].bundle.js',
+    filename: 'index.js',
+    chunkFilename: '[name].index.js',
     path: path.resolve(__dirname, '../dist')
   },
   module: {
-    rules: [
-      {
-        test: /\.vue$/,
-        loader: 'vue-loader'
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.css$/,
-        exclude: /node_modules/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          { loader: 'css-loader', options: { url: false, sourceMap: true, importLoaders: 1 } },
-          { loader: 'postcss-loader' }
-        ]
-      },
-      {
-        test: /\.toml$/,
-        loader: 'raw-loader',
-        exclude: /node_modules/
-      }
-    ]
+    rules: commonModuleRules
   },
   plugins: [
     new VueLoaderPlugin(),
@@ -54,4 +54,19 @@ module.exports = {
     }),
     new Dotenv()
   ]
-}
+}, {
+  name: 'admin',
+  entry: './ui/src/admin.js',
+  output: {
+    filename: 'admin.js',
+    chunkFilename: '[name].admin.js',
+    path: path.resolve(__dirname, '../dist')
+  },
+  module: {
+    rules: commonModuleRules
+  },
+  plugins: [
+    new VueLoaderPlugin(),
+    new Dotenv()
+  ]
+}]
