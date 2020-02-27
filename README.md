@@ -15,6 +15,31 @@ and [Vuex](https://vuex.vuejs.org) for state management.
 - **Create a new Tometo task:** https://git.tometo.org/maniphest/task/edit/form/1/
 - **Documentation:** https://docs.tometo.org
 
+## Local Installation
+
+Installation is easy! All you have to do is set up
+[Vagrant](https://vagrantup.com) on your computer, download the repository
+either via Git or as a [ZIP
+file](https://github.com/tometoproject/tometo/archive/master.zip), and then run
+the following in the downloaded folder:
+
+``` sh
+vagrant up
+# After that's done:
+vagrant ssh
+```
+
+This will put you in a small virtual machine that has Tometo running in it. The
+best part is that the content in your downloaded folder automatically
+synchronizes with your virtual machine! If you just want to run Tometo, type:
+
+``` sh
+script/watch
+```
+
+For more installation information, see our [installation
+docs](https://docs.tometo.org/installation.html).
+
 ## Reporting Issues
 
 Please follow our [documentation on reporting a bug](https://docs.tometo.org/contributing/bug.html)!
