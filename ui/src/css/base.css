@@ -1,4 +1,4 @@
-@import 'https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700&display=swap';
+@import 'https://fontlibrary.org/face/libre-baskerville';
 
 html {
   font: 16px/180% var(--font-sans);
