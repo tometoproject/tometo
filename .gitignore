@@ -4,6 +4,7 @@ npm-debug.log
 dist/*
 !dist/index.html
 !dist/admin.html
+!dist/fonts/
 serve_dist/
 .cache/
 stats.json

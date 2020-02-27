@@ -1,6 +1,3 @@
-@import 'https://fontlibrary.org/face/merriweather';
-@import 'https://fontlibrary.org/face/inter-ui';
-
 html {
   font: 16px/180% var(--font-sans);
   text-size-adjust: none;
