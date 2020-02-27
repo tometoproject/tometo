@@ -9,8 +9,8 @@
   --c-darkgray: #aaa;
   --c-red: #ff4136;
   --c-orange: #ff851b;
-  --font-serif: 'Libre Baskerville', 'DejaVu Serif', 'Bitstream Vera Serif', 'Georgia', serif;
-  --font-sans: sans-serif;
+  --font-serif: 'Merriweather', 'DejaVu Serif', 'Bitstream Vera Serif', 'Georgia', serif;
+  --font-sans: 'InterRegular', sans-serif;
   --font-monospace: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Consolas', monospace;
 }
 
