@@ -7,5 +7,5 @@ npx eslint ui/src/ --ext .js,.vue
 
 cd aph
 mix deps.get
-mix format --dry-run
+mix format --check-formatted
 mix credo
