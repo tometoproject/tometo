@@ -6,6 +6,7 @@ npm i --no-progress
 npx eslint ui/src/ --ext .js,.vue
 
 cd aph
+mix local.rebar --force
 mix deps.get
 mix format --check-formatted
 mix credo --strict --all
