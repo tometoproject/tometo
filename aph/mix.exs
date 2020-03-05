@@ -47,7 +47,8 @@ defmodule Aph.MixProject do
       {:sentry, "~> 7.2"},
       {:phauxth, "~> 2.3"},
       {:uuid, "~> 1.1"},
-      {:ex_doc, "~> 0.21", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.21", only: :dev, runtime: false},
+      {:credo, "~> 1.2", only: :dev, runtime: false}
     ]
   end
 
