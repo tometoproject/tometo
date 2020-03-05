@@ -1,4 +1,8 @@
 defmodule Aph.Accounts.Session do
+  @moduledoc """
+  The Session model.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
   alias Aph.Accounts.User

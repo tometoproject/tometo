@@ -1,4 +1,8 @@
 defmodule AphWeb.Auth do
+  @moduledoc """
+  Convenience module to access auth methods.
+  """
+
   alias Aph.Accounts
 
   def create_session(%Plug.Conn{assigns: %{current_user: %{id: user_id}}}) do
@@ -7,6 +11,10 @@ defmodule AphWeb.Auth do
 end
 
 defmodule AphWeb.Auth.Login do
+  @moduledoc """
+  Authenticates against a username and password.
+  """
+
   alias Aph.Accounts
 
   def authenticate(%{username: username, password: password}) do
@@ -19,10 +27,14 @@ defmodule AphWeb.Auth.Login do
 end
 
 defmodule AphWeb.Auth.Token do
+  @moduledoc """
+  "Encrypts" and "verifies" authenticity of a user-given token.
+  """
+
   @behaviour Phauxth.Token
 
-  alias Phoenix.Token
   alias AphWeb.Endpoint
+  alias Phoenix.Token
 
   @token_salt "user auth"
 

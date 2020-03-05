@@ -8,4 +8,4 @@ npx eslint ui/src/ --ext .js,.vue
 cd aph
 mix deps.get
 mix format --check-formatted
-mix credo
+mix credo --strict

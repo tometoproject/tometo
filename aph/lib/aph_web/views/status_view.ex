@@ -1,7 +1,7 @@
 defmodule AphWeb.StatusView do
   use AphWeb, :view
-  alias AphWeb.StatusView
   alias AphWeb.AvatarView
+  alias AphWeb.StatusView
 
   def render("index.json", %{statuses: statuses}) do
     render_many(statuses, StatusView, "status.json")
