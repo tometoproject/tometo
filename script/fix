@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+npx eslint ui/src/ --ext .js,.vue --fix
+cd aph
+mix format
+
+echo "Formatted source files!"
