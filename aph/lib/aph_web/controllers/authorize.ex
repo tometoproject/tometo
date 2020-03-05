@@ -1,4 +1,12 @@
 defmodule AphWeb.Authorize do
+  @moduledoc """
+  Plugs that help verify that the user is logged in, or in a certain role.
+
+  This is used to check whether the logged in user (automatically set by phauxth)
+  has sufficient permission to access a route/action, or whether they're logged in
+  at all.
+  """
+
   import Plug.Conn
   import Phoenix.Controller
 

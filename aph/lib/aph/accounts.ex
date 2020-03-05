@@ -1,4 +1,9 @@
 defmodule Aph.Accounts do
+  @moduledoc """
+  Context for things that are closely related to a user, such as login sessions
+  and invitations.
+  """
+
   import Ecto.Query, warn: false
   alias Aph.Repo
 
@@ -6,9 +11,9 @@ defmodule Aph.Accounts do
   # USERS
   #
 
-  alias Aph.Accounts.User
-  alias Aph.Accounts.Session
   alias Aph.Accounts.Invitation
+  alias Aph.Accounts.Session
+  alias Aph.Accounts.User
 
   def list_users do
     Repo.all(User)

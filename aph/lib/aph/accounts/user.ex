@@ -1,9 +1,13 @@
 defmodule Aph.Accounts.User do
+  @moduledoc """
+  The User model.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
-  alias Aph.Main.Avatar
-  alias Aph.Accounts.Session
   alias Aph.Accounts.Invitation
+  alias Aph.Accounts.Session
+  alias Aph.Main.Avatar
 
   schema "users" do
     field :email, :string

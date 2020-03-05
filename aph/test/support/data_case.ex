@@ -1,4 +1,6 @@
 defmodule Aph.DataCase do
+  alias Ecto.Adapter.SQL.Sandbox
+
   @moduledoc """
   This module defines the setup for tests requiring
   access to the application's data layer.
@@ -28,10 +30,10 @@ defmodule Aph.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Aph.Repo)
+    :ok = Sandbox.checkout(Aph.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Aph.Repo, {:shared, self()})
+      Sandbox.mode(Aph.Repo, {:shared, self()})
     end
 
     :ok

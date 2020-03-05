@@ -1,4 +1,8 @@
 defmodule Aph.Accounts.Invitation do
+  @moduledoc """
+  The Invitation model.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
   alias Aph.Accounts.User

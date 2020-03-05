@@ -3,10 +3,10 @@ defmodule AphWeb.SessionController do
 
   import AphWeb.Authorize
 
-  alias Phauxth.Remember
   alias Aph.Accounts
   alias Aph.Accounts.Session
   alias AphWeb.Auth.Login
+  alias Phauxth.Remember
 
   action_fallback AphWeb.FallbackController
 

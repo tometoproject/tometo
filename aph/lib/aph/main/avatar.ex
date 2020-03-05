@@ -1,8 +1,12 @@
 defmodule Aph.Main.Avatar do
+  @moduledoc """
+  The Avatar model.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
-  alias Aph.Main.Status
   alias Aph.Accounts.User
+  alias Aph.Main.Status
 
   schema "avatars" do
     field :gender, :string

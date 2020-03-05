@@ -1,4 +1,8 @@
 defmodule Aph.Main.Status do
+  @moduledoc """
+  The Status model.
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
   alias Aph.Main.Avatar
