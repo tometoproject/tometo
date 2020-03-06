@@ -11,7 +11,7 @@
     }
   },
   "scripts": {
-    "analyzebundle": "webpack --config webpack.dev.js --profile --json > stats.json && webpack-bundle-analyzer stats.json"
+    "analyzebundle": "webpack --config ui/webpack.dev.js --profile --json > stats.json && webpack-bundle-analyzer stats.json"
   },
   "repository": {
     "type": "git",
