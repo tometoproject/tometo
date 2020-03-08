@@ -4,6 +4,7 @@ defmodule Aph.QA.Answer do
   """
 
   use Ecto.Schema
+  import Ecto.Changeset
   alias Aph.Main.Avatar
   alias Aph.QA.Question
 

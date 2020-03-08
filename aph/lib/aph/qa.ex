@@ -15,6 +15,11 @@ defmodule Aph.QA do
 
   def get_question(id), do: Repo.get!(Question, id)
 
+  def create_question(attrs \\ {}) do
+    changeset = %Question{} |> Question.changeset(attrs)
+    Repo.insert(changeset)
+  end
+
   #
   # ANSWERS
   #
