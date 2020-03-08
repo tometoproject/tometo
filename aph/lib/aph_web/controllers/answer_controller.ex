@@ -43,4 +43,9 @@ defmodule AphWeb.AnswerController do
       conn |> put_status(:created) |> render(:answer, answer: answer)
     end
   end
+
+  def show(conn, %{"id" => id}) do
+    answer = QA.get_answer(id)
+    render(conn, :answer, answer: answer)
+  end
 end

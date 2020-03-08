@@ -35,5 +35,6 @@ defmodule AphWeb.Router do
     get "/questions/:id", QuestionController, :show
 
     post "/answers", AnswerController, :create
+    get "/answers/:id", AnswerController, :show
   end
 end
