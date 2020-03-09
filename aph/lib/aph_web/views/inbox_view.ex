@@ -10,6 +10,7 @@ defmodule AphWeb.InboxView do
   def render("inbox.json", %{inbox: inbox}) do
     %{
       id: inbox.id,
+      answered: inbox.answered,
       question: render_one(inbox.question, QuestionView, "question.json"),
       user_id: inbox.user_id
     }

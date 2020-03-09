@@ -6,7 +6,7 @@ defmodule AphWeb.AnswerView do
       id: answer.id,
       content: answer.content,
       avatar_id: answer.avatar_id,
-      question_id: answer.question_id
+      inbox_id: answer.inbox_id
     }
   end
 end

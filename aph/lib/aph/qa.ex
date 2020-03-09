@@ -48,8 +48,14 @@ defmodule Aph.QA do
   def get_inbox(id), do: Repo.get!(Inbox, id)
 
   def create_inbox(attrs \\ {}) do
-    changeset = %Inbox{} |> Inbox.changeset(attrs)
+    changeset = %Inbox{} |> Inbox.creation_changeset(attrs)
     Repo.insert(changeset)
+  end
+
+  def update_inbox(%Inbox{} = inbox, attrs) do
+    inbox
+    |> Inbox.changeset(attrs)
+    |> Repo.update()
   end
 
   def delete_inbox(%Inbox{} = inbox) do

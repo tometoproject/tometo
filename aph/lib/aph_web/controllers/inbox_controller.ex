@@ -12,7 +12,8 @@ defmodule AphWeb.InboxController do
 
   action_fallback AphWeb.FallbackController
 
-  plug :user_check when action in [:delete, :show, :show_for_user]
+  plug :user_check when action in [:show, :show_for_user]
+  plug :admin_check when action in [:delete]
 
   def show_for_user(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"id" => id}) do
     if user.id != String.to_integer(id) do

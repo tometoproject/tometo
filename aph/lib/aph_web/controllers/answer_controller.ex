@@ -16,7 +16,7 @@ defmodule AphWeb.AnswerController do
 
   def create(%Plug.Conn{assigns: %{current_user: user}} = conn, %{
         "content" => content,
-        "question_id" => question_id
+        "inbox_id" => inbox_id
       }) do
     av = Repo.one(from(a in Avatar, where: a.user_id == ^user.id))
     if !av do
@@ -26,8 +26,8 @@ defmodule AphWeb.AnswerController do
       |> render(:insufficient_input, message: "Create an avatar first!")
     end
 
-    question = Repo.get(Question, question_id)
-    if !question do
+    inbox = Repo.get(Inbox, inbox_id)
+    if !inbox do
       conn
       |> put_status(:bad_request)
       |> put_view(AphWeb.ErrorView)
@@ -37,9 +37,10 @@ defmodule AphWeb.AnswerController do
     answer = %{
       content: content,
       avatar_id: av.id,
-      question_id: question.id
+      inbox_id: inbox.id
     }
-    with {:ok, answer} <- QA.create_answer(answer) do
+    with {:ok, answer} <- QA.create_answer(answer),
+         {:ok, _} <- QA.update_inbox(inbox, %{answered: true}) do
       conn |> put_status(:created) |> render(:answer, answer: answer)
     end
   end
