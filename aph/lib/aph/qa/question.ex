@@ -8,6 +8,8 @@ defmodule Aph.QA.Question do
 
   schema "questions" do
     field :content, :string
+
+    timestamps()
   end
 
   @doc false

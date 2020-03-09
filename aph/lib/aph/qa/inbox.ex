@@ -10,6 +10,8 @@ defmodule Aph.QA.Inbox do
   schema "inboxes" do
     belongs_to :question, Question
     belongs_to :user, User
+
+    timestamps()
   end
 
   @doc false
