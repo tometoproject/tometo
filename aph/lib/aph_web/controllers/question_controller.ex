@@ -1,4 +1,12 @@
 defmodule AphWeb.QuestionController do
+  @moduledoc """
+  The Question controller.
+
+  Questions are pretty simple, they're just entities with a content field. They're
+  not even associated with a user (not right now, at least, but probably later on).
+  Only admins can create questions.
+  """
+
   use AphWeb, :controller
 
   import AphWeb.Authorize

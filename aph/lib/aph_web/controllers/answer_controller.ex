@@ -1,4 +1,9 @@
 defmodule AphWeb.AnswerController do
+  @moduledoc """
+  The Answer controller.
+
+  Answers are created based on an Inbox. They're also connected to a User's Avatar.
+  """
   use AphWeb, :controller
 
   import AphWeb.Authorize

@@ -1,4 +1,14 @@
 defmodule AphWeb.InboxController do
+  @moduledoc """
+  The Inbox controller.
+
+  Inboxes represent either unanswered or answered questions related to a single user.
+  They don't actually contain any of the specifics an answer would have. They're
+  created automatically by background processing whenever a new question is created,
+  which is why there's not a lot in this controller — really the only thing that you
+  can do with them that's public-facing is get their details.
+  """
+
   use AphWeb, :controller
 
   import AphWeb.Authorize
