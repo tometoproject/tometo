@@ -15,6 +15,7 @@ defmodule AphWeb.Router do
     get "/", DefaultController, :index
     post "/users", UserController, :create
     get "/users/:id/invitations", InvitationController, :for_user
+    get "/users/:id/inboxes", InboxController, :show_for_user
     get "/users/:id/poll", UserController, :poll
 
     post "/sessions", SessionController, :create
@@ -36,5 +37,7 @@ defmodule AphWeb.Router do
 
     post "/answers", AnswerController, :create
     get "/answers/:id", AnswerController, :show
+
+    delete "/inboxes/:id", InboxController, :delete
   end
 end
