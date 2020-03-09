@@ -5,10 +5,6 @@ defmodule Aph.Accounts.User do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias Aph.Accounts.Invitation
-  alias Aph.Accounts.Session
-  alias Aph.Main.Avatar
-  alias Aph.QA.Inbox
 
   schema "users" do
     field :email, :string
@@ -18,11 +14,11 @@ defmodule Aph.Accounts.User do
     field :admin, :boolean, default: false
     field :mod, :boolean, default: false
 
-    has_many :avatars, Avatar
-    has_many :sessions, Session
-    has_many :inboxes, Inbox
-    has_many :created_invitations, Invitation, foreign_key: :created_by
-    has_one :used_invitation, Invitation, foreign_key: :used_by
+    has_many :avatars, Aph.Main.Avatar
+    has_many :sessions, Aph.Accounts.Session
+    has_many :inboxes, Aph.QA.Inbox
+    has_many :created_invitations, Aph.Accounts.Invitation, foreign_key: :created_by
+    has_one :used_invitation, Aph.Accounts.Invitation, foreign_key: :used_by
 
     timestamps()
   end

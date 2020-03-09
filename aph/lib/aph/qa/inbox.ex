@@ -5,12 +5,10 @@ defmodule Aph.QA.Inbox do
 
   use Ecto.Schema
   import Ecto.Changeset
-  import Aph.Accounts.User
-  import Aph.QA.Question
 
   schema "inboxes" do
     belongs_to :question, Aph.QA.Question
-    belongs_to :user, User
+    belongs_to :user, Aph.Accounts.User
 
     timestamps()
   end

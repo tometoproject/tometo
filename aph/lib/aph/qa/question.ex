@@ -5,11 +5,10 @@ defmodule Aph.QA.Question do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias Aph.QA.Inbox
 
   schema "questions" do
     field :content, :string
-    has_many :inboxes, Inbox
+    has_many :inboxes, Aph.QA.Inbox
 
     timestamps()
   end

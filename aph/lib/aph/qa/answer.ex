@@ -5,14 +5,12 @@ defmodule Aph.QA.Answer do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias Aph.Main.Avatar
-  alias Aph.QA.Question
 
   schema "answers" do
     field :content, :string
 
-    belongs_to :question, Question
-    belongs_to :avatar, Avatar
+    belongs_to :question, Aph.QA.Question
+    belongs_to :avatar, Aph.Main.Avatar
 
     timestamps()
   end
