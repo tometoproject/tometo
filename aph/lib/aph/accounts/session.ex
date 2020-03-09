@@ -5,13 +5,12 @@ defmodule Aph.Accounts.Session do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias Aph.Accounts.User
 
   @max_age 864_400
 
   schema "sessions" do
     field :expires_at, :utc_datetime
-    belongs_to :user, User
+    belongs_to :user, Aph.Accounts.User
 
     timestamps()
   end

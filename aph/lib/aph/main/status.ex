@@ -5,12 +5,11 @@ defmodule Aph.Main.Status do
 
   use Ecto.Schema
   import Ecto.Changeset
-  alias Aph.Main.Avatar
 
   schema "statuses" do
     field :content, :string
     field :related_status_id, :id
-    belongs_to :avatar, Avatar
+    belongs_to :avatar, Aph.Main.Avatar
 
     timestamps()
   end
