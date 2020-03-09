@@ -4,10 +4,10 @@ defmodule AphWeb.AnswerController do
   import AphWeb.Authorize
   import Ecto.Query
 
+  alias Aph.Main.Avatar
   alias Aph.QA
   alias Aph.QA.Answer
   alias Aph.QA.Question
-  alias Aph.Main.Avatar
   alias Aph.Repo
 
   action_fallback AphWeb.FallbackController
@@ -19,6 +19,7 @@ defmodule AphWeb.AnswerController do
         "inbox_id" => inbox_id
       }) do
     av = Repo.one(from(a in Avatar, where: a.user_id == ^user.id))
+
     if !av do
       conn
       |> put_status(:bad_request)
@@ -27,6 +28,7 @@ defmodule AphWeb.AnswerController do
     end
 
     inbox = Repo.get(Inbox, inbox_id)
+
     if !inbox do
       conn
       |> put_status(:bad_request)
@@ -39,6 +41,7 @@ defmodule AphWeb.AnswerController do
       avatar_id: av.id,
       inbox_id: inbox.id
     }
+
     with {:ok, answer} <- QA.create_answer(answer),
          {:ok, _} <- QA.update_inbox(inbox, %{answered: true}) do
       conn |> put_status(:created) |> render(:answer, answer: answer)

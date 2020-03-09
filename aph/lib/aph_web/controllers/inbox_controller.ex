@@ -4,11 +4,11 @@ defmodule AphWeb.InboxController do
   import AphWeb.Authorize
   import Ecto.Query
 
-  alias Aph.Repo
+  alias Aph.Accounts.User
   alias Aph.QA
   alias Aph.QA.Inbox
   alias Aph.QA.Question
-  alias Aph.Accounts.User
+  alias Aph.Repo
 
   action_fallback AphWeb.FallbackController
 
