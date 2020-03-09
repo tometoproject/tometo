@@ -8,6 +8,7 @@ defmodule Aph.Accounts.User do
   alias Aph.Accounts.Invitation
   alias Aph.Accounts.Session
   alias Aph.Main.Avatar
+  alias Aph.QA.Inbox
 
   schema "users" do
     field :email, :string
@@ -19,6 +20,7 @@ defmodule Aph.Accounts.User do
 
     has_many :avatars, Avatar
     has_many :sessions, Session
+    has_many :inboxes, Inbox
     has_many :created_invitations, Invitation, foreign_key: :created_by
     has_one :used_invitation, Invitation, foreign_key: :used_by
 
