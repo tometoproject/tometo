@@ -15,8 +15,6 @@ defmodule AphWeb.InboxController do
   plug :user_check when action in [:delete, :show, :show_for_user]
 
   def show_for_user(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"id" => id}) do
-    IO.puts id
-    IO.puts user.id
     if user.id != String.to_integer(id) do
       conn
       |> put_status(:unauthorized)
