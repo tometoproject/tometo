@@ -17,7 +17,7 @@ defmodule AphWeb.InvitationController do
 
     conn
     |> put_status(:ok)
-    |> render(:show, invitation)
+    |> render(:show, invitation: invitation)
   end
 
   def create(%Plug.Conn{assigns: %{current_user: user}} = conn, _attrs) do
