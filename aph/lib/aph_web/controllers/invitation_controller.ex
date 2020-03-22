@@ -39,7 +39,7 @@ defmodule AphWeb.InvitationController do
       with {:ok, %Invitation{} = invitation} <- Accounts.create_invitation(inv) do
         conn
         |> put_status(:created)
-        |> render(:show, invitation)
+        |> render(:show, invitation: invitation)
       end
     end
   end
@@ -47,6 +47,6 @@ defmodule AphWeb.InvitationController do
   def for_user(%Plug.Conn{assigns: %{current_user: user}} = conn, _attrs) do
     query = from(i in Invitation, where: i.created_by == ^user.id, preload: :used_user)
     invitations = Repo.all(query)
-    render(conn, :for_user, invitations)
+    render(conn, :for_user, invitations: invitations)
   end
 end
