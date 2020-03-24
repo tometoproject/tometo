@@ -1,14 +1,14 @@
-  // Performs a request and parses the result. Takes a single argument with the
-  // request options:
-  // - method: The HTTP method
-  // - url: The API path you want to query, without the hostname (e.g. '/api/dosomething')
-  // - isMultipart?: Unsets the content-type header if true
-  // - headers?: Additional HTTP headers
-  // - body?: The HTTP body, if sending a POST or PUT request
-  // Either resolves with the returned JSON body or rejects with an error message when
-  // something outside of the 200 range has been returned.
+// Performs a request and parses the result. Takes a single argument with the
+// request options:
+// - method: The HTTP method
+// - url: The API path you want to query, without the hostname (e.g. '/api/dosomething')
+// - isMultipart?: Unsets the content-type header if true
+// - headers?: Additional HTTP headers
+// - body?: The HTTP body, if sending a POST or PUT request
+// Either resolves with the returned JSON body or rejects with an error message when
+// something outside of the 200 range has been returned.
 export async function request (opts) {
-  let requestOptions = {
+  const requestOptions = {
     method: opts.method,
     headers: { 'Content-Type': 'application/json', ...opts.headers },
     credentials: 'include'

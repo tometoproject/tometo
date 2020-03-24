@@ -10,7 +10,7 @@
     invitations = res.data
     limit = res.limit
   }).catch(err => {
-    errorFlash.set('Unable to load invitations!')
+    errorFlash.set(`Unable to load invitations: ${err}`)
     redirect('/')
   })
 
@@ -19,7 +19,7 @@
       const invitation = await createInvitation()
       invitations = [invitation, ...invitations]
     } catch (e) {
-      errorFlash.set('Error when trying to create an invitation!')
+      errorFlash.set(`Error when trying to create an invitation: ${e}`)
     }
   }
 </script>

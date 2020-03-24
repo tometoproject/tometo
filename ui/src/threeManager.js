@@ -45,7 +45,7 @@ class ThreeManager {
     this.loader.load(model, gltf => {
       // Center the camera on the loaded model
       const box = new THREE.Box3()
-      let boxVec = new THREE.Vector3()
+      const boxVec = new THREE.Vector3()
       box.setFromObject(gltf.scene)
       box.getCenter(boxVec)
       this.camera.position.copy(boxVec)

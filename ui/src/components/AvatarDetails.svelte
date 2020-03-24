@@ -7,7 +7,7 @@
   export let gender
 
   const dispatch = createEventDispatcher()
-  let pics = {
+  const pics = {
     pic1: '',
     pic2: ''
   }
@@ -35,7 +35,7 @@
   }
 
   function picCycle () {
-    let reader = new FileReader()
+    const reader = new FileReader()
     reader.addEventListener('load', () => {
       imagePreview = reader.result
     })
@@ -171,6 +171,7 @@
   {#if interval}
     <img
       src={imagePreview}
+      alt="Preview of your generated Avatar"
       height=150
     />
   {/if}

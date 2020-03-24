@@ -23,8 +23,8 @@
     bind:speed
     bind:language
     bind:gender
-    on:updatePic1={e => pic1 = e.detail}
-    on:updatePic2={e => pic2 = e.detail}
+    on:updatePic1={e => (pic1 = e.detail)}
+    on:updatePic2={e => (pic2 = e.detail)}
     />
 
   <button disabled={loading} on:click|preventDefault={submitForm}>

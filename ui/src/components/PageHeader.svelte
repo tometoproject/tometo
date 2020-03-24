@@ -21,7 +21,12 @@
 <nav role="navigation" aria-label="main navigation">
   <span class="nav__subnav">
     <a href="/" class="link--no-underline">
-      <img class="nav__brandimg img--vmid" width=50 src="https://tometo.org/img/tome.png" />
+      <img
+        class="nav__brandimg img--vmid"
+        alt="Tometo logo"
+        width=50
+        src="https://tometo.org/img/tome.png"
+      />
       <p class="nav__brand">
         tometo alpha
         {#if isDevelopment}<span class="nav__brand--small nav__brand--is-dev">(development)</span>{/if}
@@ -45,7 +50,7 @@
     {:else}
       Logged in as&nbsp; <strong>{$user.username}</strong>&nbsp;|&nbsp;
       <strong><a href="/user/invitations">Invitations</a></strong>&nbsp;|&nbsp;
-      <strong><a class="link" on:click={doLogout}>Log out</a></strong>
+      <strong><a class="link" href="/" on:click|preventDefault={doLogout}>Log out</a></strong>
     {/if}
   </span>
 </nav>

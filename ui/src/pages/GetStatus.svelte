@@ -1,10 +1,11 @@
 <script>
-  export let params
   import { onMount } from 'svelte'
   import { getStatus } from '../actions'
   import { redirect } from '../utils'
   import { errorFlash } from '../stores'
   import StatusDisplay from '../components/StatusDisplay.svelte'
+
+  export let params
 
   let timestamps, pic1, pic2, audioUrl, avatarName
   let loading = true
@@ -20,7 +21,7 @@
       document.title = `${status.avatar.name}'s Status - Tometo`
       loading = false
     }).catch(err => {
-      errorFlash.set('Unable to load status!')
+      errorFlash.set(`Unable to load status: ${err}`)
       redirect('/')
     })
   })

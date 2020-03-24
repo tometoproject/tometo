@@ -3,7 +3,7 @@ import navaid from 'navaid'
 import * as stores from '../stores'
 
 export async function createAvatar ({ name, pitch, speed, language, gender, pic1, pic2 }) {
-  let formdata = new FormData()
+  const formdata = new FormData()
   formdata.set('name', name)
   formdata.set('pitch', pitch)
   formdata.set('speed', speed)

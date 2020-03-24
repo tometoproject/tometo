@@ -1,6 +1,6 @@
 {
-  "name": "tome-svelte",
-  "version": "0.0.1",
+  "name": "tometo",
+  "version": "0.3.0",
   "postcss": {
     "plugins": {
       "postcss-media-variables": {}
@@ -10,6 +10,13 @@
     "concurrently": "^5.1.0",
     "css-loader": "^3.4.2",
     "envalid": "^6.0.1",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-svelte3": "^2.7.3",
     "mini-css-extract-plugin": "^0.9.0",
     "navaid": "^1.1.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",

@@ -1,14 +1,15 @@
 <script>
+  import { onMount, onDestroy } from 'svelte'
+  import ThreeManager from '../threeManager'
+
   export let timestamps
   export let pic1
   export let pic2
   export let audioUrl
   export let name
   export let id
-  import { onMount, onDestroy } from 'svelte'
-  import ThreeManager from '../threeManager'
 
-  let audio = {
+  const audio = {
     ctx: null,
     src: null,
     analyzer: null,
@@ -17,15 +18,15 @@
     isLoud: null,
     playing: false
   }
-  let text = {
+  const text = {
     words: [],
     unplayed: [],
     played: [],
     interval: null,
     index: 0
   }
-  let three = new ThreeManager()
-  let loaded = {
+  const three = new ThreeManager()
+  const loaded = {
     audio: false,
     json: false
   }
@@ -84,12 +85,12 @@
   }
 
   function getVolume () {
-    let array = new Uint8Array(audio.analyzer.fftSize)
+    const array = new Uint8Array(audio.analyzer.fftSize)
     audio.analyzer.getByteTimeDomainData(array)
 
     let average = 0
     for (let i = 0; i < array.length; i++) {
-      let a = Math.abs(array[i] - 128)
+      const a = Math.abs(array[i] - 128)
       average += a
     }
 
@@ -145,8 +146,8 @@
 
 <div class="grid grid--gap grid--2-50">
   <canvas id={`avatar${id}`} style="width: 100%; min-height: 100%;">
-    <img id={`${id}pic1`} style="display: none;" crossOrigin src={pic1} />
-    <img id={`${id}pic2`} style="display: none;" crossOrigin src={pic2} />
+    <img id={`${id}pic1`} style="display: none;" alt="Avatar state 1" crossOrigin src={pic1} />
+    <img id={`${id}pic2`} style="display: none;" alt="Avatar state 2" crossOrigin src={pic2} />
   </canvas>
   <div>
     <span class="button button--vmid button--fullwidth" on:click={togglePlaying}>

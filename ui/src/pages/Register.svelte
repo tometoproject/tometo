@@ -4,15 +4,16 @@
 
   let username = ''
   let password = ''
-  // Breaking with naming conventions here due to convenience when it comes to submitting the
-  // API request — this is the key name the API expects.
-  let password_confirmation = ''
+  let passwordConfirmation = ''
   let email = ''
   let loading = false
 
   async function submitForm () {
     loading = true
-    await register({ username, password, password_confirmation, email }, params.code)
+    // Breaking with naming conventions here due to convenience when it comes to submitting the
+    // API request — this is the key name the API expects.
+    /* eslint-disable camelcase */
+    await register({ username, password, password_confirmation: passwordConfirmation, email }, params.code)
     loading = false
   }
 </script>
@@ -37,7 +38,7 @@
 
   <fieldset>
     <label>Confirm Password</label>
-    <input bind:value={password_confirmation} type="password" />
+    <input bind:value={passwordConfirmation} type="password" />
   </fieldset>
 
   <button disabled={loading} on:click|preventDefault={submitForm}>
