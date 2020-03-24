@@ -39,6 +39,7 @@ img.img--avatar-small {
   border-style: solid dashed;
   border-color: var(--c-black);
   padding: 1rem 0;
+  margin-bottom: 5px;
 }
 
 .flash--info {

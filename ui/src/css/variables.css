@@ -1,0 +1,39 @@
+/* merriweather-regular - latin */
+@font-face {
+  font-family: 'Merriweather';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Merriweather Regular'), local('Merriweather-Regular'),
+       url('../fonts/merriweather-v21-latin-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/merriweather-v21-latin-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Inter Regular'), local('Inter-Regular'),
+       url('../fonts/Inter-Regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/Inter-Regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+:root {
+  --c-black: #252525;
+  --c-yellow: #ff6;
+  --c-white: #fff;
+  --c-blue: #00f;
+  --c-lightblue: #6491ff;
+  --c-lightgray: #eee;
+  --c-gray: #d5d5d5;
+  --c-darkgray: #aaa;
+  --c-red: #ff4136;
+  --c-orange: #ff851b;
+  --font-serif: 'Merriweather', 'DejaVu Serif', 'Bitstream Vera Serif', 'Georgia', serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-monospace: 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Consolas', monospace;
+  --medium-max-width: 54em;
+  --small-max-width: 26em;
+}
+
+@custom-media --bp-medium (max-width: var(--medium-max-width));
+@custom-media --bp-small (max-width: var(--small-max-width));
