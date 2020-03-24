@@ -3,7 +3,7 @@
 set -e
 
 npm i --no-progress
-npx eslint ui/src/ --ext .js,.vue
+npx eslint ui/src/ --ext .js,.svelte
 
 cd aph
 mix local.rebar --force

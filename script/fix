@@ -2,7 +2,7 @@
 
 set -e
 
-npx eslint ui/src/ --ext .js,.vue --fix
+npx eslint ui/src/ --ext .js,.svelte --fix
 cd aph
 mix format
 

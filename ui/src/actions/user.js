@@ -15,6 +15,7 @@ export async function login (user) {
     stores.sessionId.set(data.session_id)
     navaid().route('/')
     stores.infoFlash.set('Successfully logged in!')
+    return poll()
   }, error => {
     stores.errorFlash.set(error)
   })

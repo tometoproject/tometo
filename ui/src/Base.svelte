@@ -17,6 +17,7 @@
   export let router = navaid()
   let route
   let routeParams
+  let version = process.version
   const prod = process.env.T_ENV === 'production'
 
   router
@@ -68,6 +69,6 @@
   <svelte:component this={route} bind:params={routeParams} />
 </section>
 <section class="footer">
-  running tome-svelte  process.version{#if !prod}-dev{/if}
-  • <a href="https://marisa.cloud/aun/tome-svelte" class="footer__link">source</a>
+  running tome-svelte {version}{#if !prod}-dev{/if}
+  • <a href="https://git.tometo.org/source/tometo" class="footer__link">source</a>
 </section>

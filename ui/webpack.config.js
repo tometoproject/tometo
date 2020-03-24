@@ -4,7 +4,7 @@ const path = require('path')
 const CssExtractPlugin = require('mini-css-extract-plugin')
 const TerserWebpackPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const { version } = require('./package.json')
+const { version } = require('../package.json')
 
 const env = envalid.cleanEnv(process.env, {
   T_FRONTEND_URL: envalid.url({ default: 'http://localhost:1234' }),
@@ -16,7 +16,7 @@ const env = envalid.cleanEnv(process.env, {
 
 let replacedStrings = {
   'process.browser': true,
-  'process.version': version
+  'process.version': JSON.stringify(version)
 }
 
 for (let name in env) {
@@ -75,17 +75,17 @@ module.exports = {
   name: 'bundle',
   entry: {
     main: {
-      import: './src/main.build.js',
+      import: './ui/src/main.build.js',
       dependOn: 'shared'
     },
     admin: {
-      import: './src/admin.build.js'
+      import: './ui/src/admin.build.js'
     },
     shared: ['three']
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'public/build')
+    path: path.resolve(__dirname, 'ui/public/build')
   },
   ...commonOptions
 }
