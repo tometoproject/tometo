@@ -14,12 +14,12 @@ const env = envalid.cleanEnv(process.env, {
   T_GENERATE_BUNDLE_VISUALIZATION: envalid.bool({ default: false })
 }, { strict: true })
 
-let replacedStrings = {
+const replacedStrings = {
   'process.browser': true,
   'process.version': JSON.stringify(version)
 }
 
-for (let name in env) {
+for (const name in env) {
   replacedStrings[`process.env.${name}`] = JSON.stringify(env[name])
 }
 
@@ -85,7 +85,7 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'ui/public/build')
+    path: path.resolve(__dirname, 'public/build')
   },
   ...commonOptions
 }
