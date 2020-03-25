@@ -3,7 +3,7 @@
 set -e
 
 echo "Building frontend"
-npx webpack --config ui/webpack.prod.js
+T_ENV=production npx webpack --config ui/webpack.config.js
 
 echo "Building backend"
 cd aph; mix release

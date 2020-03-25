@@ -2,23 +2,6 @@
   shell:
     cmd: /home/vagrant/tometo/script/localsetup
 
-- name: Check if .env exists
-  stat: path=/vagrant/.env
-  register: env
-
-- name: Copy .env.example to .env
-  copy:
-    src: /vagrant/.env.example
-    dest: /vagrant/.env
-  when: not env.stat.exists
-
-- name: Configure .env
-  lineinfile:
-    path: /vagrant/.env
-    regexp: '^T_INVITATIONS_REQUIRED'
-    line: T_INVITATIONS_REQUIRED={{ tometo_require_invitations }}
-  when: not env.stat.exists
-
 - name: Check if config.exs exists
   stat: path=/vagrant/aph/config/config.exs
   register: config

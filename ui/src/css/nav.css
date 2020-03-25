@@ -50,14 +50,14 @@ nav {
 
 @media (--bp-small) {
   nav {
-	padding: 0 30px;
+    padding: 0 30px;
   }
 
   .nav__brand {
-	display: none;
+    display: none;
   }
 
   .nav__item {
-	line-height: 22.4px;
+    line-height: 22.4px;
   }
 }

@@ -1,10 +1,7 @@
 # ui
 node_modules/
 npm-debug.log
-dist/*
-!dist/index.html
-!dist/admin.html
-!dist/fonts/
+ui/public/build/
 serve_dist/
 .cache/
 stats.json
