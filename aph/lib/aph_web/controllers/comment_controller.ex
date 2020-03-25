@@ -52,6 +52,7 @@ defmodule AphWeb.CommentController do
         conn
         |> put_status(:created)
         |> render(:comment, comment: comment)
+
       {:error, err} ->
         conn
         |> put_status(:internal_server_error)
@@ -78,6 +79,7 @@ defmodule AphWeb.CommentController do
       {:ok, %Comment{} = comment} ->
         conn
         |> render(:comment, comment: comment)
+
       {:error, err} ->
         conn
         |> put_status(:internal_server_error)

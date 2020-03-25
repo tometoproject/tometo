@@ -6,9 +6,9 @@ defmodule Aph.QA do
   alias Aph.Repo
 
   alias Aph.QA.Answer
+  alias Aph.QA.Comment
   alias Aph.QA.Inbox
   alias Aph.QA.Question
-  alias Aph.QA.Comment
 
   #
   # QUESTIONS
