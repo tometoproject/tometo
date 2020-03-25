@@ -1,8 +1,8 @@
-defmodule AphWeb.AnswerController do
+defmodule AphWeb.CommentController do
   @moduledoc """
-  The Answer controller.
+  The Comment controller.
 
-  Answers are created based on an Inbox. They're also connected to a User's Avatar.
+  Comments can be attached to an answer, but can be related to a different user.
   """
   use AphWeb, :controller
 
@@ -12,7 +12,7 @@ defmodule AphWeb.AnswerController do
   alias Aph.Main.Avatar
   alias Aph.QA
   alias Aph.QA.Answer
-  alias Aph.QA.Question
+  alias Aph.QA.Comment
   alias Aph.Repo
 
   action_fallback AphWeb.FallbackController
@@ -21,7 +21,7 @@ defmodule AphWeb.AnswerController do
 
   def create(%Plug.Conn{assigns: %{current_user: user}} = conn, %{
         "content" => content,
-        "inbox_id" => inbox_id
+        "answer_id" => answer_id
       }) do
     av = Repo.one(from(a in Avatar, where: a.user_id == ^user.id))
 
@@ -32,29 +32,31 @@ defmodule AphWeb.AnswerController do
       |> render(:insufficient_input, message: "Create an avatar first!")
     end
 
-    inbox = QA.get_inbox(inbox_id)
+    answer = QA.get_answer(answer_id)
 
-    if !inbox do
+    if !answer do
       conn
       |> put_status(:bad_request)
       |> put_view(AphWeb.ErrorView)
-      |> render(:invalid_input, message: "You attempted to answer a nonexistent question!")
+      |> render(:invalid_input, message: "You attempted to comment on a nonexistent answer!")
     end
 
-    answer = %{
+    comment = %{
       content: content,
-      avatar_id: av.id,
-      inbox_id: inbox.id
+      answer_id: answer.id,
+      avatar_id: av.id
     }
 
-    with {:ok, answer} <- QA.create_answer(answer),
-         {:ok, _} <- QA.update_inbox(inbox, %{answered: true}) do
-      conn |> put_status(:created) |> render(:answer, answer: answer)
+    case QA.create_comment(comment) do
+      {:ok, %Comment{} = comment} ->
+        conn
+        |> put_status(:created)
+        |> render(:comment, comment: comment)
+      {:error, err} ->
+        conn
+        |> put_status(:internal_server_error)
+        |> put_view(AphWeb.ErrorView)
+        |> render(:internal_error, message: err)
     end
-  end
-
-  def show(conn, %{"id" => id}) do
-    answer = QA.get_answer(id)
-    render(conn, :answer, answer: answer)
   end
 end

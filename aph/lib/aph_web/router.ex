@@ -39,5 +39,7 @@ defmodule AphWeb.Router do
     get "/answers/:id", AnswerController, :show
 
     delete "/inboxes/:id", InboxController, :delete
+
+    post "/comments", CommentController, :create
   end
 end
