@@ -87,8 +87,15 @@ defmodule AphWeb.AvatarController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
+  def delete(%Plug.Conn{assigns: %{current_user: user}}, %{"id" => id}) do
     avatar = Main.get_avatar(id)
+
+    if !avatar or avatar.user_id != user.id do
+      conn
+      |> put_status(:unauthorized)
+      |> put_view(AphWeb.ErrorView)
+      |> render(:no_auth)
+    end
 
     with {:ok, %Avatar{}} <- Main.delete_avatar(avatar) do
       send_resp(conn, :no_content, "")

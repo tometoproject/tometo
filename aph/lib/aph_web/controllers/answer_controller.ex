@@ -32,7 +32,7 @@ defmodule AphWeb.AnswerController do
       |> render(:insufficient_input, message: "Create an avatar first!")
     end
 
-    inbox = Repo.get(Inbox, inbox_id)
+    inbox = QA.get_inbox(inbox_id)
 
     if !inbox do
       conn

@@ -6,6 +6,7 @@ defmodule Aph.QA do
   alias Aph.Repo
 
   alias Aph.QA.Answer
+  alias Aph.QA.Comment
   alias Aph.QA.Inbox
   alias Aph.QA.Question
 
@@ -13,7 +14,7 @@ defmodule Aph.QA do
   # QUESTIONS
   #
 
-  def get_question(id), do: Repo.get!(Question, id)
+  def get_question(id), do: Repo.get(Question, id)
 
   def create_question(attrs \\ {}) do
     changeset = %Question{} |> Question.changeset(attrs)
@@ -24,7 +25,7 @@ defmodule Aph.QA do
   # ANSWERS
   #
 
-  def get_answer(id), do: Repo.get!(Answer, id)
+  def get_answer(id), do: Repo.get(Answer, id)
 
   def create_answer(attrs \\ {}) do
     changeset = %Answer{} |> Answer.changeset(attrs)
@@ -45,7 +46,7 @@ defmodule Aph.QA do
   # INBOXES
   #
 
-  def get_inbox(id), do: Repo.get!(Inbox, id)
+  def get_inbox(id), do: Repo.get(Inbox, id)
 
   def create_inbox(attrs \\ {}) do
     changeset = %Inbox{} |> Inbox.creation_changeset(attrs)
@@ -60,5 +61,26 @@ defmodule Aph.QA do
 
   def delete_inbox(%Inbox{} = inbox) do
     Repo.delete(inbox)
+  end
+
+  #
+  # COMMENTS
+  #
+
+  def get_comment(id), do: Repo.get(Comment, id)
+
+  def create_comment(attrs \\ {}) do
+    changeset = %Comment{} |> Comment.changeset(attrs)
+    Repo.insert(changeset)
+  end
+
+  def update_comment(%Comment{} = comment, attrs) do
+    comment
+    |> Comment.update_changeset(attrs)
+    |> Repo.update()
+  end
+
+  def delete_comment(%Comment{} = comment) do
+    Repo.delete(comment)
   end
 end
