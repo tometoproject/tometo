@@ -59,4 +59,46 @@ defmodule AphWeb.CommentController do
         |> render(:internal_error, message: err)
     end
   end
+
+  def update(%Plug.Conn{assigns: %{current_user: user}} = conn, %{
+        "id" => id,
+        "content" => content
+      }) do
+    av = Repo.one(from(a in Avatar, where: a.user_id == ^user.id))
+    comment = QA.get_comment(id)
+
+    if !comment or !av or comment.avatar_id != av.id do
+      conn
+      |> put_status(:unauthorized)
+      |> put_view(AphWeb.ErrorView)
+      |> render(:no_auth)
+    end
+
+    case QA.update_comment(comment, %{content: content}) do
+      {:ok, %Comment{} = comment} ->
+        conn
+        |> render(:comment, comment: comment)
+      {:error, err} ->
+        conn
+        |> put_status(:internal_server_error)
+        |> put_view(AphWeb.ErrorView)
+        |> render(:internal_error, message: err)
+    end
+  end
+
+  def delete(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"id" => id}) do
+    av = Repo.one(from(a in Avatar, where: a.user_id == ^user.id))
+    comment = QA.get_comment(id)
+
+    if !av or !comment or comment.avatar_id != av.id do
+      conn
+      |> put_status(:unauthorized)
+      |> put_view(AphWeb.ErrorView)
+      |> render(:no_auth)
+    end
+
+    with {:ok, %Comment{}} <- QA.delete_comment(comment) do
+      send_resp(conn, :no_content, "")
+    end
+  end
 end

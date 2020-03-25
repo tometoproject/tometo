@@ -76,7 +76,7 @@ defmodule Aph.QA do
 
   def update_comment(%Comment{} = comment, attrs) do
     comment
-    |> Comment.changeset(attrs)
+    |> Comment.update_changeset(attrs)
     |> Repo.update()
   end
 

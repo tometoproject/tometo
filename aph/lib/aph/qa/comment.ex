@@ -22,4 +22,12 @@ defmodule Aph.QA.Comment do
     |> validate_required([:content, :answer_id, :avatar_id])
     |> validate_length(:content, max: 500)
   end
+
+  @doc false
+  def update_changeset(comment, attrs) do
+    comment
+    |> cast(attrs, [:content])
+    |> validate_required([:content])
+    |> validate_length(:content, max: 500)
+  end
 end
