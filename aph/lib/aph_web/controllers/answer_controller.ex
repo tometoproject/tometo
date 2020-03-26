@@ -11,8 +11,6 @@ defmodule AphWeb.AnswerController do
 
   alias Aph.Main.Avatar
   alias Aph.QA
-  alias Aph.QA.Answer
-  alias Aph.QA.Question
   alias Aph.Repo
 
   action_fallback AphWeb.FallbackController

@@ -11,7 +11,6 @@ defmodule AphWeb.CommentController do
 
   alias Aph.Main.Avatar
   alias Aph.QA
-  alias Aph.QA.Answer
   alias Aph.QA.Comment
   alias Aph.Repo
 
