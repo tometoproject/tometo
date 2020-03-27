@@ -1,14 +1,10 @@
 {
   "name": "tometo",
   "version": "0.3.0",
-  "postcss": {
-    "plugins": {
-      "postcss-media-variables": {}
-    }
-  },
   "devDependencies": {
     "concurrently": "^5.1.0",
     "css-loader": "^3.4.2",
+    "cssnano": "^4.1.10",
     "envalid": "^6.0.1",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.1",
@@ -21,8 +17,8 @@
     "navaid": "^1.1.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss": "^7.0.27",
-    "postcss-load-config": "^2.1.0",
-    "postcss-media-variables": "^2.0.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.7.0",
     "svelte": "^3.19.2",
     "svelte-loader": "^2.13.6",
     "terser-webpack-plugin": "^2.3.5",

@@ -60,7 +60,8 @@ const commonOptions = {
         test: /\.css$/,
         use: [
           { loader: CssExtractPlugin.loader },
-          { loader: 'css-loader', options: { url: false } }
+          { loader: 'css-loader', options: { url: false, importLoaders: 1 } },
+          { loader: 'postcss-loader' }
         ]
       }
     ]
