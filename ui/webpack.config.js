@@ -58,6 +58,7 @@ const commonOptions = {
       },
       {
         test: /\.css$/,
+        exclude: /node_modules/,
         use: [
           { loader: CssExtractPlugin.loader },
           { loader: 'css-loader', options: { url: false, importLoaders: 1 } },

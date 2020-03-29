@@ -5,6 +5,7 @@
 
   let invitations = []
   let limit = 0
+  $: quota = invitations.length * (100 / limit)
 
   getInvitations().then(res => {
     invitations = res.data
@@ -17,7 +18,7 @@
   async function addInvitation () {
     try {
       const invitation = await createInvitation()
-      invitations = [invitation, ...invitations]
+      invitations = [invitation.data, ...invitations]
     } catch (e) {
       errorFlash.set(`Error when trying to create an invitation: ${e}`)
     }
@@ -26,25 +27,42 @@
 
 <h1>Invitations</h1>
 
-<div class="text--center">
-  <p>You have <strong>{limit - invitations.length}</strong> invitations left.</p>
-  <button on:click|preventDefault={addInvitation}>
+<div class="container">
+  <div class="bar">
+    <div
+      class="bar-item"
+      role="progressbar"
+      style="width:{quota}%"
+      aria-valuenow={quota}
+      aria-valuemin=0
+      aria-valuemax=100>
+      Used: {invitations.length}/{limit}
+    </div>
+  </div>
+  <div class="btn-group btn-group-block">
+  <button class="btn btn-primary" on:click|preventDefault={addInvitation}>
     New invitation
   </button>
-</div>
-
-<h2>Your invitations</h2>
-
-<div class="grid grid__outline grid--3-2-1-1">
-  <p><strong>Link</strong></p>
-  <p><strong>Status</strong></p>
-  <p><strong>Used By</strong></p>
-</div>
-
-{#each invitations as inv, key}
-  <div key={key} class="grid grid--3-2-1-1">
-    <p><a href={`${process.env.T_FRONTEND_URL}/i/${inv.code}`}>{inv.code}</a></p>
-    <p>{#if inv.used_by}USED{:else}UNUSED{/if}</p>
-    {#if inv.used_by}<p>{inv.used_by.username}</p>{/if}
   </div>
-{/each}
+</div>
+
+<div class="container">
+  <h2>Your invitations</h2>
+
+  <table class="table table-striped">
+    <thead>
+      <th><strong>Link</strong></th>
+      <th><strong>Status</strong></th>
+      <th><strong>Used By</strong></th>
+    </thead>
+    <tbody>
+      {#each invitations as inv, key}
+        <tr key={key}>
+          <td><a href={`${process.env.T_FRONTEND_URL}/i/${inv.code}`}>{inv.code}</a></td>
+          <td>{#if inv.used_by}Used{:else}Unused{/if}</td>
+          {#if inv.used_by}<td>{inv.used_by.username}</td>{/if}
+        </tr>
+      {/each}
+    </tbody>
+  </table>
+</div>

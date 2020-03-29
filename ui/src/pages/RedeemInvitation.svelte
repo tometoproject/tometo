@@ -17,8 +17,10 @@
   })
 </script>
 
-<div class="text--center">
-  <h1><strong>{invitation && invitation.created_by.username}</strong> invited you to join Tometo!</h1>
-  <p>Click the button below to register using this invitation.</p>
-  <a href={registerUrl}><button>Register</button></a>
+<div class="empty">
+  <h1 class="empty-title">{invitation && invitation.created_by.username} invited you to join Tometo!</h1>
+  <p class="empty-subtitle">Click the button below to register using this invitation.</p>
+  <div class="empty-action">
+    <a class="btn btn-lg btn-primary" href={registerUrl}>Join</a>
+  </div>
 </div>

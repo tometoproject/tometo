@@ -38,6 +38,6 @@
     audioUrl={audioUrl}
     name={avatarName}
   />
-  <h2>Comments</h2>
+  <h2 class="mt-2">Comments</h2>
   <!-- Pretend there's something here -->
 {/if}

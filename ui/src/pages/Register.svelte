@@ -21,27 +21,27 @@
 <form on:keydown.enter={submitForm}>
   <h1>Register</h1>
 
-  <fieldset>
-    <label>Username</label>
-    <input bind:value={username} type="text" />
+  <fieldset class="form-group">
+    <label class="form-label label-lg">Username</label>
+    <input class="form-input input-lg" bind:value={username} type="text" />
   </fieldset>
 
-  <fieldset>
-    <label>Email</label>
-    <input bind:value={email} type="text" />
+  <fieldset class="form-group">
+    <label class="form-label label-lg">Email</label>
+    <input class="form-input input-lg" bind:value={email} type="text" />
   </fieldset>
 
-  <fieldset>
-    <label>Password</label>
-    <input bind:value={password} type="password" />
+  <fieldset class="form-group">
+    <label class="form-label label-lg">Password</label>
+    <input class="form-input input-lg" bind:value={password} type="password" />
   </fieldset>
 
-  <fieldset>
-    <label>Confirm Password</label>
-    <input bind:value={passwordConfirmation} type="password" />
+  <fieldset class="form-group">
+    <label class="form-label label-lg">Confirm Password</label>
+    <input class="form-input input-lg" bind:value={passwordConfirmation} type="password" />
   </fieldset>
 
-  <button disabled={loading} on:click|preventDefault={submitForm}>
+  <button class="btn btn-primary btn-lg" disabled={loading} on:click|preventDefault={submitForm}>
     Submit
   </button>
 </form>

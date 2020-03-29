@@ -1,4 +1,10 @@
-/* merriweather-regular - latin */
+@import 'spectre.css';
+@import 'base.css';
+@import 'nav.css';
+@import 'form.css';
+@import 'button.css';
+@import 'misc.css';
+
 @font-face {
   font-family: 'Merriweather';
   font-style: normal;
@@ -18,15 +24,19 @@
 }
 
 :root {
-  --c-black: #252525;
+  --c-black: #4a4a4a;
   --c-yellow: #ff6;
   --c-white: #fff;
   --c-blue: #00f;
   --c-lightblue: #6491ff;
-  --c-lightgray: #eee;
+  --c-lightgray: #fafafa;
   --c-gray: #d5d5d5;
   --c-darkgray: #aaa;
-  --c-red: #ff4136;
+  --c-red: #ff4036;
+  --c-light-red: #ff635b;
+  --c-very-light-red: #ff8b85;
+  --c-dark-red: #ea1308;
+  --c-very-dark-red: #b40a01;
   --c-orange: #ff851b;
   --font-serif: 'Merriweather', 'DejaVu Serif', 'Bitstream Vera Serif', 'Georgia', serif;
   --font-sans: 'Inter', sans-serif;
@@ -34,6 +44,11 @@
   --medium-max-width: 54em;
   --small-max-width: 26em;
 }
+
+.gray { color: var(--c-gray); }
+.blue { color: var(--c-blue); }
+.lightblue { color: var(--c-lightblue); }
+.text-underline { text-decoration: underline; }
 
 @custom-media --bp-medium (max-width: var(--medium-max-width));
 @custom-media --bp-small (max-width: var(--small-max-width));

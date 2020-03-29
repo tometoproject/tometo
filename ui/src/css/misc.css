@@ -1,68 +1,15 @@
-.color--blue {
-  color: var(--c-lightblue);
+.color-dev {
+  color: var(--c-red);
 }
 
-.text--lhdefault {
-  line-height: 180%;
+.color-stage {
+  color: var(--c-yellow);
 }
 
-.text--vmid {
-  vertical-align: middle;
+.bar {
+  height: 1rem;
 }
 
-.text--small {
-  font-size: 0.7rem;
-}
-
-img.img--centered {
-  text-align: center;
-  margin: 0 auto;
-  display: block;
-}
-
-img.img--vmid {
-  vertical-align: middle;
-}
-
-img.img--avatar {
-  max-height: 400px;
-}
-
-img.img--avatar-small {
-  max-height: 200px;
-}
-
-.flash {
-  width: 100%;
-  text-align: center;
-  border-width: 1px;
-  border-style: solid dashed;
-  border-color: var(--c-black);
-  padding: 1rem 0;
-  margin-bottom: 5px;
-}
-
-.flash--info {
-  border-color: var(--c-blue);
-}
-
-.flash--error {
-  border-color: var(--c-red);
-}
-
-.banner {
-  width: 100%;
-  padding: 10px 0;
-  text-align: center;
-  background-color: var(--c-orange);
-  color: var(--c-white);
-}
-
-.footer {
-  text-align: center;
-  color: var(--c-darkgray);
-}
-
-.footer__link {
-  opacity: 0.5;
+.bar .bar-item {
+  background-color: var(--c-very-light-red);
 }

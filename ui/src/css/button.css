@@ -1,42 +1,9 @@
-button,
-.button {
-  font-family: var(--font-serif);
-  border: 1px var(--c-blue);
-  border-style: solid dashed;
-  padding: 7px 10px;
-  background: transparent;
-  font-size: 16px;
-  color: var(--c-blue);
-  font-weight: bold;
-  transition: .1s all;
+.btn.btn-primary {
+  background-color: var(--c-red);
+  border-color: var(--c-light-red);
 }
 
-button:hover,
-.button:hover {
-  cursor: pointer;
-  text-decoration: underline;
-  color: var(--c-lightblue);
-  border-color: var(--c-lightblue);
-}
-
-button[disabled],
-.button[disabled]{
-  color: var(--c-gray);
-  border-color: var(--c-gray);
-  cursor: default;
-}
-
-button[disabled]:hover,
-.button[disabled]:hover {
-  text-decoration: none;
-}
-
-.button--fullwidth {
-  width: 100%;
-  text-align: center;
-  display: block;
-}
-
-.button--vmid {
-  vertical-align: middle;
+.btn.btn-primary:hover {
+  background-color: var(--c-dark-red);
+  border-color: var(--c-dark-red);
 }

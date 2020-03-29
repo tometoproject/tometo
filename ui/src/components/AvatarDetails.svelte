@@ -45,17 +45,19 @@
   }
 </script>
 
-<fieldset>
-  <label>Name</label>
+<fieldset class="form-group">
+  <label class="form-label label-lg">Name</label>
   <input
+    class="form-input input-lg"
     bind:value={name}
     type="text"
   />
 </fieldset>
 
-<fieldset>
-  <label>Pitch <i>Number from -20 to 20</i></label>
+<fieldset class="form-group">
+  <label class="form-label label-lg">Pitch <i>Number from -20 to 20</i></label>
   <input
+    class="form-input input-lg"
     bind:value={pitch}
     type="number"
     max=20
@@ -63,9 +65,10 @@
   />
 </fieldset>
 
-<fieldset>
-  <label>Speed <i>Number from (0.25 to 4.0)</i></label>
+<fieldset class="form-group">
+  <label class="form-label label-lg">Speed <i>Number from (0.25 to 4.0)</i></label>
   <input
+    class="form-input input-lg"
     bind:value={speed}
     type="number"
     min=0.25

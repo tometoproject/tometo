@@ -18,39 +18,38 @@
   </div>
 {/if}
 
-<nav role="navigation" aria-label="main navigation">
-  <span class="nav__subnav">
-    <a href="/" class="link--no-underline">
+<nav role="navigation" aria-label="main navigation" class="navbar main-nav container">
+  <section class="navbar-section">
+    <a href="/" class="navbar-brand btn btn-link">
       <img
-        class="nav__brandimg img--vmid"
+        class="v-mid"
         alt="Tometo logo"
-        width=50
+        width=29
         src="https://tometo.org/img/tome.png"
       />
-      <p class="nav__brand">
-        tometo alpha
-        {#if isDevelopment}<span class="nav__brand--small nav__brand--is-dev">(development)</span>{/if}
-        {#if isStaging}<span class="nav__brand--small nav__brand--is-stage">(staging)</span>{/if}
-      </p>
+      <span class="text-bold v-mid">
+        Tometo α
+        {#if isDevelopment}<span class="color-dev">dev</span>{/if}
+        {#if isStaging}<span class="color-stage">staging</span>{/if}
+      </span>
     </a>
     {#if $user && $hasAvatar}
-      <a class="nav__item" href="/status/new">New Status</a>
+      <a class="btn btn-link" href="/status/new">New Status</a>
     {/if}
     {#if $user && !$hasAvatar}
-      <a class="nav__item" href="/avatar/new">Create Avatar</a>
+      <a class="btn btn-link" href="/avatar/new">Create Avatar</a>
     {/if}
-  </span>
-  <span class="nav__subnav">
+  </section>
+  <section class="navbar-section">
     {#if !$user}
       {#if !hasInvitationsOn}
-        <a class="nav__item" href="/register/fakeinvitation"><strong>Register</strong></a>
-        &nbsp;|&nbsp;
+        <a class="btn btn-link" href="/register/fakeinvitation"><strong>Register</strong></a>
       {/if}
-      <a class="nav__item" href="/login"><strong>Log in</strong></a>
+      <a class="btn btn-link" href="/login"><strong>Log in</strong></a>
     {:else}
-      Logged in as&nbsp; <strong>{$user.username}</strong>&nbsp;|&nbsp;
-      <strong><a href="/user/invitations">Invitations</a></strong>&nbsp;|&nbsp;
-      <strong><a class="link" href="/" on:click|preventDefault={doLogout}>Log out</a></strong>
+      <span class="item">Logged in as <span class="text-bold">{$user.username}</span></span>
+      <a class="btn btn-link text-bold" href="/user/invitations">Invitations</a>
+      <a class="btn btn-link text-bold" href="/" on:click|preventDefault={doLogout}>Log out</a>
     {/if}
-  </span>
+  </section>
 </nav>

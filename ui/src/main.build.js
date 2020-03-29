@@ -1,10 +1,4 @@
-import './css/variables.css'
-import './css/base.css'
-import './css/grid.css'
-import './css/nav.css'
-import './css/form.css'
-import './css/button.css'
-import './css/misc.css'
+import './css/main.css'
 
 import Base from './Base.svelte'
 

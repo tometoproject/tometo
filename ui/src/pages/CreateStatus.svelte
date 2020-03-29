@@ -17,12 +17,12 @@
   <h1>New Status</h1>
 
   <form on:keyup.enter={submitForm}>
-    <fieldset>
-      <label>Content</label>
-      <textarea bind:value={content} maxlength=500 type="textarea" />
+    <fieldset class="form-group">
+      <label class="form-label" for="content">Content</label>
+      <textarea class="form-input" bind:value={content} maxlength=500 name="content" type="textarea" />
     </fieldset>
 
-    <button disabled={loading} on:click|preventDefault={submitForm}>
+    <button class="btn btn-primary" disabled={loading} on:click|preventDefault={submitForm}>
       Submit
     </button>
   </form>

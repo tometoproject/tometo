@@ -16,19 +16,20 @@
 <form on:keydown.enter={submitForm}>
   <h1>Login</h1>
 
-  <fieldset>
-    <label>Username</label>
-    <input bind:value={username} type="text" />
+  <fieldset class="form-group">
+    <label class="form-label label-lg">Username</label>
+    <input class="form-input input-lg" bind:value={username} type="text" />
   </fieldset>
 
-  <fieldset>
-    <label>Password</label>
-    <input bind:value={password} type="password" />
+  <fieldset class="form-group">
+    <label class="form-label label-lg">Password</label>
+    <input class="form-input input-lg" bind:value={password} type="password" />
   </fieldset>
 
-  <fieldset>
-    <label class="text--vmid">
-      <input bind:checked={remember} type="checkbox" class="text--vmid" />
+  <fieldset class="form-group">
+    <label class="form-inline form-checkbox">
+      <input bind:checked={remember} type="checkbox" />
+      <i class="form-icon"></i>
       Remember me
     </label>
   </fieldset>

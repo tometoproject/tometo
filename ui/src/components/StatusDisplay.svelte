@@ -144,22 +144,26 @@
   })
 </script>
 
-<div class="grid grid--gap grid--2-50">
-  <canvas id={`avatar${id}`} style="width: 100%; min-height: 100%;">
+<div class="container columns">
+  <canvas class="column col-6" id={`avatar${id}`} style="min-height: 100%;">
     <img id={`${id}pic1`} style="display: none;" alt="Avatar state 1" crossOrigin src={pic1} />
     <img id={`${id}pic2`} style="display: none;" alt="Avatar state 2" crossOrigin src={pic2} />
   </canvas>
-  <div>
-    <span class="button button--vmid button--fullwidth" on:click={togglePlaying}>
-      {#if audio.playing && isLoaded}❚❚{:else if !audio.playing && isLoaded}▶{:else}侢{/if}
-    </span>
-    <p><span class="color--blue">{name}</span> says:</p>
-    <h1 class="h1--uncentered h1--nomargin">
-      <span class="text--vmid text--lhdefault color--blue">{text.played.join(' ')}</span>
-      <span class="text--vmid text--lhdefault">{text.unplayed.join(' ')}</span>
-    </h1>
-    <p class="text--small">
-      <a href={audioUrl}>🔽 Download audio</a>
-    </p>
+  <div class="column col-6 card">
+    <div class="card-header">
+      <span class="btn btn-action btn-primary" on:click={togglePlaying}>
+        {#if audio.playing && isLoaded}❚❚{:else if !audio.playing && isLoaded}▶{:else}侢{/if}
+      </span>
+      <span class="blue">{name}</span> says:
+    </div>
+    <div class="card-body">
+      <h1>
+        <span class="v-mid lightblue">{text.played.join(' ')}</span>
+        <span class="v-mid">{text.unplayed.join(' ')}</span>
+      </h1>
+    </div>
+    <div class="card-footer">
+      <a class="btn btn-sm" href={audioUrl}>🔽 Download audio</a>
+    </div>
   </div>
 </div>

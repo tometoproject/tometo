@@ -53,22 +53,28 @@
 
 <Header/>
 
-<section class="page center">
-  {#if !$cookiesAcknowledged}
-    <div class="flash flash--info" on:click={turnOffCookieNotification}>
-      We use cookies to keep you logged in, but for nothing else.<br>
-      <i>Click anywhere on this notification to close it.</i>
-    </div>
-  {/if}
-  {#if $infoFlash}
-    <div class="flash">{$infoFlash}</div>
-  {/if}
-  {#if $errorFlash}
-    <div class="flash flash--error">{$errorFlash}</div>
-  {/if}
-  <svelte:component this={route} bind:params={routeParams} />
+<section class="container columns">
+  <div class="column col-3 col-xl-2 hide-md"></div>
+  <div class="column col-6 col-xl-8 col-md-12">
+    {#if !$cookiesAcknowledged}
+      <div class="toast" on:click={turnOffCookieNotification}>
+        We use cookies to keep you logged in, but for nothing else.<br>
+        <i>Click anywhere on this notification to close it.</i>
+      </div>
+    {/if}
+    {#if $infoFlash}
+      <div class="toast">{$infoFlash}</div>
+    {/if}
+    {#if $errorFlash}
+      <div class="toast toast-error">{$errorFlash}</div>
+    {/if}
+    <main>
+      <svelte:component this={route} bind:params={routeParams} />
+    </main>
+  </div>
+  <div class="column col-3 col-xl-2 hide-md"></div>
 </section>
-<section class="footer">
+<footer class="gray text-center">
   running Tometo {version}{#if !prod}-dev{/if}
-  • <a href="https://git.tometo.org/source/tometo" class="footer__link">source</a>
-</section>
+  • <a href="https://git.tometo.org/source/tometo" class="text-underline gray">source</a>
+</footer>
