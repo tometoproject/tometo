@@ -77,9 +77,9 @@
   />
 </fieldset>
 
-<fieldset>
-  <label>Language</label>
-  <select bind:value={language}>
+<fieldset class="form-group">
+  <label class="form-label label-lg">Language</label>
+  <select class="form-select input-lg" bind:value={language}>
     <option value="ar">
       Arabic
     </option>
@@ -134,9 +134,9 @@
   </select>
 </fieldset>
 
-<fieldset>
-  <label>Voice Sound</label>
-  <select bind:value={gender}>
+<fieldset class="form-group">
+  <label class="form-label label-lg">Voice Sound</label>
+  <select class="form-select input-lg" bind:value={gender}>
     <option value="FEMALE">
       Female
     </option>
@@ -146,36 +146,36 @@
   </select>
 </fieldset>
 
-<div class="grid grid--gap grid--2-50">
-  <div>
-    <fieldset>
-      <label>Closed Mouth image</label>
-      <label>
-        <input
-          type="file"
-          accept="image/png, image/jpeg"
-          on:change={updatePic(1)}
-        />
-      </label>
+<div class="columns">
+  <div class="column col-6">
+    <fieldset class="form-group">
+      <label class="form-label label-lg">Closed Mouth image</label>
+      <input
+        class="form-input input-lg"
+        type="file"
+        accept="image/png, image/jpeg"
+        on:change={updatePic(1)}
+      />
     </fieldset>
 
-    <fieldset>
-      <label>Open Mouth image</label>
-      <label>
-        <input
-          type="file"
-          accept="image/png, image/jpeg"
-          on:change={updatePic(2)}
-        />
-      </label>
+    <fieldset class="form-group">
+      <label class="form-label label-lg">Open Mouth image</label>
+      <input
+        class="form-input input-lg"
+        type="file"
+        accept="image/png, image/jpeg"
+        on:change={updatePic(2)}
+      />
     </fieldset>
   </div>
 
   {#if interval}
-    <img
-      src={imagePreview}
-      alt="Preview of your generated Avatar"
-      height=150
-    />
+    <div class="column col-6">
+      <img
+        src={imagePreview}
+        alt="Preview of your generated Avatar"
+        height=150
+      />
+    </div>
   {/if}
 </div>

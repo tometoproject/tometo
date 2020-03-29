@@ -1,4 +1,3 @@
-@import 'spectre.css';
 @import 'base.css';
 @import 'nav.css';
 @import 'form.css';
@@ -24,14 +23,15 @@
 }
 
 :root {
-  --c-black: #4a4a4a;
+  --c-black: #303742;
   --c-yellow: #ff6;
   --c-white: #fff;
-  --c-blue: #00f;
-  --c-lightblue: #6491ff;
-  --c-lightgray: #fafafa;
+  --c-blue: #1c9aff;
+  --c-light-blue: #0ebfe8;
+  --c-dark-blue: #0e4ce8;
+  --c-light-gray: #fafafa;
   --c-gray: #d5d5d5;
-  --c-darkgray: #aaa;
+  --c-dark-gray: #aaa;
   --c-red: #ff4036;
   --c-light-red: #ff635b;
   --c-very-light-red: #ff8b85;
@@ -45,9 +45,6 @@
   --small-max-width: 26em;
 }
 
-.gray { color: var(--c-gray); }
-.blue { color: var(--c-blue); }
-.lightblue { color: var(--c-lightblue); }
 .text-underline { text-decoration: underline; }
 
 @custom-media --bp-medium (max-width: var(--medium-max-width));

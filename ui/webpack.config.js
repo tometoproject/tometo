@@ -44,7 +44,8 @@ const commonOptions = {
   } : {},
   resolve: {
     alias: {
-      svelte: path.resolve('node_modules', 'svelte')
+      svelte: path.resolve('node_modules', 'svelte'),
+      spectre: path.resolve('node_modules', 'spectre.css')
     },
     extensions: ['.mjs', '.js', '.svelte'],
     mainFields: ['svelte', 'browser', 'module', 'main']
@@ -63,6 +64,15 @@ const commonOptions = {
           { loader: CssExtractPlugin.loader },
           { loader: 'css-loader', options: { url: false, importLoaders: 1 } },
           { loader: 'postcss-loader' }
+        ]
+      },
+      {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        use: [
+          { loader: CssExtractPlugin.loader },
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          { loader: 'sass-loader' }
         ]
       }
     ]

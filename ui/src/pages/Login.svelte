@@ -34,7 +34,7 @@
     </label>
   </fieldset>
 
-  <button disabled={loading} on:click|preventDefault={submitForm}>
+  <button class="btn btn-primary" disabled={loading} on:click|preventDefault={submitForm}>
     Submit
   </button>
 </form>

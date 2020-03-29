@@ -17,5 +17,5 @@
 
 .main-nav .navbar-section a:hover {
   color: var(--c-light-red);
-  background-color: var(--c-lightgray)
+  background-color: var(--c-light-gray)
 }
