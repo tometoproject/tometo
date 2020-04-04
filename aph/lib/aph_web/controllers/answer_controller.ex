@@ -39,15 +39,31 @@ defmodule AphWeb.AnswerController do
       |> render(:invalid_input, message: "You attempted to answer a nonexistent question!")
     end
 
+    if inbox.user_id != user.id do
+      conn
+      |> put_status(:unauthorized)
+      |> put_view(AphWeb.ErrorView)
+      |> render(:no_auth)
+    end
+
     answer = %{
       content: content,
       avatar_id: av.id,
-      inbox_id: inbox.id
+      inbox_id: inbox.id,
+      question_id: inbox.question_id
     }
 
-    with {:ok, answer} <- QA.create_answer(answer),
+    Process.sleep(2000)
+
+    with {:ok, answer} <- QA.create_answer(av, answer),
          {:ok, _} <- QA.update_inbox(inbox, %{answered: true}) do
-      conn |> put_status(:created) |> render(:answer, answer: answer)
+      conn |> put_status(:created) |> render(:answer_min, answer: answer)
+    else
+      {:error, reason} ->
+        conn
+        |> put_status(:internal_server_error)
+        |> put_view(AphWeb.ErrorView)
+        |> render(:internal_error, message: reason)
     end
   end
 

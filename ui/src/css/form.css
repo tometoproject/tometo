@@ -13,10 +13,5 @@ textarea {
 
 textarea {
   width: 100%;
-  font-family: var(--font-serif);
   padding: 0.5rem 1rem;
-}
-
-button {
-  margin-top: 1rem;
 }

@@ -18,6 +18,11 @@ defmodule AphWeb.CommentController do
 
   plug :user_check when action in [:create, :update, :delete]
 
+  def show_for_answer(conn, %{"id" => id}) do
+    comments = QA.get_comments_for_answer(id)
+    conn |> render(:comments, comments: comments)
+  end
+
   def create(%Plug.Conn{assigns: %{current_user: user}} = conn, %{
         "content" => content,
         "answer_id" => answer_id
@@ -46,11 +51,11 @@ defmodule AphWeb.CommentController do
       avatar_id: av.id
     }
 
-    case QA.create_comment(comment) do
+    case QA.create_comment(av, comment) do
       {:ok, %Comment{} = comment} ->
         conn
         |> put_status(:created)
-        |> render(:comment, comment: comment)
+        |> render(:comment_simple, comment: comment)
 
       {:error, err} ->
         conn
@@ -77,7 +82,7 @@ defmodule AphWeb.CommentController do
     case QA.update_comment(comment, %{content: content}) do
       {:ok, %Comment{} = comment} ->
         conn
-        |> render(:comment, comment: comment)
+        |> render(:comment_simple, comment: comment)
 
       {:error, err} ->
         conn

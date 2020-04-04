@@ -1,0 +1,23 @@
+.card-speech-bubble {
+  border: 0;
+}
+
+.card-speech-bubble .card-body {
+  position: relative;
+  background: var(--c-mid-gray);
+  border-radius: 4px;
+}
+
+.card-speech-bubble .card-body:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0;
+  height: 0;
+  border: 20px solid transparent;
+  border-right-color: var(--c-mid-gray);
+  border-left: 0;
+  margin-top: -20px;
+  margin-left: -20px;
+}

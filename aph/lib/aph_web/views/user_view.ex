@@ -16,7 +16,10 @@ defmodule AphWeb.UserView do
     }
   end
 
-  def render("poll.json", %{has_avatar: h}) do
-    %{has_avatar: h}
+  def render("poll.json", %{has_avatar: h, inboxes: inboxes}) do
+    %{
+      has_avatar: h,
+      inboxes: inboxes
+    }
   end
 end

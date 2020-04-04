@@ -4,6 +4,8 @@ import { errorFlash } from './stores'
 export * from './actions/user'
 export * from './actions/avatar'
 export * from './actions/invitation'
+export * from './actions/qa'
+
 // This will get removed very soon so no extra file for it
 export async function createStatus (content) {
   const opts = {

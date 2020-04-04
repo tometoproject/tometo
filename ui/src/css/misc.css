@@ -6,6 +6,10 @@
   color: var(--c-yellow);
 }
 
+.card-gray-header {
+  background-color: var(--c-light-gray);
+}
+
 .bar {
   height: 1rem;
 }

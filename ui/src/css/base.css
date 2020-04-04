@@ -18,8 +18,16 @@ main {
   margin-top: 20px;
 }
 
+button {
+  margin-top: 10px;
+}
+
 .v-mid {
   vertical-align: middle;
+}
+
+.divider {
+  margin: 30px 0;
 }
 
 .no-link {

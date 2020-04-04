@@ -70,6 +70,12 @@ class ThreeManager {
     this.controls.update()
     this.renderer.render(this.scene, this.camera)
   }
+
+  destroy () {
+    this.controls.dispose()
+    this.scene.dispose()
+    this.renderer.dispose()
+  }
 }
 
 export default ThreeManager

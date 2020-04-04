@@ -64,6 +64,7 @@ export async function poll () {
   }
 
   request(opts).then(data => {
+    stores.inboxes.set(data.inboxes)
     if (data && data.has_avatar) {
       stores.hasAvatar.set(true)
     }

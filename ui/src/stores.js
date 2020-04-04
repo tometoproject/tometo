@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store'
 
 export const user = localStorageStore('user')
+export const inboxes = writable(0)
 export const sessionId = localStorageStore('sessionId')
 export const hasAvatar = writable(false)
 export const cookiesAcknowledged = localStorageStore('cookiesAcknowledged')

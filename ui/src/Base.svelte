@@ -9,10 +9,10 @@
   import Register from './pages/Register.svelte'
   import CreateAvatar from './pages/CreateAvatar.svelte'
   import CreateStatus from './pages/CreateStatus.svelte'
-  import GetStatus from './pages/GetStatus.svelte'
+  import GetAnswer from './pages/GetAnswer.svelte'
   import Invitations from './pages/Invitations.svelte'
   import RedeemInvitation from './pages/RedeemInvitation.svelte'
-  import AdminBase from './admin/AdminBase.svelte'
+  import Inbox from './pages/Inbox.svelte'
 
   export let router = navaid()
   let route
@@ -26,11 +26,10 @@
     .on('/register/:code', setRoute(Register))
     .on('/avatar/new', setRoute(CreateAvatar))
     .on('/status/new', setRoute(CreateStatus))
-    .on('/status/:id', setRoute(GetStatus))
+    .on('/answer/:id', setRoute(GetAnswer))
     .on('/user/invitations', setRoute(Invitations))
     .on('/i/:code', setRoute(RedeemInvitation))
-
-    .on('/admin', setRoute(AdminBase))
+    .on('/inbox', setRoute(Inbox))
 
   router.listen()
 

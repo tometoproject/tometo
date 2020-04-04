@@ -33,8 +33,7 @@ defmodule AphWeb.InboxController do
       |> render(:no_auth)
     end
 
-    query = from(i in Inbox, where: i.user_id == ^String.to_integer(id), preload: :question)
-    inboxes = Repo.all(query)
+    inboxes = QA.get_inbox_for_user(id)
     render(conn, :show_many, inboxes: inboxes)
   end
 

@@ -53,26 +53,30 @@ defmodule Aph.TTS do
   @doc """
   Generates a TTS message.
 
-  Takes a Aph.Main.Status and a Aph.Main.Avatar.
+  Takes a database entity, a file prefix and a Aph.Main.Avatar.
+
+  The database entity can be generic, but must at least have an ID and a `content`
+  field. The file prefix is used to prevent filename collisions, since IDs can
+  be the same across multiple database tables.
 
   First creates a temporary directory under `gentts/`, then depending on the
   TTS synthesis configuration option pulls the audio from somewhere and saves it
   in the temporary directory. Then calls TTS.align/3.
   """
-  def synthesize(status, av) do
-    File.mkdir_p!("gentts/#{status.id}")
+  def synthesize(entity, prefix, av) do
+    File.mkdir_p!("gentts/#{prefix}-#{entity.id}")
 
     if Application.get_env(:aph, :tts) == "google" do
-      synthesize_google(status, av)
+      synthesize_google(entity, prefix, av)
     else
-      synthesize_espeak(status, av)
+      synthesize_espeak(entity, prefix, av)
     end
   end
 
   @doc """
   Synthesize TTS with Google Text-to-Speech API.
   """
-  defp synthesize_google(status, av) do
+  defp synthesize_google(entity, prefix, av) do
     api_key = Application.get_env(:aph, :google_key)
     lang = @g_lang_map[String.to_atom(av.language)]
 
@@ -87,7 +91,7 @@ defmodule Aph.TTS do
 
     body =
       Jason.encode!(%{
-        input: %{text: status.content},
+        input: %{text: entity.content},
         voice: %{languageCode: lang, name: "#{lang}-Standard-#{gender_num}"},
         audioConfig: %{
           audioEncoding: "OGG_OPUS",
@@ -106,8 +110,8 @@ defmodule Aph.TTS do
            ),
          {:ok, json} <- Jason.decode(res.body),
          {:ok, content} <- Base.decode64(json["audioContent"]),
-         :ok <- File.write("gentts/#{status.id}/temp.ogg", content),
-         :ok <- align(status.id, status.content, av.language) do
+         :ok <- File.write("gentts/#{prefix}-#{entity.id}/temp.ogg", content),
+         :ok <- align(entity.id, entity.content, prefix, av.language) do
       :ok
     else
       {:error, err} -> {:tts_error, err}
@@ -117,7 +121,7 @@ defmodule Aph.TTS do
   @doc """
   Synthesizes TTS using espeak.
   """
-  defp synthesize_espeak(status, av) do
+  defp synthesize_espeak(entity, prefix, av) do
     # Since espeak doesn't accept the same values that the Google TTS api does,
     # we have to convert them from one scale to another.
     scale_pitch = (av.pitch + 20) / 40 * 99
@@ -130,20 +134,20 @@ defmodule Aph.TTS do
              "-s",
              to_string(scale_speed),
              "-w",
-             "gentts/#{status.id}/temp.wav",
-             status.content
+             "gentts/#{prefix}-#{entity.id}/temp.wav",
+             entity.content
            ]),
          {_, 0} <-
            System.cmd("ffmpeg", [
              "-i",
-             "gentts/#{status.id}/temp.wav",
+             "gentts/#{prefix}-#{entity.id}/temp.wav",
              "-c:a",
              "libopus",
              "-b:a",
              "96K",
-             "gentts/#{status.id}/temp.ogg"
+             "gentts/#{prefix}-#{entity.id}/temp.ogg"
            ]),
-         :ok <- align(status.id, status.content, av.language) do
+         :ok <- align(entity.id, entity.content, prefix, av.language) do
       :ok
     else
       {_error, 1} -> {:tts_error, "espeak failed to create audio!"}
@@ -156,8 +160,8 @@ defmodule Aph.TTS do
   Takes the name of the temporary directory.
   """
   def clean(name) do
-    with :ok <- File.cp("gentts/#{name}/out.json", "priv/static/st#{name}.json"),
-         :ok <- File.cp("gentts/#{name}/temp.ogg", "priv/static/st#{name}.ogg"),
+    with :ok <- File.cp("gentts/#{name}/out.json", "priv/static/#{name}.json"),
+         :ok <- File.cp("gentts/#{name}/temp.ogg", "priv/static/#{name}.ogg"),
          {:ok, _} <- File.rm_rf("gentts/#{name}") do
       :ok
     else
@@ -173,19 +177,19 @@ defmodule Aph.TTS do
   This shells out to `aeneas` and obtains a JSON file that contains timestamps
   of when in the audio file which word is said.
   """
-  def align(name, text, lang) do
+  def align(name, text, prefix, lang) do
     lang = @a_lang_map[String.to_atom(lang)]
 
     with :ok <-
-           File.write("gentts/#{name}/temp.txt", text |> String.split(" ") |> Enum.join("\n")),
+           File.write("gentts/#{prefix}-#{name}/temp.txt", text |> String.split(" ") |> Enum.join("\n")),
          {_, 0} <-
            System.cmd("python3", [
              "-m",
              "aeneas.tools.execute_task",
-             "gentts/#{name}/temp.ogg",
-             "gentts/#{name}/temp.txt",
+             "gentts/#{prefix}-#{name}/temp.ogg",
+             "gentts/#{prefix}-#{name}/temp.txt",
              "task_language=#{Atom.to_string(lang)}|os_task_file_format=json|is_text_type=plain",
-             "gentts/#{name}/out.json"
+             "gentts/#{prefix}-#{name}/out.json"
            ]) do
       :ok
     else

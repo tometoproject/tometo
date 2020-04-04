@@ -1,5 +1,5 @@
 <script>
-  import { user, hasAvatar } from '../stores'
+  import { user, hasAvatar, inboxes } from '../stores'
   import { logout } from '../actions'
 
   const isStaging = process.env.T_ENV === 'staging'
@@ -33,9 +33,6 @@
         {#if isStaging}<span class="color-stage">staging</span>{/if}
       </span>
     </a>
-    {#if $user && $hasAvatar}
-      <a class="btn btn-link" href="/status/new">New Status</a>
-    {/if}
     {#if $user && !$hasAvatar}
       <a class="btn btn-link" href="/avatar/new">Create Avatar</a>
     {/if}
@@ -47,7 +44,13 @@
       {/if}
       <a class="btn btn-link" href="/login"><strong>Log in</strong></a>
     {:else}
-      <span class="item">Logged in as <span class="text-bold">{$user.username}</span></span>
+      <a class="btn btn-link text-bold" href="/inbox">
+        {#if $inboxes > 0}
+          <span class="badge" data-badge={$inboxes}>Inbox</span>
+        {:else}
+          Inbox
+        {/if}
+      </a>
       <a class="btn btn-link text-bold" href="/user/invitations">Invitations</a>
       <a class="btn btn-link text-bold" href="/" on:click|preventDefault={doLogout}>Log out</a>
     {/if}

@@ -8,6 +8,7 @@
   export let audioUrl
   export let name
   export let id
+  export let isComment
 
   const audio = {
     ctx: null,
@@ -32,7 +33,7 @@
   }
 
   $: isLoaded = loaded.audio && loaded.json
-  $: statusKey = `avatar${id}`
+  $: answerKey = `avatar${id}`
 
   function initAudio () {
     audio.ctx = new window.AudioContext()
@@ -115,7 +116,7 @@
         audio.media.crossOrigin = 'anonymous'
         initAudio()
         // Prepare for loading our model and initialize more 3D stuff
-        three.initWithDefaultOptions(statusKey)
+        three.initWithDefaultOptions(answerKey)
         three.initForGLTF()
 
         // When the audio is finished loading (which always happens after timestamp loading),
@@ -141,6 +142,7 @@
 
   onDestroy(() => {
     clearInterval(text.interval)
+    three.destroy()
   })
 </script>
 
@@ -149,16 +151,16 @@
     <img id={`${id}pic1`} style="display: none;" alt="Avatar state 1" crossOrigin src={pic1} />
     <img id={`${id}pic2`} style="display: none;" alt="Avatar state 2" crossOrigin src={pic2} />
   </canvas>
-  <div class="column col-6 card">
+  <div class="column col-6 card card-speech-bubble">
     <div class="card-header">
       <span class="btn btn-action btn-primary" on:click={togglePlaying}>
         {#if audio.playing && isLoaded}❚❚{:else if !audio.playing && isLoaded}▶{:else}侢{/if}
       </span>
-      <span class="blue">{name}</span> says:
+      <span class="text-blue">{name}</span> {isComment ? 'comments' : 'answers'}:
     </div>
-    <div class="card-body">
+    <div class="card-body mt-2">
       <h1>
-        <span class="v-mid lightblue">{text.played.join(' ')}</span>
+        <span class="v-mid text-light-blue">{text.played.join(' ')}</span>
         <span class="v-mid">{text.unplayed.join(' ')}</span>
       </h1>
     </div>
