@@ -8,7 +8,6 @@
   import Login from './pages/Login.svelte'
   import Register from './pages/Register.svelte'
   import CreateAvatar from './pages/CreateAvatar.svelte'
-  import CreateStatus from './pages/CreateStatus.svelte'
   import GetAnswer from './pages/GetAnswer.svelte'
   import Invitations from './pages/Invitations.svelte'
   import RedeemInvitation from './pages/RedeemInvitation.svelte'
@@ -25,7 +24,6 @@
     .on('/login', setRoute(Login))
     .on('/register/:code', setRoute(Register))
     .on('/avatar/new', setRoute(CreateAvatar))
-    .on('/status/new', setRoute(CreateStatus))
     .on('/answer/:id', setRoute(GetAnswer))
     .on('/user/invitations', setRoute(Invitations))
     .on('/i/:code', setRoute(RedeemInvitation))

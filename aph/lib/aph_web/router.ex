@@ -24,10 +24,6 @@ defmodule AphWeb.Router do
     post "/invitations", InvitationController, :create
     get "/invitations/:code", InvitationController, :get
 
-    post "/statuses", StatusController, :create
-    get "/statuses/:id", StatusController, :show
-    get "/statuses/:id/comments", StatusController, :show_comments
-
     post "/avatars", AvatarController, :create
     get "/avatars/:id", AvatarController, :show
     put "/avatars/:id", AvatarController, :update

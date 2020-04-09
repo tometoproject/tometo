@@ -13,7 +13,6 @@ defmodule Aph.Main.Avatar do
     field :pitch, :integer
     field :speed, :float
     belongs_to :user, Aph.Accounts.User
-    has_many :statuses, Aph.Main.Status
 
     timestamps()
   end
