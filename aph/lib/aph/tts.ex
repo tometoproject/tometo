@@ -181,7 +181,10 @@ defmodule Aph.TTS do
     lang = @a_lang_map[String.to_atom(lang)]
 
     with :ok <-
-           File.write("gentts/#{prefix}-#{name}/temp.txt", text |> String.split(" ") |> Enum.join("\n")),
+           File.write(
+             "gentts/#{prefix}-#{name}/temp.txt",
+             text |> String.split(" ") |> Enum.join("\n")
+           ),
          {_, 0} <-
            System.cmd("python3", [
              "-m",

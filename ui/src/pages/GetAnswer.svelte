@@ -47,7 +47,7 @@
 {:else}
   <div class="columns">
     <div class="column col-2 v-mid">
-      <img src="https://tometo.org/img/tome.png" width=100 />
+      <img src="https://tometo.org/img/tome.png" alt="Tometo logo" width=100 />
     </div>
     <div class="column col-9 card v-mid card-speech-bubble">
       <div class="card-body">

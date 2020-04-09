@@ -5,7 +5,7 @@
 
   let inboxes = []
   let loading = true
-  let answers = []
+  const answers = []
 
   onMount(async () => {
     const res = await getInboxes()

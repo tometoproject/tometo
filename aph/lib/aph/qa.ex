@@ -79,7 +79,14 @@ defmodule Aph.QA do
   def get_inbox(id), do: Repo.get(Inbox, id)
 
   def get_inbox_for_user(user_id) do
-    Repo.all(from(i in Inbox, where: i.user_id == ^String.to_integer(user_id), where: not i.answered, preload: :question), preload: :question)
+    Repo.all(
+      from(i in Inbox,
+        where: i.user_id == ^String.to_integer(user_id),
+        where: not i.answered,
+        preload: :question
+      ),
+      preload: :question
+    )
   end
 
   def create_inbox(attrs \\ {}) do
