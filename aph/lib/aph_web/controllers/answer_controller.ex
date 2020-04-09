@@ -53,8 +53,6 @@ defmodule AphWeb.AnswerController do
       question_id: inbox.question_id
     }
 
-    Process.sleep(2000)
-
     with {:ok, answer} <- QA.create_answer(av, answer),
          {:ok, _} <- QA.update_inbox(inbox, %{answered: true}) do
       conn |> put_status(:created) |> render(:answer_min, answer: answer)
