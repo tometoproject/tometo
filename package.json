@@ -1,8 +1,12 @@
 {
   "name": "tometo",
+  "scripts": {
+    "run-f:vagrant": "webpack-dev-server --config ui/webpack.config.js --quiet --disable-host-check --host 0.0.0.0 --useLocalIp",
+    "run-f": "webpack-dev-server --config ui/webpack.config.js --quiet",
+    "run-b": "cd aph; mix phx.server"
+  },
   "version": "0.3.0",
   "devDependencies": {
-    "concurrently": "^5.1.0",
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
     "envalid": "^6.0.1",
@@ -15,6 +19,7 @@
     "eslint-plugin-svelte3": "^2.7.3",
     "mini-css-extract-plugin": "^0.9.0",
     "navaid": "^1.1.0",
+    "npm-run-all": "^4.1.5",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "postcss": "^7.0.27",
     "postcss-import": "^12.0.1",
@@ -30,5 +35,6 @@
     "webpack": "^5.0.0-beta.14",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "webpack/webpack-dev-server#8bbef6adf6ae5f6a3109ecd4a6246223d2f77cb2"
-  }
+  },
+  "dependencies": {}
 }

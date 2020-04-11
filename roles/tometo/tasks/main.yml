@@ -2,15 +2,10 @@
   shell:
     cmd: /home/vagrant/tometo/script/localsetup
 
-- name: Check if config.exs exists
-  stat: path=/vagrant/aph/config/config.exs
-  register: config
-
-- name: Create config.exs using Ansible variables if it doesn't exist
+- name: Create config.exs using Ansible variables
   template:
     src: config.exs.j2
     dest: /vagrant/aph/config/config.exs
-  when: not config.stat.exists
 
 - name: Run database setup
   shell:
