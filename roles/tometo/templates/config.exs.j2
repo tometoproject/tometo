@@ -18,6 +18,14 @@ config :aph, Aph.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+config :exq,
+  name: Exq,
+  host: "127.0.0.1",
+  port: 6379,
+  namespace: "aph:exq",
+  concurrency: 200,
+  queues: ["default"]
+
 config :aph, AphWeb.Endpoint,
   render_errors: [view: AphWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: Aph.PubSub, adapter: Phoenix.PubSub.PG2],
