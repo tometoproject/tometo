@@ -1,8 +1,14 @@
+- name: Add Redis PPA repo
+  become: yes
+  apt_repository:
+    repo: ppa:chris-lea/redis-server
+
 - name: Install Redis
   become: yes
   apt:
     name: "redis-server"
     state: present
+    update_cache: yes
 
 - name: Ensure Redis is started
   become: yes
