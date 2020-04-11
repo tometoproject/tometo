@@ -11,6 +11,10 @@
 
 - hosts: all
   roles:
+  - redis
+
+- hosts: all
+  roles:
   - postgres
 
 # Install Elixir and Erlang

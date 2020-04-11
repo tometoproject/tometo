@@ -20,7 +20,7 @@ defmodule Aph.MixProject do
   def application do
     [
       mod: {Aph.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :exq, :exq_ui, :runtime_tools]
     ]
   end
 
@@ -46,7 +46,9 @@ defmodule Aph.MixProject do
       {:httpoison, "~> 1.6"},
       {:sentry, "~> 7.2"},
       {:phauxth, "~> 2.3"},
-      {:uuid, "~> 1.1"},
+      {:elixir_uuid, "~> 1.2"},
+      {:exq, "~> 0.13.5"},
+      {:exq_ui, "~> 0.11.0"},
       {:ex_doc, "~> 0.21", only: :dev, runtime: false},
       {:credo, "~> 1.2", only: :dev, runtime: false}
     ]
