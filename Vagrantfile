@@ -7,6 +7,7 @@ Vagrant.configure("2") do |config|
   end
   config.vm.network "forwarded_port", guest: 4001, host: 4001
   config.vm.network "forwarded_port", guest: 1234, host: 1234
+  config.vm.network "forwarded_port", guest: 4040, host: 4040
   config.vm.provider "virtualbox" do |v|
     v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
   end
