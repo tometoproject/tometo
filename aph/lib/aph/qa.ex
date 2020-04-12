@@ -20,7 +20,14 @@ defmodule Aph.QA do
 
   def create_question(attrs \\ {}) do
     changeset = %Question{} |> Question.changeset(attrs)
-    Repo.insert(changeset)
+    {:ok, question} = Repo.insert(changeset)
+    users = Aph.Accounts.list_users()
+
+    Enum.each(users, fn user ->
+      Exq.enqueue(Exq, "inbox", Aph.InboxWorker, [question.id, user.id])
+    end)
+
+    {:ok, question}
   end
 
   #

@@ -19,6 +19,7 @@ defmodule Aph.QA.Inbox do
     inbox
     |> cast(attrs, [:answered, :user_id, :question_id])
     |> validate_required([:user_id, :question_id])
+    |> unique_constraint(:id)
   end
 
   def changeset(inbox, attrs) do
