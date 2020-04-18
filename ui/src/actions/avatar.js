@@ -24,6 +24,6 @@ export async function createAvatar ({ name, pitch, speed, language, gender, pic1
     stores.infoFlash.set(`Avatar ${data.name} created!`)
     navaid().route('/')
   }).catch(err => {
-    stores.errorFlash.set(err)
+    stores.errorFlash.set(err.message)
   })
 }

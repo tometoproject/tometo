@@ -12,7 +12,7 @@
     registerUrl = `/register/${invitation.code}`
   }).catch(err => {
     errorFlash.set('Unable to load invitation! Check if you have the right code.')
-    console.error('Invitation error:', err)
+    console.error('Invitation error:', err.message)
     redirect('/')
   })
 </script>

@@ -11,7 +11,7 @@
     invitations = res.data
     limit = res.limit
   }).catch(err => {
-    errorFlash.set(`Unable to load invitations: ${err}`)
+    errorFlash.set(`Unable to load invitations: ${err.message}`)
     redirect('/')
   })
 

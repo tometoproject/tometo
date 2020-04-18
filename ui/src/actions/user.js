@@ -17,7 +17,7 @@ export async function login (user) {
     stores.infoFlash.set('Successfully logged in!')
     return poll()
   }, error => {
-    stores.errorFlash.set(error)
+    stores.errorFlash.set(error.message)
   })
 }
 
@@ -32,7 +32,7 @@ export async function register (user, code) {
     navaid().route('/')
     stores.infoFlash.set('Successfully registered! You can log in now.')
   }).catch(err => {
-    stores.errorFlash.set(err)
+    stores.errorFlash.set(err.message)
   })
 }
 
@@ -47,7 +47,7 @@ export async function logout () {
     stores.user.clear()
     stores.infoFlash.set('Successfully logged out!')
   }).catch(error => {
-    stores.errorFlash.set(error)
+    stores.errorFlash.set(error.message)
   })
 }
 
@@ -68,8 +68,10 @@ export async function poll () {
     if (data && data.has_avatar) {
       stores.hasAvatar.set(true)
     }
-  }).catch(() => {
-    stores.user.clear()
-    stores.sessionId.clear()
+  }).catch(e => {
+    if ([401, 403].includes(e.status)) {
+      stores.user.clear()
+      stores.sessionId.clear()
+    }
   })
 }

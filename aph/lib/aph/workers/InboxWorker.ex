@@ -4,10 +4,10 @@ defmodule Aph.InboxWorker do
   """
 
   import Ecto.Query
-  alias Aph.Repo
   alias Aph.Accounts.User
   alias Aph.QA.Inbox
   alias Aph.QA.Question
+  alias Aph.Repo
 
   def perform(question_id, user_id) do
     existing_inbox =
