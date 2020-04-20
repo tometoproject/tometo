@@ -30,7 +30,7 @@ export async function request (opts) {
   const textRes = await fetchRes.text()
   const data = textRes && JSON.parse(textRes)
   if (!fetchRes.ok && data.error) {
-    return Promise.reject(new Error({ status: fetchRes.status, message: data.message }))
+    return Promise.reject({ status: fetchRes.status, message: data.message })
   }
 
   return data
