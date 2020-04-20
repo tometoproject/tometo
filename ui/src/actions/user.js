@@ -69,7 +69,6 @@ export async function poll () {
       stores.hasAvatar.set(true)
     }
   }).catch(e => {
-    console.log(e)
     if ([401, 403].includes(e.status)) {
       stores.user.clear()
       stores.sessionId.clear()

@@ -19,7 +19,7 @@ defmodule Aph.QA do
 
   def get_question(id), do: Repo.get(Question, id)
 
-  def list_questions(), do: Repo.all(Question)
+  def list_questions, do: Repo.all(Question)
 
   def create_question(attrs \\ {}, time) do
     changeset = %Question{} |> Question.changeset(attrs)
