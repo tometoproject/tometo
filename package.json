@@ -36,5 +36,8 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "webpack/webpack-dev-server#8bbef6adf6ae5f6a3109ecd4a6246223d2f77cb2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "date-fns": "^2.12.0",
+    "date-fns-tz": "^1.0.10"
+  }
 }

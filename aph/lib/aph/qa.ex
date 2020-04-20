@@ -6,6 +6,7 @@ defmodule Aph.QA do
 
   alias Aph.Repo
 
+  alias Aph.Accounts
   alias Aph.QA.Answer
   alias Aph.QA.Comment
   alias Aph.QA.Inbox
@@ -18,13 +19,15 @@ defmodule Aph.QA do
 
   def get_question(id), do: Repo.get(Question, id)
 
-  def create_question(attrs \\ {}) do
+  def list_questions(), do: Repo.all(Question)
+
+  def create_question(attrs \\ {}, time) do
     changeset = %Question{} |> Question.changeset(attrs)
     {:ok, question} = Repo.insert(changeset)
-    users = Aph.Accounts.list_users()
+    users = Accounts.list_users()
 
     Enum.each(users, fn user ->
-      Exq.enqueue(Exq, "inbox", Aph.InboxWorker, [question.id, user.id])
+      Exq.enqueue_at(Exq, "inbox", time, Aph.InboxWorker, [question.id, user.id])
     end)
 
     {:ok, question}

@@ -16,16 +16,29 @@ defmodule AphWeb.QuestionController do
 
   action_fallback AphWeb.FallbackController
 
-  plug :admin_check when action in [:create, :update, :delete]
+  plug :admin_check when action in [:create, :update, :delete, :list]
 
   def create(%Plug.Conn{assigns: %{current_user: _}} = conn, %{
-        "content" => content
+        "content" => content,
+        "date" => date
       }) do
-    with {:ok, question} <- QA.create_question(%{content: content}) do
+    with {:ok, time} <- Timex.parse(date, "{ISO:Extended:Z}"),
+         {:ok, question} <- QA.create_question(%{content: content}, time) do
       conn
       |> put_status(:created)
       |> render(:question, question: question)
+    else
+      {:error, err} ->
+        conn
+        |> put_status(:internal_server_error)
+        |> put_view(AphWeb.ErrorView)
+        |> render(:internal_error, message: err)
     end
+  end
+
+  def list(conn, %{}) do
+    questions = QA.list_questions()
+    render(conn, :questions, questions: questions)
   end
 
   def show(conn, %{"id" => id}) do

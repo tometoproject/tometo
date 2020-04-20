@@ -27,7 +27,7 @@ config :exq,
   port: 6379,
   namespace: "aph:exq",
   concurrency: 200,
-  queues: ["default"]
+  queues: ["inbox"]
 
 # Internal configuration, you probably don't need to edit this unless you want to
 # change the port the application uses, or something like that

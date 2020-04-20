@@ -28,6 +28,7 @@ defmodule AphWeb.Router do
     get "/avatars/:id", AvatarController, :show
     put "/avatars/:id", AvatarController, :update
 
+    get "/questions", QuestionController, :list
     post "/questions", QuestionController, :create
     get "/questions/:id", QuestionController, :show
 
