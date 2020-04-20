@@ -18,6 +18,6 @@ export function reverseUserCheck () {
   }
 }
 
-export function redirect (route) {
-  navaid().route(route)
+export function redirect (route, opts = {}) {
+  navaid().route(route, opts.replace)
 }

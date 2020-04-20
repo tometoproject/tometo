@@ -3,6 +3,7 @@
   import { onMount } from 'svelte'
   import { user } from '../stores'
   import { poll } from '../actions'
+  import { redirect } from '../utils'
   import Index from './pages/AdminIndex.svelte'
   import Questions from './pages/AdminQuestions.svelte'
 
@@ -25,6 +26,10 @@
 
   onMount(async () => {
     await poll()
+    if (!$user) {
+      redirect('/login', { replace: true })
+      window.location.reload()
+    }
   })
 </script>
 
@@ -35,7 +40,7 @@
   </section>
 
   <section class="navbar-section">
-    <p class="pt-2">logged in as <strong>{$user.username}</strong></p>
+    <p class="pt-2">logged in as <strong>{$user && $user.username}</strong></p>
   </section>
 </header>
 
