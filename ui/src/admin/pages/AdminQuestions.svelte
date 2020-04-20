@@ -6,7 +6,8 @@
     add,
     set,
     differenceInHours,
-    parse
+    parse,
+    parseISO
   } from 'date-fns'
 
   const curDate = new Date()
@@ -65,5 +66,20 @@
     <div class="empty-title h4">No questions!</div>
   </div>
 {:else}
-  <h1>{questions}</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Content</th>
+        <th>Posted At</th>
+      </tr>
+    </thead>
+    <tbody>
+      {#each questions as question}
+        <tr>
+          <td>{question.content}</td>
+          <td>{format(parseISO(question.inserted_at), 'do \'of\' MMMM, yyyy / hh:mm a \'(UTC)\'')}</td>
+        </tr>
+      {/each}
+    </tbody>
+  </table>
 {/if}

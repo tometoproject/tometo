@@ -31,6 +31,7 @@
   }
 </script>
 
+<h1>Inbox</h1>
 
 {#if loading}
   <div class="loading loading-lg"></div>
@@ -46,8 +47,6 @@
 {/if}
 
 {#each inboxes as inbox, key}
-  <h1>Inbox</h1>
-
   <div class="card" key={key}>
     {#if inbox.submitting}
       <div class="card-body" in:fade>

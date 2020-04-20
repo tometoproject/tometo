@@ -10,7 +10,8 @@ defmodule AphWeb.QuestionView do
   def render("question.json", %{question: question}) do
     %{
       id: question.id,
-      content: question.content
+      content: question.content,
+      inserted_at: question.inserted_at
     }
   end
 end
