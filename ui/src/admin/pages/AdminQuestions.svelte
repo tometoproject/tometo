@@ -26,6 +26,8 @@
   async function submitQuestion (e) {
     const isoTime = combinedDate.toISOString()
     await postQuestion(content, isoTime)
+    addModalActive = false
+    questions = await getQuestions()
   }
 
   onMount(async () => {
