@@ -33,14 +33,14 @@
   })
 </script>
 
-<header class="navbar">
+<header class="navbar m-2 px-2">
   <section class="navbar-section">
-    <strong><a href="/admin" class="navbar-brand mr-2">tometo admin</a></strong>
-    <a class="btn btn-link" href="/admin/questions">Questions</a>
+    <strong><a href="/admin" class="navbar-brand mr-2 v-mid">tometo admin</a></strong>
+    <a class="btn btn-link v-mid" href="/admin/questions">Questions</a>
   </section>
 
   <section class="navbar-section">
-    <p class="pt-2">logged in as <strong>{$user && $user.username}</strong></p>
+    <div>logged in as <strong>{$user && $user.username}</strong></div>
   </section>
 </header>
 
