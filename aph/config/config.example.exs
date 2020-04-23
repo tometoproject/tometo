@@ -1,6 +1,11 @@
 use Mix.Config
 
 # Main configuration for Aph
+# For any keys that include "secret", you can generally create a random value by running the following
+# command:
+#
+# $ mix phx.gen.secret LENGTH
+# For example, for a 32-character secret: mix phx.gen.secret 32
 config :aph,
   ecto_repos: [Aph.Repo],
   tts: "espeak",
@@ -33,7 +38,7 @@ config :exq,
 # change the port the application uses, or something like that
 config :aph, AphWeb.Endpoint,
   render_errors: [view: AphWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: Aph.PubSub, adapter: Phoenix.PubSub.PG2],
+  pubsub_server: Aph.PubSub,
   http: [port: 4001],
   url: [host: "localhost"],
   secret_key_base: "ym9e4r4KwYYerVHZkJxpoHC8vYcVQEELGyoIoLy8kcvol8cD67RvJdB8oV/ldlxH",
@@ -44,6 +49,7 @@ config :aph, AphWeb.Endpoint,
   # And this should be set to true
   check_origin: false,
   watchers: [],
+  live_view: [signing_salt: "yVZYwiNje017IblQJYD1ndhXDbYGlW5m"],
   server: true
 
 config :phauxth,

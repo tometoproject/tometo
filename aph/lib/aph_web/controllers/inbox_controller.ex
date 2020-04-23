@@ -12,13 +12,9 @@ defmodule AphWeb.InboxController do
   use AphWeb, :controller
 
   import AphWeb.Authorize
-  import Ecto.Query
 
-  alias Aph.Accounts.User
   alias Aph.QA
   alias Aph.QA.Inbox
-  alias Aph.QA.Question
-  alias Aph.Repo
 
   action_fallback AphWeb.FallbackController
 

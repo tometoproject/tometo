@@ -73,9 +73,7 @@ defmodule Aph.TTS do
     end
   end
 
-  @doc """
-  Synthesize TTS with Google Text-to-Speech API.
-  """
+  # Synthesize TTS with Google Text-to-Speech API.
   defp synthesize_google(entity, prefix, av) do
     api_key = Application.get_env(:aph, :google_key)
     lang = @g_lang_map[String.to_atom(av.language)]
@@ -118,9 +116,7 @@ defmodule Aph.TTS do
     end
   end
 
-  @doc """
-  Synthesizes TTS using espeak.
-  """
+  # Synthesizes TTS using espeak.
   defp synthesize_espeak(entity, prefix, av) do
     # Since espeak doesn't accept the same values that the Google TTS api does,
     # we have to convert them from one scale to another.

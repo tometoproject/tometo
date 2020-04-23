@@ -28,8 +28,8 @@ config :exq,
 
 config :aph, AphWeb.Endpoint,
   render_errors: [view: AphWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: Aph.PubSub, adapter: Phoenix.PubSub.PG2],
   http: [port: 4001],
+  pubsub_server: Aph.PubSub,
   url: [host: "localhost"],
   secret_key_base: "ym9e4r4KwYYerVHZkJxpoHC8vYcVQEELGyoIoLy8kcvol8cD67RvJdB8oV/ldlxH",
   # This should be set to false in production
@@ -39,6 +39,7 @@ config :aph, AphWeb.Endpoint,
   # And this should be set to true
   check_origin: false,
   watchers: [],
+  live_view: [signing_salt: "yVZYwiNje017IblQJYD1ndhXDbYGlW5m"],
   server: true
 
 config :phauxth,

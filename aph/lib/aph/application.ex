@@ -11,7 +11,8 @@ defmodule Aph.Application do
       # Start the Ecto repository
       Aph.Repo,
       # Start the endpoint when the application starts
-      AphWeb.Endpoint
+      AphWeb.Endpoint,
+      {Phoenix.PubSub, [name: Aph.PubSub, adapter: Phoenix.PubSub.PG2]}
       # Starts a worker by calling: Aph.Worker.start_link(arg)
       # {Aph.Worker, arg},
     ]

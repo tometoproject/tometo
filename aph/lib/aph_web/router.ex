@@ -2,6 +2,7 @@ defmodule AphWeb.Router do
   use AphWeb, :router
   use Plug.ErrorHandler
   use Sentry.Plug
+  import Phoenix.LiveDashboard.Router
 
   pipeline :api do
     plug :accepts, ["json"]
@@ -39,5 +40,11 @@ defmodule AphWeb.Router do
     delete "/inboxes/:id", InboxController, :delete
 
     post "/comments", CommentController, :create
+  end
+
+  if Mix.env() == :dev do
+    scope "/" do
+      live_dashboard "/dashboard"
+    end
   end
 end

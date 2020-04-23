@@ -5,7 +5,6 @@ defmodule Aph.Main do
 
   import Ecto.Query, warn: false
   alias Aph.Repo
-  alias Aph.TTS
 
   alias Aph.Main.Avatar
 

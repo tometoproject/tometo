@@ -31,5 +31,7 @@ defmodule AphWeb.Endpoint do
     key: "aph",
     signing_salt: Application.get_env(:aph, :cookie_secret)
 
+  socket "/live", Phoenix.LiveView.Socket
+
   plug AphWeb.Router
 end

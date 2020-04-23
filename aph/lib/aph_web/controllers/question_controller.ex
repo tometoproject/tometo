@@ -12,7 +12,6 @@ defmodule AphWeb.QuestionController do
   import AphWeb.Authorize
 
   alias Aph.QA
-  alias Aph.QA.Question
 
   action_fallback AphWeb.FallbackController
 
