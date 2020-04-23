@@ -1,7 +1,5 @@
 # Tometo
 
-[![Build status](https://badge.buildkite.com/01b5ac8d7f2c0b0e20a6401bd35815de56291e1c342afcee61.svg)](https://buildkite.com/mokou/tometo)
-
 Tometo is a social network focused on text-to-speech. It's written in
 [Elixir](https://elixir-lang.org) using the
 [Phoenix](https://phoenixframework.org) web library and can generate TTS
@@ -23,7 +21,7 @@ either via Git or as a [ZIP
 file](https://github.com/tometoproject/tometo/archive/master.zip), and then run
 the following in the downloaded folder:
 
-``` sh
+```
 vagrant up
 # After that's done:
 vagrant ssh
@@ -33,7 +31,7 @@ This will put you in a small virtual machine that has Tometo running in it. The
 best part is that the content in your downloaded folder automatically
 synchronizes with your virtual machine! If you just want to run Tometo, type:
 
-``` sh
+```
 script/watch
 ```
 
