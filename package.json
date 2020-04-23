@@ -5,7 +5,7 @@
     "run-f": "webpack-dev-server --config ui/webpack.config.js --quiet",
     "run-b": "cd aph; mix phx.server"
   },
-  "version": "0.3.0",
+  "version": "0.4.0",
   "devDependencies": {
     "css-loader": "^3.4.2",
     "cssnano": "^4.1.10",
