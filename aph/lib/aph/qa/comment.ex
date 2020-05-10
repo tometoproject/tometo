@@ -12,7 +12,7 @@ defmodule Aph.QA.Comment do
     belongs_to :answer, Aph.QA.Answer
     belongs_to :avatar, Aph.Main.Avatar
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

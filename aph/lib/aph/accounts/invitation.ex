@@ -11,7 +11,7 @@ defmodule Aph.Accounts.Invitation do
     belongs_to :created_user, Aph.Accounts.User, foreign_key: :created_by
     belongs_to :used_user, Aph.Accounts.User, foreign_key: :used_by
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

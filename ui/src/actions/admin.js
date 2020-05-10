@@ -15,7 +15,7 @@ export async function postQuestion (content, date) {
 
   const opts = {
     method: 'POST',
-    url: '/api/questions',
+    url: '/questions',
     body: {
       content,
       date

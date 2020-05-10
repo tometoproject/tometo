@@ -7,7 +7,7 @@ defmodule Aph.Repo.Migrations.CreateAnswers do
       add :inbox_id, references(:inboxes, on_delete: :nothing)
       add :avatar_id, references(:avatars, on_delete: :nothing)
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create index(:answers, [:avatar_id])

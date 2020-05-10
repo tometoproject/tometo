@@ -6,13 +6,13 @@ export async function getInvitations () {
   if (!user) {
     return false
   }
-  return request({ method: 'GET', url: `/api/users/${get(user).id}/invitations` })
+  return request({ method: 'GET', url: `/users/${get(user).id}/invitations` })
 }
 
 export async function getInvitation (code) {
-  return request({ method: 'GET', url: `/api/invitations/${code}` })
+  return request({ method: 'GET', url: `/invitations/${code}` })
 }
 
 export async function createInvitation () {
-  return request({ method: 'POST', url: '/api/invitations' })
+  return request({ method: 'POST', url: '/invitations' })
 }

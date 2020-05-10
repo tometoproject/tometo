@@ -14,7 +14,7 @@ export async function createAvatar ({ name, pitch, speed, language, gender, pic1
 
   const opts = {
     method: 'POST',
-    url: '/api/avatars',
+    url: '/avatars',
     isMultipart: true,
     body: formdata
   }

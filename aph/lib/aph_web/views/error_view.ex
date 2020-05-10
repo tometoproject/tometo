@@ -9,6 +9,22 @@ defmodule AphWeb.ErrorView do
     }
   end
 
+  def render("reverse_no_auth.json", _assigns) do
+    %{
+      error: true,
+      id: "reverse_no_auth",
+      message: "You can't be logged in while doing this!"
+    }
+  end
+
+  def render("no_confirmation.json", _assigns) do
+    %{
+      error: true,
+      id: "no_confirmation",
+      message: "You haven't confirmed your email address yet!"
+    }
+  end
+
   def render("wrong_user.json", _assigns) do
     %{
       error: true,

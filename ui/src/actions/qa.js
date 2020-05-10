@@ -6,7 +6,7 @@ export async function getInboxes () {
   const userId = get(stores.user).id
   const opts = {
     method: 'GET',
-    url: `/api/users/${userId}/inboxes`
+    url: `/users/${userId}/inboxes`
   }
 
   return request(opts)
@@ -15,7 +15,7 @@ export async function getInboxes () {
 export async function createAnswer (content, inboxId) {
   const opts = {
     method: 'POST',
-    url: '/api/answers',
+    url: '/answers',
     body: {
       content,
       inbox_id: inboxId
@@ -28,7 +28,7 @@ export async function createAnswer (content, inboxId) {
 export async function getAnswer (id) {
   const opts = {
     method: 'GET',
-    url: `/api/answers/${id}`
+    url: `/answers/${id}`
   }
 
   return request(opts)
@@ -37,7 +37,7 @@ export async function getAnswer (id) {
 export async function createComment (content, answerId) {
   const opts = {
     method: 'POST',
-    url: '/api/comments',
+    url: '/comments',
     body: {
       content,
       answer_id: answerId
@@ -50,7 +50,7 @@ export async function createComment (content, answerId) {
 export async function getComments (answerId) {
   const opts = {
     method: 'GET',
-    url: `/api/answers/${answerId}/comments`
+    url: `/answers/${answerId}/comments`
   }
 
   return request(opts)

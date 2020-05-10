@@ -6,7 +6,6 @@ defmodule AphWeb.CommentController do
   """
   use AphWeb, :controller
 
-  import AphWeb.Authorize
   import Ecto.Query
 
   alias Aph.Main.Avatar
@@ -15,8 +14,6 @@ defmodule AphWeb.CommentController do
   alias Aph.Repo
 
   action_fallback AphWeb.FallbackController
-
-  plug :user_check when action in [:create, :update, :delete]
 
   def show_for_answer(conn, %{"id" => id}) do
     comments = QA.get_comments_for_answer(id)

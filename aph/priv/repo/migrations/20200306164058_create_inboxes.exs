@@ -7,7 +7,7 @@ defmodule Aph.Repo.Migrations.CreateInboxes do
       add :user_id, references(:users, on_delete: :delete_all)
       add :question_id, references(:questions, on_delete: :delete_all)
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create index(:inboxes, [:user_id])

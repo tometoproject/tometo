@@ -10,6 +10,7 @@ config :aph,
   ecto_repos: [Aph.Repo],
   tts: "espeak",
   hostname: "http://localhost:4001",
+  frontend_hostname: "http://localhost:1234",
   cookie_secret: "9RGqJxYrnc3eoQHrDBBdZsSCMytNFWqgsvD572DfPcm2uH+ycGFye8ulrwaFi+zp",
   # This is only useful if you are using the "google" TTS strategy.
   google_key: "replaceme",
@@ -23,6 +24,11 @@ config :aph, Aph.Repo,
   # Set this to false in production
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
+
+# Mailer configuration, you'll want to replace this with some other adapter in prod
+config :aph, Aph.Mailer,
+  adapter: Bamboo.LocalAdapter,
+  open_email_in_browser_url: "http://localhost:4001/sent_emails"
 
 # Configuration for Aph's job queue. This is where you would put in Redis credentials. The
 # host, port and password keys are related to this (password is optional).
@@ -51,10 +57,6 @@ config :aph, AphWeb.Endpoint,
   watchers: [],
   live_view: [signing_salt: "yVZYwiNje017IblQJYD1ndhXDbYGlW5m"],
   server: true
-
-config :phauxth,
-  user_context: Aph.Accounts,
-  token_module: AphWeb.Auth.Token
 
 # This is the CORS configuration, you need to add the URL where your frontend is deployed
 # to to this array. For example, if you change the port of your frontend in development,

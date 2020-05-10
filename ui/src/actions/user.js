@@ -6,13 +6,12 @@ import { request } from '../api'
 export async function login (user) {
   const opts = {
     method: 'POST',
-    url: '/api/sessions',
-    body: user
+    url: '/sessions',
+    body: { user }
   }
 
   request(opts).then(data => {
-    stores.user.set(data.user)
-    stores.sessionId.set(data.session_id)
+    stores.user.set(data)
     navaid().route('/')
     stores.infoFlash.set('Successfully logged in!')
     return poll()
@@ -24,22 +23,31 @@ export async function login (user) {
 export async function register (user, code) {
   const opts = {
     method: 'POST',
-    url: '/api/users',
+    url: '/users',
     body: { user, code }
   }
 
   request(opts).then(data => {
     navaid().route('/')
-    stores.infoFlash.set('Successfully registered! You can log in now.')
+    stores.infoFlash.set('Successfully registered! Check your email for a confirmation mail to be able to use your account.')
   }).catch(err => {
     stores.errorFlash.set(err.message)
   })
 }
 
+export async function confirmAccount (token) {
+  const opts = {
+    method: 'GET',
+    url: `/users/confirm/${token}`
+  }
+
+  return request(opts)
+}
+
 export async function logout () {
   const opts = {
     method: 'DELETE',
-    url: `/api/sessions/${get(stores.sessionId)}`
+    url: '/sessions'
   }
 
   request(opts).then(() => {
@@ -48,6 +56,39 @@ export async function logout () {
     stores.infoFlash.set('Successfully logged out!')
   }).catch(error => {
     stores.errorFlash.set(error.message)
+  })
+}
+
+export async function sendResetPassword (email) {
+  const opts = {
+    method: 'POST',
+    url: '/users/reset_password',
+    body: { user: { email } }
+  }
+
+  request(opts).then(() => {
+    stores.infoFlash.set('If the email exists, you\'ll receive instructions on how to reset your password soon!')
+  }).catch(error => {
+    stores.errorFlash.set(error.message)
+  })
+}
+
+export async function performResetPassword (token, password, confirmPassword) {
+  const opts = {
+    method: 'PUT',
+    url: `/users/reset_password/${token}`,
+    body: {
+      user: {
+        password,
+        password_confirmation: confirmPassword
+      }
+    }
+  }
+
+  request(opts).then(() => {
+    stores.infoFlash.set('Password successfully reset!')
+  }).catch(error => {
+    stores.errorFlash(error.message)
   })
 }
 
@@ -60,7 +101,7 @@ export async function poll () {
   const userId = get(stores.user).id
   const opts = {
     method: 'GET',
-    url: `/api/users/${userId}/poll`
+    url: `/users/${userId}/poll`
   }
 
   request(opts).then(data => {
