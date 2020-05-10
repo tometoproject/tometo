@@ -70,9 +70,9 @@ defmodule Aph.Accounts.User do
     |> cast(attrs, [:email])
     |> validate_email()
     |> case do
-         %{changes: %{email: _}} = changeset -> changeset
-         %{} = changeset -> add_error(changeset, :email, "did not change")
-       end
+      %{changes: %{email: _}} = changeset -> changeset
+      %{} = changeset -> add_error(changeset, :email, "did not change")
+    end
   end
 
   def password_changeset(user, attrs) do
