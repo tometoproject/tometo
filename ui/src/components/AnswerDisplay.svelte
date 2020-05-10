@@ -79,9 +79,9 @@
 
   function updateImage () {
     if (audio.isLoud) {
-      three.draw(document.getElementById(`${id}pic2`), 0, 0, 256, 256)
+      three.draw('mouth', document.getElementById(`${id}pic2`), 0, 0, 256, 256)
     } else {
-      three.draw(document.getElementById(`${id}pic1`), 0, 0, 256, 256)
+      three.draw('mouth', document.getElementById(`${id}pic1`), 0, 0, 256, 256)
     }
   }
 
@@ -124,7 +124,9 @@
         audio.media.addEventListener('canplaythrough', () => {
           loaded.audio = true
           three.loadModel(`${process.env.T_BACKEND_URL}/static/cube.glb`, 0).then(gltf => {
-            three.draw(document.getElementById(`${id}pic1`), 0, 0, 256, 256)
+            three.draw('eyeL', document.getElementById(`eyeL`), 0, 0, 256, 256)
+            three.draw('eyeR', document.getElementById(`eyeR`), 0, 0, 256, 256)
+            three.draw('mouth', document.getElementById(`${id}pic1`), 0, 0, 256, 256)
             animate()
           })
         })
@@ -150,6 +152,8 @@
   <canvas class="column col-6" id={`avatar${id}`} style="min-height: 100%;">
     <img id={`${id}pic1`} style="display: none;" alt="Avatar state 1" crossOrigin src={pic1} />
     <img id={`${id}pic2`} style="display: none;" alt="Avatar state 2" crossOrigin src={pic2} />
+    <img id="eyeL" style="display: none;" crossOrigin src="http://localhost:4001/static/av1-eyeL.png" />
+    <img id="eyeR" style="display: none;" crossOrigin src="http://localhost:4001/static/av1-eyeR.png" />
   </canvas>
   <div class="column col-6 card card-speech-bubble">
     <div class="card-header">

@@ -9,9 +9,22 @@ class ThreeManager {
     this.renderer = null
     this.loader = null
     this.controls = null
-    this.canvas = null
     this.model = null
-    this.canvasContext = null
+    this.canvas = {
+      eyeL: null,
+      eyeR: null,
+      mouth: null
+    }
+    this.subModels = {
+      eyeL: null,
+      eyeR: null,
+      mouth: null
+    }
+    this.canvasContext = {
+      eyeL: null,
+      eyeR: null,
+      mouth: null
+    }
     this.width = 0
     this.height = 0
   }
@@ -35,10 +48,12 @@ class ThreeManager {
 
   initForGLTF () {
     this.loader = new GLTFLoader()
-    this.canvas = document.createElement('canvas')
-    this.canvas.height = 256
-    this.canvas.width = 256
-    this.canvasContext = this.canvas.getContext('2d')
+    for (const name in this.canvas) {
+      this.canvas[name] = document.createElement('canvas')
+      this.canvas[name].height = 256
+      this.canvas[name].width = 256
+      this.canvasContext[name] = this.canvas[name].getContext('2d')
+    }
   }
 
   async loadModel (model, layer) {
@@ -49,20 +64,49 @@ class ThreeManager {
       box.setFromObject(gltf.scene)
       box.getCenter(boxVec)
       this.camera.position.copy(boxVec)
-      this.camera.position.add(new THREE.Vector3(1, 2, 2))
+      this.camera.position.add(new THREE.Vector3(3, 1, 1.4))
       this.model = gltf.scene.children[layer]
       this.scene.add(this.model)
-      this.model.material.map = new THREE.CanvasTexture(this.canvas)
+      for (const name in this.subModels) {
+        const canvasSide = new THREE.MeshBasicMaterial()
+        canvasSide.map = new THREE.CanvasTexture(this.canvas[name])
+        const mats = [
+          new THREE.MeshBasicMaterial({ transparent: true }),
+          new THREE.MeshBasicMaterial({ transparent: true }),
+          new THREE.MeshBasicMaterial({ transparent: true }),
+          new THREE.MeshBasicMaterial({ transparent: true }),
+          canvasSide,
+          new THREE.MeshBasicMaterial({ transparent: true })
+        ]
+        this.subModels[name] = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 0.1), mats)
+      }
+      this.subModels.eyeL.translateX(0.96)
+      this.subModels.eyeR.translateX(0.96)
+      this.subModels.mouth.translateX(0.96)
+      this.subModels.eyeL.translateY(0.450)
+      this.subModels.eyeR.translateY(0.450)
+      this.subModels.mouth.translateY(-0.400)
+      this.subModels.eyeL.translateZ(0.450)
+      this.subModels.eyeR.translateZ(-0.450)
+      this.subModels.eyeL.scale.set(0.6, 0.6, 1)
+      this.subModels.eyeR.scale.set(0.6, 0.6, 1)
+      this.subModels.mouth.scale.set(1, 0.8, 1)
+      this.subModels.eyeL.rotateY(1.570)
+      this.subModels.eyeR.rotateY(1.570)
+      this.subModels.mouth.rotateY(1.570)
+      this.scene.add(this.subModels.eyeL)
+      this.scene.add(this.subModels.eyeR)
+      this.scene.add(this.subModels.mouth)
       return gltf
     }, undefined, error => {
       console.error(error)
     })
   }
 
-  draw (src, dx, dy, dw, dh) {
-    this.canvasContext.drawImage(src, dx, dy, dw, dh)
-    if (this.model) {
-      this.model.material.map.needsUpdate = true
+  draw (name, src, dx, dy, dw, dh) {
+    this.canvasContext[name].drawImage(src, dx, dy, dw, dh)
+    if (this.subModels[name]) {
+      this.subModels[name].material[4].map.needsUpdate = true
     }
   }
 
@@ -74,6 +118,7 @@ class ThreeManager {
   destroy () {
     this.controls.dispose()
     this.scene.dispose()
+    this.renderer.forceContextLoss()
     this.renderer.dispose()
   }
 }
