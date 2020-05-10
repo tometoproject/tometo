@@ -5,7 +5,6 @@ config :aph,
   ecto_repos: [Aph.Repo],
   tts: "espeak",
   hostname: "http://localhost:4001",
-  frontend_hostname: "http://localhost:1234",
   cookie_secret: "9RGqJxYrnc3eoQHrDBBdZsSCMytNFWqgsvD572DfPcm2uH+ycGFye8ulrwaFi+zp",
   # This is only useful if you are using the "google" TTS strategy.
   google_key: "replaceme",

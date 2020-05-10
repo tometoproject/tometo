@@ -32,6 +32,6 @@ defmodule AphWeb.UserConfirmationController do
   end
 
   def frontend_user_confirmation_url(token) do
-    "#{Application.get_env(:aph, :frontend_hostname)}/confirm/#{token}"
+    "#{Application.get_env(:aph, :hostname)}/confirm/#{token}"
   end
 end

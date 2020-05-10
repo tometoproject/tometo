@@ -47,6 +47,6 @@ defmodule AphWeb.UserResetPasswordController do
   end
 
   defp frontend_reset_password_url(token) do
-    "#{Application.get_env(:aph, :frontend_hostname)}/reset_password/#{token}"
+    "#{Application.get_env(:aph, :hostname)}/reset_password/#{token}"
   end
 end

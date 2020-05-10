@@ -73,6 +73,6 @@ defmodule AphWeb.UserSettingsController do
   end
 
   defp frontend_confirm_updated_email_url(token) do
-    "#{Application.get_env(:aph, :frontend_hostname)}/confirm_email/#{token}"
+    "#{Application.get_env(:aph, :hostname)}/confirm_email/#{token}"
   end
 end
