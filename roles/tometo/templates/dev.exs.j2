@@ -1,0 +1,49 @@
+use Mix.Config
+
+config :aph,
+  tts: "{{ tometo_tts_strategy }}",
+  hostname: "http://localhost:4001",
+  # This is only useful if you are using the "google" TTS strategy.
+  google_key: "{{ tometo_google_key }}",
+  require_invitations: {{ tometo_require_invitations }}
+
+config :aph, Aph.Repo,
+  username: "{{ tometo_database_username }}",
+  database: "{{ tometo_database_name }}",
+  password: "{{ tometo_database_password }}",
+  hostname: "localhost",
+  # Set this to false in production
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
+config :aph, Aph.Mailer,
+  adapter: Bamboo.LocalAdapter,
+  open_email_in_browser_url: "http://localhost:4001/sent_emails"
+
+config :exq,
+  name: Exq,
+  host: "127.0.0.1",
+  port: 6379,
+  namespace: "aph:exq",
+  concurrency: 200,
+  queues: ["inbox"]
+
+# Watch static and templates for browser reloading.
+config :aph, AphWeb.Endpoint,
+  live_reload: [
+    patterns: [
+      ~r"priv/static/js/.*(js|css)$",
+      ~r"priv/gettext/.*(po)$",
+      ~r"lib/meseta_web/templates/.*(eex)$"
+    ]
+  ]
+
+# Do not include metadata nor timestamps in development logs
+config :logger, :console, format: "[$level] $message\n"
+
+# Set a higher stacktrace during development. Avoid configuring such
+# in production as building large stacktraces may be expensive.
+config :phoenix, :stacktrace_depth, 20
+
+# Initialize plugs at runtime for faster development compilation
+config :phoenix, :plug_init_mode, :runtime

@@ -2,10 +2,10 @@
   shell:
     cmd: /home/vagrant/tometo/script/localsetup
 
-- name: Create config.exs using Ansible variables
+- name: Create dev.exs using Ansible variables
   template:
-    src: config.exs.j2
-    dest: /vagrant/config/config.exs
+    src: dev.exs.j2
+    dest: /vagrant/config/dev.exs
 
 - name: Run database setup
   shell:

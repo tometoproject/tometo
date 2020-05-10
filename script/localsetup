@@ -62,10 +62,10 @@ npm i
 mix deps.get
 
 echo "Copying configuration example file..."
-cp config/config.example.exs config/config.exs
+cp config/dev.example.exs config/dev.exs
 
 echo ""
-echo "All done! Be sure to fill out the config/config.exs file and create the database:"
+echo "All done! Be sure to fill out the config/dev.exs file and create the database:"
 echo "mix ecto.setup"
 
 echo ""
