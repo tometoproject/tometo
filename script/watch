@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-npx run-p run-f run-b

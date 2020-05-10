@@ -59,18 +59,17 @@ python3 -m aeneas.diagnostics
 
 echo "Installing packages"
 npm i
-cd aph; mix deps.get; cd ..
+mix deps.get
 
 echo "Copying configuration example file..."
-cp aph/config/config.example.exs aph/config/config.exs
+cp config/config.example.exs config/config.exs
 
 echo ""
-echo "All done! Be sure to fill out the aph/config/config.exs file and create the database:"
-echo "cd aph; mix ecto.setup"
+echo "All done! Be sure to fill out the config/config.exs file and create the database:"
+echo "mix ecto.setup"
 
 echo ""
 echo "You can then use the following scripts to run Tometo:"
-echo "script/run_f <vagrant> - Run only the frontend, optionally with less secure Webpack server configuration for Vagrant"
+echo "script/run_f - Run only the frontend"
 echo "script/run_b - Run only the backend"
-echo "script/run <vagrant> - Run both frontend and backend, optionally with less secure Webpack server configuration for Vagrant"
-echo "script/watch <vagrant> - Run both frontend and backend and rerun on changes, optionally with less secure Webpack server configuration for Vagrant"
+echo "script/run - Run both frontend and backend, and watch and rebuild on changes"

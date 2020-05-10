@@ -5,9 +5,9 @@
 - name: Create config.exs using Ansible variables
   template:
     src: config.exs.j2
-    dest: /vagrant/aph/config/config.exs
+    dest: /vagrant/config/config.exs
 
 - name: Run database setup
   shell:
-    chdir: /vagrant/aph/ 
+    chdir: /vagrant/
     cmd: mix ecto.setup

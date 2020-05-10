@@ -55,7 +55,7 @@ config :aph, AphWeb.Endpoint,
 # to to this array. For example, if you change the port of your frontend in development,
 # you're also going to need to change it here.
 config :cors_plug,
-  origin: ["http://localhost:1234"]
+  origin: ["http://localhost:4001"]
 
 # Optional Sentry (https://sentry.io) configuration. This is pretty much useless in development
 config :sentry,

@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-
-vagrant ssh -c "cd tometo/; npx run-p run-f:vagrant run-b"

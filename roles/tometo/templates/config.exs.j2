@@ -18,6 +18,10 @@ config :aph, Aph.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+config :aph, Aph.Mailer,
+  adapter: Bamboo.LocalAdapter,
+  open_email_in_browser_url: "http://localhost:4001/sent_emails"
+
 config :exq,
   name: Exq,
   host: "127.0.0.1",
@@ -42,13 +46,9 @@ config :aph, AphWeb.Endpoint,
   live_view: [signing_salt: "yVZYwiNje017IblQJYD1ndhXDbYGlW5m"],
   server: true
 
-config :phauxth,
-  user_context: Aph.Accounts,
-  token_module: AphWeb.Auth.Token
-
 # This is the CORS config, add allowed origins to the list
 config :cors_plug,
-  origin: ["http://localhost:1234"]
+  origin: ["http://localhost:4001"]
 
 config :sentry,
   dsn: "AAAA",
