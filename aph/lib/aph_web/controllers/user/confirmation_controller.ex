@@ -11,7 +11,10 @@ defmodule AphWeb.UserConfirmationController do
     end
 
     conn
-    |> render(:message, message: "If your email is registered and hasn't been confirmed yet, you will receive an email with instructions shortly.")
+    |> render(:message,
+      message:
+        "If your email is registered and hasn't been confirmed yet, you will receive an email with instructions shortly."
+    )
   end
 
   def confirm(conn, %{"token" => token}) do
@@ -19,6 +22,7 @@ defmodule AphWeb.UserConfirmationController do
       {:ok, _} ->
         conn
         |> render(:message, message: "Email successfully confirmed!")
+
       :error ->
         conn
         |> put_status(:internal_server_error)

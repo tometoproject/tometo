@@ -24,7 +24,7 @@ defmodule Aph.Accounts do
   def get_user_by_email_and_password(email, password) when is_binary(email) do
     user = Repo.get_by(User, email: email)
     if User.valid_password?(user, password), do: user
-   end
+  end
 
   def get_user!(id), do: Repo.get!(User, id)
 
@@ -103,8 +103,9 @@ defmodule Aph.Accounts do
   end
 
   def deliver_update_email_instructions(%User{} = user, current_email, update_email_url_fun)
-  when is_function(update_email_url_fun, 1) do
-    {encoded_token, user_token} = UserToken.build_user_email_token(user, "change:#{current_email}")
+      when is_function(update_email_url_fun, 1) do
+    {encoded_token, user_token} =
+      UserToken.build_user_email_token(user, "change:#{current_email}")
 
     Repo.insert!(user_token)
     UserNotifier.deliver_update_email_instructions(user, update_email_url_fun.(encoded_token))
@@ -126,9 +127,9 @@ defmodule Aph.Accounts do
     |> Ecto.Multi.delete_all(:tokens, UserToken.user_and_contexts_query(user, :all))
     |> Repo.transaction()
     |> case do
-         {:ok, %{user: user}} -> {:ok, user}
-         {:error, :user, changeset, _} -> {:error, changeset}
-       end
+      {:ok, %{user: user}} -> {:ok, user}
+      {:error, :user, changeset, _} -> {:error, changeset}
+    end
   end
 
   #
@@ -156,7 +157,7 @@ defmodule Aph.Accounts do
   #
 
   def deliver_user_confirmation_instructions(%User{} = user, confirmation_url_fun)
-  when is_function(confirmation_url_fun, 1) do
+      when is_function(confirmation_url_fun, 1) do
     if user.confirmed_at do
       {:error, :already_confirmed}
     else
@@ -188,7 +189,7 @@ defmodule Aph.Accounts do
   #
 
   def deliver_user_reset_password_instructions(%User{} = user, reset_password_url_fun)
-  when is_function(reset_password_url_fun, 1) do
+      when is_function(reset_password_url_fun, 1) do
     {encoded_token, user_token} = UserToken.build_user_email_token(user, "reset_password")
     Repo.insert!(user_token)
 
@@ -210,9 +211,9 @@ defmodule Aph.Accounts do
     |> Ecto.Multi.delete_all(:tokens, UserToken.user_and_contexts_query(user, :all))
     |> Repo.transaction()
     |> case do
-         {:ok, %{user: user}} -> {:ok, user}
-         {:error, :user, changeset, _} -> {:error, changeset}
-       end
+      {:ok, %{user: user}} -> {:ok, user}
+      {:error, :user, changeset, _} -> {:error, changeset}
+    end
   end
 
   #

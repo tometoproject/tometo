@@ -12,7 +12,9 @@ defmodule AphWeb.UserResetPasswordController do
     end
 
     conn
-    |> render(:message, message: "If your email exists, you'll receive instructions to reset your password shortly.")
+    |> render(:message,
+      message: "If your email exists, you'll receive instructions to reset your password shortly."
+    )
   end
 
   def update(conn, %{"user" => user_params}) do
@@ -20,11 +22,14 @@ defmodule AphWeb.UserResetPasswordController do
       {:ok, _} ->
         conn
         |> render(:message, message: "Password reset successfully.")
+
       {:error, changeset} ->
         conn
         |> put_status(:bad_request)
         |> put_view(AphWeb.ErrorView)
-        |> render(:bad_request, message: "Unable to change your password, please check its length.")
+        |> render(:bad_request,
+          message: "Unable to change your password, please check its length."
+        )
     end
   end
 

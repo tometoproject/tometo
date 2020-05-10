@@ -11,10 +11,14 @@ defmodule AphWeb.UserRegistrationController do
   def create(conn, %{"user" => user_params, "code" => code}) do
     with {:ok, changeset} <- Accounts.register_user(user_params, code),
          {:ok, _changeset} <- Accounts.update_invitation_with_user(changeset, code),
-         {:ok, _} <- Accounts.deliver_user_confirmation_instructions(changeset, &Confirm.frontend_user_confirmation_url(&1)) do
-        conn
-        |> put_status(:created)
-        |> render(:show, user: changeset)
+         {:ok, _} <-
+           Accounts.deliver_user_confirmation_instructions(
+             changeset,
+             &Confirm.frontend_user_confirmation_url(&1)
+           ) do
+      conn
+      |> put_status(:created)
+      |> render(:show, user: changeset)
     else
       {:invitation_error, reason} ->
         conn

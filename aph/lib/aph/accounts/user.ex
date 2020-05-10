@@ -78,7 +78,7 @@ defmodule Aph.Accounts.User do
   end
 
   def valid_password?(%Aph.Accounts.User{encrypted_password: pwd}, password)
-  when is_binary(pwd) and byte_size(pwd) > 0 do
+      when is_binary(pwd) and byte_size(pwd) > 0 do
     Argon2.verify_pass(password, pwd)
   end
 

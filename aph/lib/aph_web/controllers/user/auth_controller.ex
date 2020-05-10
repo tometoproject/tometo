@@ -106,7 +106,8 @@ defmodule AphWeb.UserAuth do
   end
 
   def require_admin_or_mod_user(conn, _opts) do
-    if conn.assigns[:current_user] && (conn.assigns.current_user.mod || conn.assigns.current_user.admin) do
+    if conn.assigns[:current_user] &&
+         (conn.assigns.current_user.mod || conn.assigns.current_user.admin) do
       conn
     else
       conn

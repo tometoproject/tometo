@@ -12,10 +12,17 @@ defmodule AphWeb.UserSettingsController do
 
     case Accounts.apply_user_email(user, password, user_params) do
       {:ok, applied_user} ->
-        Accounts.deliver_update_email_instructions(applied_user, user.email, &frontend_confirm_updated_email_url(&1))
+        Accounts.deliver_update_email_instructions(
+          applied_user,
+          user.email,
+          &frontend_confirm_updated_email_url(&1)
+        )
 
         conn
-        |> render(:message, message: "A link to confirm your email change has been sent to the new address.")
+        |> render(:message,
+          message: "A link to confirm your email change has been sent to the new address."
+        )
+
       {:error, changeset} ->
         conn
         |> put_status(:bad_request)

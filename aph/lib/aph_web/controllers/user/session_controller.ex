@@ -10,7 +10,8 @@ defmodule AphWeb.UserSessionController do
     %{"email" => email, "password" => password} = user_params
 
     if user = Accounts.get_user_by_email_and_password(email, password) do
-      IO.puts user.confirmed_at
+      IO.puts(user.confirmed_at)
+
       if user.confirmed_at do
         UserAuth.login_user(conn, user, user_params)
         |> render(:show, user: user)

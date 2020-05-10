@@ -32,11 +32,12 @@ defmodule Aph.Accounts.UserToken do
   Checks if the token is valid and returns its lookup query, which returns the user found by the token.
   """
   def verify_session_token_query(token) do
-    query = from(token in token_and_context_query(token, "session"),
-      join: user in assoc(token, :user),
-      where: token.inserted_at > ago(@session_validity_in_days, "day"),
-      select: user
-    )
+    query =
+      from(token in token_and_context_query(token, "session"),
+        join: user in assoc(token, :user),
+        where: token.inserted_at > ago(@session_validity_in_days, "day"),
+        select: user
+      )
 
     {:ok, query}
   end
@@ -72,12 +73,15 @@ defmodule Aph.Accounts.UserToken do
         hashed_token = :crypto.hash(@hash_algorithm, decoded_token)
         days = days_for_context(context)
 
-        query = from(token in token_and_context_query(hashed_token, context),
-          join: user in assoc(token, :user),
-          where: token.inserted_at > ago(^days, "day") and token.sent_to == user.email,
-          select: user)
+        query =
+          from(token in token_and_context_query(hashed_token, context),
+            join: user in assoc(token, :user),
+            where: token.inserted_at > ago(^days, "day") and token.sent_to == user.email,
+            select: user
+          )
 
         {:ok, query}
+
       :error ->
         :error
     end
@@ -99,11 +103,11 @@ defmodule Aph.Accounts.UserToken do
             where: token.inserted_at > ago(@change_email_validity_in_days, "day")
 
         {:ok, query}
+
       :error ->
         :error
     end
   end
-
 
   @doc """
   Returns the token with context.
