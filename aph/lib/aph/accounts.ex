@@ -12,7 +12,7 @@ defmodule Aph.Accounts do
   # USERS
   #
 
-  def list_users() do
+  def list_users do
     Repo.all(User)
   end
 
