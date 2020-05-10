@@ -14,7 +14,7 @@ defmodule Aph.Main.Avatar do
     field :speed, :float
     belongs_to :user, Aph.Accounts.User
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

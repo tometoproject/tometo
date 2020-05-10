@@ -11,7 +11,7 @@ defmodule Aph.QA.Inbox do
     belongs_to :question, Aph.QA.Question
     belongs_to :user, Aph.Accounts.User
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

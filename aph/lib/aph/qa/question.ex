@@ -10,7 +10,7 @@ defmodule Aph.QA.Question do
     field :content, :string
     has_many :inboxes, Aph.QA.Inbox
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false
