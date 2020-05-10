@@ -11,6 +11,13 @@ defmodule AphWeb.Router do
     plug :fetch_current_user
   end
 
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
   scope "/api/v1", AphWeb do
     pipe_through [:api, :redirect_if_user_is_authenticated]
 
@@ -63,5 +70,12 @@ defmodule AphWeb.Router do
       live_dashboard "/dashboard"
       forward "/sent_emails", Bamboo.SentEmailViewerPlug
     end
+  end
+
+  scope "/", AphWeb do
+    pipe_through :browser
+
+    get "/admin/*path", PageController, :admin
+    get "/*path", PageController, :index
   end
 end

@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Tometo</title>
-  <link rel="stylesheet" href="/style.css" />
-  <script src="/js/index.js"></script>
+  <title>Tometo Admin</title>
+  <link rel="stylesheet" href="/static/js/main.css" />
 </head>
-<body class="has-white-background">
+<body>
+  <script src="/static/js/admin.js"></script>
 </body>
 </html>

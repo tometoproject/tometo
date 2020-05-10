@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Tometo</title>
-  <link rel="stylesheet" href="/style.css" />
-  <script src="/js/index.js"></script>
+  <link rel="stylesheet" href="/static/js/main.css" />
 </head>
-<body class="has-white-background">
+<body>
+  <script async src="/static/js/shared.js"></script>
+  <script src="/static/js/main.js"></script>
 </body>
 </html>

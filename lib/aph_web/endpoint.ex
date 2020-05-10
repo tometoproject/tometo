@@ -7,7 +7,8 @@ defmodule AphWeb.Endpoint do
   plug Plug.Static,
     at: "/static",
     from: :aph,
-    gzip: false
+    gzip: true,
+    brotli: true
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

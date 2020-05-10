@@ -31,17 +31,6 @@ const commonOptions = {
   optimization: prod ? {
     minimizer: [new TerserWebpackPlugin({}), new OptimizeCSSAssetsPlugin({})]
   } : {},
-  devServer: !prod ? {
-    contentBase: path.join(__dirname, 'public'),
-    port: 1234,
-    compress: true,
-    publicPath: '/build/',
-    historyApiFallback: {
-      rewrites: [
-        { from: /^\/admin\/?.*/, to: '/admin.html' }
-      ]
-    }
-  } : {},
   resolve: {
     alias: {
       svelte: path.resolve('node_modules', 'svelte'),
@@ -97,7 +86,7 @@ module.exports = {
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'public/build')
+    path: path.resolve(process.cwd(), 'priv/static/js')
   },
   ...commonOptions
 }

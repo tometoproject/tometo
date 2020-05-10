@@ -65,6 +65,7 @@ defmodule Aph.TTS do
   """
   def synthesize(entity, prefix, av) do
     File.mkdir_p!("gentts/#{prefix}-#{entity.id}")
+    File.mkdir_p!("priv/static/tts/")
 
     if Application.get_env(:aph, :tts) == "google" do
       synthesize_google(entity, prefix, av)
@@ -156,8 +157,8 @@ defmodule Aph.TTS do
   Takes the name of the temporary directory.
   """
   def clean(name) do
-    with :ok <- File.cp("gentts/#{name}/out.json", "priv/static/#{name}.json"),
-         :ok <- File.cp("gentts/#{name}/temp.ogg", "priv/static/#{name}.ogg"),
+    with :ok <- File.cp("gentts/#{name}/out.json", "priv/static/tts/#{name}.json"),
+         :ok <- File.cp("gentts/#{name}/temp.ogg", "priv/static/tts/#{name}.ogg"),
          {:ok, _} <- File.rm_rf("gentts/#{name}") do
       :ok
     else
