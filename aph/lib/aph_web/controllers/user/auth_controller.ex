@@ -66,7 +66,9 @@ defmodule AphWeb.UserAuth do
   def redirect_if_user_is_authenticated(conn, _opts) do
     if conn.assigns[:current_user] do
       conn
-      |> halt()
+      |> put_status(:unauthorized)
+      |> put_view(AphWeb.ErrorView)
+      |> render(:reverse_no_auth)
     else
       conn
     end
@@ -77,6 +79,7 @@ defmodule AphWeb.UserAuth do
       conn
     else
       conn
+      |> put_status(:unauthorized)
       |> put_view(AphWeb.ErrorView)
       |> render(:no_auth)
     end

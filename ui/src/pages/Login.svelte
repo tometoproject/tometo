@@ -1,24 +1,25 @@
 <script>
   import { login } from '../actions'
 
-  let username = ''
+  let email = ''
   let password = ''
   let remember = false
   let loading = false
 
   async function submitForm () {
     loading = true
-    await login({ username, password, remember_me: remember })
+    await login({ email, password, remember_me: remember })
     loading = false
   }
 </script>
 
 <form on:keydown.enter={submitForm}>
-  <h1>Login</h1>
+  <h1 class="mb-0">Login</h1>
+  <small class="mb-2">or <a href="/reset_password">reset your password</a></small>
 
   <fieldset class="form-group">
-    <label class="form-label label-lg">Username</label>
-    <input class="form-input input-lg" bind:value={username} type="text" />
+    <label class="form-label label-lg">Email</label>
+    <input class="form-input input-lg" bind:value={email} type="email" />
   </fieldset>
 
   <fieldset class="form-group">

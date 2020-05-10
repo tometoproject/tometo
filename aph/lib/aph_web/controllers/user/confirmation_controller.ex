@@ -23,7 +23,7 @@ defmodule AphWeb.UserConfirmationController do
         conn
         |> put_status(:internal_server_error)
         |> put_view(AphWeb.ErrorView)
-        |> render(:internal_error, message: "Error when confirming email address.")
+        |> render(:internal_error, message: "Error when confirming account.")
     end
   end
 

@@ -11,6 +11,9 @@
   import GetAnswer from './pages/GetAnswer.svelte'
   import Invitations from './pages/Invitations.svelte'
   import RedeemInvitation from './pages/RedeemInvitation.svelte'
+  import ConfirmAccount from './pages/ConfirmAccount.svelte'
+  import ForgotPassword from './pages/ForgotPassword.svelte'
+  import ResetPassword from './pages/ResetPassword.svelte'
   import Inbox from './pages/Inbox.svelte'
 
   export let router = navaid()
@@ -27,6 +30,9 @@
     .on('/answer/:id', setRoute(GetAnswer))
     .on('/user/invitations', setRoute(Invitations))
     .on('/i/:code', setRoute(RedeemInvitation))
+    .on('/confirm/:token', setRoute(ConfirmAccount))
+    .on('/reset_password', setRoute(ForgotPassword))
+    .on('/reset_password/:token', setRoute(ResetPassword))
     .on('/inbox', setRoute(Inbox))
 
   router.listen()

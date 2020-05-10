@@ -16,17 +16,18 @@ defmodule AphWeb.Router do
 
     post "/users", UserRegistrationController, :create
     post "/sessions", UserSessionController, :create
+    post "/users/confirm", UserConfirmationController, :create
+    get "/users/confirm/:token", UserConfirmationController, :confirm
     post "/users/reset_password", UserResetPasswordController, :create
     put "/users/reset_password/:token", UserResetPasswordController, :update
     get "/users/confirm_email/:token", UserSettingsController, :confirm_email
-    delete "/sessions/:id", UserSessionController, :delete
     get "/invitations/:code", InvitationController, :get
   end
 
   scope "/api/v1", AphWeb do
     pipe_through [:api, :require_authenticated_user]
 
-    delete "/users", UserSessionController, :delete
+    delete "/sessions", UserSessionController, :delete
     put "/users/update_password", UserSettingsController, :update_password
     put "/users/update_email", UserSettingsController, :update_email
     get "/users/:id/invitations", InvitationController, :for_user
@@ -52,8 +53,6 @@ defmodule AphWeb.Router do
     pipe_through :api
 
     get "/", DefaultController, :index
-    post "/users/confirm", UserConfirmationController, :create
-    get "/users/confirm/:token", UserConfirmationController, :confirm
     get "/avatars/:id", AvatarController, :show
     get "/answers/:id", AnswerController, :show
     get "/answers/:id/comments", CommentController, :show_for_answer

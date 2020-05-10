@@ -26,11 +26,11 @@ export async function request (opts) {
     }
   }
 
-  const fetchRes = await fetch(`${process.env.T_BACKEND_URL}${opts.url}`, requestOptions)
+  const fetchRes = await fetch(`${process.env.T_BACKEND_URL}/api/v1${opts.url}`, requestOptions)
   const textRes = await fetchRes.text()
   const data = textRes && JSON.parse(textRes)
-  if (!fetchRes.ok && data.error) {
-    return Promise.reject({ status: fetchRes.status, message: data.message })
+  if (!fetchRes.ok) {
+    return Promise.reject({ status: fetchRes.status, message: data.message || 'Error' })
   }
 
   return data
