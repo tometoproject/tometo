@@ -7,7 +7,7 @@ defmodule Aph.Repo.Migrations.CreateComments do
       add :answer_id, references(:answers, on_delete: :delete_all)
       add :avatar_id, references(:avatars, on_delete: :nothing)
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create index(:comments, [:answer_id])

@@ -10,7 +10,7 @@ defmodule Aph.Repo.Migrations.CreateAvatars do
       add :gender, :text
       add :user_id, references(:users, on_delete: :nothing)
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create index(:avatars, [:user_id])

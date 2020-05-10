@@ -7,7 +7,7 @@ defmodule Aph.Repo.Migrations.CreateUsers do
       add :username, :text
       add :encrypted_password, :text
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
 
     create unique_index(:users, [:email])

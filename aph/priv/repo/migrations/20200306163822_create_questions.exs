@@ -5,7 +5,7 @@ defmodule Aph.Repo.Migrations.CreateQuestions do
     create table(:questions) do
       add :content, :text
 
-      timestamps()
+      timestamps(type: :timestamptz)
     end
   end
 end
