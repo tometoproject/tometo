@@ -11,15 +11,10 @@ defmodule AphWeb.InboxController do
 
   use AphWeb, :controller
 
-  import AphWeb.Authorize
-
   alias Aph.QA
   alias Aph.QA.Inbox
 
   action_fallback AphWeb.FallbackController
-
-  plug :user_check when action in [:show, :show_for_user]
-  plug :admin_check when action in [:delete]
 
   def show_for_user(%Plug.Conn{assigns: %{current_user: user}} = conn, %{"id" => id}) do
     if user.id != String.to_integer(id) do

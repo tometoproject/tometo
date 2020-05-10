@@ -46,11 +46,11 @@ defmodule Aph.MixProject do
       {:cors_plug, "~> 2.0"},
       {:httpoison, "~> 1.6"},
       {:sentry, "~> 7.2"},
-      {:phauxth, "~> 2.3"},
       {:elixir_uuid, "~> 1.2"},
       {:exq, "~> 0.13.5"},
       {:exq_ui, "~> 0.11.0"},
       {:timex, "~> 3.6.1"},
+      {:bamboo, "~> 1.5"},
       {:ex_doc, "~> 0.21", only: :dev, runtime: false},
       {:credo, "~> 1.2", only: :dev, runtime: false}
     ]

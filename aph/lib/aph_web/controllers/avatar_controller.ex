@@ -1,14 +1,10 @@
 defmodule AphWeb.AvatarController do
   use AphWeb, :controller
 
-  import AphWeb.Authorize
-
   alias Aph.Main
   alias Aph.Main.Avatar
 
   action_fallback AphWeb.FallbackController
-
-  plug :user_check when action in [:create, :update, :delete]
 
   def create(%Plug.Conn{assigns: %{current_user: user}} = conn, %{
         "name" => name,

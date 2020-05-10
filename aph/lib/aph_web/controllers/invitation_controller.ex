@@ -3,14 +3,11 @@ defmodule AphWeb.InvitationController do
 
   import Ecto.Query
   alias Aph.Repo
-  import AphWeb.Authorize
 
   alias Aph.Accounts
   alias Aph.Accounts.Invitation
 
   action_fallback AphWeb.FallbackController
-
-  plug :user_check when action in [:create, :for_user]
 
   def get(conn, %{"code" => code}) do
     invitation = Accounts.get_invitation_by_code(code)

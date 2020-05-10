@@ -9,13 +9,9 @@ defmodule AphWeb.QuestionController do
 
   use AphWeb, :controller
 
-  import AphWeb.Authorize
-
   alias Aph.QA
 
   action_fallback AphWeb.FallbackController
-
-  plug :admin_check when action in [:create, :update, :delete, :list]
 
   def create(%Plug.Conn{assigns: %{current_user: _}} = conn, %{
         "content" => content,

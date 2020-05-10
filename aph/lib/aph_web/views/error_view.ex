@@ -9,6 +9,14 @@ defmodule AphWeb.ErrorView do
     }
   end
 
+  def render("no_confirmation", _assigns) do
+    %{
+      error: true,
+      id: "no_confirmation",
+      message: "You haven't confirmed your email address yet!"
+    }
+  end
+
   def render("wrong_user.json", _assigns) do
     %{
       error: true,
