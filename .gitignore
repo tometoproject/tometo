@@ -1,8 +1,6 @@
 # ui
 node_modules/
 npm-debug.log
-ui/public/build/
-serve_dist/
 .cache/
 stats.json
 
@@ -18,13 +16,12 @@ doc/
 erl_crash.dump
 *.ez
 aph-*.tar
-/priv/static/
 gentts/
 _build/
-aph/priv/static/
-aph/config/config.exs
+priv/static/
+config/config.exs
 # for now, include the cube model
-!aph/priv/static/cube.glb
+!priv/static/cube.glb
 
 # vagrant
 .vagrant
