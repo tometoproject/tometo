@@ -1,4 +1,7 @@
 defmodule Aph.Accounts.UserNotifier do
+  @moduledoc """
+  Contains email texts and logic for sending emails related to users.
+  """
   import Bamboo.Email
 
   defp deliver(to, subject, body) do

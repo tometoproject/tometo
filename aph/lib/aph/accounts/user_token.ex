@@ -1,4 +1,7 @@
 defmodule Aph.Accounts.UserToken do
+  @moduledoc """
+  Schema module for the various kinds of user tokens (session, password reset, email change, email confirmation).
+  """
   use Ecto.Schema
   import Ecto.Query
 

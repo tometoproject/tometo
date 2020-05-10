@@ -2,8 +2,6 @@ defmodule AphWeb.UserRegistrationController do
   use AphWeb, :controller
 
   alias Aph.Accounts
-  alias Aph.Accounts.User
-  alias AphWeb.UserAuth
   alias AphWeb.UserConfirmationController, as: Confirm
 
   plug :put_view, AphWeb.UserView

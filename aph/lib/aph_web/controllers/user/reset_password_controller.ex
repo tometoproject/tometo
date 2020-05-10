@@ -23,7 +23,7 @@ defmodule AphWeb.UserResetPasswordController do
         conn
         |> render(:message, message: "Password reset successfully.")
 
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_status(:bad_request)
         |> put_view(AphWeb.ErrorView)

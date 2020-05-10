@@ -23,7 +23,7 @@ defmodule AphWeb.UserSettingsController do
           message: "A link to confirm your email change has been sent to the new address."
         )
 
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_status(:bad_request)
         |> put_view(AphWeb.ErrorView)
@@ -56,7 +56,7 @@ defmodule AphWeb.UserSettingsController do
         |> UserAuth.login_user(user)
         |> render(:message, message: "Password updated successfully.")
 
-      {:error, changeset} ->
+      {:error, _changeset} ->
         conn
         |> put_status(:bad_request)
         |> put_view(AphWeb.ErrorView)

@@ -1,4 +1,7 @@
 defmodule AphWeb.UserAuth do
+  @moduledoc """
+  This module contains functions to manage user sessions.
+  """
   import Plug.Conn
   import Phoenix.Controller
 
