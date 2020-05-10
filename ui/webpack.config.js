@@ -7,8 +7,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const { version } = require('../package.json')
 
 const env = envalid.cleanEnv(process.env, {
-  T_FRONTEND_URL: envalid.url({ default: 'http://localhost:1234' }),
-  T_BACKEND_URL: envalid.url({ default: 'http://localhost:4001' }),
+  T_HOSTNAME: envalid.url({ default: 'http://localhost:4001' }),
   T_ENV: envalid.str({ devDefault: 'development' }),
   T_REQUIRE_INVITATIONS: envalid.bool({ default: false }),
   T_GENERATE_BUNDLE_VISUALIZATION: envalid.bool({ default: false })

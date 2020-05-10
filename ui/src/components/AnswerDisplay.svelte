@@ -123,7 +123,7 @@
         // we set the boolean flag and properly load the model, and start animating.
         audio.media.addEventListener('canplaythrough', () => {
           loaded.audio = true
-          three.loadModel(`${process.env.T_BACKEND_URL}/static/cube.glb`, 0).then(gltf => {
+          three.loadModel(`/static/cube.glb`, 0).then(gltf => {
             three.draw(document.getElementById(`${id}pic1`), 0, 0, 256, 256)
             animate()
           })

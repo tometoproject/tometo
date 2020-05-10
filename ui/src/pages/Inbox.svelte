@@ -27,7 +27,7 @@
 
     const res = await createAnswer(answer, inbox.content.id)
     inboxes[inboxNum].submitting = false
-    inboxes[inboxNum].answerLink = `${process.env.T_FRONTEND_URL}/answer/${res.id}`
+    inboxes[inboxNum].answerLink = `/answer/${res.id}`
   }
 </script>
 

@@ -58,7 +58,7 @@
     <tbody>
       {#each invitations as inv, key}
         <tr key={key}>
-          <td><a href={`${process.env.T_FRONTEND_URL}/i/${inv.code}`}>{inv.code}</a></td>
+          <td><a href={`${process.env.T_HOSTNAME}/i/${inv.code}`}>{inv.code}</a></td>
           <td>{#if inv.used_by}Used{:else}Unused{/if}</td>
           {#if inv.used_by}<td>{inv.used_by.username}</td>{/if}
         </tr>
