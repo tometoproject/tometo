@@ -4,8 +4,7 @@ config :aph, AphWeb.Endpoint,
   url: [host: "0.0.0.0", port: 4001],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
-config :aph, Aph.Mailer,
-  adapter: Bamboo.PostmarkAdapter
+config :aph, Aph.Mailer, adapter: Bamboo.PostmarkAdapter
 
 config :sentry,
   environment_name: :prod,

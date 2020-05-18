@@ -29,22 +29,21 @@ config :aph, AphWeb.Endpoint,
 
 sentry_dsn =
   System.get_env("SENTRY_DSN") ||
-  raise """
-  environment variable SENTRY_DSN is missing.
-  """
+    raise """
+    environment variable SENTRY_DSN is missing.
+    """
 
 config :sentry,
   dsn: sentry_dsn
 
 postmark_key =
   System.get_env("POSTMARK_API_KEY") ||
-  raise """
-  environment variable POSTMARK_API_KEY is missing.
-  If you don't want to use Postmark for sending emails, use a different
-  Bamboo email adapter in config/prod.exs and change the name
-  of the environment variable to be loaded in config/releases.exs, and
-  then assemble a new release.
-  """
+    raise """
+    environment variable POSTMARK_API_KEY is missing.
+    If you don't want to use Postmark for sending emails, use a different
+    Bamboo email adapter in config/prod.exs and change the name
+    of the environment variable to be loaded in config/releases.exs, and
+    then assemble a new release.
+    """
 
-config :aph, Aph.Mailer,
-  api_key: postmark_key
+config :aph, Aph.Mailer, api_key: postmark_key
